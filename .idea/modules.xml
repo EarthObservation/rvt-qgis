@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Q-RVTpy.iml" filepath="$PROJECT_DIR$/.idea/Q-RVTpy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/qgis-rvt.iml" filepath="$PROJECT_DIR$/.idea/qgis-rvt.iml" />
     </modules>
   </component>
 </project>
