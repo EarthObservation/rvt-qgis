@@ -6,7 +6,7 @@ Relief Visualization Toolbox was produced to help scientist visualize raster ele
 
 ## Installation
 
-Create a ZIP file from the repository and install it via standard QGIS Plugin installation method and select install from ZIP.
+Create a ZIP file from the repository and install it via standard QGIS Plugin installation method and select install from ZIP. See [QGIS Plugins — QGIS Documentation documentation](http://docs.qgis.org/latest/en/docs/user_manual/plugins/plugins.html).
 
 Later, you can also just update the files located in your Plugins folder. It is located under QGIS profiles, e.g.:
 ```
