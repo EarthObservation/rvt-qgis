@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="" />
+    <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rvt/blend.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/blend.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rvt/default.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/default.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rvt/vis.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/vis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/default_settings.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/overcast_250sp.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/overcast_500sp.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/uniform_250sp.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/uniform_500sp.txt" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JupyterTrust" id="16c1413d-dc70-460c-b775-f84b8ddf0a3e" />
+  <component name="JupyterTrust" id="90e3b966-5a69-4ba5-a86d-dd87c759ad2e" />
   <component name="ProjectId" id="1jvaA4kSMXa750yAzVvKWyA5Kv7" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -19,6 +33,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -32,10 +47,21 @@
       <workItem from="1604686908987" duration="165000" />
       <workItem from="1604687184232" duration="7000" />
       <workItem from="1604687221924" duration="43000" />
+      <workItem from="1605091089467" duration="2325000" />
+      <workItem from="1605101001684" duration="3479000" />
+      <workItem from="1605162825228" duration="4120000" />
+      <workItem from="1605528113593" duration="3101000" />
+      <workItem from="1605609011333" duration="2528000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1605091101459">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1605091101459" />
   </component>
 </project>

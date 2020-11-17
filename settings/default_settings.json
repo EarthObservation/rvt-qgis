@@ -10,7 +10,7 @@
         },
         "Hillshade": {
             "hs_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Hillshade. Parameter for GUIs."
             },
             "hs_sun_azi": {
@@ -37,7 +37,7 @@
         },
         "Multiple directions hillshade": {
             "mhs_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Multiple directions hillshade. Parameter for GUIs."
             },
             "mhs_nr_dir": {
@@ -53,7 +53,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "mhs_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "mhs_bytscl": {
@@ -64,7 +64,7 @@
         },
         "Slope gradient": {
             "slp_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Slope. Parameter for GUIs."
             },
             "slp_output_units": {
@@ -76,7 +76,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "slp_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "slp_bytscl": {
@@ -87,7 +87,7 @@
         },
         "Simple local relief model": {
             "slrm_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Simple local relief model. Parameter for GUIs."
             },
             "slrm_rad_cell": {
@@ -99,7 +99,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "slrm_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "slrm_bytscl": {
@@ -110,7 +110,7 @@
         },
         "Sky-View Factor": {
             "svf_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Sky-View Factor. Parameter for GUIs."
             },
             "svf_n_dir": {
@@ -130,7 +130,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "svf_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "svf_bytscl": {
@@ -141,7 +141,7 @@
         },
         "Anisotropic Sky-View Factor": {
             "asvf_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Anisotropic Sky-View Factor. Parameter for GUIs."
             },
             "asvf_dir": {
@@ -160,7 +160,7 @@
         },
         "Openness - Positive": {
             "pos_opns_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Openness - Positive. Parameter for GUIs."
             },
             "pos_opns_bytscl": {
@@ -171,7 +171,7 @@
         },
         "Openness - Negative": {
             "neg_opns_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Openness - Negative. Parameter for GUIs."
             },
             "neg_opns_save_float": {
@@ -179,7 +179,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "neg_opns_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "neg_opns_bytscl": {
@@ -190,20 +190,24 @@
         },
         "Sky illumination": {
             "sim_compute": {
-                "value": 0,
+                "value": 1,
                 "description": "If compute Sky illumination. Parameter for GUIs."
             },
             "sim_sky_mod": {
                 "value": "overcast",
                 "description": "Sky model [overcast, uniform]."
             },
-            "sim_samp_pnts": {
-                "value": 250,
-                "description": "Number of sampling points [250 or 500]."
+            "sim_compute_shadow": {
+                "value": 1,
+                "description": "If 1 it computes shadows, if 0 it doesn't."
             },
             "sim_shadow_dist": {
                 "value": 100,
                 "description": "Max shadow modeling distance in pixels."
+            },
+            "sim_nr_dir": {
+                "value": 32,
+                "description": "Number of directions to search for horizon"
             },
             "sim_shadow_az": {
                 "value": 315,
@@ -222,14 +226,14 @@
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "sim_bytscl": {
-                "min": 0.25,
-                "max": 0.0,
+                "min": 0.7,
+                "max": 1,
                 "description": "Byte scale min and max values for 8bit raster."
             }
         },
         "Local dominance": {
             "ld_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Local dominance. Parameter for GUIs."
             },
             "ld_min_rad": {
@@ -257,7 +261,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "ld_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "ld_bytscl": {

@@ -30,7 +30,7 @@ import sys
 from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt
 from PyQt5.QtGui import QIcon, QMovie
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel
-from qgis.core import QgsProject, QgsRasterLayer
+from qgis.core import QgsProject, QgsRasterLayer, QgsTask
 from osgeo import gdal
 
 # Initialize Qt resources from file resources.py
@@ -249,8 +249,7 @@ class QRVT:
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-
-        icon_path = ':/plugins/qrvt/icon.png'
+        icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__),"icon.png"))
         self.add_action(
             icon_path,
             text=self.tr(u'Relief Visualization Toolbox'),
@@ -267,7 +266,6 @@ class QRVT:
 
     def run(self):
         """Run method that performs all the real work"""
-
         self.load_raster_layers()
 
         # save to rast loc checkbox
@@ -678,9 +676,9 @@ class QRVT:
         index_combo_sim_sky_mod = self.dlg.combo_sim_sky_mod.findText(self.default.sim_sky_mod)
         if index_combo_sim_sky_mod >= 0:
             self.dlg.combo_sim_sky_mod.setCurrentIndex(index_combo_sim_sky_mod)
-        index_combo_sim_samp_pnts = self.dlg.combo_sim_samp_pnts.findText(str(self.default.sim_samp_pnts))
-        if index_combo_sim_samp_pnts >= 0:
-            self.dlg.combo_sim_samp_pnts.setCurrentIndex(index_combo_sim_samp_pnts)
+        index_combo_sim_nr_dir = self.dlg.combo_sim_nr_dir.findText(str(self.default.sim_nr_dir))
+        if index_combo_sim_nr_dir >= 0:
+            self.dlg.combo_sim_nr_dir.setCurrentIndex(index_combo_sim_nr_dir)
         index_combo_sim_shadow_dist = self.dlg.combo_sim_shadow_dist.findText(str(self.default.sim_shadow_dist))
         if index_combo_sim_shadow_dist >= 0:
             self.dlg.combo_sim_shadow_dist.setCurrentIndex(index_combo_sim_shadow_dist)
@@ -738,7 +736,7 @@ class QRVT:
         default.neg_opns_compute = int(self.dlg.group_openess_neg.isChecked())
         default.sim_compute = int(self.dlg.group_illumination.isChecked())
         default.sim_sky_mod = str(self.dlg.combo_sim_sky_mod.currentText())
-        default.sim_samp_pnts = int(self.dlg.combo_sim_samp_pnts.currentText())
+        default.sim_nr_dir = int(self.dlg.combo_sim_nr_dir.currentText())
         default.sim_shadow_dist = int(self.dlg.combo_sim_shadow_dist.currentText())
         default.ld_compute = int(self.dlg.group_local_dominance.isChecked())
         default.ld_min_rad = int(self.dlg.line_ld_min_rad.text())
@@ -909,7 +907,6 @@ class QRVT:
         """Compute Blended image from set parameters (in blender dlg). (blend images button clicked)"""
         load_screen = LoadingScreen()
         load_screen.start_animation()
-
         selected_input_rasters = self.dlg.select_input_files.checkedItems()
         for raster_name in selected_input_rasters:  # loop trough all selected rasters
             start_time = time.time()

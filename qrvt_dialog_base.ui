@@ -185,8 +185,8 @@ QGroupBox
        <rect>
         <x>180</x>
         <y>30</y>
-        <width>191</width>
-        <height>22</height>
+        <width>226</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -216,7 +216,7 @@ QGroupBox
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="combo_sim_samp_pnts">
+        <widget class="QComboBox" name="combo_sim_nr_dir">
          <property name="sizePolicy">
           <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
@@ -234,12 +234,27 @@ QGroupBox
          </property>
          <item>
           <property name="text">
-           <string>250</string>
+           <string>8</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>500</string>
+           <string>16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>32</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>64</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>128</string>
           </property>
          </item>
         </widget>
@@ -251,8 +266,8 @@ QGroupBox
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>151</width>
-        <height>22</height>
+        <width>152</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -323,8 +338,8 @@ QGroupBox
        <rect>
         <x>10</x>
         <y>60</y>
-        <width>281</width>
-        <height>22</height>
+        <width>330</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -405,8 +420,8 @@ QGroupBox
        <rect>
         <x>450</x>
         <y>30</y>
-        <width>101</width>
-        <height>21</height>
+        <width>115</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -453,7 +468,7 @@ QGroupBox
       <rect>
        <x>70</x>
        <y>0</y>
-       <width>241</width>
+       <width>254</width>
        <height>24</height>
       </rect>
      </property>
@@ -557,8 +572,8 @@ QGroupBox
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>181</width>
-        <height>22</height>
+        <width>204</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -643,8 +658,8 @@ QGroupBox
        <rect>
         <x>210</x>
         <y>30</y>
-        <width>191</width>
-        <height>22</height>
+        <width>209</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -729,8 +744,8 @@ QGroupBox
        <rect>
         <x>450</x>
         <y>30</y>
-        <width>101</width>
-        <height>20</height>
+        <width>115</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -912,8 +927,8 @@ QGroupBox
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>201</width>
-        <height>22</height>
+        <width>231</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -986,8 +1001,8 @@ QGroupBox
        <rect>
         <x>230</x>
         <y>60</y>
-        <width>181</width>
-        <height>22</height>
+        <width>223</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1064,7 +1079,7 @@ QGroupBox
         <x>10</x>
         <y>60</y>
         <width>201</width>
-        <height>22</height>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1149,8 +1164,8 @@ QGroupBox
        <rect>
         <x>450</x>
         <y>30</y>
-        <width>101</width>
-        <height>21</height>
+        <width>115</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1276,8 +1291,8 @@ QGroupBox
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>241</width>
-        <height>22</height>
+        <width>276</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1362,8 +1377,8 @@ QGroupBox
        <rect>
         <x>450</x>
         <y>30</y>
-        <width>101</width>
-        <height>21</height>
+        <width>115</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1450,7 +1465,7 @@ QGroupBox
         <x>10</x>
         <y>30</y>
         <width>171</width>
-        <height>22</height>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1526,8 +1541,8 @@ QGroupBox
        <rect>
         <x>450</x>
         <y>30</y>
-        <width>101</width>
-        <height>21</height>
+        <width>115</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1631,8 +1646,8 @@ QGroupBox
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>171</width>
-        <height>22</height>
+        <width>176</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1717,8 +1732,8 @@ QGroupBox
        <rect>
         <x>210</x>
         <y>30</y>
-        <width>181</width>
-        <height>22</height>
+        <width>182</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1803,8 +1818,8 @@ QGroupBox
        <rect>
         <x>450</x>
         <y>30</y>
-        <width>101</width>
-        <height>21</height>
+        <width>115</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1930,8 +1945,8 @@ QGroupBox
        <rect>
         <x>10</x>
         <y>30</y>
-        <width>171</width>
-        <height>22</height>
+        <width>190</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -2016,8 +2031,8 @@ QGroupBox
        <rect>
         <x>210</x>
         <y>30</y>
-        <width>181</width>
-        <height>22</height>
+        <width>182</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -2102,8 +2117,8 @@ QGroupBox
        <rect>
         <x>450</x>
         <y>30</y>
-        <width>101</width>
-        <height>21</height>
+        <width>115</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -2189,8 +2204,8 @@ QGroupBox
        <rect>
         <x>230</x>
         <y>30</y>
-        <width>224</width>
-        <height>22</height>
+        <width>268</width>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -2276,7 +2291,7 @@ QGroupBox
         <x>10</x>
         <y>30</y>
         <width>201</width>
-        <height>22</height>
+        <height>24</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -2514,7 +2529,7 @@ QGroupBox
        <x>10</x>
        <y>220</y>
        <width>681</width>
-       <height>342</height>
+       <height>382</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="grid_layers" rowstretch="0,0,0,0,0,0" columnstretch="2,0,1,1,1,3,5" columnminimumwidth="2,0,1,1,1,3,5">
@@ -3729,7 +3744,7 @@ QGroupBox
     <rect>
      <x>160</x>
      <y>60</y>
-     <width>531</width>
+     <width>640</width>
      <height>25</height>
     </rect>
    </property>
