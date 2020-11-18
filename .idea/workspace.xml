@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="" />
+    <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,7 +43,7 @@
       <workItem from="1605101001684" duration="3479000" />
       <workItem from="1605162825228" duration="4120000" />
       <workItem from="1605528113593" duration="3101000" />
-      <workItem from="1605609011333" duration="2883000" />
+      <workItem from="1605609011333" duration="3469000" />
     </task>
     <servers />
   </component>
@@ -45,9 +51,9 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1605091101459">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1605613626418">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1605091101459" />
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1605613626418" />
   </component>
 </project>
