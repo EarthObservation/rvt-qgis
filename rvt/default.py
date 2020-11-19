@@ -217,7 +217,7 @@ class DefaultValues:
         self.sim_bytscl = ("percent", 0.025, 0)
         self.ld_bytscl = ("value", 0.5, 1.8)
         # multiprocessing
-        self.multiproc_size_limit = 10000 * 10000  # if arr size > multiproc_size_limit, it uses multiprocessing
+        self.multiproc_size_limit = 1000000 * 1000000  # if arr size > multiproc_size_limit, it uses multiprocessing
         self.multiproc_block_size = (4000, 4000)  # size of single block (x_size, y_size)
 
     def save_default_to_file(self, file_path=None):
