@@ -260,8 +260,10 @@ class QRVT:
         """Removes the plugin menu item and icon from QGIS GUI."""
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&Relief Visualization Toolbox'),
+                self.tr(u'Relief Visualization Toolbox'),
                 action)
+            self.iface.removePluginRasterMenu(self.tr(u'Relief Visualization Toolbox'),
+                                              action)
             self.iface.removeToolBarIcon(action)
 
     def run(self):
