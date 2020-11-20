@@ -9,7 +9,7 @@ class Provider(QgsProcessingProvider):
     def loadAlgorithms(self, *args, **kwargs):
         self.addAlgorithm(RVTHillshade())
         self.addAlgorithm(RVTMultiHillshade())
-        #self.addAlgorithm(RVTSlope())
+        self.addAlgorithm(RVTSlope())
 
     def id(self, *args, **kwargs):
         """The ID of your plugin, used for identifying the provider.
