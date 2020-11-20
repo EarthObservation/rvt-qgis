@@ -30,7 +30,7 @@ import sys
 from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt
 from PyQt5.QtGui import QIcon, QMovie
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel
-from qgis.core import QgsProject, QgsRasterLayer, QgsTask
+from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication
 from osgeo import gdal
 
 # Initialize Qt resources from file resources.py
@@ -41,6 +41,7 @@ from .qrvt_dialog import QRVTDialog
 sys.path.append(os.path.dirname(__file__))
 import rvt.default
 import rvt.blend
+from processing_provider.provider import Provider
 
 
 class LoadingScreen(QWidget):  # not working yet
@@ -158,6 +159,13 @@ class QRVT:
 
         self.load_default2dlg()  # load values in dialog
 
+        # processing provider
+        self.provider = None
+
+    def initProcessing(self):
+        self.provider = Provider()
+        QgsApplication.processingRegistry().addProvider(self.provider)
+
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -255,13 +263,14 @@ class QRVT:
             text=self.tr(u'Relief Visualization Toolbox'),
             callback=self.run,
             parent=self.iface.mainWindow())
+        self.initProcessing()
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
+        QgsApplication.processingRegistry().removeProvider(self.provider)
         for action in self.actions:
-            self.iface.removePluginMenu(
-                self.tr(u'&Relief Visualization Toolbox'),
-                action)
+            self.iface.removePluginRasterMenu(self.menu,
+                                              action)
             self.iface.removeToolBarIcon(action)
 
     def run(self):

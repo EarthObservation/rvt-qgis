@@ -2,13 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_hillshade.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_slope.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pb_tool.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/pb_tool.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,7 +52,7 @@
       <workItem from="1605528113593" duration="3101000" />
       <workItem from="1605609011333" duration="3469000" />
       <workItem from="1605769427366" duration="4224000" />
-      <workItem from="1605854454116" duration="1227000" />
+      <workItem from="1605854454116" duration="17672000" />
     </task>
     <servers />
   </component>
