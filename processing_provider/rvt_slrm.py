@@ -13,18 +13,16 @@ import rvt.default
 import rvt.vis
 
 
-class RVTSlope(QgsProcessingAlgorithm):
+class RVTSlrm(QgsProcessingAlgorithm):
     """
-    RVT Slope gradient.
+    RVT Simple local relief model.
     """
     # processing function parameters
     INPUT = 'INPUT'
     VE_FACTOR = 'VE_FACTOR'
-    UNIT = "UNIT"
+    RADIUS = "RADIUS"
     OUTPUT = 'OUTPUT'
 
-    units_options = ["degree", "radian", "percent"]
-    
     def tr(self, string):
         """
         Returns a translatable string with the self.tr() function.
@@ -32,7 +30,7 @@ class RVTSlope(QgsProcessingAlgorithm):
         return QCoreApplication.translate('Processing', string)
 
     def createInstance(self):
-        return RVTSlope()
+        return RVTSlrm()
 
     def name(self):
         """
@@ -42,14 +40,14 @@ class RVTSlope(QgsProcessingAlgorithm):
         lowercase alphanumeric characters only and no spaces or other
         formatting characters.
         """
-        return 'rvt_slope'
+        return 'rvt_slrm'
 
     def displayName(self):
         """
         Returns the translated algorithm name, which should be used for any
         user-visible display of the algorithm name.
         """
-        return self.tr('RVT Slope')
+        return self.tr('RVT Simplified local relief model')
 
     def shortHelpString(self):
         """
@@ -57,7 +55,8 @@ class RVTSlope(QgsProcessingAlgorithm):
         should provide a basic description about what the algorithm does and the
         parameters and outputs associated with it..
         """
-        return self.tr("Relief visualization toolbox, Slope. Calculates slope gradient.")
+        return self.tr("Relief visualization toolbox, Simplified local relief model. Calculates Simplified local"
+                       " relief model.")
 
     def initAlgorithm(self, config=None):
         """
@@ -82,11 +81,13 @@ class RVTSlope(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
-            QgsProcessingParameterEnum(
-                name="UNIT",
-                description="Output units",
-                options=self.units_options,
-                defaultValue="degree"
+            QgsProcessingParameterNumber(
+                name="RADIUS",
+                description="Radius for trend assessment [pixels]",
+                type=QgsProcessingParameterNumber.Integer,
+                defaultValue=20,
+                minValue=10,
+                maxValue=50
             )
         )
         self.addParameter(
@@ -111,12 +112,11 @@ class RVTSlope(QgsProcessingAlgorithm):
             self.VE_FACTOR,
             context
         ))
-        unit_enum = int(self.parameterAsEnum(
+        radius = int(self.parameterAsInt(
             parameters,
-            self.UNIT,
+            self.RADIUS,
             context
         ))
-        unit = self.units_options[unit_enum]
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -129,8 +129,7 @@ class RVTSlope(QgsProcessingAlgorithm):
         resolution = dict_arr_dem["resolution"]  # (x_res, y_res)
         dem_arr = dict_arr_dem["array"]
 
-        visualization_arr = rvt.vis.slope_aspect(dem=dem_arr, resolution_x=resolution[0], resolution_y=resolution[1],
-                                                 output_units=unit, ve_factor=ve_factor)["slope"]
+        visualization_arr = rvt.vis.slrm(dem=dem_arr, radius_cell=radius, ve_factor=ve_factor)
         rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                 out_raster_arr=visualization_arr, e_type=6)
 

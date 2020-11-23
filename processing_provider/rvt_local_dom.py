@@ -13,18 +13,19 @@ import rvt.default
 import rvt.vis
 
 
-class RVTSlope(QgsProcessingAlgorithm):
+class RVTLocalDom(QgsProcessingAlgorithm):
     """
-    RVT Slope gradient.
+    RVT Local dominance.
     """
     # processing function parameters
     INPUT = 'INPUT'
     VE_FACTOR = 'VE_FACTOR'
-    UNIT = "UNIT"
+    MIN_RADIUS = "MIN_RADIUS"
+    MAX_RADIUS = "MAX_RADIUS"
+    ANGULAR_RES = "ANGULAR_RES"
+    OBSERVER_H = "OBSERVER_H"
     OUTPUT = 'OUTPUT'
 
-    units_options = ["degree", "radian", "percent"]
-    
     def tr(self, string):
         """
         Returns a translatable string with the self.tr() function.
@@ -32,7 +33,7 @@ class RVTSlope(QgsProcessingAlgorithm):
         return QCoreApplication.translate('Processing', string)
 
     def createInstance(self):
-        return RVTSlope()
+        return RVTLocalDom()
 
     def name(self):
         """
@@ -42,14 +43,14 @@ class RVTSlope(QgsProcessingAlgorithm):
         lowercase alphanumeric characters only and no spaces or other
         formatting characters.
         """
-        return 'rvt_slope'
+        return 'rvt_ld'
 
     def displayName(self):
         """
         Returns the translated algorithm name, which should be used for any
         user-visible display of the algorithm name.
         """
-        return self.tr('RVT Slope')
+        return self.tr('RVT Local dominance')
 
     def shortHelpString(self):
         """
@@ -57,7 +58,7 @@ class RVTSlope(QgsProcessingAlgorithm):
         should provide a basic description about what the algorithm does and the
         parameters and outputs associated with it..
         """
-        return self.tr("Relief visualization toolbox, Slope. Calculates slope gradient.")
+        return self.tr("Relief visualization toolbox, Local dominance. Calculates Local dominance.")
 
     def initAlgorithm(self, config=None):
         """
@@ -82,11 +83,43 @@ class RVTSlope(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
-            QgsProcessingParameterEnum(
-                name="UNIT",
-                description="Output units",
-                options=self.units_options,
-                defaultValue="degree"
+            QgsProcessingParameterNumber(
+                name="MIN_RADIUS",
+                description="Minimum radius [pixels]",
+                type=QgsProcessingParameterNumber.Integer,
+                defaultValue=10,
+                minValue=0,
+                maxValue=100
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="MAX_RADIUS",
+                description="Maximum radius [pixels]",
+                type=QgsProcessingParameterNumber.Integer,
+                defaultValue=20,
+                minValue=0,
+                maxValue=100
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="ANGULAR_RES",
+                description="Number of angular directions",
+                type=QgsProcessingParameterNumber.Integer,
+                defaultValue=15,
+                minValue=4,
+                maxValue=32
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="OBSERVER_H",
+                description="Height at which we observe the terrain",
+                type=QgsProcessingParameterNumber.Double,
+                defaultValue=1.7,
+                minValue=0.5,
+                maxValue=20
             )
         )
         self.addParameter(
@@ -111,12 +144,26 @@ class RVTSlope(QgsProcessingAlgorithm):
             self.VE_FACTOR,
             context
         ))
-        unit_enum = int(self.parameterAsEnum(
+        min_rad = int(self.parameterAsInt(
             parameters,
-            self.UNIT,
+            self.MIN_RADIUS,
             context
         ))
-        unit = self.units_options[unit_enum]
+        max_rad = int(self.parameterAsInt(
+            parameters,
+            self.MAX_RADIUS,
+            context
+        ))
+        angular_res = int(self.parameterAsInt(
+            parameters,
+            self.ANGULAR_RES,
+            context
+        ))
+        observer_h = float(self.parameterAsDouble(
+            parameters,
+            self.OBSERVER_H,
+            context
+        ))
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -129,8 +176,9 @@ class RVTSlope(QgsProcessingAlgorithm):
         resolution = dict_arr_dem["resolution"]  # (x_res, y_res)
         dem_arr = dict_arr_dem["array"]
 
-        visualization_arr = rvt.vis.slope_aspect(dem=dem_arr, resolution_x=resolution[0], resolution_y=resolution[1],
-                                                 output_units=unit, ve_factor=ve_factor)["slope"]
+        visualization_arr = rvt.vis.local_dominance(dem=dem_arr, min_rad=min_rad, max_rad=max_rad,
+                                                    angular_res=angular_res, observer_height=observer_h,
+                                                    ve_factor=ve_factor)
         rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                 out_raster_arr=visualization_arr, e_type=6)
 

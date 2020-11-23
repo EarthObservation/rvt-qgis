@@ -3,13 +3,25 @@ from qgis.core import QgsProcessingProvider
 from processing_provider.rvt_hillshade import RVTHillshade
 from processing_provider.rvt_multi_hillshade import RVTMultiHillshade
 from processing_provider.rvt_slope import RVTSlope
+from processing_provider.rvt_slrm import RVTSlrm
+from processing_provider.rvt_svf import RVTSvf
+from processing_provider.rvt_asvf import RVTASvf
+from processing_provider.rvt_opns import RVTOpns
+from processing_provider.rvt_sky_illum import RVTSim
+from processing_provider.rvt_local_dom import RVTLocalDom
 
 
 class Provider(QgsProcessingProvider):
     def loadAlgorithms(self, *args, **kwargs):
         self.addAlgorithm(RVTHillshade())
         self.addAlgorithm(RVTMultiHillshade())
-        #self.addAlgorithm(RVTSlope())
+        self.addAlgorithm(RVTSlope())
+        self.addAlgorithm(RVTSlrm())
+        self.addAlgorithm(RVTSvf())
+        self.addAlgorithm(RVTASvf())
+        self.addAlgorithm(RVTOpns())
+        self.addAlgorithm(RVTSim())
+        self.addAlgorithm(RVTLocalDom())
 
     def id(self, *args, **kwargs):
         """The ID of your plugin, used for identifying the provider.

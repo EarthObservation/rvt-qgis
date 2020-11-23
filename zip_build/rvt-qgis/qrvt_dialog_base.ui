@@ -283,7 +283,7 @@ QGroupBox
               <x>0</x>
               <y>0</y>
               <width>914</width>
-              <height>759</height>
+              <height>751</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -407,7 +407,7 @@ QGroupBox
                  <property name="checked">
                   <bool>true</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,1,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0,2,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_49">
                     <item>
@@ -664,7 +664,7 @@ QGroupBox
                  <property name="checked">
                   <bool>true</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,1,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0,2,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_51">
                     <item>
@@ -921,7 +921,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="1,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="0,2,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_47">
                     <item>
@@ -1099,7 +1099,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="0,2,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_46">
                     <item>
@@ -2203,7 +2203,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="1,1,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,0,2,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_40">
                     <item>
@@ -2428,7 +2428,7 @@ QGroupBox
                 </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,2,1">
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_54">
                    <item>

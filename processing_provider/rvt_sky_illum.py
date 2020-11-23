@@ -13,18 +13,22 @@ import rvt.default
 import rvt.vis
 
 
-class RVTSlope(QgsProcessingAlgorithm):
+class RVTSim(QgsProcessingAlgorithm):
     """
-    RVT Slope gradient.
+    RVT Sky illumination.
     """
     # processing function parameters
     INPUT = 'INPUT'
     VE_FACTOR = 'VE_FACTOR'
-    UNIT = "UNIT"
+    SKY_MODEL = "SKY_MODEL"
+    NUM_DIRECTIONS = "NUM_DIRECTIONS"
+    SHADOW_DIST = "SHADOW_DIST"
+    SHADOW_AZIMUTH = "SHADOW_AZIMUTH"
+    SHADOW_ELEVATION = "SHADOW_ELEVATION"
     OUTPUT = 'OUTPUT'
 
-    units_options = ["degree", "radian", "percent"]
-    
+    sky_model_options = ["overcast", "uniform"]
+
     def tr(self, string):
         """
         Returns a translatable string with the self.tr() function.
@@ -32,7 +36,7 @@ class RVTSlope(QgsProcessingAlgorithm):
         return QCoreApplication.translate('Processing', string)
 
     def createInstance(self):
-        return RVTSlope()
+        return RVTSim()
 
     def name(self):
         """
@@ -42,14 +46,14 @@ class RVTSlope(QgsProcessingAlgorithm):
         lowercase alphanumeric characters only and no spaces or other
         formatting characters.
         """
-        return 'rvt_slope'
+        return 'rvt_sim'
 
     def displayName(self):
         """
         Returns the translated algorithm name, which should be used for any
         user-visible display of the algorithm name.
         """
-        return self.tr('RVT Slope')
+        return self.tr('RVT Sky illumination')
 
     def shortHelpString(self):
         """
@@ -57,7 +61,7 @@ class RVTSlope(QgsProcessingAlgorithm):
         should provide a basic description about what the algorithm does and the
         parameters and outputs associated with it..
         """
-        return self.tr("Relief visualization toolbox, Slope. Calculates slope gradient.")
+        return self.tr("Relief visualization toolbox, Sky illumination. Calculates Sky illumination.")
 
     def initAlgorithm(self, config=None):
         """
@@ -83,10 +87,50 @@ class RVTSlope(QgsProcessingAlgorithm):
         )
         self.addParameter(
             QgsProcessingParameterEnum(
-                name="UNIT",
-                description="Output units",
-                options=self.units_options,
-                defaultValue="degree"
+                name="SKY_MODEL",
+                description="Sky model",
+                options=self.sky_model_options,
+                defaultValue="overcast"
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="NUM_DIRECTIONS",
+                description="Number of horizon search directions",
+                type=QgsProcessingParameterNumber.Integer,
+                defaultValue=32,
+                minValue=8,
+                maxValue=128
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="SHADOW_DIST",
+                description="Max shadow modeling distance",
+                type=QgsProcessingParameterNumber.Integer,
+                defaultValue=100,
+                minValue=10,
+                maxValue=1000
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="SHADOW_AZIMUTH",
+                description="Shadow azimuth",
+                type=QgsProcessingParameterNumber.Double,
+                defaultValue=315,
+                minValue=0,
+                maxValue=360
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="SHADOW_ELEVATION",
+                description="Shadow elevation",
+                type=QgsProcessingParameterNumber.Double,
+                defaultValue=35,
+                minValue=0,
+                maxValue=90
             )
         )
         self.addParameter(
@@ -111,12 +155,32 @@ class RVTSlope(QgsProcessingAlgorithm):
             self.VE_FACTOR,
             context
         ))
-        unit_enum = int(self.parameterAsEnum(
+        sky_model_enum = int(self.parameterAsEnum(
             parameters,
-            self.UNIT,
+            self.SKY_MODEL,
             context
         ))
-        unit = self.units_options[unit_enum]
+        sky_model = self.sky_model_options[sky_model_enum]
+        nr_dir = int(self.parameterAsInt(
+            parameters,
+            self.NUM_DIRECTIONS,
+            context
+        ))
+        max_fine_rad = float(self.parameterAsInt(
+            parameters,
+            self.SHADOW_DIST,
+            context
+        ))
+        shadow_az = float(self.parameterAsDouble(
+            parameters,
+            self.SHADOW_AZIMUTH,
+            context
+        ))
+        shadow_el = float(self.parameterAsDouble(
+            parameters,
+            self.SHADOW_ELEVATION,
+            context
+        ))
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -129,8 +193,10 @@ class RVTSlope(QgsProcessingAlgorithm):
         resolution = dict_arr_dem["resolution"]  # (x_res, y_res)
         dem_arr = dict_arr_dem["array"]
 
-        visualization_arr = rvt.vis.slope_aspect(dem=dem_arr, resolution_x=resolution[0], resolution_y=resolution[1],
-                                                 output_units=unit, ve_factor=ve_factor)["slope"]
+        visualization_arr = rvt.vis.sky_illumination(dem=dem_arr, resolution=resolution[0], sky_model=sky_model,
+                                                     max_fine_radius=max_fine_rad, num_directions=nr_dir,
+                                                     ve_factor=ve_factor,
+                                                     compute_shadow=True, shadow_az=shadow_az, shadow_el=shadow_el)
         rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                 out_raster_arr=visualization_arr, e_type=6)
 

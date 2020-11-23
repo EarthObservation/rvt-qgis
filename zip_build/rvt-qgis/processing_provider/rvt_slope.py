@@ -23,6 +23,8 @@ class RVTSlope(QgsProcessingAlgorithm):
     UNIT = "UNIT"
     OUTPUT = 'OUTPUT'
 
+    units_options = ["degree", "radian", "percent"]
+    
     def tr(self, string):
         """
         Returns a translatable string with the self.tr() function.
@@ -83,11 +85,10 @@ class RVTSlope(QgsProcessingAlgorithm):
             QgsProcessingParameterEnum(
                 name="UNIT",
                 description="Output units",
-                options=unit_options,
+                options=self.units_options,
                 defaultValue="degree"
             )
         )
-
         self.addParameter(
             QgsProcessingParameterRasterDestination(
                 self.OUTPUT,
@@ -110,19 +111,18 @@ class RVTSlope(QgsProcessingAlgorithm):
             self.VE_FACTOR,
             context
         ))
-        print(parameters)
-        # unit_enum = int(self.parameterAsEnum(
-        #     parameters,
-        #     self.UNIT,
-        #     context
-        # ))
-        # unit = self.unit_options[unit_enum]
+        unit_enum = int(self.parameterAsEnum(
+            parameters,
+            self.UNIT,
+            context
+        ))
+        unit = self.units_options[unit_enum]
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
             context,
         ))
-        #print(unit)
+
         dem_path = str(dem_layer.source())
 
         dict_arr_dem = rvt.default.get_raster_arr(dem_path)
