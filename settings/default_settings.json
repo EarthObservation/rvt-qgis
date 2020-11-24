@@ -1,7 +1,7 @@
 {
     "default_settings": {
         "overwrite": {
-            "value": 0,
+            "value": 1,
             "description": "When saving visualisation functions and file already exists, if 0 it doesn't compute it, if 1 it overwrites it."
         },
         "ve_factor": {
@@ -10,7 +10,7 @@
         },
         "Hillshade": {
             "hs_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Hillshade. Parameter for GUIs."
             },
             "hs_sun_azi": {
@@ -38,7 +38,7 @@
         },
         "Multiple directions hillshade": {
             "mhs_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Multiple directions hillshade. Parameter for GUIs."
             },
             "mhs_nr_dir": {
@@ -66,7 +66,7 @@
         },
         "Slope gradient": {
             "slp_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Slope. Parameter for GUIs."
             },
             "slp_output_units": {
@@ -90,7 +90,7 @@
         },
         "Simple local relief model": {
             "slrm_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Simple local relief model. Parameter for GUIs."
             },
             "slrm_rad_cell": {
@@ -118,7 +118,7 @@
                 "description": "If compute Sky-View Factor. Parameter for GUIs."
             },
             "svf_n_dir": {
-                "value": 16,
+                "value": 32,
                 "description": "Number of directions."
             },
             "svf_r_max": {
@@ -146,7 +146,7 @@
         },
         "Anisotropic Sky-View Factor": {
             "asvf_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Anisotropic Sky-View Factor. Parameter for GUIs."
             },
             "asvf_dir": {
@@ -166,7 +166,7 @@
         },
         "Openness - Positive": {
             "pos_opns_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Openness - Positive. Parameter for GUIs."
             },
             "pos_opns_bytscl": {
@@ -178,7 +178,7 @@
         },
         "Openness - Negative": {
             "neg_opns_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Openness - Negative. Parameter for GUIs."
             },
             "neg_opns_save_float": {
@@ -198,7 +198,7 @@
         },
         "Sky illumination": {
             "sim_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Sky illumination. Parameter for GUIs."
             },
             "sim_sky_mod": {
@@ -210,11 +210,11 @@
                 "description": "If 1 it computes shadows, if 0 it doesn't."
             },
             "sim_shadow_dist": {
-                "value": 100,
+                "value": 50,
                 "description": "Max shadow modeling distance in pixels."
             },
             "sim_nr_dir": {
-                "value": 32,
+                "value": 16,
                 "description": "Number of directions to search for horizon"
             },
             "sim_shadow_az": {
@@ -242,7 +242,7 @@
         },
         "Local dominance": {
             "ld_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Local dominance. Parameter for GUIs."
             },
             "ld_min_rad": {

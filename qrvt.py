@@ -29,8 +29,9 @@ import os
 import sys
 from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt
 from PyQt5.QtGui import QIcon, QMovie
-from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel
-from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication
+from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
+    QProgressBar
+from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
 from osgeo import gdal
 
 # Initialize Qt resources from file resources.py
@@ -44,15 +45,14 @@ import rvt.blend
 from processing_provider.provider import Provider
 
 
-class LoadingScreen(QWidget):  # not working yet
-    """Loading screen animation. TODO: fix not working properly yet"""
-
-    def __init__(self):
+class LoadingScreen(QWidget):  # TODO: not working yet, fix it :(
+    """Loading screen animation."""
+    def __init__(self, gif_path):
         super().__init__()
         self.setFixedSize(200, 200)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
         self.label_animation = QLabel(self)
-        self.movie = QMovie("loading.gif")
+        self.movie = QMovie(gif_path)
         self.label_animation.setMovie(self.movie)
 
     def start_animation(self):
@@ -159,6 +159,9 @@ class QRVT:
 
         self.load_default2dlg()  # load values in dialog
 
+        # loading gif path
+        self.gif_path = os.path.join(self.plugin_dir, "loading.gif")
+
         # processing provider
         self.provider = None
 
@@ -257,7 +260,7 @@ class QRVT:
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-        icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__),"icon.png"))
+        icon_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "icon.png"))
         self.add_action(
             icon_path,
             text=self.tr(u'Relief Visualization Toolbox'),
@@ -292,7 +295,10 @@ class QRVT:
         # VISUALIZATIONS
         # start button pressed
         self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations())
+        # check float 8bit checkbox changes
         self.check_checkbox_float_8bit_change()
+        # check svf noise rem
+        self.dlg.check_svf_noise.stateChanged.connect(lambda: self.checkbox_svf_noise_check())
 
         # BLENDER
         # check if blender combination radio changed
@@ -339,6 +345,12 @@ class QRVT:
         """Save to button clicked"""
         save_dir = str(QFileDialog.getExistingDirectory(self.dlg, 'Select a directory'))
         self.dlg.line_save_loc.setText(save_dir)
+
+    def checkbox_svf_noise_check(self):
+        if self.dlg.check_svf_noise.isChecked():
+            self.dlg.combo_svf_noise.setEnabled(True)
+        else:
+            self.dlg.combo_svf_noise.setEnabled(False)
 
     def activate_all_visualizations(self):
         """Activate all visualizations."""
@@ -674,6 +686,7 @@ class QRVT:
                 index_combo_svf_noise = self.dlg.combo_svf_noise.findText("high")
             if index_combo_svf_noise >= 0:
                 self.dlg.combo_slp_output_units.setCurrentIndex(index_combo_svf_noise)
+        self.checkbox_svf_noise_check()
         self.dlg.group_anisotropic.setChecked(bool(self.default.asvf_compute))
         index_combo_asvf_level = self.dlg.combo_asvf_level.findText(str(self.default.asvf_level))
         if index_combo_asvf_level >= 0:
@@ -727,7 +740,7 @@ class QRVT:
         default.svf_compute = int(self.dlg.group_sky_view.isChecked())
         default.svf_n_dir = int(self.dlg.combo_svf_n_dir.currentText())
         default.svf_r_max = int(self.dlg.line_svf_r_max.text())
-        if self.dlg.check_svf_noise:
+        if not self.dlg.check_svf_noise.isChecked():
             default.svf_noise = 0
         elif self.dlg.combo_svf_noise.currentText() == str("low"):
             default.svf_noise = 1
@@ -770,16 +783,36 @@ class QRVT:
 
     def compute_visualizations(self):
         """Compute checked visualizations with set parameters. (start button clicked)"""
-        load_screen = LoadingScreen()
-        load_screen.start_animation()
-        self.checkbox_float_8bit_check()
+        loading_screen = LoadingScreen(self.gif_path)
+        loading_screen.start_animation()
+
+        self.checkbox_float_8bit_check()  # check for float and 8bit checkboxes
         self.load_dlg2default()  # fill rvt.default.DefaultValues(), vis fn parameters
         self.default.save_default_to_file(file_path=self.default_settings_path)
         add_to_qgis = self.dlg.check_addqgis.isChecked()
         selected_input_rasters = self.dlg.select_input_files.checkedItems()
-        for raster_name in selected_input_rasters:  # loop trough all selected rasters
-            raster_path = self.rvt_select_input[raster_name]
 
+        self.iface.messageBar().clearWidgets()  # clear all messages
+        if len(selected_input_rasters) == 0:  # no raster selected
+            self.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+            return 0
+
+        # add progress bar
+        progressMessageBar = self.iface.messageBar().createMessage("RVT", "Calculating visualizations...")
+        progress = QProgressBar()
+        progress.setMaximum(len(selected_input_rasters))
+        progress.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        progress.setRange(0, len(selected_input_rasters))
+        progress.setValue(0)
+        progressMessageBar.layout().addWidget(progress)
+        self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
+        progress.setFormat("Calculating visualizations...")
+
+        i_raster = 1
+        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+            progress.setFormat("Calculating visualizations... on raster {}".format(raster_name))
+
+            raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
                 save_dir = os.path.dirname(raster_path)
@@ -910,14 +943,42 @@ class QRVT:
                         self.remove_layer_by_path(local_dominance_8bit_path)  # remove layer from qgis if exists
                         self.iface.addRasterLayer(local_dominance_8bit_path, local_dominance_8bit_name)  # add layer
 
-        load_screen.stop_animation()
+            # change progress bar state
+            progress.setValue(i_raster)
+            i_raster += 1
+
+        loading_screen.stop_animation()
+
+        progress.setFormat("Visualizations calculated!".format(raster_name))
+        self.iface.messageBar().pushMessage("RVT", "Visualizations calculated!", level=Qgis.Success)
 
     def compute_blended_image(self):
         """Compute Blended image from set parameters (in blender dlg). (blend images button clicked)"""
-        load_screen = LoadingScreen()
-        load_screen.start_animation()
+        loading_screen = LoadingScreen(self.gif_path)
+        loading_screen.start_animation()
+
         selected_input_rasters = self.dlg.select_input_files.checkedItems()
+
+        self.iface.messageBar().clearWidgets()  # clear all messages
+        if len(selected_input_rasters) == 0:  # no raster selected
+            self.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+            return 0
+
+        # add progress bar
+        progressMessageBar = self.iface.messageBar().createMessage("RVT", "Calculating blended images...")
+        progress = QProgressBar()
+        progress.setMaximum(len(selected_input_rasters))
+        progress.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        progress.setRange(0, len(selected_input_rasters))
+        progress.setValue(0)
+        progressMessageBar.layout().addWidget(progress)
+        self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
+        progress.setFormat("Calculating visualizations...")
+
+        i_raster = 1
         for raster_name in selected_input_rasters:  # loop trough all selected rasters
+            progress.setFormat("Calculating blended image... on raster {}".format(raster_name))
+
             start_time = time.time()
             raster_path = self.rvt_select_input[raster_name]
 
@@ -970,7 +1031,14 @@ class QRVT:
                                              render_path=blend_img_path, terrain_sett_name=terrain_sett_name,
                                              default=self.default, custom_dir=save_dir, computation_time=compute_time)
 
-        load_screen.stop_animation()
+            # change progress bar state
+            progress.setValue(i_raster)
+            i_raster += 1
+
+        loading_screen.stop_animation()
+
+        progress.setFormat("Blended images calculated!".format(raster_name))
+        self.iface.messageBar().pushMessage("RVT", "Blended images calculated!", level=Qgis.Success)
 
     def load_terrains_settings2dlg(self):
         """Fills preset terrains settings combo box."""

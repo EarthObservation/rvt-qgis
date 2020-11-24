@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_asvf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_local_dom.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_opns.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_sky_illum.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_slrm.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_svf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/provider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_slope.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_slope.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/default_settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +56,8 @@
       <workItem from="1605609011333" duration="3469000" />
       <workItem from="1605769427366" duration="4224000" />
       <workItem from="1605854454116" duration="20277000" />
-      <workItem from="1606114579548" duration="6462000" />
+      <workItem from="1606114579548" duration="16832000" />
+      <workItem from="1606199940723" duration="8421000" />
     </task>
     <servers />
   </component>
@@ -69,5 +69,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1605875122083" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1606133163884">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1606133163884" />
   </component>
 </project>
