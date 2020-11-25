@@ -5,11 +5,37 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/default_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/!README.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/metadata.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/provider.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_asvf.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_hillshade.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_local_dom.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_multi_hillshade.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_opns.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_sky_illum.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_slope.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_slrm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/processing_provider/rvt_svf.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/resources.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/rvt/blend.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/rvt/blend_func.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/rvt/default.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/rvt/multiproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/rvt/vis.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/blender_custom_layers.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/blender_file_example.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/default_blender_combinations.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/default_settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/settings/default_terrains_settings.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +83,8 @@
       <workItem from="1605769427366" duration="4224000" />
       <workItem from="1605854454116" duration="20277000" />
       <workItem from="1606114579548" duration="16832000" />
-      <workItem from="1606199940723" duration="8421000" />
+      <workItem from="1606199940723" duration="9037000" />
+      <workItem from="1606288904904" duration="1159000" />
     </task>
     <servers />
   </component>

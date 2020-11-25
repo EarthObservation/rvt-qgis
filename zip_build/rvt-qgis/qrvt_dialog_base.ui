@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>960</width>
+    <width>980</width>
     <height>905</height>
    </rect>
   </property>
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>750</width>
+    <width>800</width>
     <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>2100</width>
-    <height>2520</height>
+    <width>1000</width>
+    <height>1000</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -101,13 +101,13 @@ QGroupBox
        </property>
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>600</width>
          <height>22</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>16777215</width>
+         <width>10000</width>
          <height>22</height>
         </size>
        </property>
@@ -132,7 +132,7 @@ QGroupBox
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,1,0,0">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1,1,0">
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
@@ -245,13 +245,13 @@ QGroupBox
          </property>
          <property name="minimumSize">
           <size>
-           <width>280</width>
+           <width>300</width>
            <height>22</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>450</width>
+           <width>2000</width>
            <height>22</height>
           </size>
          </property>
@@ -291,12 +291,12 @@ QGroupBox
           <enum>Qt::Horizontal</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Minimum</enum>
+          <enum>QSizePolicy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>15</width>
-           <height>10</height>
+           <width>10</width>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -327,6 +327,18 @@ QGroupBox
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
           <widget class="QScrollArea" name="scrollArea">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>935</width>
+             <height>1000</height>
+            </size>
+           </property>
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
@@ -335,7 +347,7 @@ QGroupBox
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>914</width>
+              <width>916</width>
               <height>760</height>
              </rect>
             </property>
@@ -354,13 +366,13 @@ QGroupBox
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>140</width>
+                     <width>150</width>
                      <height>22</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>140</width>
+                     <width>150</width>
                      <height>22</height>
                     </size>
                    </property>
@@ -411,9 +423,12 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>40</width>
+                     <width>682</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -431,13 +446,13 @@ QGroupBox
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -472,7 +487,7 @@ QGroupBox
                  <property name="checked">
                   <bool>true</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0,0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_49">
                     <item>
@@ -485,13 +500,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>92</width>
+                        <width>132</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>92</width>
+                        <width>132</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -571,13 +586,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>100</width>
+                        <width>125</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>125</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -650,9 +665,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>346</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -757,13 +775,13 @@ QGroupBox
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -789,7 +807,7 @@ QGroupBox
                  <property name="checked">
                   <bool>true</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0,0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_51">
                     <item>
@@ -802,13 +820,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>105</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>105</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -888,13 +906,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>100</width>
+                        <width>125</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>125</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -967,9 +985,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>348</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1074,13 +1095,13 @@ QGroupBox
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -1106,7 +1127,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="0,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_19" stretch="0,0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_47">
                     <item>
@@ -1119,13 +1140,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>60</width>
+                        <width>85</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>60</width>
+                        <width>85</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1193,9 +1214,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>557</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1250,6 +1274,12 @@ QGroupBox
                         <height>20</height>
                        </size>
                       </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
+                      </property>
                       <property name="font">
                        <font>
                         <pointsize>8</pointsize>
@@ -1294,13 +1324,13 @@ QGroupBox
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -1326,7 +1356,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="0,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="0,0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_46">
                     <item>
@@ -1339,13 +1369,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>175</width>
+                        <width>200</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>175</width>
+                        <width>200</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1418,9 +1448,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>467</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1525,13 +1558,13 @@ QGroupBox
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -1560,7 +1593,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="0,0,0,0,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="0,0,0,0,0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_43">
                     <item>
@@ -1573,13 +1606,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>110</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>110</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1659,13 +1692,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>160</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
+                        <width>160</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1743,13 +1776,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>112</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>112</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1822,13 +1855,13 @@ QGroupBox
                     </property>
                     <property name="minimumSize">
                      <size>
-                      <width>90</width>
+                      <width>80</width>
                       <height>20</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>90</width>
+                      <width>80</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1852,9 +1885,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>8</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1959,13 +1995,13 @@ QGroupBox
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -1991,7 +2027,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="0,0,1">
+                 <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_53">
                     <item>
@@ -2004,13 +2040,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>100</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>100</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2080,13 +2116,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>170</width>
+                        <width>190</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>170</width>
+                        <width>190</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2159,9 +2195,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>430</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2176,20 +2215,20 @@ QGroupBox
                   <bool>true</bool>
                  </property>
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>52</height>
                   </size>
                  </property>
@@ -2224,20 +2263,20 @@ QGroupBox
                   <bool>true</bool>
                  </property>
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>52</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>52</height>
                   </size>
                  </property>
@@ -2272,20 +2311,20 @@ QGroupBox
                   <bool>true</bool>
                  </property>
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -2311,7 +2350,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="0,0,0,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="0,0,0,0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_2">
                     <item>
@@ -2324,13 +2363,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>200</width>
+                        <width>215</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>200</width>
+                        <width>205</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2410,13 +2449,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>55</width>
+                        <width>65</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>55</width>
+                        <width>60</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2486,13 +2525,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>130</width>
+                        <width>140</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>130</width>
+                        <width>140</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2570,9 +2609,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>64</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2587,6 +2629,18 @@ QGroupBox
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
                       </property>
                       <property name="font">
                        <font>
@@ -2608,6 +2662,18 @@ QGroupBox
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
                       </property>
                       <property name="font">
                        <font>
@@ -2646,20 +2712,20 @@ QGroupBox
                   <bool>true</bool>
                  </property>
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
+                   <width>895</width>
                    <height>65</height>
                   </size>
                  </property>
@@ -2688,7 +2754,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,0,2,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,0,0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_40">
                     <item>
@@ -2701,13 +2767,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>115</width>
+                        <width>135</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>115</width>
+                        <width>135</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2787,13 +2853,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>120</width>
+                        <width>140</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>120</width>
+                        <width>140</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2866,9 +2932,12 @@ QGroupBox
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
                     </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::Fixed</enum>
+                    </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>40</width>
+                      <width>328</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2883,6 +2952,18 @@ QGroupBox
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
                       </property>
                       <property name="font">
                        <font>
@@ -2904,6 +2985,18 @@ QGroupBox
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>20</height>
+                       </size>
                       </property>
                       <property name="font">
                        <font>
@@ -2937,7 +3030,20 @@ QGroupBox
                 </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,2,1">
+                <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,1,2,1,0">
+                 <item>
+                  <spacer name="horizontalSpacer_18">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_54">
                    <item>
@@ -3015,9 +3121,12 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>40</width>
+                     <width>400</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3096,6 +3205,19 @@ QGroupBox
                    </item>
                   </layout>
                  </item>
+                 <item>
+                  <spacer name="horizontalSpacer_24">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                 </layout>
                </item>
               </layout>
@@ -3121,8 +3243,8 @@ QGroupBox
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>914</width>
-              <height>760</height>
+              <width>934</width>
+              <height>757</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
@@ -3138,13 +3260,13 @@ QGroupBox
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>100</width>
+                   <width>120</width>
                    <height>20</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>100</width>
+                   <width>120</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -3168,13 +3290,13 @@ QGroupBox
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>125</width>
+                     <width>140</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>125</width>
+                     <width>140</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3196,13 +3318,13 @@ QGroupBox
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>125</width>
+                     <width>150</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>125</width>
+                     <width>150</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3291,9 +3413,12 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Expanding</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>40</width>
+                     <width>280</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3316,13 +3441,13 @@ QGroupBox
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>190</width>
+                     <width>225</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>190</width>
+                     <width>225</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3364,9 +3489,12 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Expanding</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>40</width>
+                     <width>550</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3378,6 +3506,9 @@ QGroupBox
                 <spacer name="verticalSpacer_5">
                  <property name="orientation">
                   <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -4902,10 +5033,13 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>20</width>
-                     <height>40</height>
+                     <height>10</height>
                     </size>
                    </property>
                   </spacer>
@@ -5146,9 +5280,12 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Expanding</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>40</width>
+                     <width>400</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -5159,9 +5296,12 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Expanding</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>40</width>
+                     <width>400</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -5177,8 +5317,14 @@ QGroupBox
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>80</width>
-                     <height>30</height>
+                     <width>100</width>
+                     <height>25</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>300</width>
+                     <height>100</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5191,10 +5337,13 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Expanding</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>20</width>
-                     <height>40</height>
+                     <height>100</height>
                     </size>
                    </property>
                   </spacer>
@@ -5203,6 +5352,9 @@ QGroupBox
                   <spacer name="verticalSpacer_2">
                    <property name="orientation">
                     <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Expanding</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>

@@ -27,10 +27,11 @@ import time
 import subprocess
 import os
 import sys
+import PyQt5
 from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt
 from PyQt5.QtGui import QIcon, QMovie
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
-    QProgressBar
+    QProgressBar, QApplication
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
 from osgeo import gdal
 
@@ -45,7 +46,15 @@ import rvt.blend
 from processing_provider.provider import Provider
 
 
-class LoadingScreen(QWidget):  # not working yet
+# high dpi scaling for screens with bigger resolution than 1920x1080
+if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+
+if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+
+
+class LoadingScreen(QWidget):  # TODO: not working yet, fix it :(
     """Loading screen animation."""
     def __init__(self, gif_path):
         super().__init__()
