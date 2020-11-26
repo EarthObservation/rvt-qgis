@@ -10,7 +10,7 @@
         },
         "Hillshade": {
             "hs_compute": {
-                "value": 0,
+                "value": 1,
                 "description": "If compute Hillshade. Parameter for GUIs."
             },
             "hs_sun_azi": {
@@ -66,11 +66,11 @@
         },
         "Slope gradient": {
             "slp_compute": {
-                "value": 0,
+                "value": 1,
                 "description": "If compute Slope. Parameter for GUIs."
             },
             "slp_output_units": {
-                "value": "degree",
+                "value": "percent",
                 "description": "Slope output units [radian, degree, percent]."
             },
             "slp_save_float": {
@@ -166,7 +166,7 @@
         },
         "Openness - Positive": {
             "pos_opns_compute": {
-                "value": 0,
+                "value": 1,
                 "description": "If compute Openness - Positive. Parameter for GUIs."
             },
             "pos_opns_bytscl": {

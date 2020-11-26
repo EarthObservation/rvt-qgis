@@ -500,13 +500,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>132</width>
+                        <width>122</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>132</width>
+                        <width>122</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -586,13 +586,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>125</width>
+                        <width>115</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>125</width>
+                        <width>115</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -670,7 +670,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>346</width>
+                      <width>366</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -820,13 +820,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>130</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>130</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -906,13 +906,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>125</width>
+                        <width>115</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>125</width>
+                        <width>115</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -990,7 +990,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>348</width>
+                      <width>368</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1140,13 +1140,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>85</width>
+                        <width>75</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>85</width>
+                        <width>75</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1219,7 +1219,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>557</width>
+                      <width>567</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1369,13 +1369,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>200</width>
+                        <width>190</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>200</width>
+                        <width>190</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1453,7 +1453,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>467</width>
+                      <width>477</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1606,13 +1606,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>130</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>130</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1692,13 +1692,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>160</width>
+                        <width>150</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>160</width>
+                        <width>150</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1776,13 +1776,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>130</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>130</width>
+                        <width>120</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -1855,13 +1855,13 @@ QGroupBox
                     </property>
                     <property name="minimumSize">
                      <size>
-                      <width>80</width>
+                      <width>90</width>
                       <height>20</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>80</width>
+                      <width>90</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1890,7 +1890,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>8</width>
+                      <width>28</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2040,13 +2040,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>120</width>
+                        <width>100</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>120</width>
+                        <width>100</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2116,13 +2116,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>190</width>
+                        <width>175</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>190</width>
+                        <width>175</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2200,7 +2200,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>430</width>
+                      <width>465</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2363,7 +2363,7 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>215</width>
+                        <width>205</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2449,7 +2449,7 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>65</width>
+                        <width>60</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2525,13 +2525,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>150</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
+                        <width>150</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2543,7 +2543,7 @@ QGroupBox
                        </font>
                       </property>
                       <property name="text">
-                       <string>Number of sampling points:</string>
+                       <string>Number search of directions:</string>
                       </property>
                      </widget>
                     </item>
@@ -2614,7 +2614,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>64</width>
+                      <width>69</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2767,13 +2767,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>135</width>
+                        <width>125</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>135</width>
+                        <width>125</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2853,13 +2853,13 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
@@ -2937,7 +2937,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>328</width>
+                      <width>348</width>
                       <height>20</height>
                      </size>
                     </property>

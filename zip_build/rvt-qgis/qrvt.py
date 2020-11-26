@@ -25,18 +25,28 @@
 import importlib
 import time
 import subprocess
+import threading
 import os
 import sys
 import PyQt5
-from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt
-from PyQt5.QtGui import QIcon, QMovie
+from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt, QThread, QRunnable,\
+    QThreadPool
+from PyQt5.QtGui import QIcon, QMovie, QPixmap, QPalette, QColor, QPainterPath
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
-    QProgressBar, QApplication
+    QProgressBar, QApplication, QMessageBox, QErrorMessage, QDialog
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
 from osgeo import gdal
 
 # Initialize Qt resources from file resources.py
 from .resources import *
+
+# high dpi scaling for screens with bigger resolution than 1920x1080
+if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+
+if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+
 # Import the code for the dialog
 from .qrvt_dialog import QRVTDialog
 
@@ -46,31 +56,29 @@ import rvt.blend
 from processing_provider.provider import Provider
 
 
-# high dpi scaling for screens with bigger resolution than 1920x1080
-if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
-    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-
-if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-
-
-class LoadingScreen(QWidget):  # TODO: not working yet, fix it :(
+class LoadingScreen:
     """Loading screen animation."""
     def __init__(self, gif_path):
-        super().__init__()
-        self.setFixedSize(200, 200)
-        self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
-        self.label_animation = QLabel(self)
+        self.dlg = QDialog()
+        self.dlg.setWindowTitle("Loading")
+        self.dlg.setWindowModality(False)
+        self.dlg.setFixedSize(200, 200)
+        self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
+        pal = QPalette()
+        role = QPalette.Background
+        pal.setColor(role, QColor(255, 255, 255))
+        self.dlg.setPalette(pal)
+        self.label_animation = QLabel(self.dlg)
         self.movie = QMovie(gif_path)
         self.label_animation.setMovie(self.movie)
 
     def start_animation(self):
         self.movie.start()
-        self.show()
+        self.dlg.show()
 
     def stop_animation(self):
         self.movie.stop()
-        self.close()
+        self.dlg.done(0)
 
 
 class QRVT:
@@ -481,7 +489,7 @@ class QRVT:
         terrain_settings.asvf_dir = self.default.asvf_dir
         terrain_settings.asvf_level = self.default.asvf_level
         terrain_settings.sim_sky_mod = self.default.sim_sky_mod
-        terrain_settings.sim_samp_pnts = self.default.sim_samp_pnts
+        terrain_settings.sim_nr_dir = self.default.sim_nr_dir
         terrain_settings.sim_shadow_dist = self.default.sim_shadow_dist
         terrain_settings.sim_shadow_az = self.default.sim_shadow_az
         terrain_settings.sim_shadow_el = self.default.sim_shadow_el
@@ -792,7 +800,7 @@ class QRVT:
 
     def compute_visualizations(self):
         """Compute checked visualizations with set parameters. (start button clicked)"""
-        loading_screen = LoadingScreen(self.gif_path)
+        loading_screen = LoadingScreen(gif_path=self.gif_path)
         loading_screen.start_animation()
 
         self.checkbox_float_8bit_check()  # check for float and 8bit checkboxes
