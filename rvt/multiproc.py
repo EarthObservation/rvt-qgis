@@ -182,62 +182,58 @@ def save_multiprocess_vis(dem_path, vis, default, custom_dir=None, save_float=Tr
         # parallel processes which are saving visualization blocks in output rasters
         if save_float:
             save_float_process = QgsTask.fromFunction(description="save_float_process",
-                                                      function=save_block_visualization, args=(vis_float_path,
-                                                                                               blocks_to_save_float,
-                                                                                               nr_bands_float))
+                                                      function=save_block_visualization, vis_path=vis_float_path,
+                                                      blocks_to_save=blocks_to_save_float, nr_bands=nr_bands_float)
             save_float_process.run()
         if save_8bit:
             save_8bit_process = QgsTask.fromFunction(description="save_8bit_process",
-                                                     function=save_block_visualization,
-                                                     args=(vis_8bit_path,
-                                                           blocks_to_save_8bit,
-                                                           nr_bands_8bit))
+                                                     function=save_block_visualization, vis_path=vis_float_path,
+                                                     blocks_to_save=blocks_to_save_float, nr_bands=nr_bands_float)
             save_8bit_process.run()
     else:  # vis == "sky-view factor default"
         if save_svf:
             if save_float:
                 save_svf_float_process = QgsTask.fromFunction(description="save_svf_float_process",
                                                               function=save_block_visualization,
-                                                              args=(vis_svf_float_path,
-                                                                    blocks_to_save_svf_float,
-                                                                    nr_bands_float))
+                                                              vis_path=vis_float_path,
+                                                              blocks_to_save=blocks_to_save_float,
+                                                              nr_bands=nr_bands_float)
                 save_svf_float_process.run()
             if save_8bit:
                 save_svf_8bit_process = QgsTask.fromFunction(description="save_svf_8bit_process",
-                                                             function=save_block_visualization,
-                                                             args=(vis_svf_8bit_path,
-                                                                   blocks_to_save_svf_8bit,
-                                                                   nr_bands_8bit))
+                                                             function=save_block_visualization, vis_path=vis_float_path,
+                                                             blocks_to_save=blocks_to_save_float,
+                                                             nr_bands=nr_bands_float)
                 save_svf_8bit_process.run()
         if save_asvf:
             if save_float:
                 save_asvf_float_process = QgsTask.fromFunction(description="save_asvf_float_process",
                                                                function=save_block_visualization,
-                                                               args=(vis_asvf_float_path,
-                                                                     blocks_to_save_asvf_float,
-                                                                     nr_bands_float))
+                                                               vis_path=vis_float_path,
+                                                               blocks_to_save=blocks_to_save_float,
+                                                               nr_bands=nr_bands_float)
                 save_asvf_float_process.run()
             if save_8bit:
                 save_asvf_8bit_process = QgsTask.fromFunction(description="save_asvf_8bit_process",
                                                               function=save_block_visualization,
-                                                              args=(vis_asvf_8bit_path,
-                                                                    blocks_to_save_asvf_8bit,
-                                                                    nr_bands_8bit))
+                                                              vis_path=vis_float_path,
+                                                              blocks_to_save=blocks_to_save_float,
+                                                              nr_bands=nr_bands_float)
                 save_asvf_8bit_process.run()
         if save_pos_opns:
             if save_float:
                 save_pos_opns_float_process = QgsTask.fromFunction(description="save_pos_opns_float_process",
                                                                    function=save_block_visualization,
-                                                                   args=(vis_pos_opns_float_path,
-                                                                         blocks_to_save_pos_opns_float,
-                                                                         nr_bands_float))
+                                                                   vis_path=vis_float_path,
+                                                                   blocks_to_save=blocks_to_save_float,
+                                                                   nr_bands=nr_bands_float)
                 save_pos_opns_float_process.run()
             if save_8bit:
                 save_pos_opns_8bit_process = QgsTask.fromFunction(description="save_pos_opns_8bit_process",
                                                                   function=save_block_visualization,
-                                                                  args=(vis_pos_opns_8bit_path,
-                                                                        blocks_to_save_pos_opns_8bit,
-                                                                        nr_bands_8bit))
+                                                                  vis_path=vis_float_path,
+                                                                  blocks_to_save=blocks_to_save_float,
+                                                                  nr_bands=nr_bands_float)
                 save_pos_opns_8bit_process.run()
 
     # list with processes
@@ -542,6 +538,7 @@ def calculate_block_visualization(dem_block_arr, vis, default, x_res, y_res):
 def save_block_visualization(vis_path, blocks_to_save, nr_bands=1):
     """Takes first block from blocks_to_save list and saves it to output raster then
      removes it form list."""
+    print("notri")
     out_data_set = gdal.Open(vis_path, gdal.GA_Update)
     while 1:
         if len(blocks_to_save) > 0:

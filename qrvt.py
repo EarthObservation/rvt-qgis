@@ -29,7 +29,7 @@ import threading
 import os
 import sys
 import PyQt5
-from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt, QThread, QRunnable,\
+from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt, QThread, QRunnable, \
     QThreadPool
 from PyQt5.QtGui import QIcon, QMovie, QPixmap, QPalette, QColor, QPainterPath
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
@@ -58,6 +58,7 @@ from processing_provider.provider import Provider
 
 class LoadingScreen:
     """Loading screen animation."""
+
     def __init__(self, gif_path):
         self.dlg = QDialog()
         self.dlg.setWindowTitle("Loading")
@@ -181,6 +182,12 @@ class QRVT:
 
         # processing provider
         self.provider = None
+
+        # task manager
+        self.tm = QgsApplication.taskManager()
+
+        # is already calculating something
+        self.is_calculating = False
 
     def initProcessing(self):
         self.provider = Provider()
@@ -311,7 +318,7 @@ class QRVT:
 
         # VISUALIZATIONS
         # start button pressed
-        self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations())
+        self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations_clicked())
         # check float 8bit checkbox changes
         self.check_checkbox_float_8bit_change()
         # check svf noise rem
@@ -331,7 +338,7 @@ class QRVT:
         self.check_dlg_blender_layers_change()
 
         # blend images button clicked
-        self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image())
+        self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
 
         # show the dialog
         self.dlg.show()
@@ -798,11 +805,217 @@ class QRVT:
         default.ld_save_8bit = int(self.dlg.check_ld_8bit.isChecked())
         self.default = default
 
-    def compute_visualizations(self):
-        """Compute checked visualizations with set parameters. (start button clicked)"""
-        loading_screen = LoadingScreen(gif_path=self.gif_path)
-        loading_screen.start_animation()
+    class ComputeVisualizationsTask(QgsTask):
+        """Task (thread) for computing visualizations."""
+        def __init__(self, description, parent):
+            super().__init__(description)
+            self.parent = parent
+            self.loading_screen = LoadingScreen(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen.start_animation()  # start loading dlg
+            self.exception = None
+            self.no_raster = False
+            self.is_calculating = False
 
+        def run(self):
+            if self.parent.is_calculating:
+                self.is_calculating = True
+                return False
+            else:
+                self.parent.is_calculating = True
+                try:
+                    compute = self.parent.compute_visualizations()  # run compute visualizations
+                    if compute == "no raster selected":
+                        self.no_raster = True
+                        self.parent.is_calculating = False
+                        return False
+                    else:
+                        self.no_raster = False
+                        self.parent.is_calculating = False
+                        return True
+                except:  # something went wrong
+                    return False
+
+        def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
+            if result:  # if self.run returns True
+                add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
+                selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
+                # add saved/computed to qgis
+                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                    raster_path = self.parent.rvt_select_input[raster_name]
+                    # get directory to save in
+                    if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
+                        save_dir = os.path.dirname(raster_path)
+                    else:
+                        save_dir = self.parent.dlg.line_save_loc.text()
+
+                    if add_to_qgis:  # add calculated layers to Qgis
+                        # Slope
+                        if self.parent.default.slp_compute:
+                            if self.parent.default.slp_save_float:
+                                slope_name = self.parent.default.get_slope_file_name(raster_path)
+                                slope_path = os.path.abspath(os.path.join(save_dir, slope_name))
+                                self.parent.remove_layer_by_path(slope_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(slope_path, slope_name)  # add layer to qgis
+                            if self.parent.default.slp_save_8bit:
+                                slope_8bit_name = self.parent.default.get_slope_file_name(raster_path, bit8=True)
+                                slope_8bit_path = os.path.abspath(os.path.join(save_dir, slope_8bit_name))
+                                self.parent.remove_layer_by_path(slope_8bit_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(slope_8bit_path, slope_8bit_name)  # add layer to qgis
+                        # Hillshade
+                        if self.parent.default.hs_compute:
+                            if self.parent.default.hs_save_float:
+                                hillshade_name = self.parent.default.get_hillshade_file_name(raster_path)
+                                hillshade_path = os.path.abspath(os.path.join(save_dir, hillshade_name))
+                                self.parent.remove_layer_by_path(hillshade_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(hillshade_path, hillshade_name)  # add layer to qgis
+                            if self.parent.default.hs_save_8bit:
+                                hillshade_8bit_name = self.parent.default.get_hillshade_file_name(raster_path,
+                                                                                                  bit8=True)
+                                hillshade_8bit_path = os.path.abspath(os.path.join(save_dir, hillshade_8bit_name))
+                                self.parent.remove_layer_by_path(hillshade_8bit_path)  # remove layer if exists
+                                self.parent.iface.addRasterLayer(hillshade_8bit_path,
+                                                                 hillshade_8bit_name)  # add layer to qgis
+                        # Multiple direction hillshade
+                        if self.parent.default.mhs_compute:
+                            if self.parent.default.mhs_save_float:
+                                multi_hillshade_name = self.parent.default.get_multi_hillshade_file_name(raster_path)
+                                multi_hillshade_path = os.path.abspath(os.path.join(save_dir, multi_hillshade_name))
+                                self.parent.remove_layer_by_path(multi_hillshade_path)  # remove layer if exists
+                                self.parent.iface.addRasterLayer(multi_hillshade_path,
+                                                                 multi_hillshade_name)  # add layer to qgis
+                            if self.parent.default.mhs_save_8bit:
+                                multi_hillshade_8bit_name = self.parent.default.get_multi_hillshade_file_name(
+                                    raster_path,
+                                    bit8=True)
+                                multi_hillshade_8bit_path = os.path.abspath(
+                                    os.path.join(save_dir, multi_hillshade_8bit_name))
+                                self.parent.remove_layer_by_path(
+                                    multi_hillshade_8bit_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(multi_hillshade_8bit_path,
+                                                                 multi_hillshade_8bit_name)  # add to qgis
+                        # Simplified local relief model
+                        if self.parent.default.slrm_compute:
+                            if self.parent.default.slrm_save_float:
+                                slrm_name = self.parent.default.get_slrm_file_name(raster_path)
+                                slrm_path = os.path.abspath(os.path.join(save_dir, slrm_name))
+                                self.parent.remove_layer_by_path(slrm_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(slrm_path, slrm_name)  # add layer to qgis
+                            if self.parent.default.slrm_save_8bit:
+                                slrm_8bit_name = self.parent.default.get_slrm_file_name(raster_path, bit8=True)
+                                slrm_8bit_path = os.path.abspath(os.path.join(save_dir, slrm_8bit_name))
+                                self.parent.remove_layer_by_path(slrm_8bit_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(slrm_8bit_path, slrm_8bit_name)  # add layer to qgis
+                        # Sky-View factor, Anisotropic Sky-View factor, Positive Openness
+                        if self.parent.default.svf_compute or self.parent.default.asvf_compute or \
+                                self.parent.default.pos_opns_compute:
+                            if self.parent.default.svf_save_float:
+                                if self.parent.default.svf_compute:
+                                    svf_name = self.parent.default.get_svf_file_name(raster_path)
+                                    svf_path = os.path.abspath(os.path.join(save_dir, svf_name))
+                                    self.parent.remove_layer_by_path(svf_path)  # remove layer from qgis if exists
+                                    self.parent.iface.addRasterLayer(svf_path, svf_name)  # add layer to qgis
+                                if self.parent.default.asvf_compute:
+                                    asvf_name = self.parent.default.get_asvf_file_name(raster_path)
+                                    asvf_path = os.path.abspath(os.path.join(save_dir, asvf_name))
+                                    self.parent.remove_layer_by_path(asvf_path)  # remove layer from qgis if exists
+                                    self.parent.iface.addRasterLayer(asvf_path, asvf_name)  # add layer to qgis
+                                if self.parent.default.pos_opns_compute:
+                                    pos_opns_name = self.parent.default.get_opns_file_name(raster_path)
+                                    pos_opns_path = os.path.abspath(os.path.join(save_dir, pos_opns_name))
+                                    self.parent.remove_layer_by_path(pos_opns_path)  # remove layer from qgis if exists
+                                    self.parent.iface.addRasterLayer(pos_opns_path, pos_opns_name)  # add layer to qgis
+                            if self.parent.default.svf_save_8bit:
+                                if self.parent.default.svf_compute:
+                                    svf_8bit_name = self.parent.default.get_svf_file_name(raster_path, bit8=True)
+                                    svf_8bit_path = os.path.abspath(os.path.join(save_dir, svf_8bit_name))
+                                    self.parent.remove_layer_by_path(svf_8bit_path)  # remove layer from qgis if exists
+                                    self.parent.iface.addRasterLayer(svf_8bit_path, svf_8bit_name)  # add layer to qgis
+                                if self.parent.default.asvf_compute:
+                                    asvf_8bit_name = self.parent.default.get_asvf_file_name(raster_path, bit8=True)
+                                    asvf_8bit_path = os.path.abspath(os.path.join(save_dir, asvf_8bit_name))
+                                    self.parent.remove_layer_by_path(asvf_8bit_path)  # remove layer from qgis if exists
+                                    self.parent.iface.addRasterLayer(asvf_8bit_path,
+                                                                     asvf_8bit_name)  # add layer to qgis
+                                if self.parent.default.pos_opns_compute:
+                                    pos_opns_8bit_name = self.parent.default.get_opns_file_name(raster_path, bit8=True)
+                                    pos_opns_8bit_path = os.path.abspath(os.path.join(save_dir, pos_opns_8bit_name))
+                                    self.parent.remove_layer_by_path(
+                                        pos_opns_8bit_path)  # remove layer from qgis if exists
+                                    self.parent.iface.addRasterLayer(pos_opns_8bit_path,
+                                                                     pos_opns_8bit_name)  # add layer to qgis
+                        # Negative Openness
+                        if self.parent.default.neg_opns_compute:
+                            if self.parent.default.neg_opns_save_float:
+                                neg_opns_name = self.parent.default.get_neg_opns_file_name(raster_path)
+                                neg_opns_path = os.path.abspath(os.path.join(save_dir, neg_opns_name))
+                                self.parent.remove_layer_by_path(neg_opns_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(neg_opns_path, neg_opns_name)  # add layer to qgis
+                            if self.parent.default.neg_opns_save_8bit:
+                                neg_opns_8bit_name = self.parent.default.get_neg_opns_file_name(raster_path, bit8=True)
+                                neg_opns_8bit_path = os.path.abspath(os.path.join(save_dir, neg_opns_8bit_name))
+                                self.parent.remove_layer_by_path(neg_opns_8bit_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(neg_opns_8bit_path,
+                                                                 neg_opns_8bit_name)  # add layer to qgis
+                        # Sky illumination
+                        if self.parent.default.sim_compute:
+                            if self.parent.default.sim_save_float:
+                                sky_illumination_name = self.parent.default.get_sky_illumination_file_name(raster_path)
+                                sky_illumination_path = os.path.abspath(os.path.join(save_dir, sky_illumination_name))
+                                self.parent.remove_layer_by_path(
+                                    sky_illumination_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(sky_illumination_path,
+                                                                 sky_illumination_name)  # add layer to qgis
+                            if self.parent.default.sim_save_8bit:
+                                sky_illumination_8bit_name = self.parent.default.get_sky_illumination_file_name(
+                                    raster_path,
+                                    bit8=True)
+                                sky_illumination_8bit_path = os.path.abspath(
+                                    os.path.join(save_dir, sky_illumination_8bit_name))
+                                self.parent.remove_layer_by_path(
+                                    sky_illumination_8bit_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(sky_illumination_8bit_path,
+                                                                 sky_illumination_8bit_name)  # add layer
+                        # Local dominance
+                        if self.parent.default.ld_compute:
+                            if self.parent.default.ld_save_float:
+                                local_dominance_name = self.parent.default.get_local_dominance_file_name(raster_path)
+                                local_dominance_path = os.path.abspath(os.path.join(save_dir, local_dominance_name))
+                                self.parent.remove_layer_by_path(
+                                    local_dominance_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(local_dominance_path,
+                                                                 local_dominance_name)  # add layer to qgis
+                            if self.parent.default.ld_save_8bit:
+                                local_dominance_8bit_name = self.parent.default.get_local_dominance_file_name(
+                                    raster_path,
+                                    bit8=True)
+                                local_dominance_8bit_path = os.path.abspath(
+                                    os.path.join(save_dir, local_dominance_8bit_name))
+                                self.parent.remove_layer_by_path(local_dominance_8bit_path)  # remove layer from qgis
+                                # if exists
+                                self.parent.iface.addRasterLayer(local_dominance_8bit_path,
+                                                                 local_dominance_8bit_name)  # add layer
+                self.loading_screen.stop_animation()
+                self.parent.is_calculating = False
+                self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculated!", level=Qgis.Success)
+            else:  # if self.run returns False
+                self.loading_screen.stop_animation()
+                if self.is_calculating:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
+                                                               level=Qgis.Warning)
+                    self.is_calculating = False
+                elif self.no_raster:
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                else:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculation Failed!",
+                                                               level=Qgis.Critical)
+
+    def compute_visualizations_clicked(self):
+        """Start button clicked (Compute visualization button)."""
+        task = self.ComputeVisualizationsTask(description="Compute visualizations", parent=self)
+        self.tm.addTask(task)  # add task to task manager and start task
+
+    def compute_visualizations(self):
+        """Compute checked visualizations with set parameters."""
         self.checkbox_float_8bit_check()  # check for float and 8bit checkboxes
         self.load_dlg2default()  # fill rvt.default.DefaultValues(), vis fn parameters
         self.default.save_default_to_file(file_path=self.default_settings_path)
@@ -811,24 +1024,9 @@ class QRVT:
 
         self.iface.messageBar().clearWidgets()  # clear all messages
         if len(selected_input_rasters) == 0:  # no raster selected
-            self.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
-            return 0
+            return "no raster selected"
 
-        # add progress bar
-        progressMessageBar = self.iface.messageBar().createMessage("RVT", "Calculating visualizations...")
-        progress = QProgressBar()
-        progress.setMaximum(len(selected_input_rasters))
-        progress.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        progress.setRange(0, len(selected_input_rasters))
-        progress.setValue(0)
-        progressMessageBar.layout().addWidget(progress)
-        self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
-        progress.setFormat("Calculating visualizations...")
-
-        i_raster = 1
         for raster_name in selected_input_rasters:  # loop trough all selected rasters
-            progress.setFormat("Calculating visualizations... on raster {}".format(raster_name))
-
             raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -838,164 +1036,109 @@ class QRVT:
 
             # compute and save all visualizations
             self.default.save_visualizations(dem_path=raster_path, custom_dir=save_dir)
+            return True
 
-            # add saved/computed to qgis
-            if add_to_qgis:
-                # Slope
-                if self.default.slp_compute:
-                    if self.default.slp_save_float:
-                        slope_name = self.default.get_slope_file_name(raster_path)
-                        slope_path = os.path.abspath(os.path.join(save_dir, slope_name))
-                        self.remove_layer_by_path(slope_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(slope_path, slope_name)  # add layer to qgis
-                    if self.default.slp_save_8bit:
-                        slope_8bit_name = self.default.get_slope_file_name(raster_path, bit8=True)
-                        slope_8bit_path = os.path.abspath(os.path.join(save_dir, slope_8bit_name))
-                        self.remove_layer_by_path(slope_8bit_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(slope_8bit_path, slope_8bit_name)  # add layer to qgis
-                # Hillshade
-                if self.default.hs_compute:
-                    if self.default.hs_save_float:
-                        hillshade_name = self.default.get_hillshade_file_name(raster_path)
-                        hillshade_path = os.path.abspath(os.path.join(save_dir, hillshade_name))
-                        self.remove_layer_by_path(hillshade_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(hillshade_path, hillshade_name)  # add layer to qgis
-                    if self.default.hs_save_8bit:
-                        hillshade_8bit_name = self.default.get_hillshade_file_name(raster_path, bit8=True)
-                        hillshade_8bit_path = os.path.abspath(os.path.join(save_dir, hillshade_8bit_name))
-                        self.remove_layer_by_path(hillshade_8bit_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(hillshade_8bit_path, hillshade_8bit_name)  # add layer to qgis
-                # Multiple direction hillshade
-                if self.default.mhs_compute:
-                    if self.default.mhs_save_float:
-                        multi_hillshade_name = self.default.get_multi_hillshade_file_name(raster_path)
-                        multi_hillshade_path = os.path.abspath(os.path.join(save_dir, multi_hillshade_name))
-                        self.remove_layer_by_path(multi_hillshade_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(multi_hillshade_path, multi_hillshade_name)  # add layer to qgis
-                    if self.default.mhs_save_8bit:
-                        multi_hillshade_8bit_name = self.default.get_multi_hillshade_file_name(raster_path, bit8=True)
-                        multi_hillshade_8bit_path = os.path.abspath(os.path.join(save_dir, multi_hillshade_8bit_name))
-                        self.remove_layer_by_path(multi_hillshade_8bit_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(multi_hillshade_8bit_path, multi_hillshade_8bit_name)  # add to qgis
-                # Simplified local relief model
-                if self.default.slrm_compute:
-                    if self.default.slrm_save_float:
-                        slrm_name = self.default.get_slrm_file_name(raster_path)
-                        slrm_path = os.path.abspath(os.path.join(save_dir, slrm_name))
-                        self.remove_layer_by_path(slrm_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(slrm_path, slrm_name)  # add layer to qgis
-                    if self.default.slrm_save_8bit:
-                        slrm_8bit_name = self.default.get_slrm_file_name(raster_path, bit8=True)
-                        slrm_8bit_path = os.path.abspath(os.path.join(save_dir, slrm_8bit_name))
-                        self.remove_layer_by_path(slrm_8bit_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(slrm_8bit_path, slrm_8bit_name)  # add layer to qgis
-                # Sky-View factor, Anisotropic Sky-View factor, Positive Openness
-                if self.default.svf_compute or self.default.asvf_compute or self.default.pos_opns_compute:
-                    if self.default.svf_save_float:
-                        if self.default.svf_compute:
-                            svf_name = self.default.get_svf_file_name(raster_path)
-                            svf_path = os.path.abspath(os.path.join(save_dir, svf_name))
-                            self.remove_layer_by_path(svf_path)  # remove layer from qgis if exists
-                            self.iface.addRasterLayer(svf_path, svf_name)  # add layer to qgis
-                        if self.default.asvf_compute:
-                            asvf_name = self.default.get_asvf_file_name(raster_path)
-                            asvf_path = os.path.abspath(os.path.join(save_dir, asvf_name))
-                            self.remove_layer_by_path(asvf_path)  # remove layer from qgis if exists
-                            self.iface.addRasterLayer(asvf_path, asvf_name)  # add layer to qgis
-                        if self.default.pos_opns_compute:
-                            pos_opns_name = self.default.get_opns_file_name(raster_path)
-                            pos_opns_path = os.path.abspath(os.path.join(save_dir, pos_opns_name))
-                            self.remove_layer_by_path(pos_opns_path)  # remove layer from qgis if exists
-                            self.iface.addRasterLayer(pos_opns_path, pos_opns_name)  # add layer to qgis
-                    if self.default.svf_save_8bit:
-                        if self.default.svf_compute:
-                            svf_8bit_name = self.default.get_svf_file_name(raster_path, bit8=True)
-                            svf_8bit_path = os.path.abspath(os.path.join(save_dir, svf_8bit_name))
-                            self.remove_layer_by_path(svf_8bit_path)  # remove layer from qgis if exists
-                            self.iface.addRasterLayer(svf_8bit_path, svf_8bit_name)  # add layer to qgis
-                        if self.default.asvf_compute:
-                            asvf_8bit_name = self.default.get_asvf_file_name(raster_path, bit8=True)
-                            asvf_8bit_path = os.path.abspath(os.path.join(save_dir, asvf_8bit_name))
-                            self.remove_layer_by_path(asvf_8bit_path)  # remove layer from qgis if exists
-                            self.iface.addRasterLayer(asvf_8bit_path, asvf_8bit_name)  # add layer to qgis
-                        if self.default.pos_opns_compute:
-                            pos_opns_8bit_name = self.default.get_opns_file_name(raster_path, bit8=True)
-                            pos_opns_8bit_path = os.path.abspath(os.path.join(save_dir, pos_opns_8bit_name))
-                            self.remove_layer_by_path(pos_opns_8bit_path)  # remove layer from qgis if exists
-                            self.iface.addRasterLayer(pos_opns_8bit_path, pos_opns_8bit_name)  # add layer to qgis
-                # Negative Openness
-                if self.default.neg_opns_compute:
-                    if self.default.neg_opns_save_float:
-                        neg_opns_name = self.default.get_neg_opns_file_name(raster_path)
-                        neg_opns_path = os.path.abspath(os.path.join(save_dir, neg_opns_name))
-                        self.remove_layer_by_path(neg_opns_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(neg_opns_path, neg_opns_name)  # add layer to qgis
-                    if self.default.neg_opns_save_8bit:
-                        neg_opns_8bit_name = self.default.get_neg_opns_file_name(raster_path, bit8=True)
-                        neg_opns_8bit_path = os.path.abspath(os.path.join(save_dir, neg_opns_8bit_name))
-                        self.remove_layer_by_path(neg_opns_8bit_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(neg_opns_8bit_path, neg_opns_8bit_name)  # add layer to qgis
-                # Sky illumination
-                if self.default.sim_compute:
-                    if self.default.sim_save_float:
-                        sky_illumination_name = self.default.get_sky_illumination_file_name(raster_path)
-                        sky_illumination_path = os.path.abspath(os.path.join(save_dir, sky_illumination_name))
-                        self.remove_layer_by_path(sky_illumination_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(sky_illumination_path, sky_illumination_name)  # add layer to qgis
-                    if self.default.sim_save_8bit:
-                        sky_illumination_8bit_name = self.default.get_sky_illumination_file_name(raster_path, bit8=True)
-                        sky_illumination_8bit_path = os.path.abspath(os.path.join(save_dir, sky_illumination_8bit_name))
-                        self.remove_layer_by_path(sky_illumination_8bit_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(sky_illumination_8bit_path, sky_illumination_8bit_name)  # add layer
-                # Local dominance
-                if self.default.ld_compute:
-                    if self.default.ld_save_float:
-                        local_dominance_name = self.default.get_local_dominance_file_name(raster_path)
-                        local_dominance_path = os.path.abspath(os.path.join(save_dir, local_dominance_name))
-                        self.remove_layer_by_path(local_dominance_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(local_dominance_path, local_dominance_name)  # add layer to qgis
-                    if self.default.ld_save_8bit:
-                        local_dominance_8bit_name = self.default.get_local_dominance_file_name(raster_path, bit8=True)
-                        local_dominance_8bit_path = os.path.abspath(os.path.join(save_dir, local_dominance_8bit_name))
-                        self.remove_layer_by_path(local_dominance_8bit_path)  # remove layer from qgis if exists
-                        self.iface.addRasterLayer(local_dominance_8bit_path, local_dominance_8bit_name)  # add layer
+    class ComputeBlenderTask(QgsTask):
+        """Task (thread) for computing Blended image."""
+        def __init__(self, description, parent):
+            super().__init__(description)
+            self.parent = parent
+            self.loading_screen = LoadingScreen(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen.start_animation()  # start loading dlg
+            self.exception = None
+            self.no_raster = False
+            self.is_calculating = False
 
-            # change progress bar state
-            progress.setValue(i_raster)
-            i_raster += 1
+        def run(self):
+            if self.parent.is_calculating:
+                self.is_calculating = True
+                return False
+            else:
+                self.parent.is_calculating = True
+                try:
+                    compute = self.parent.compute_blended_image()  # run compute blended image
+                    if compute == "no raster selected":
+                        self.no_raster = True
+                        self.parent.is_calculating = False
+                        return False
+                    else:
+                        self.no_raster = False
+                        self.parent.is_calculating = False
+                        return True
+                except:  # something went wrong
+                    return False
 
-        loading_screen.stop_animation()
+        def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
+            if result:  # if self.run returns True
+                add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
+                selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
+                # add saved/computed to qgis
+                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                    raster_path = self.parent.rvt_select_input[raster_name]
+                    # get directory to save in
+                    if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
+                        save_dir = os.path.dirname(raster_path)
+                    else:
+                        save_dir = self.parent.dlg.line_save_loc.text()
 
-        progress.setFormat("Visualizations calculated!".format(raster_name))
-        self.iface.messageBar().pushMessage("RVT", "Visualizations calculated!", level=Qgis.Success)
+                    if self.parent.dlg.radio_archaeological.isChecked():
+                        blend_img_name = "{}_{}".format(raster_name, "archaeological")
+                        combination_name = "Archaeological (VAT) "
+                    elif self.parent.dlg.radio_prism_opns.isChecked():
+                        blend_img_name = "{}_{}".format(raster_name, "prismatic_opns")
+                        combination_name = "Prismatic openness"
+                    elif self.parent.dlg.radio_geomorph.isChecked():
+                        blend_img_name = "{}_{}".format(raster_name, "geomorph")
+                        combination_name = "Geomorphological"
+                    elif self.parent.dlg.radio_city.isChecked():
+                        blend_img_name = "{}_{}".format(raster_name, "city")
+                        combination_name = "City"
+                    else:
+                        blend_img_name = "{}_{}".format(raster_name, "custom")
+                        combination_name = "Custom"
+
+                    terrain_sett_name = None
+                    if self.parent.dlg.chech_terrain_preset.checkState():
+                        terrain_sett_name = str(self.parent.dlg.combo_terrains.currentText())
+                        blend_img_name = "{}_{}".format(blend_img_name, terrain_sett_name)
+
+                    blend_img_name = "{}.tif".format(blend_img_name)
+
+                    blend_img_path = os.path.abspath(os.path.join(save_dir, blend_img_name))
+                    print()
+                    if add_to_qgis:  # add calculated layers to Qgis
+                        self.parent.remove_layer_by_path(blend_img_path)  # remove layer from qgis if exists
+                        self.parent.iface.addRasterLayer(blend_img_path, blend_img_name)  # add layer to qgis
+
+                self.loading_screen.stop_animation()
+                self.parent.is_calculating = False
+                self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculated!", level=Qgis.Success)
+            else:  # if self.run returns False
+                self.loading_screen.stop_animation()
+                if self.is_calculating:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
+                                                               level=Qgis.Warning)
+                    self.is_calculating = False
+                elif self.no_raster:
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                else:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculation Failed!",
+                                                               level=Qgis.Critical)
+
+    def compute_blended_image_clicked(self):
+        """Start button clicked (Compute visualization button)."""
+        task = self.ComputeBlenderTask(description="Compute blended image", parent=self)
+        self.tm.addTask(task)  # add task to task manager and start task
 
     def compute_blended_image(self):
         """Compute Blended image from set parameters (in blender dlg). (blend images button clicked)"""
-        loading_screen = LoadingScreen(self.gif_path)
-        loading_screen.start_animation()
-
         selected_input_rasters = self.dlg.select_input_files.checkedItems()
 
         self.iface.messageBar().clearWidgets()  # clear all messages
         if len(selected_input_rasters) == 0:  # no raster selected
-            self.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
-            return 0
+            return "no raster selected"
 
-        # add progress bar
-        progressMessageBar = self.iface.messageBar().createMessage("RVT", "Calculating blended images...")
-        progress = QProgressBar()
-        progress.setMaximum(len(selected_input_rasters))
-        progress.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        progress.setRange(0, len(selected_input_rasters))
-        progress.setValue(0)
-        progressMessageBar.layout().addWidget(progress)
-        self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
-        progress.setFormat("Calculating visualizations...")
-
-        i_raster = 1
         for raster_name in selected_input_rasters:  # loop trough all selected rasters
-            progress.setFormat("Calculating blended image... on raster {}".format(raster_name))
-
             start_time = time.time()
             raster_path = self.rvt_select_input[raster_name]
 
@@ -1036,26 +1179,12 @@ class QRVT:
             self.combination.render_all_images(default=self.default, save_visualizations=False,
                                                save_render_path=blend_img_path)
 
-            add_to_qgis = self.dlg.check_addqgis.isChecked()
-
-            if add_to_qgis:
-                self.remove_layer_by_path(blend_img_path)  # remove layer from qgis if exists
-                self.iface.addRasterLayer(blend_img_path, blend_img_name)  # add layer to qgis
-
             end_time = time.time()
             compute_time = end_time - start_time
             self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
                                              render_path=blend_img_path, terrain_sett_name=terrain_sett_name,
                                              default=self.default, custom_dir=save_dir, computation_time=compute_time)
-
-            # change progress bar state
-            progress.setValue(i_raster)
-            i_raster += 1
-
-        loading_screen.stop_animation()
-
-        progress.setFormat("Blended images calculated!".format(raster_name))
-        self.iface.messageBar().pushMessage("RVT", "Blended images calculated!", level=Qgis.Success)
+            return True
 
     def load_terrains_settings2dlg(self):
         """Fills preset terrains settings combo box."""

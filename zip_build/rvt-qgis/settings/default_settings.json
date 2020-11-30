@@ -10,7 +10,7 @@
         },
         "Hillshade": {
             "hs_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Hillshade. Parameter for GUIs."
             },
             "hs_sun_azi": {
@@ -66,7 +66,7 @@
         },
         "Slope gradient": {
             "slp_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Slope. Parameter for GUIs."
             },
             "slp_output_units": {
@@ -166,7 +166,7 @@
         },
         "Openness - Positive": {
             "pos_opns_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Openness - Positive. Parameter for GUIs."
             },
             "pos_opns_bytscl": {
