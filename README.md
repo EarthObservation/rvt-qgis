@@ -36,7 +36,7 @@ Please report any bugs and suggestions for improvements.
 
 ## Acknowledgment
 
-Development of RVT was part financed by the European Commission's Culture Programme through the ArchaeoLandscapes Europe project and by the Slovenian Research Agency core funding No. P2-0406, and by research projects No. J6-7085 and No. J6-9395.
+Development of RVT was part financed by the European Commission's Culture Programme through the ArchaeoLandscapes Europe project and by the Slovenian Research Agency core funding No. P2-0406, and by research projects No. J6-7085 and No. J6-9395. Development of RVT QGIS plugin was part financed by PTS Consultancy.
 
 ## License
 This project is licensed under the terms of the [Apache License](LICENSE).
