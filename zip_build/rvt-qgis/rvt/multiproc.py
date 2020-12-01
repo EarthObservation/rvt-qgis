@@ -2,11 +2,9 @@ import gdal
 import rvt.vis
 import rvt.default
 import numpy as np
+import multiprocessing as mp
 import time
 import os
-from qgis.core import (
-    QgsApplication, QgsTask, QgsMessageLog,
-)
 
 
 class RasterVisBlock:
@@ -55,298 +53,289 @@ def save_multiprocess_vis(dem_path, vis, default, custom_dir=None, save_float=Tr
     -------
     Function saves output visualization GTiff in vis_path.
     """
+    if mp.process.current_process().name == "MainProcess":
+        data_set = gdal.Open(dem_path)  # Open dem raster
+        if data_set.RasterCount != 1:
+            raise Exception("rvt.multiproc.save_multiprocess_vis: Input raster has more bands than 1!")
+        gt = data_set.GetGeoTransform()
+        x_res = gt[1]  # x_resolution
+        y_res = -gt[5]  # y_resolution
+        band = data_set.GetRasterBand(1)
+        x_size = band.XSize  # number of columns
+        y_size = band.YSize  # number of rows
+        del band
 
-    data_set = gdal.Open(dem_path)  # Open dem raster
-    if data_set.RasterCount != 1:
-        raise Exception("rvt.multiproc.save_multiprocess_vis: Input raster has more bands than 1!")
-    gt = data_set.GetGeoTransform()
-    x_res = gt[1]  # x_resolution
-    y_res = -gt[5]  # y_resolution
-    band = data_set.GetRasterBand(1)
-    x_size = band.XSize  # number of columns
-    y_size = band.YSize  # number of rows
-    del band
+        nr_bands_float = 1
+        nr_bands_8bit = 1
+        if vis == "multiple directions hillshade":
+            nr_bands_float = default.mhs_nr_dir
+            nr_bands_8bit = 3
 
-    nr_bands_float = 1
-    nr_bands_8bit = 1
-    if vis == "multiple directions hillshade":
-        nr_bands_float = default.mhs_nr_dir
-        nr_bands_8bit = 3
+        if offset is None:  # if offset not set
+            offset = get_block_offset(default=default, vis=vis)
 
-    if offset is None:  # if offset not set
-        offset = get_block_offset(default=default, vis=vis)
+        # paths
+        vis_float_path = None
+        vis_8bit_path = None
+        vis_svf_float_path = None
+        vis_svf_8bit_path = None
+        vis_asvf_float_path = None
+        vis_asvf_8bit_path = None
+        vis_pos_opns_float_path = None
+        vis_pos_opns_8bit_path = None
 
-    # paths
-    vis_float_path = None
-    vis_8bit_path = None
-    vis_svf_float_path = None
-    vis_svf_8bit_path = None
-    vis_asvf_float_path = None
-    vis_asvf_8bit_path = None
-    vis_pos_opns_float_path = None
-    vis_pos_opns_8bit_path = None
-
-    # get output vis raster paths for float and 8bit
-    if vis != "sky-view factor default":  # single vis function
-        if custom_dir is None:
-            vis_float_path = default.get_vis_path(dem_path=dem_path, vis=vis, bit8=False)
-            vis_8bit_path = default.get_vis_path(dem_path=dem_path, vis=vis, bit8=True)
-        else:
-            vis_float_path = os.path.abspath(os.path.join(
-                os.path.dirname(dem_path),
-                default.get_vis_file_name(dem_path=dem_path, vis=vis, bit8=False)))
-            vis_8bit_path = os.path.abspath(os.path.join(
-                os.path.dirname(dem_path),
-                default.get_vis_file_name(dem_path=dem_path, vis=vis, bit8=True)))
-        # create blank out raster
-        if save_float:
-            create_blank_raster(in_data_set=data_set, out_raster_path=vis_float_path, nr_bands=nr_bands_float, e_type=6)
-        if save_8bit:
-            create_blank_raster(in_data_set=data_set, out_raster_path=vis_8bit_path, nr_bands=nr_bands_8bit, e_type=1)
-    else:  # vis == "sky-view factor default", we can compute svf, asvf, pos_opns simultaneously
-        save_svf = default.svf_compute
-        save_asvf = default.asvf_compute
-        save_pos_opns = default.pos_opns_compute
-        if save_svf:
+        # get output vis raster paths for float and 8bit
+        if vis != "sky-view factor default":  # single vis function
             if custom_dir is None:
-                vis_svf_float_path = default.get_vis_path(dem_path=dem_path, vis="sky-view factor", bit8=False)
-                vis_svf_8bit_path = default.get_vis_path(dem_path=dem_path, vis="sky-view factor", bit8=True)
+                vis_float_path = default.get_vis_path(dem_path=dem_path, vis=vis, bit8=False)
+                vis_8bit_path = default.get_vis_path(dem_path=dem_path, vis=vis, bit8=True)
             else:
-                vis_svf_float_path = os.path.abspath(os.path.join(
+                vis_float_path = os.path.abspath(os.path.join(
                     os.path.dirname(dem_path),
-                    default.get_vis_file_name(dem_path=dem_path, vis="sky-view factor", bit8=False)))
-                vis_svf_8bit_path = os.path.abspath(os.path.join(
+                    default.get_vis_file_name(dem_path=dem_path, vis=vis, bit8=False)))
+                vis_8bit_path = os.path.abspath(os.path.join(
                     os.path.dirname(dem_path),
-                    default.get_vis_file_name(dem_path=dem_path, vis="sky-view factor", bit8=True)))
+                    default.get_vis_file_name(dem_path=dem_path, vis=vis, bit8=True)))
             # create blank out raster
             if save_float:
-                create_blank_raster(in_data_set=data_set, out_raster_path=vis_svf_float_path,
-                                    nr_bands=nr_bands_float,
-                                    e_type=6)
+                create_blank_raster(in_data_set=data_set, out_raster_path=vis_float_path, nr_bands=nr_bands_float, e_type=6)
             if save_8bit:
-                create_blank_raster(in_data_set=data_set, out_raster_path=vis_svf_8bit_path,
-                                    nr_bands=nr_bands_8bit,
-                                    e_type=1)
-        if save_asvf:
-            if custom_dir is None:
-                vis_asvf_float_path = default.get_vis_path(dem_path=dem_path, vis="anisotropic sky-view factor",
-                                                           bit8=False)
-                vis_asvf_8bit_path = default.get_vis_path(dem_path=dem_path, vis="anisotropic sky-view factor",
-                                                          bit8=True)
-            else:
-                vis_asvf_float_path = os.path.abspath(os.path.join(
-                    os.path.dirname(dem_path),
-                    default.get_vis_file_name(dem_path=dem_path, vis="anisotropic sky-view factor", bit8=False)))
-                vis_asvf_8bit_path = os.path.abspath(os.path.join(
-                    os.path.dirname(dem_path),
-                    default.get_vis_file_name(dem_path=dem_path, vis="anisotropic sky-view factor", bit8=True)))
-            # create blank out raster
-            if save_float:
-                create_blank_raster(in_data_set=data_set, out_raster_path=vis_asvf_float_path,
-                                    nr_bands=nr_bands_float,
-                                    e_type=6)
-            if save_8bit:
-                create_blank_raster(in_data_set=data_set, out_raster_path=vis_asvf_8bit_path,
-                                    nr_bands=nr_bands_8bit,
-                                    e_type=1)
-        if save_pos_opns:
-            if custom_dir is None:
-                vis_pos_opns_float_path = default.get_vis_path(dem_path=dem_path, vis="openness - positive",
+                create_blank_raster(in_data_set=data_set, out_raster_path=vis_8bit_path, nr_bands=nr_bands_8bit, e_type=1)
+        else:  # vis == "sky-view factor default", we can compute svf, asvf, pos_opns simultaneously
+            save_svf = default.svf_compute
+            save_asvf = default.asvf_compute
+            save_pos_opns = default.pos_opns_compute
+            if save_svf:
+                if custom_dir is None:
+                    vis_svf_float_path = default.get_vis_path(dem_path=dem_path, vis="sky-view factor", bit8=False)
+                    vis_svf_8bit_path = default.get_vis_path(dem_path=dem_path, vis="sky-view factor", bit8=True)
+                else:
+                    vis_svf_float_path = os.path.abspath(os.path.join(
+                        os.path.dirname(dem_path),
+                        default.get_vis_file_name(dem_path=dem_path, vis="sky-view factor", bit8=False)))
+                    vis_svf_8bit_path = os.path.abspath(os.path.join(
+                        os.path.dirname(dem_path),
+                        default.get_vis_file_name(dem_path=dem_path, vis="sky-view factor", bit8=True)))
+                # create blank out raster
+                if save_float:
+                    create_blank_raster(in_data_set=data_set, out_raster_path=vis_svf_float_path,
+                                        nr_bands=nr_bands_float,
+                                        e_type=6)
+                if save_8bit:
+                    create_blank_raster(in_data_set=data_set, out_raster_path=vis_svf_8bit_path,
+                                        nr_bands=nr_bands_8bit,
+                                        e_type=1)
+            if save_asvf:
+                if custom_dir is None:
+                    vis_asvf_float_path = default.get_vis_path(dem_path=dem_path, vis="anisotropic sky-view factor",
                                                                bit8=False)
-                vis_pos_opns_8bit_path = default.get_vis_path(dem_path=dem_path, vis="openness - positive",
+                    vis_asvf_8bit_path = default.get_vis_path(dem_path=dem_path, vis="anisotropic sky-view factor",
                                                               bit8=True)
+                else:
+                    vis_asvf_float_path = os.path.abspath(os.path.join(
+                        os.path.dirname(dem_path),
+                        default.get_vis_file_name(dem_path=dem_path, vis="anisotropic sky-view factor", bit8=False)))
+                    vis_asvf_8bit_path = os.path.abspath(os.path.join(
+                        os.path.dirname(dem_path),
+                        default.get_vis_file_name(dem_path=dem_path, vis="anisotropic sky-view factor", bit8=True)))
+                # create blank out raster
+                if save_float:
+                    create_blank_raster(in_data_set=data_set, out_raster_path=vis_asvf_float_path,
+                                        nr_bands=nr_bands_float,
+                                        e_type=6)
+                if save_8bit:
+                    create_blank_raster(in_data_set=data_set, out_raster_path=vis_asvf_8bit_path,
+                                        nr_bands=nr_bands_8bit,
+                                        e_type=1)
+            if save_pos_opns:
+                if custom_dir is None:
+                    vis_pos_opns_float_path = default.get_vis_path(dem_path=dem_path, vis="openness - positive",
+                                                                   bit8=False)
+                    vis_pos_opns_8bit_path = default.get_vis_path(dem_path=dem_path, vis="openness - positive",
+                                                                  bit8=True)
+                else:
+                    vis_pos_opns_float_path = os.path.abspath(os.path.join(
+                        os.path.dirname(dem_path),
+                        default.get_vis_file_name(dem_path=dem_path, vis="openness - positive", bit8=False)))
+                    vis_pos_opns_8bit_path = os.path.abspath(os.path.join(
+                        os.path.dirname(dem_path),
+                        default.get_vis_file_name(dem_path=dem_path, vis="openness - positive", bit8=True)))
+                # create blank out raster
+                if save_float:
+                    create_blank_raster(in_data_set=data_set, out_raster_path=vis_pos_opns_float_path,
+                                        nr_bands=nr_bands_float, e_type=6)
+                if save_8bit:
+                    create_blank_raster(in_data_set=data_set, out_raster_path=vis_pos_opns_8bit_path,
+                                        nr_bands=nr_bands_8bit, e_type=1)
+        # save threads
+        # manager allows processes to all access same blocks_to_save list
+        manager = mp.Manager()
+        blocks_to_save_float = manager.list()  # list where all processes are saving float visualization blocks
+        blocks_to_save_8bit = manager.list()  # list where all processes are saving 8bit visualization blocks
+        blocks_to_save_svf_float = manager.list()  # list where all processes are saving float svf blocks
+        blocks_to_save_svf_8bit = manager.list()  # list where all processes are saving 8bit svf blocks
+        blocks_to_save_asvf_float = manager.list()  # list where all processes are saving float asvf blocks
+        blocks_to_save_asvf_8bit = manager.list()  # list where all processes are saving 8bit asvf blocks
+        blocks_to_save_pos_opns_float = manager.list()  # list where all processes are saving float opns blocks
+        blocks_to_save_pos_opns_8bit = manager.list()  # list where all processes are saving 8bit opns blocks
+        if vis != "sky-view factor default":  # single vis function
+            # parallel processes which are saving visualization blocks in output rasters
+            if save_float:
+                save_float_process = mp.Process(target=save_block_visualization, args=(vis_float_path,
+                                                                                       blocks_to_save_float,
+                                                                                       nr_bands_float))
+                save_float_process.start()
+            if save_8bit:
+                save_8bit_process = mp.Process(target=save_block_visualization, args=(vis_8bit_path,
+                                                                                      blocks_to_save_8bit,
+                                                                                      nr_bands_8bit))
+                save_8bit_process.start()
+        else:  # vis == "sky-view factor default"
+            if save_svf:
+                if save_float:
+                    save_svf_float_process = mp.Process(target=save_block_visualization, args=(vis_svf_float_path,
+                                                                                               blocks_to_save_svf_float,
+                                                                                               nr_bands_float))
+                    save_svf_float_process.start()
+                if save_8bit:
+                    save_svf_8bit_process = mp.Process(target=save_block_visualization, args=(vis_svf_8bit_path,
+                                                                                              blocks_to_save_svf_8bit,
+                                                                                              nr_bands_8bit))
+                    save_svf_8bit_process.start()
+            if save_asvf:
+                if save_float:
+                    save_asvf_float_process = mp.Process(target=save_block_visualization, args=(vis_asvf_float_path,
+                                                                                                blocks_to_save_asvf_float,
+                                                                                                nr_bands_float))
+                    save_asvf_float_process.start()
+                if save_8bit:
+                    save_asvf_8bit_process = mp.Process(target=save_block_visualization, args=(vis_asvf_8bit_path,
+                                                                                               blocks_to_save_asvf_8bit,
+                                                                                               nr_bands_8bit))
+                    save_asvf_8bit_process.start()
+            if save_pos_opns:
+                if save_float:
+                    save_pos_opns_float_process = mp.Process(target=save_block_visualization,
+                                                             args=(vis_pos_opns_float_path,
+                                                                   blocks_to_save_pos_opns_float,
+                                                                   nr_bands_float))
+                    save_pos_opns_float_process.start()
+                if save_8bit:
+                    save_pos_opns_8bit_process = mp.Process(target=save_block_visualization,
+                                                            args=(vis_pos_opns_8bit_path,
+                                                                  blocks_to_save_pos_opns_8bit,
+                                                                  nr_bands_8bit))
+                    save_pos_opns_8bit_process.start()
+
+        # list with processes
+        blocks_processes = []  # refrence to running processes
+
+        # slice raster to blocks
+        blocks = 0
+        for y in range(0, y_size, y_block_size):
+            if y + y_block_size < y_size:  # if rows overlap
+                rows = y_block_size
             else:
-                vis_pos_opns_float_path = os.path.abspath(os.path.join(
-                    os.path.dirname(dem_path),
-                    default.get_vis_file_name(dem_path=dem_path, vis="openness - positive", bit8=False)))
-                vis_pos_opns_8bit_path = os.path.abspath(os.path.join(
-                    os.path.dirname(dem_path),
-                    default.get_vis_file_name(dem_path=dem_path, vis="openness - positive", bit8=True)))
-            # create blank out raster
-            if save_float:
-                create_blank_raster(in_data_set=data_set, out_raster_path=vis_pos_opns_float_path,
-                                    nr_bands=nr_bands_float, e_type=6)
-            if save_8bit:
-                create_blank_raster(in_data_set=data_set, out_raster_path=vis_pos_opns_8bit_path,
-                                    nr_bands=nr_bands_8bit, e_type=1)
-    # save threads
-    blocks_to_save_float = list()  # list where all processes are saving float visualization blocks
-    blocks_to_save_8bit = list()  # list where all processes are saving 8bit visualization blocks
-    blocks_to_save_svf_float = list()  # list where all processes are saving float svf blocks
-    blocks_to_save_svf_8bit = list()  # list where all processes are saving 8bit svf blocks
-    blocks_to_save_asvf_float = list()  # list where all processes are saving float asvf blocks
-    blocks_to_save_asvf_8bit = list()  # list where all processes are saving 8bit asvf blocks
-    blocks_to_save_pos_opns_float = list()  # list where all processes are saving float opns blocks
-    blocks_to_save_pos_opns_8bit = list()  # list where all processes are saving 8bit opns blocks
-    if vis != "sky-view factor default":  # single vis function
-        # parallel processes which are saving visualization blocks in output rasters
-        if save_float:
-            save_float_process = QgsTask.fromFunction(description="save_float_process",
-                                                      function=save_block_visualization, vis_path=vis_float_path,
-                                                      blocks_to_save=blocks_to_save_float, nr_bands=nr_bands_float)
-            save_float_process.run()
-        if save_8bit:
-            save_8bit_process = QgsTask.fromFunction(description="save_8bit_process",
-                                                     function=save_block_visualization, vis_path=vis_float_path,
-                                                     blocks_to_save=blocks_to_save_float, nr_bands=nr_bands_float)
-            save_8bit_process.run()
-    else:  # vis == "sky-view factor default"
-        if save_svf:
-            if save_float:
-                save_svf_float_process = QgsTask.fromFunction(description="save_svf_float_process",
-                                                              function=save_block_visualization,
-                                                              vis_path=vis_float_path,
-                                                              blocks_to_save=blocks_to_save_float,
-                                                              nr_bands=nr_bands_float)
-                save_svf_float_process.run()
-            if save_8bit:
-                save_svf_8bit_process = QgsTask.fromFunction(description="save_svf_8bit_process",
-                                                             function=save_block_visualization, vis_path=vis_float_path,
-                                                             blocks_to_save=blocks_to_save_float,
-                                                             nr_bands=nr_bands_float)
-                save_svf_8bit_process.run()
-        if save_asvf:
-            if save_float:
-                save_asvf_float_process = QgsTask.fromFunction(description="save_asvf_float_process",
-                                                               function=save_block_visualization,
-                                                               vis_path=vis_float_path,
-                                                               blocks_to_save=blocks_to_save_float,
-                                                               nr_bands=nr_bands_float)
-                save_asvf_float_process.run()
-            if save_8bit:
-                save_asvf_8bit_process = QgsTask.fromFunction(description="save_asvf_8bit_process",
-                                                              function=save_block_visualization,
-                                                              vis_path=vis_float_path,
-                                                              blocks_to_save=blocks_to_save_float,
-                                                              nr_bands=nr_bands_float)
-                save_asvf_8bit_process.run()
-        if save_pos_opns:
-            if save_float:
-                save_pos_opns_float_process = QgsTask.fromFunction(description="save_pos_opns_float_process",
-                                                                   function=save_block_visualization,
-                                                                   vis_path=vis_float_path,
-                                                                   blocks_to_save=blocks_to_save_float,
-                                                                   nr_bands=nr_bands_float)
-                save_pos_opns_float_process.run()
-            if save_8bit:
-                save_pos_opns_8bit_process = QgsTask.fromFunction(description="save_pos_opns_8bit_process",
-                                                                  function=save_block_visualization,
-                                                                  vis_path=vis_float_path,
-                                                                  blocks_to_save=blocks_to_save_float,
-                                                                  nr_bands=nr_bands_float)
-                save_pos_opns_8bit_process.run()
-
-    # list with processes
-    blocks_processes = []  # refrence to running processes
-
-    # slice raster to blocks
-    blocks = 0
-    for y in range(0, y_size, y_block_size):
-        if y + y_block_size < y_size:  # if rows overlap
-            rows = y_block_size
-        else:
-            rows = y_size - y
-        for x in range(0, x_size, x_block_size):
-            if x + x_block_size < x_size:  # if cols overlap
-                cols = x_block_size
-            else:
-                cols = x_size - x
-
-            # get offset for each block, check edges
-            left_offset = 0
-            right_offset = 0
-            top_offset = 0
-            bottom_offset = 0
-            if x != 0:  # left offset
-                if x - offset < 0:  # left overlap
-                    left_offset = x
+                rows = y_size - y
+            for x in range(0, x_size, x_block_size):
+                if x + x_block_size < x_size:  # if cols overlap
+                    cols = x_block_size
                 else:
-                    left_offset = offset
-            if x + cols != x_size:  # right offset
-                if x + cols + offset > x_size:  # right overlap
-                    right_offset = x_size - x - cols
-                else:
-                    right_offset = offset
-            if y != 0:  # apply top offset
-                if y - offset < 0:  # top overlap
-                    top_offset = y
-                else:
-                    top_offset = offset
-            if y + rows != y_size:  # bottom offset
-                if y + rows + offset > y_size:  # bottom overlap
-                    bottom_offset = y_size - y - rows
-                else:
-                    bottom_offset = offset
+                    cols = x_size - x
 
-            # reads block
-            x_off = x - left_offset
-            y_off = y - top_offset
-            cols_off = cols + left_offset + right_offset
-            rows_off = rows + top_offset + bottom_offset
-            block_array = np.array(data_set.GetRasterBand(1).ReadAsArray(x_off, y_off, cols_off, rows_off))
+                # get offset for each block, check edges
+                left_offset = 0
+                right_offset = 0
+                top_offset = 0
+                bottom_offset = 0
+                if x != 0:  # left offset
+                    if x - offset < 0:  # left overlap
+                        left_offset = x
+                    else:
+                        left_offset = offset
+                if x + cols != x_size:  # right offset
+                    if x + cols + offset > x_size:  # right overlap
+                        right_offset = x_size - x - cols
+                    else:
+                        right_offset = offset
+                if y != 0:  # apply top offset
+                    if y - offset < 0:  # top overlap
+                        top_offset = y
+                    else:
+                        top_offset = offset
+                if y + rows != y_size:  # bottom offset
+                    if y + rows + offset > y_size:  # bottom overlap
+                        bottom_offset = y_size - y - rows
+                    else:
+                        bottom_offset = offset
 
-            # create process for each block
-            if vis != "sky-view factor default":  # single vis function
-                block_process = QgsTask.fromFunction(description="block: {}".format(blocks),
-                                                     function=calc_add_vis_block,
-                                                     args=(save_float, save_8bit, blocks_to_save_float,
-                                                           blocks_to_save_8bit, block_array, default,
-                                                           x, y, left_offset, right_offset, top_offset,
-                                                           bottom_offset, vis, x_res, y_res))
-            else:  # vis == "sky-view factor default"
-                # calc add svf, asvf, opns
-                block_process = QgsTask.fromFunction(description="block: {}".format(blocks),
-                                                     function=calc_add_svf_asvf_opns_block,
-                                                     args=(save_float, save_8bit,
-                                                           blocks_to_save_svf_float,
-                                                           blocks_to_save_svf_8bit,
-                                                           blocks_to_save_asvf_float,
-                                                           blocks_to_save_asvf_8bit,
-                                                           blocks_to_save_pos_opns_float,
-                                                           blocks_to_save_pos_opns_8bit,
-                                                           block_array, default, x, y,
-                                                           left_offset, right_offset,
-                                                           top_offset, bottom_offset,
-                                                           vis, x_res, y_res))
-            # start each process
-            block_process.run()
-            # add block to blocks_processes from where save_process is saving them
-            blocks_processes.append(block_process)
-            blocks += 1
+                # reads block
+                x_off = x - left_offset
+                y_off = y - top_offset
+                cols_off = cols + left_offset + right_offset
+                rows_off = rows + top_offset + bottom_offset
+                block_array = np.array(data_set.GetRasterBand(1).ReadAsArray(x_off, y_off, cols_off, rows_off))
 
-    for block_process in blocks_processes:
-        block_process.waitForFinished()  # wait block_process to finish
-    # stop saving processes
-    if vis != "sky-view factor default":  # single vis function
-        if save_float:
-            blocks_to_save_float.append("kill")  # when block_process finished stop saving process
-            save_float_process.waitForFinished()
-        if save_8bit:
-            blocks_to_save_8bit.append("kill")  # when block_process finished stop saving process
-            save_8bit_process.waitForFinished()
-    else:  # vis == "sky-view factor default"
-        if save_svf:
+                # create process for each block
+                if vis != "sky-view factor default":  # single vis function
+                    block_process = mp.Process(target=calc_add_vis_block, args=(save_float, save_8bit, blocks_to_save_float,
+                                                                                blocks_to_save_8bit, block_array, default,
+                                                                                x, y, left_offset, right_offset, top_offset,
+                                                                                bottom_offset, vis, x_res, y_res))
+                else:  # vis == "sky-view factor default"
+                    # calc add svf, asvf, opns
+                    block_process = mp.Process(target=calc_add_svf_asvf_opns_block, args=(save_float, save_8bit,
+                                                                                          blocks_to_save_svf_float,
+                                                                                          blocks_to_save_svf_8bit,
+                                                                                          blocks_to_save_asvf_float,
+                                                                                          blocks_to_save_asvf_8bit,
+                                                                                          blocks_to_save_pos_opns_float,
+                                                                                          blocks_to_save_pos_opns_8bit,
+                                                                                          block_array, default, x, y,
+                                                                                          left_offset, right_offset,
+                                                                                          top_offset, bottom_offset,
+                                                                                          vis, x_res, y_res))
+                # start each process
+                block_process.start()
+                # add block to blocks_processes from where save_process is saving them
+                blocks_processes.append(block_process)
+                blocks += 1
+
+        for block_process in blocks_processes:
+            block_process.join()  # wait block_process to finish
+        # stop saving processes
+        if vis != "sky-view factor default":  # single vis function
             if save_float:
-                blocks_to_save_svf_float.append("kill")
-                save_svf_float_process.waitForFinished()
+                blocks_to_save_float.append("kill")  # when block_process finished stop saving process
+                save_float_process.join()
             if save_8bit:
-                blocks_to_save_svf_8bit.append("kill")
-                save_svf_8bit_process.waitForFinished()
-        if save_asvf:
-            if save_float:
-                blocks_to_save_asvf_float.append("kill")
-                save_asvf_float_process.waitForFinished()
-            if save_8bit:
-                blocks_to_save_asvf_8bit.append("kill")
-                save_asvf_8bit_process.waitForFinished()
-        if save_pos_opns:
-            if save_float:
-                blocks_to_save_pos_opns_float.append("kill")
-                save_pos_opns_float_process.waitForFinished()
-            if save_8bit:
-                blocks_to_save_pos_opns_8bit.append("kill")
-                save_pos_opns_8bit_process.waitForFinished()
-    data_set = None  # close dem data set
+                blocks_to_save_8bit.append("kill")  # when block_process finished stop saving process
+                save_8bit_process.join()
+        else:  # vis == "sky-view factor default"
+            if save_svf:
+                if save_float:
+                    blocks_to_save_svf_float.append("kill")
+                    save_svf_float_process.join()
+                if save_8bit:
+                    blocks_to_save_svf_8bit.append("kill")
+                    save_svf_8bit_process.join()
+            if save_asvf:
+                if save_float:
+                    blocks_to_save_asvf_float.append("kill")
+                    save_asvf_float_process.join()
+                if save_8bit:
+                    blocks_to_save_asvf_8bit.append("kill")
+                    save_asvf_8bit_process.join()
+            if save_pos_opns:
+                if save_float:
+                    blocks_to_save_pos_opns_float.append("kill")
+                    save_pos_opns_float_process.join()
+                if save_8bit:
+                    blocks_to_save_pos_opns_8bit.append("kill")
+                    save_pos_opns_8bit_process.join()
+        data_set = None  # close dem data set
+    else:
+        pass
 
 
 def get_block_offset(default, vis):
@@ -538,7 +527,6 @@ def calculate_block_visualization(dem_block_arr, vis, default, x_res, y_res):
 def save_block_visualization(vis_path, blocks_to_save, nr_bands=1):
     """Takes first block from blocks_to_save list and saves it to output raster then
      removes it form list."""
-    print("notri")
     out_data_set = gdal.Open(vis_path, gdal.GA_Update)
     while 1:
         if len(blocks_to_save) > 0:
@@ -570,3 +558,20 @@ def create_blank_raster(in_data_set, out_raster_path, nr_bands=1, e_type=6):
     out_data_set.SetGeoTransform(in_data_set.GetGeoTransform())
     out_data_set.FlushCache()
     out_data_set = None
+
+# TEST
+# if __name__ == "__main__":
+#     default = rvt.default.DefaultValues()
+#     start_time = time.time()
+#     x_block_size = 256
+#     y_block_size = 256
+#     save_multiprocess_vis(dem_path=r"..\test_data\TM1_564_146.tif",
+#                           vis="hillshade",
+#                           default=default,
+#                           save_float=True,
+#                           save_8bit=True,
+#                           x_block_size=x_block_size,
+#                           y_block_size=y_block_size)
+#     end_time = time.time()
+#     print("Multiprocessing: calculate and save hillshade with blocks({}x{}), dem(1000x1000), time={}".format(
+#         x_block_size, y_block_size, end_time - start_time))

@@ -1068,7 +1068,7 @@ class QRVT:
                 except:  # something went wrong
                     return False
 
-        def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
+        def finished(self, result):  # when finished close loading dlg and load rasters (blended images) into Qgis
             if result:  # if self.run returns True
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
