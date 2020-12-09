@@ -1175,8 +1175,9 @@ class QRVT:
             self.load_dlg2combination()
             self.load_dlg2default()
             self.combination.add_dem_path(raster_path)
+            save_vis = self.dlg.check_blender_save_vis.isChecked()
             self.combination.add_dem_arr(dem_arr=dict_arr_res["array"], dem_resolution=dict_arr_res["resolution"][0])
-            self.combination.render_all_images(default=self.default, save_visualizations=False,
+            self.combination.render_all_images(default=self.default, save_visualizations=save_vis,
                                                save_render_path=blend_img_path)
 
             end_time = time.time()

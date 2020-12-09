@@ -4,8 +4,6 @@
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rvt/default.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/default.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rvt/multiproc.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/multiproc.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
