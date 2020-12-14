@@ -10,7 +10,7 @@
         },
         "Hillshade": {
             "hs_compute": {
-                "value": 0,
+                "value": 1,
                 "description": "If compute Hillshade. Parameter for GUIs."
             },
             "hs_sun_azi": {
@@ -70,7 +70,7 @@
                 "description": "If compute Slope. Parameter for GUIs."
             },
             "slp_output_units": {
-                "value": "percent",
+                "value": "degree",
                 "description": "Slope output units [radian, degree, percent]."
             },
             "slp_save_float": {
@@ -114,7 +114,7 @@
         },
         "Sky-View Factor": {
             "svf_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Sky-View Factor. Parameter for GUIs."
             },
             "svf_n_dir": {
