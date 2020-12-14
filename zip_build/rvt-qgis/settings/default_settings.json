@@ -118,7 +118,7 @@
                 "description": "If compute Sky-View Factor. Parameter for GUIs."
             },
             "svf_n_dir": {
-                "value": 32,
+                "value": 16,
                 "description": "Number of directions."
             },
             "svf_r_max": {
