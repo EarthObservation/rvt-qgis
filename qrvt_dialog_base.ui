@@ -3194,6 +3194,9 @@ QGroupBox
                    <property name="text">
                     <string>Save float blend</string>
                    </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                  <item>
