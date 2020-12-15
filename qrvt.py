@@ -336,6 +336,8 @@ class QRVT:
 
         # check if any value in blender layers dialog changed
         self.check_dlg_blender_layers_change()
+        # check float 8bit checkbox changes in blender
+        self.check_blender_checkbox_float_8bit_change()
 
         # blend images button clicked
         self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
@@ -586,6 +588,10 @@ class QRVT:
         self.dlg.check_ld_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_ld_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
 
+    def check_blender_checkbox_float_8bit_change(self):
+        self.dlg.check_blender_save_float.stateChanged.connect(lambda: self.blender_checkbox_float_8bit_check())
+        self.dlg.check_blender_save_8bit.stateChanged.connect(lambda: self.blender_checkbox_float_8bit_check())
+
     def checkbox_float_8bit_check(self):
         """Check all float and 8bit checkboxes, if both float and 8bit checkboxes are False for specific visualisation
          then set them both to True. At least one of them has to be True!"""
@@ -610,6 +616,11 @@ class QRVT:
         if not self.dlg.check_ld_float.isChecked() and not self.dlg.check_ld_8bit.isChecked():
             self.dlg.check_ld_float.setChecked(True)
             self.dlg.check_ld_8bit.setChecked(True)
+
+    def blender_checkbox_float_8bit_check(self):
+        if not self.dlg.check_blender_save_float.isChecked() and not self.dlg.check_blender_save_8bit.isChecked():
+            self.dlg.check_blender_save_float.setChecked(True)
+            self.dlg.check_blender_save_8bit.setChecked(True)
 
     def check_radio_combination_change(self):
         """If blender combination radio changes method triggers other methods."""
@@ -1177,9 +1188,11 @@ class QRVT:
             self.combination.add_dem_path(raster_path)
             save_vis = self.dlg.check_blender_save_vis.isChecked()
             self.combination.add_dem_arr(dem_arr=dict_arr_res["array"], dem_resolution=dict_arr_res["resolution"][0])
+            save_float = self.dlg.check_blender_save_float.isChecked()
+            save_8bit = self.dlg.check_blender_save_8bit.isChecked()
             self.combination.render_all_images(default=self.default, save_visualizations=save_vis,
-                                               save_render_path=blend_img_path)
-
+                                               save_render_path=blend_img_path, save_float=save_float,
+                                               save_8bit=save_8bit)
             end_time = time.time()
             compute_time = end_time - start_time
             self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
