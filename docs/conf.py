@@ -13,9 +13,6 @@ import os
 import sys
 import shutil
 
-# Needed for removing credits
-import sphinx.ext.autodoc
-
 sys.path.insert(0, os.path.abspath('..'))  # Source code dir relative to this file
 
 
@@ -32,10 +29,6 @@ author = 'ZRC SAZU and University of Ljubljana'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',  # Core library for html generation from docstrings
-    'sphinx.ext.autosummary',  # Create neat summary tables
-    'sphinx.ext.viewcode',  # Add links to highlighted source code
-    'sphinx.ext.napoleon',  # Use NumPy docstrings
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -59,7 +52,3 @@ html_logo = './figures/RVT_head.png'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-# Remove module docstring credits
-def setup(app):
-    app.connect('autodoc-process-docstring', sphinx.ext.autodoc.between('Credits:', what=['module'], exclude=True))

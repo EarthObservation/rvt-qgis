@@ -21,4 +21,4 @@ The visualizations are computed and displayed in the main QGIS window. Files are
 
    .. image:: ./figures/rvt_qgis_svf.png
 
-The visualizations are described in the `Relief Visualization Toolbox — Relief Visualization Toolbox in Python documentation <https://rvt-py.readthedocs.io/en/latest/index.html>`_.
+The visualizations are described in the `Relief Visualization Toolbox — Relief Visualization Toolbox in Python documentation <https://rvt-py.readthedocs.io>`_.

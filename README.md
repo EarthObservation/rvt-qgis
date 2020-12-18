@@ -17,9 +17,9 @@ The plugin has been tested under QGIS 3.12 and later.
 
 ## Documentation
 
-Documentation of the plugin is under development.
+Documentation of the QGIS plugin is available at [Relief Visualization Toolbox QGIS Plugin](https://rvt-qgis.readthedocs.io/).
 
-Use the RVT Python documentation, availabe at [Read the Docs](https://rvt-py.readthedocs.io/).
+RVT Python documentation is available at [Relief Visualization Toolbox]([Relief Visualization Toolbox — Relief Visualization Toolbox in Python documentation](https://rvt-py.readthedocs.io).
 
 ## References
 

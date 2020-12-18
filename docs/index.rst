@@ -26,7 +26,7 @@ Methods currently implemented are:
 
 For a more detailed description see references given at each method in the manual and a comparative paper describing them (e.g. Kokalj and Hesse 2017, see below).
 
-RVT can be used as a QGIS Plugin, ArcGIS raster functions or as a Python library.
+RVT can be used as a QGIS plugin, ArcGIS raster functions or as a Python library.
 
 References
 ----------
@@ -40,7 +40,7 @@ When using the tools, please cite:
 Contributing
 ------------
 
-The source code for Python library is available on  `GitHub EarthObservation/RVT_py <https://github.com/EarthObservation/RVT_py>`_. The source code for QGIS PLugin is available on  `GitHub EarthObservation/rvt-qgis <hhttps://github.com/EarthObservation/rvt-qgis>`_. 
+The source code for Python library is available at  `GitHub EarthObservation/RVT_py <https://github.com/EarthObservation/RVT_py>`_. The source code for QGIS Plugin is available at  `GitHub EarthObservation/rvt-qgis <https://github.com/EarthObservation/rvt-qgis>`_. 
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
