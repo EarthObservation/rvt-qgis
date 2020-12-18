@@ -58,17 +58,3 @@ This project is licensed under the terms of the `Apache License <http://www.apac
 
 
 © Copyright 2020 ZRC SAZU and University of Ljubljana
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
-
-   install
-   usage
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
