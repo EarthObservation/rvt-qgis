@@ -1,6 +1,6 @@
 # QGIS Plugin for Relief Visualization Toolbox
 
-![](./help/source/figures/RVT_head.png)
+![](./docs/figures/RVT_head.png)
 
 Relief Visualization Toolbox was produced to help scientist visualize raster elevation model datasets. We have narrowed down the selection to include techniques that have proven to be effective for identification of small scale features. Default settings therefore assume working with high resolution digital elevation models, derived from airborne laser scanning missions (lidar).
 
@@ -17,9 +17,9 @@ The plugin has been tested under QGIS 3.12 and later.
 
 ## Documentation
 
-Documentation of the plugin is under development.
+Documentation of the QGIS plugin is available at [Relief Visualization Toolbox QGIS Plugin](https://rvt-qgis.readthedocs.io/).
 
-Use the RVT Python documentation, availabe at [Read the Docs](https://rvt-py.readthedocs.io/).
+RVT Python documentation is available at [Relief Visualization Toolbox]([Relief Visualization Toolbox — Relief Visualization Toolbox in Python documentation](https://rvt-py.readthedocs.io).
 
 ## References
 
