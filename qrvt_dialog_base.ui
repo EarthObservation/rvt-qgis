@@ -56,7 +56,7 @@ QGroupBox
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0,0,50">
+    <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0,0,1">
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
@@ -252,7 +252,7 @@ QGroupBox
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>25</height>
+           <height>16777215</height>
           </size>
          </property>
         </widget>
@@ -411,7 +411,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="font">
@@ -545,7 +545,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -627,7 +627,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -845,7 +845,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -927,7 +927,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1145,7 +1145,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1358,7 +1358,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1579,7 +1579,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1661,7 +1661,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1741,7 +1741,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1989,7 +1989,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2061,7 +2061,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2308,7 +2308,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2390,7 +2390,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2462,7 +2462,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2688,7 +2688,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2770,7 +2770,7 @@ QGroupBox
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
-                        <height>25</height>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -3123,7 +3123,7 @@ QGroupBox
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,1,1,1,0,20,5">
+              <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,1,1,1,0,0,5">
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
                  <item>
@@ -3432,29 +3432,59 @@ QGroupBox
                   </widget>
                  </item>
                  <item>
-                  <widget class="QComboBox" name="combo_terrains">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>100</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                  </widget>
+                  <layout class="QVBoxLayout" name="verticalLayout_50" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_66">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo_terrains">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>100</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_65">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>40</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
                  </item>
                  <item>
                   <spacer name="horizontalSpacer_22">
@@ -3491,7 +3521,7 @@ QGroupBox
                 </spacer>
                </item>
                <item>
-                <layout class="QGridLayout" name="grid_layers" rowstretch="0,0,0,0,0,0,0" columnstretch="2,0,0,0,0,0,0">
+                <layout class="QGridLayout" name="grid_layers" rowstretch="0,0,0,0,0,0,0" columnstretch="2,0,0,0,0,0,0,0,0">
                  <property name="sizeConstraint">
                   <enum>QLayout::SetMinimumSize</enum>
                  </property>
@@ -3501,167 +3531,93 @@ QGroupBox
                  <property name="verticalSpacing">
                   <number>28</number>
                  </property>
-                 <item row="5" column="3">
-                  <widget class="QLineEdit" name="line4_min">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="4">
-                  <widget class="QLineEdit" name="line1_max">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="placeholderText">
-                    <string>0.0</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="6" column="2">
-                  <widget class="QComboBox" name="combo5_norm">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
+                 <item row="3" column="7">
+                  <layout class="QVBoxLayout" name="verticalLayout_29" stretch="8">
                    <item>
-                    <property name="text">
-                     <string>Value</string>
-                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_2">
+                     <item>
+                      <widget class="QLabel" name="label2_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>100</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QScrollBar" name="scroll2_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>15</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="maximum">
+                        <number>100</number>
+                       </property>
+                       <property name="pageStep">
+                        <number>0</number>
+                       </property>
+                       <property name="sliderPosition">
+                        <number>100</number>
+                       </property>
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
-                   <item>
-                    <property name="text">
-                     <string>Perc</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QComboBox" name="combo1_norm">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Value</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Perc</string>
-                    </property>
-                   </item>
-                  </widget>
+                  </layout>
                  </item>
                  <item row="6" column="6">
-                  <layout class="QVBoxLayout" name="verticalLayout_5">
+                  <layout class="QVBoxLayout" name="verticalLayout_46" stretch="2,8,2">
                    <item>
-                    <widget class="QLabel" name="label5_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
+                    <spacer name="verticalSpacer_61">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
                      </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximumSize">
+                     <property name="sizeHint" stdset="0">
                       <size>
-                       <width>16777215</width>
-                       <height>25</height>
+                       <width>20</width>
+                       <height>1</height>
                       </size>
                      </property>
-                     <property name="text">
-                      <string>100</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                    </widget>
+                    </spacer>
                    </item>
                    <item>
-                    <widget class="QScrollBar" name="scroll5_opacity">
+                    <widget class="QComboBox" name="combo5_blend_mode">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -3673,714 +3629,291 @@ QGroupBox
                      </property>
                      <property name="minimumSize">
                       <size>
-                       <width>180</width>
-                       <height>15</height>
+                       <width>75</width>
+                       <height>20</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>25</height>
+                       <height>16777215</height>
                       </size>
                      </property>
-                     <property name="maximum">
-                      <number>100</number>
-                     </property>
-                     <property name="pageStep">
-                      <number>0</number>
-                     </property>
-                     <property name="sliderPosition">
-                      <number>100</number>
-                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Normal</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiply</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Overlay</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Luminosity</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Screen</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_62">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="2">
+                  <layout class="QVBoxLayout" name="verticalLayout_42" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_53">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo5_vis">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>160</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>None</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiple directions hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Slope gradient</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Simple local relief model</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Anisotropic Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Positive</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Negative</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky illumination</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Local dominance</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_54">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="4">
+                  <layout class="QVBoxLayout" name="verticalLayout_32" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_33">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line3_min">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
                      </property>
                     </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_34">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="4">
+                  <layout class="QVBoxLayout" name="verticalLayout_26" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_21">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line2_min">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                     <property name="frame">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_22">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>
                  <item row="1" column="3">
-                  <widget class="QLabel" name="label_67">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Min</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="label_65">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>120</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Visualization method</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="0">
-                  <widget class="QLabel" name="label_56">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>2nd:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QComboBox" name="combo1_vis">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>160</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>None</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiple directions hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Slope gradient</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Simple local relief model</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Anisotropic Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Positive</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Negative</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky illumination</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Local dominance</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="4" column="3">
-                  <widget class="QLineEdit" name="line3_min">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="1">
-                  <widget class="QComboBox" name="combo4_vis">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>160</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>None</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiple directions hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Slope gradient</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Simple local relief model</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Anisotropic Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Positive</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Negative</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky illumination</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Local dominance</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="4" column="6">
-                  <layout class="QVBoxLayout" name="verticalLayout_3">
-                   <item>
-                    <widget class="QLabel" name="label3_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>100</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QScrollBar" name="scroll3_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>180</width>
-                       <height>15</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="maximum">
-                      <number>100</number>
-                     </property>
-                     <property name="pageStep">
-                      <number>0</number>
-                     </property>
-                     <property name="sliderPosition">
-                      <number>100</number>
-                     </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="2" column="5">
-                  <widget class="QComboBox" name="combo1_blend_mode">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>75</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Normal</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiply</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Overlay</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Luminosity</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Screen</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="3" column="1">
-                  <widget class="QComboBox" name="combo2_vis">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>160</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>None</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiple directions hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Slope gradient</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Simple local relief model</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Anisotropic Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Positive</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Negative</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky illumination</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Local dominance</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="6" column="1">
-                  <widget class="QComboBox" name="combo5_vis">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>160</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>None</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiple directions hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Slope gradient</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Simple local relief model</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Anisotropic Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Positive</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Negative</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky illumination</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Local dominance</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="2" column="6">
-                  <layout class="QVBoxLayout" name="verticalLayout">
-                   <item>
-                    <widget class="QLabel" name="label1_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>100</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QScrollBar" name="scroll1_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>180</width>
-                       <height>15</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="maximum">
-                      <number>100</number>
-                     </property>
-                     <property name="pageStep">
-                      <number>0</number>
-                     </property>
-                     <property name="sliderPosition">
-                      <number>100</number>
-                     </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="4" column="2">
-                  <widget class="QComboBox" name="combo3_norm">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Value</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Perc</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="6" column="5">
-                  <widget class="QComboBox" name="combo5_blend_mode">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>75</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Normal</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiply</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Overlay</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Luminosity</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Screen</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
                   <widget class="QLabel" name="label_66">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -4397,7 +3930,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4405,11 +3938,8 @@ QGroupBox
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="5">
-                  <widget class="QComboBox" name="combo3_blend_mode">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
+                 <item row="6" column="1">
+                  <widget class="QLabel" name="label_59">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -4418,44 +3948,83 @@ QGroupBox
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>75</width>
+                     <width>50</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
-                   <item>
-                    <property name="text">
-                     <string>Normal</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiply</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Overlay</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Luminosity</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Screen</string>
-                    </property>
-                   </item>
+                   <property name="text">
+                    <string>5th:</string>
+                   </property>
                   </widget>
                  </item>
-                 <item row="1" column="6">
+                 <item row="5" column="4">
+                  <layout class="QVBoxLayout" name="verticalLayout_38" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_45">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line4_min">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_46">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="7">
                   <widget class="QLabel" name="label_70">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -4472,7 +4041,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4480,463 +4049,23 @@ QGroupBox
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="4">
-                  <widget class="QLineEdit" name="line5_max">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="5">
-                  <widget class="QComboBox" name="combo4_blend_mode">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>75</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Normal</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiply</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Overlay</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Luminosity</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Screen</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QLabel" name="label_60">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>Layers:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="1">
-                  <widget class="QComboBox" name="combo3_vis">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>160</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>None</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiple directions hillshade</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Slope gradient</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Simple local relief model</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Anisotropic Sky-View Factor</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Positive</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Openness - Negative</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Sky illumination</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Local dominance</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="5" column="6">
-                  <layout class="QVBoxLayout" name="verticalLayout_4">
-                   <item>
-                    <widget class="QLabel" name="label4_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>100</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QScrollBar" name="scroll4_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>180</width>
-                       <height>15</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="maximum">
-                      <number>100</number>
-                     </property>
-                     <property name="pageStep">
-                      <number>0</number>
-                     </property>
-                     <property name="sliderPosition">
-                      <number>100</number>
-                     </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="5" column="2">
-                  <widget class="QComboBox" name="combo4_norm">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Value</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Perc</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="6" column="3">
-                  <widget class="QLineEdit" name="line5_min">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="5">
-                  <widget class="QComboBox" name="combo2_blend_mode">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>75</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Normal</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Multiply</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Overlay</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Luminosity</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Screen</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="5" column="0">
-                  <widget class="QLabel" name="label_58">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>4th:</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="3" column="2">
-                  <widget class="QComboBox" name="combo2_norm">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_24" stretch="2,8,2">
                    <item>
-                    <property name="text">
-                     <string>Value</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>Perc</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                 <item row="3" column="6">
-                  <layout class="QVBoxLayout" name="verticalLayout_2">
-                   <item>
-                    <widget class="QLabel" name="label2_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
+                    <spacer name="verticalSpacer_17">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
                      </property>
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="maximumSize">
+                     <property name="sizeHint" stdset="0">
                       <size>
-                       <width>16777215</width>
-                       <height>25</height>
+                       <width>20</width>
+                       <height>1</height>
                       </size>
                      </property>
-                     <property name="text">
-                      <string>100</string>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                    </widget>
+                    </spacer>
                    </item>
                    <item>
-                    <widget class="QScrollBar" name="scroll2_opacity">
-                     <property name="enabled">
-                      <bool>false</bool>
-                     </property>
+                    <widget class="QComboBox" name="combo2_vis">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
@@ -4945,95 +4074,92 @@ QGroupBox
                      </property>
                      <property name="minimumSize">
                       <size>
-                       <width>180</width>
-                       <height>15</height>
+                       <width>160</width>
+                       <height>20</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>25</height>
+                       <height>16777215</height>
                       </size>
                      </property>
-                     <property name="maximum">
-                      <number>100</number>
-                     </property>
-                     <property name="pageStep">
-                      <number>0</number>
-                     </property>
-                     <property name="sliderPosition">
-                      <number>100</number>
-                     </property>
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
+                     <item>
+                      <property name="text">
+                       <string>None</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiple directions hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Slope gradient</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Simple local relief model</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Anisotropic Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Positive</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Negative</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky illumination</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Local dominance</string>
+                      </property>
+                     </item>
                     </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_18">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
                    </item>
                   </layout>
                  </item>
-                 <item row="3" column="3">
-                  <widget class="QLineEdit" name="line2_min">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
-                   </property>
-                   <property name="frame">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="4" column="0">
-                  <widget class="QLabel" name="label_57">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>3rd:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <spacer name="verticalSpacer_3">
+                 <item row="1" column="8">
+                  <spacer name="horizontalSpacer_7">
                    <property name="orientation">
-                    <enum>Qt::Vertical</enum>
+                    <enum>Qt::Horizontal</enum>
                    </property>
                    <property name="sizeType">
                     <enum>QSizePolicy::Fixed</enum>
@@ -5041,12 +4167,350 @@ QGroupBox
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>20</width>
-                     <height>10</height>
+                     <height>20</height>
                     </size>
                    </property>
                   </spacer>
                  </item>
-                 <item row="1" column="4">
+                 <item row="2" column="3">
+                  <layout class="QVBoxLayout" name="verticalLayout_19" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_7">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo1_norm">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Value</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Perc</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_8">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="4">
+                  <layout class="QVBoxLayout" name="verticalLayout_44" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_57">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line5_min">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_58">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="1">
+                  <widget class="QLabel" name="label_56">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>2nd:</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="6">
+                  <layout class="QVBoxLayout" name="verticalLayout_34" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_38">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo3_blend_mode">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>75</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Normal</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiply</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Overlay</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Luminosity</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Screen</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_37">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="2">
+                  <layout class="QVBoxLayout" name="verticalLayout_36" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_42">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo4_vis">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>160</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>None</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiple directions hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Slope gradient</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Simple local relief model</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Anisotropic Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Positive</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Negative</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky illumination</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Local dominance</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_41">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="5">
                   <widget class="QLabel" name="label_68">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -5063,7 +4527,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5071,36 +4535,8 @@ QGroupBox
                    </property>
                   </widget>
                  </item>
-                 <item row="6" column="0">
-                  <widget class="QLabel" name="label_59">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>5th:</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="4">
-                  <widget class="QLineEdit" name="line4_max">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
+                 <item row="4" column="1">
+                  <widget class="QLabel" name="label_57">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -5116,22 +4552,341 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
+                    <string>3rd:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="4">
-                  <widget class="QLineEdit" name="line3_max">
-                   <property name="enabled">
-                    <bool>false</bool>
+                 <item row="3" column="6">
+                  <layout class="QVBoxLayout" name="verticalLayout_28" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_26">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo2_blend_mode">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>75</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Normal</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiply</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Overlay</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Luminosity</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Screen</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_25">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="3" column="5">
+                  <layout class="QVBoxLayout" name="verticalLayout_27" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_24">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line2_max">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_23">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="0" column="1">
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item row="4" column="2">
+                  <layout class="QVBoxLayout" name="verticalLayout_30" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_29">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo3_vis">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>160</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>None</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiple directions hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Slope gradient</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Simple local relief model</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Anisotropic Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Positive</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Negative</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky illumination</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Local dominance</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_30">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="5">
+                  <layout class="QVBoxLayout" name="verticalLayout_45" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_59">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line5_max">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_60">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="label_55">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -5147,22 +4902,166 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
+                    <string>1st:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="3">
-                  <widget class="QLineEdit" name="line1_min">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
+                 <item row="2" column="6">
+                  <layout class="QVBoxLayout" name="verticalLayout_22" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_13">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo1_blend_mode">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>75</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Normal</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiply</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Overlay</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Luminosity</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Screen</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_14">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="7">
+                  <layout class="QVBoxLayout" name="verticalLayout_47" stretch="8">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_5">
+                     <item>
+                      <widget class="QLabel" name="label5_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>100</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QScrollBar" name="scroll5_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>15</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="maximum">
+                        <number>100</number>
+                       </property>
+                       <property name="pageStep">
+                        <number>0</number>
+                       </property>
+                       <property name="sliderPosition">
+                        <number>100</number>
+                       </property>
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="1">
+                  <widget class="QLabel" name="label_58">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -5178,21 +5077,412 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
-                   </property>
-                   <property name="placeholderText">
-                    <string>0.0</string>
+                    <string>4th:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="1" column="5">
+                 <item row="3" column="3">
+                  <layout class="QVBoxLayout" name="verticalLayout_25" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_19">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo2_norm">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Value</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Perc</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_20">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="2">
+                  <layout class="QVBoxLayout" name="verticalLayout_18" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_4">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo1_vis">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>160</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>None</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiple directions hillshade</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Slope gradient</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Simple local relief model</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Anisotropic Sky-View Factor</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Positive</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Openness - Negative</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Sky illumination</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Local dominance</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_6">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="6" column="3">
+                  <layout class="QVBoxLayout" name="verticalLayout_43" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_55">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo5_norm">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Value</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Perc</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_56">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="3">
+                  <layout class="QVBoxLayout" name="verticalLayout_37" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_44">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo4_norm">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Value</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Perc</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_43">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="4">
+                  <widget class="QLabel" name="label_67">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Min</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="4" column="7">
+                  <layout class="QVBoxLayout" name="verticalLayout_35" stretch="8">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_3">
+                     <item>
+                      <widget class="QLabel" name="label3_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>100</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QScrollBar" name="scroll3_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>15</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="maximum">
+                        <number>100</number>
+                       </property>
+                       <property name="pageStep">
+                        <number>0</number>
+                       </property>
+                       <property name="sliderPosition">
+                        <number>100</number>
+                       </property>
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="6">
                   <widget class="QLabel" name="label_69">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -5209,7 +5499,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5217,11 +5507,33 @@ QGroupBox
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="4">
-                  <widget class="QLineEdit" name="line2_max">
-                   <property name="enabled">
-                    <bool>false</bool>
+                 <item row="1" column="2">
+                  <widget class="QLabel" name="label_65">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>120</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Visualization method</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="label_60">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
@@ -5237,41 +5549,561 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>25</height>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
-                    <string>0.0000</string>
-                   </property>
-                   <property name="maxLength">
-                    <number>8</number>
+                    <string>Layers:</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="2" column="0">
-                  <widget class="QLabel" name="label_55">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
+                 <item row="4" column="3">
+                  <layout class="QVBoxLayout" name="verticalLayout_31" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_32">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo3_norm">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Value</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Perc</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_31">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="7">
+                  <layout class="QVBoxLayout" name="verticalLayout_41" stretch="8">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout_4">
+                     <item>
+                      <widget class="QLabel" name="label4_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>100</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QScrollBar" name="scroll4_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>15</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="maximum">
+                        <number>100</number>
+                       </property>
+                       <property name="pageStep">
+                        <number>0</number>
+                       </property>
+                       <property name="sliderPosition">
+                        <number>100</number>
+                       </property>
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="4" column="5">
+                  <layout class="QVBoxLayout" name="verticalLayout_33" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_36">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line3_max">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_35">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="6">
+                  <layout class="QVBoxLayout" name="verticalLayout_40" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_49">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="combo4_blend_mode">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>75</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Normal</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Multiply</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Overlay</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Luminosity</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>Screen</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_50">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="5" column="5">
+                  <layout class="QVBoxLayout" name="verticalLayout_39" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_47">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line4_max">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_48">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="5">
+                  <layout class="QVBoxLayout" name="verticalLayout_21" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_12">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line1_max">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="placeholderText">
+                      <string>0.0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_11">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="4">
+                  <layout class="QVBoxLayout" name="verticalLayout_20" stretch="2,8,2">
+                   <item>
+                    <spacer name="verticalSpacer_10">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="line1_min">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>50</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>0.0000</string>
+                     </property>
+                     <property name="maxLength">
+                      <number>8</number>
+                     </property>
+                     <property name="placeholderText">
+                      <string>0.0</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="verticalSpacer_9">
+                     <property name="orientation">
+                      <enum>Qt::Vertical</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>20</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <spacer name="horizontalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
                    </property>
-                   <property name="minimumSize">
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
                     <size>
-                     <width>50</width>
+                     <width>20</width>
                      <height>20</height>
                     </size>
                    </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>25</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>1st:</string>
-                   </property>
-                  </widget>
+                  </spacer>
+                 </item>
+                 <item row="2" column="7">
+                  <layout class="QVBoxLayout" name="verticalLayout_23" stretch="8">
+                   <item>
+                    <layout class="QVBoxLayout" name="verticalLayout">
+                     <item>
+                      <widget class="QLabel" name="label1_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>100</string>
+                       </property>
+                       <property name="alignment">
+                        <set>Qt::AlignCenter</set>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QScrollBar" name="scroll1_opacity">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>180</width>
+                         <height>15</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="maximum">
+                        <number>100</number>
+                       </property>
+                       <property name="pageStep">
+                        <number>0</number>
+                       </property>
+                       <property name="sliderPosition">
+                        <number>100</number>
+                       </property>
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </item>
