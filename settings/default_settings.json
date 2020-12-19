@@ -1,11 +1,11 @@
 {
     "default_settings": {
         "overwrite": {
-            "value": 1,
+            "value": 0,
             "description": "When saving visualisation functions and file already exists, if 0 it doesn't compute it, if 1 it overwrites it."
         },
         "ve_factor": {
-            "value": 1.0,
+            "value": 1,
             "description": "Vertical exaggeration."
         },
         "Hillshade": {
@@ -26,7 +26,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "hs_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "hs_bytscl": {
@@ -54,7 +54,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "mhs_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "mhs_bytscl": {
@@ -78,7 +78,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "slp_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "slp_bytscl": {
@@ -102,13 +102,13 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "slrm_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "slrm_bytscl": {
                 "mode": "percent",
-                "min": 0.02,
-                "max": 0.02,
+                "min": 2,
+                "max": 2,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
         },
@@ -134,7 +134,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "svf_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "svf_bytscl": {
@@ -159,8 +159,8 @@
             },
             "asvf_bytscl": {
                 "mode": "percent",
-                "min": 0.02,
-                "max": 0.02,
+                "min": 2,
+                "max": 2,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
         },
@@ -186,7 +186,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "neg_opns_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "neg_opns_bytscl": {
@@ -210,11 +210,11 @@
                 "description": "If 1 it computes shadows, if 0 it doesn't."
             },
             "sim_shadow_dist": {
-                "value": 50,
+                "value": 100,
                 "description": "Max shadow modeling distance in pixels."
             },
             "sim_nr_dir": {
-                "value": 16,
+                "value": 32,
                 "description": "Number of directions to search for horizon"
             },
             "sim_shadow_az": {
@@ -230,12 +230,12 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "sim_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "sim_bytscl": {
                 "mode": "percent",
-                "min": 0.025,
+                "min": 0.25,
                 "max": 0,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
@@ -270,7 +270,7 @@
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "ld_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "ld_bytscl": {

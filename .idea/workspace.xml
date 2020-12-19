@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="" />
+    <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,7 +65,12 @@
       <workItem from="1607763315478" duration="522000" />
       <workItem from="1607948310278" duration="347000" />
       <workItem from="1607951672997" duration="1803000" />
-      <workItem from="1608053801348" duration="1742000" />
+      <workItem from="1608053801348" duration="2100000" />
+      <workItem from="1608200601349" duration="551000" />
+      <workItem from="1608201226447" duration="391000" />
+      <workItem from="1608205812611" duration="292000" />
+      <workItem from="1608209848697" duration="1515000" />
+      <workItem from="1608369049389" duration="1812000" />
     </task>
     <servers />
   </component>
@@ -68,10 +78,11 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1608056949835">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1608370261758">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1608056949835" />
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1608370261758" />
+    <state x="2512" y="220" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1608206101601" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608056047963">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
