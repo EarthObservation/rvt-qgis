@@ -24,8 +24,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1100</width>
-    <height>1000</height>
+    <width>3200</width>
+    <height>2000</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -77,7 +77,7 @@ QGroupBox
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>15</height>
+         <height>16777215</height>
         </size>
        </property>
        <property name="font">
@@ -94,7 +94,7 @@ QGroupBox
      <item>
       <widget class="QgsCheckableComboBox" name="select_input_files">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -107,8 +107,8 @@ QGroupBox
        </property>
        <property name="maximumSize">
         <size>
-         <width>10000</width>
-         <height>22</height>
+         <width>16777215</width>
+         <height>30</height>
         </size>
        </property>
        <property name="currentText">
@@ -132,14 +132,14 @@ QGroupBox
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1,1,0">
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,1,0,0">
        <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
+        <enum>QLayout::SetMinimumSize</enum>
        </property>
        <item>
         <widget class="QCheckBox" name="check_addqgis">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -152,8 +152,8 @@ QGroupBox
          </property>
          <property name="maximumSize">
           <size>
-           <width>100</width>
-           <height>22</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -172,7 +172,7 @@ QGroupBox
        <item>
         <widget class="QCheckBox" name="check_overwrite">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -185,8 +185,8 @@ QGroupBox
          </property>
          <property name="maximumSize">
           <size>
-           <width>100</width>
-           <height>22</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -202,7 +202,7 @@ QGroupBox
        <item>
         <widget class="QCheckBox" name="check_sav_rast_loc">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -215,8 +215,8 @@ QGroupBox
          </property>
          <property name="maximumSize">
           <size>
-           <width>140</width>
-           <height>22</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -238,7 +238,7 @@ QGroupBox
           <bool>false</bool>
          </property>
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -251,8 +251,8 @@ QGroupBox
          </property>
          <property name="maximumSize">
           <size>
-           <width>2000</width>
-           <height>22</height>
+           <width>16777215</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -263,7 +263,7 @@ QGroupBox
           <bool>false</bool>
          </property>
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -276,8 +276,8 @@ QGroupBox
          </property>
          <property name="maximumSize">
           <size>
-           <width>75</width>
-           <height>22</height>
+           <width>16777215</width>
+           <height>16777215</height>
           </size>
          </property>
          <property name="text">
@@ -327,6 +327,12 @@ QGroupBox
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <item>
           <widget class="QScrollArea" name="scrollArea">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -335,8 +341,8 @@ QGroupBox
            </property>
            <property name="maximumSize">
             <size>
-             <width>1060</width>
-             <height>860</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="widgetResizable">
@@ -348,32 +354,32 @@ QGroupBox
               <x>0</x>
               <y>0</y>
               <width>1054</width>
-              <height>855</height>
+              <height>854</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,2,2,2,2,2,2,2,2,2,2,0">
+              <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,2,2,2,2,2,2,2,2,2,2,1">
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_39">
                  <item>
                   <widget class="QLabel" name="label_40">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>165</width>
+                     <width>145</width>
                      <height>22</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>165</width>
-                     <height>22</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="font">
@@ -391,7 +397,7 @@ QGroupBox
                  <item>
                   <widget class="QLineEdit" name="line_ve_factor">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -404,8 +410,8 @@ QGroupBox
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>50</width>
-                     <height>22</height>
+                     <width>16777215</width>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="font">
@@ -424,12 +430,12 @@ QGroupBox
                     <enum>Qt::Horizontal</enum>
                    </property>
                    <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
+                    <enum>QSizePolicy::Expanding</enum>
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
                      <width>780</width>
-                     <height>20</height>
+                     <height>22</height>
                     </size>
                    </property>
                   </spacer>
@@ -452,8 +458,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -487,27 +493,27 @@ QGroupBox
                  <property name="checked">
                   <bool>true</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0,0">
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_49">
+                   <layout class="QHBoxLayout" name="horizontalLayout_48">
                     <item>
                      <widget class="QLabel" name="label_49">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>125</width>
+                        <width>110</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>125</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -525,7 +531,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_hs_sun_azi">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -538,8 +544,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -572,28 +578,24 @@ QGroupBox
                       </property>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_48">
                     <item>
                      <widget class="QLabel" name="label_48">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>115</width>
+                        <width>105</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>115</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -611,7 +613,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_hs_sun_el">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -624,8 +626,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -670,7 +672,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>526</width>
+                      <width>584</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -681,7 +683,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_hs_float">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -694,8 +696,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -714,7 +716,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_hs_8bit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -727,8 +729,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -765,8 +767,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -791,27 +793,27 @@ QGroupBox
                  <property name="checked">
                   <bool>true</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0,0">
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_51">
+                   <layout class="QHBoxLayout" name="horizontalLayout_51" stretch="0,0,0,0">
                     <item>
                      <widget class="QLabel" name="label_51">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>125</width>
+                        <width>110</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>125</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -829,7 +831,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_mhs_nr_dir">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -842,8 +844,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -876,28 +878,24 @@ QGroupBox
                       </property>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_50">
                     <item>
                      <widget class="QLabel" name="label_50">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>115</width>
+                        <width>105</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>115</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -915,7 +913,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_mhs_sun_el">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -928,8 +926,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -974,7 +972,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>523</width>
+                      <width>584</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -985,7 +983,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_mhs_float">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -998,8 +996,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1018,7 +1016,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_mhs_8bit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1031,8 +1029,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1069,8 +1067,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -1101,7 +1099,7 @@ QGroupBox
                     <item>
                      <widget class="QLabel" name="label_47">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1114,8 +1112,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>75</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1133,7 +1131,7 @@ QGroupBox
                     <item>
                      <widget class="QComboBox" name="combo_slp_output_units">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1146,8 +1144,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>80</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1198,7 +1196,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_slp_float">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1211,8 +1209,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1231,7 +1229,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_slp_8bit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1244,8 +1242,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1282,8 +1280,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -1314,21 +1312,21 @@ QGroupBox
                     <item>
                      <widget class="QLabel" name="label_46">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>210</width>
+                        <width>180</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>210</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1346,7 +1344,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_slrm_rad_cell">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1359,8 +1357,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1405,7 +1403,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>617</width>
+                      <width>680</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1416,7 +1414,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_slrm_float">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1429,8 +1427,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1449,7 +1447,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_slrm_8bit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1462,8 +1460,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1500,8 +1498,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -1529,27 +1527,27 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="0,0,0,0,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_43">
                     <item>
                      <widget class="QLabel" name="label_43">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>110</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1567,7 +1565,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_svf_r_max">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1580,8 +1578,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1614,28 +1612,24 @@ QGroupBox
                       </property>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_44">
                     <item>
                      <widget class="QLabel" name="label_44">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>170</width>
+                        <width>145</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>170</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1653,7 +1647,7 @@ QGroupBox
                     <item>
                      <widget class="QComboBox" name="combo_svf_n_dir">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1666,8 +1660,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1698,28 +1692,24 @@ QGroupBox
                       </item>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_45">
                     <item>
                      <widget class="QLabel" name="label_45">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>140</width>
+                        <width>115</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>140</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1737,7 +1727,7 @@ QGroupBox
                     <item>
                      <widget class="QComboBox" name="combo_svf_noise">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1750,8 +1740,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>75</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1779,42 +1769,42 @@ QGroupBox
                       </item>
                      </widget>
                     </item>
+                    <item>
+                     <widget class="QCheckBox" name="check_svf_noise">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>8</pointsize>
+                        <weight>50</weight>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="accessibleDescription">
+                       <string>remove_noise</string>
+                      </property>
+                      <property name="text">
+                       <string>Remove noise</string>
+                      </property>
+                     </widget>
+                    </item>
                    </layout>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="check_svf_noise">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>100</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>100</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>8</pointsize>
-                      <weight>50</weight>
-                      <bold>false</bold>
-                     </font>
-                    </property>
-                    <property name="accessibleDescription">
-                     <string>remove_noise</string>
-                    </property>
-                    <property name="text">
-                     <string>Remove noise</string>
-                    </property>
-                   </widget>
                   </item>
                   <item>
                    <spacer name="horizontalSpacer_11">
@@ -1826,7 +1816,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>118</width>
+                      <width>350</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1837,7 +1827,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_svf_float">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1850,8 +1840,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1870,7 +1860,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_svf_8bit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1883,8 +1873,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1921,8 +1911,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -1947,27 +1937,27 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="0,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_53">
                     <item>
                      <widget class="QLabel" name="label_53">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>120</width>
+                        <width>100</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>120</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -1985,7 +1975,7 @@ QGroupBox
                     <item>
                      <widget class="QComboBox" name="combo_asvf_level">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -1998,8 +1988,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2022,28 +2012,24 @@ QGroupBox
                       </item>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_52">
                     <item>
                      <widget class="QLabel" name="label_52">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>205</width>
+                        <width>170</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>205</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2061,7 +2047,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_asvf_dir">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2074,8 +2060,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2120,7 +2106,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>550</width>
+                      <width>800</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2148,8 +2134,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>52</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -2196,8 +2182,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>52</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -2244,8 +2230,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -2270,27 +2256,27 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="0,0,0,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_2">
                     <item>
                      <widget class="QLabel" name="label_39">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>240</width>
+                        <width>210</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>240</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2308,7 +2294,7 @@ QGroupBox
                     <item>
                      <widget class="QComboBox" name="combo_sim_shadow_dist">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2321,8 +2307,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>75</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2355,28 +2341,24 @@ QGroupBox
                       </item>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_38">
                     <item>
                      <widget class="QLabel" name="label_38">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>70</width>
+                        <width>60</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>70</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2394,7 +2376,7 @@ QGroupBox
                     <item>
                      <widget class="QComboBox" name="combo_sim_sky_mod">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2407,8 +2389,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>90</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2431,28 +2413,24 @@ QGroupBox
                       </item>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_37">
                     <item>
                      <widget class="QLabel" name="label_37">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>170</width>
+                        <width>150</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>170</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2470,7 +2448,7 @@ QGroupBox
                     <item>
                      <widget class="QComboBox" name="combo_sim_nr_dir">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2483,8 +2461,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2534,7 +2512,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>154</width>
+                      <width>250</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2545,7 +2523,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_sim_float">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2558,8 +2536,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2578,7 +2556,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_sim_8bit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2591,8 +2569,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2629,8 +2607,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>1025</width>
-                   <height>65</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="font">
@@ -2658,7 +2636,7 @@ QGroupBox
                  <property name="checked">
                   <bool>false</bool>
                  </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,0,0,0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0,0,0">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_40">
                     <item>
@@ -2671,14 +2649,14 @@ QGroupBox
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>145</width>
+                        <width>130</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>145</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2696,7 +2674,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_ld_min_rad">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2709,8 +2687,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2743,28 +2721,24 @@ QGroupBox
                       </property>
                      </widget>
                     </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_41">
                     <item>
                      <widget class="QLabel" name="label_42">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
                       </property>
                       <property name="minimumSize">
                        <size>
-                        <width>150</width>
+                        <width>135</width>
                         <height>20</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>150</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2782,7 +2756,7 @@ QGroupBox
                     <item>
                      <widget class="QLineEdit" name="line_ld_max_rad">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2795,8 +2769,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>25</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2841,7 +2815,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>468</width>
+                      <width>680</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2852,7 +2826,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_ld_float">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2865,8 +2839,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2885,7 +2859,7 @@ QGroupBox
                     <item>
                      <widget class="QCheckBox" name="check_ld_8bit">
                       <property name="sizePolicy">
-                       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                         <horstretch>0</horstretch>
                         <verstretch>0</verstretch>
                        </sizepolicy>
@@ -2898,8 +2872,8 @@ QGroupBox
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>50</width>
-                        <height>20</height>
+                        <width>16777215</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="font">
@@ -2940,7 +2914,7 @@ QGroupBox
                    <item>
                     <widget class="QPushButton" name="button_start">
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -2953,8 +2927,8 @@ QGroupBox
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>106</width>
-                       <height>22</height>
+                       <width>16777215</width>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="font">
@@ -2975,7 +2949,7 @@ QGroupBox
                    <item>
                     <widget class="QPushButton" name="button_close">
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -2988,8 +2962,8 @@ QGroupBox
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>106</width>
-                       <height>22</height>
+                       <width>16777215</width>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="font">
@@ -3031,7 +3005,7 @@ QGroupBox
                       <bool>true</bool>
                      </property>
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -3044,8 +3018,8 @@ QGroupBox
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>106</width>
-                       <height>22</height>
+                       <width>16777215</width>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="font">
@@ -3064,7 +3038,7 @@ QGroupBox
                    <item>
                     <widget class="QPushButton" name="button_select_none">
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -3077,8 +3051,8 @@ QGroupBox
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>106</width>
-                       <height>22</height>
+                       <width>16777215</width>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="font">
@@ -3129,6 +3103,12 @@ QGroupBox
         <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0">
          <item>
           <widget class="QScrollArea" name="scrollArea_2">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="widgetResizable">
             <bool>true</bool>
            </property>
@@ -3138,32 +3118,32 @@ QGroupBox
               <x>0</x>
               <y>0</y>
               <width>1054</width>
-              <height>855</height>
+              <height>854</height>
              </rect>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0,0,0,1,5,2">
+              <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,1,1,1,0,20,5">
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
                  <item>
                   <widget class="QCheckBox" name="check_blender_save_vis">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>200</width>
+                     <width>130</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>200</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3174,21 +3154,21 @@ QGroupBox
                  <item>
                   <widget class="QCheckBox" name="check_blender_save_float">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>150</width>
+                     <width>120</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>150</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3202,21 +3182,21 @@ QGroupBox
                  <item>
                   <widget class="QCheckBox" name="check_blender_save_8bit">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>150</width>
+                     <width>110</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>150</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3229,9 +3209,12 @@ QGroupBox
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Expanding</enum>
+                   </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>320</width>
+                     <width>650</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3242,7 +3225,7 @@ QGroupBox
                <item>
                 <widget class="QLabel" name="label_54">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -3255,8 +3238,8 @@ QGroupBox
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>120</width>
-                   <height>20</height>
+                   <width>16777215</width>
+                   <height>16777215</height>
                   </size>
                  </property>
                  <property name="text">
@@ -3272,7 +3255,7 @@ QGroupBox
                     <bool>true</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3285,8 +3268,8 @@ QGroupBox
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>140</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3300,21 +3283,21 @@ QGroupBox
                  <item>
                   <widget class="QRadioButton" name="radio_prism_opns">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>150</width>
+                     <width>135</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>150</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3325,7 +3308,7 @@ QGroupBox
                  <item>
                   <widget class="QRadioButton" name="radio_geomorph">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3338,8 +3321,8 @@ QGroupBox
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>125</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3350,21 +3333,21 @@ QGroupBox
                  <item>
                   <widget class="QRadioButton" name="radio_city">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>75</width>
+                     <width>60</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>75</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3375,7 +3358,7 @@ QGroupBox
                  <item>
                   <widget class="QRadioButton" name="radio_custom">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3388,8 +3371,8 @@ QGroupBox
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>75</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3423,21 +3406,21 @@ QGroupBox
                     <bool>true</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
                    <property name="minimumSize">
                     <size>
-                     <width>225</width>
+                     <width>200</width>
                      <height>20</height>
                     </size>
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>225</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3454,7 +3437,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3467,8 +3450,8 @@ QGroupBox
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>100</width>
-                     <height>20</height>
+                     <width>16777215</width>
+                     <height>25</height>
                     </size>
                    </property>
                   </widget>
@@ -3497,7 +3480,7 @@ QGroupBox
                   <enum>Qt::Vertical</enum>
                  </property>
                  <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
+                  <enum>QSizePolicy::Expanding</enum>
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
@@ -3524,7 +3507,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3538,7 +3521,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3555,7 +3538,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3569,7 +3552,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3586,7 +3569,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3600,7 +3583,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -3621,7 +3604,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3635,7 +3618,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -3663,6 +3646,12 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>25</height>
+                      </size>
+                     </property>
                      <property name="text">
                       <string>100</string>
                      </property>
@@ -3677,7 +3666,7 @@ QGroupBox
                       <bool>false</bool>
                      </property>
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -3691,7 +3680,7 @@ QGroupBox
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>15</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="maximum">
@@ -3713,7 +3702,7 @@ QGroupBox
                  <item row="1" column="3">
                   <widget class="QLabel" name="label_67">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3727,7 +3716,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3738,7 +3727,7 @@ QGroupBox
                  <item row="1" column="1">
                   <widget class="QLabel" name="label_65">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3752,7 +3741,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3763,7 +3752,7 @@ QGroupBox
                  <item row="3" column="0">
                   <widget class="QLabel" name="label_56">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3777,7 +3766,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>50</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3788,7 +3777,7 @@ QGroupBox
                  <item row="2" column="1">
                   <widget class="QComboBox" name="combo1_vis">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3802,7 +3791,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -3868,7 +3857,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3882,7 +3871,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -3896,7 +3885,7 @@ QGroupBox
                  <item row="5" column="1">
                   <widget class="QComboBox" name="combo4_vis">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -3910,7 +3899,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -3983,6 +3972,12 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>25</height>
+                      </size>
+                     </property>
                      <property name="text">
                       <string>100</string>
                      </property>
@@ -3997,7 +3992,7 @@ QGroupBox
                       <bool>false</bool>
                      </property>
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -4011,7 +4006,7 @@ QGroupBox
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>15</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="maximum">
@@ -4036,7 +4031,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4050,7 +4045,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4083,7 +4078,7 @@ QGroupBox
                  <item row="3" column="1">
                   <widget class="QComboBox" name="combo2_vis">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4097,7 +4092,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4160,7 +4155,7 @@ QGroupBox
                  <item row="6" column="1">
                   <widget class="QComboBox" name="combo5_vis">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4174,7 +4169,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4247,6 +4242,12 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>25</height>
+                      </size>
+                     </property>
                      <property name="text">
                       <string>100</string>
                      </property>
@@ -4261,7 +4262,7 @@ QGroupBox
                       <bool>false</bool>
                      </property>
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -4275,7 +4276,7 @@ QGroupBox
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>15</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="maximum">
@@ -4300,7 +4301,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4314,7 +4315,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4335,7 +4336,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4349,7 +4350,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4382,7 +4383,7 @@ QGroupBox
                  <item row="1" column="2">
                   <widget class="QLabel" name="label_66">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4396,7 +4397,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4410,7 +4411,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4424,7 +4425,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4457,7 +4458,7 @@ QGroupBox
                  <item row="1" column="6">
                   <widget class="QLabel" name="label_70">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4471,7 +4472,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4485,7 +4486,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4499,7 +4500,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4516,7 +4517,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4530,7 +4531,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4563,7 +4564,7 @@ QGroupBox
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_60">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4577,7 +4578,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>50</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4588,7 +4589,7 @@ QGroupBox
                  <item row="4" column="1">
                   <widget class="QComboBox" name="combo3_vis">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4602,7 +4603,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4675,6 +4676,12 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>25</height>
+                      </size>
+                     </property>
                      <property name="text">
                       <string>100</string>
                      </property>
@@ -4689,7 +4696,7 @@ QGroupBox
                       <bool>false</bool>
                      </property>
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -4703,7 +4710,7 @@ QGroupBox
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>15</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="maximum">
@@ -4728,7 +4735,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4742,7 +4749,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4763,7 +4770,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4777,7 +4784,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4794,7 +4801,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4808,7 +4815,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4841,7 +4848,7 @@ QGroupBox
                  <item row="5" column="0">
                   <widget class="QLabel" name="label_58">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4855,7 +4862,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>50</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4869,7 +4876,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4883,7 +4890,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <item>
@@ -4911,6 +4918,12 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>25</height>
+                      </size>
+                     </property>
                      <property name="text">
                       <string>100</string>
                      </property>
@@ -4925,7 +4938,7 @@ QGroupBox
                       <bool>false</bool>
                      </property>
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -4939,7 +4952,7 @@ QGroupBox
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>15</height>
+                       <height>25</height>
                       </size>
                      </property>
                      <property name="maximum">
@@ -4964,7 +4977,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -4978,7 +4991,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -4995,7 +5008,7 @@ QGroupBox
                  <item row="4" column="0">
                   <widget class="QLabel" name="label_57">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5009,7 +5022,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>50</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5036,7 +5049,7 @@ QGroupBox
                  <item row="1" column="4">
                   <widget class="QLabel" name="label_68">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5050,7 +5063,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5061,7 +5074,7 @@ QGroupBox
                  <item row="6" column="0">
                   <widget class="QLabel" name="label_59">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5075,7 +5088,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>50</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5089,7 +5102,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5103,7 +5116,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5120,7 +5133,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5134,7 +5147,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5151,7 +5164,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5165,7 +5178,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5182,7 +5195,7 @@ QGroupBox
                  <item row="1" column="5">
                   <widget class="QLabel" name="label_69">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5196,7 +5209,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5210,7 +5223,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5224,7 +5237,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>16777215</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5238,7 +5251,7 @@ QGroupBox
                  <item row="2" column="0">
                   <widget class="QLabel" name="label_55">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5252,7 +5265,7 @@ QGroupBox
                    <property name="maximumSize">
                     <size>
                      <width>50</width>
-                     <height>20</height>
+                     <height>25</height>
                     </size>
                    </property>
                    <property name="text">
@@ -5299,7 +5312,7 @@ QGroupBox
                  <item row="1" column="1">
                   <widget class="QPushButton" name="button_blend">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -5312,8 +5325,8 @@ QGroupBox
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>300</width>
-                     <height>100</height>
+                     <width>16777215</width>
+                     <height>16777215</height>
                     </size>
                    </property>
                    <property name="text">
