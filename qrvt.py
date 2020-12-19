@@ -34,18 +34,27 @@ from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFi
 from PyQt5.QtGui import QIcon, QMovie, QPixmap, QPalette, QColor, QPainterPath
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
     QProgressBar, QApplication, QMessageBox, QErrorMessage, QDialog
+
+# high dpi scaling
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+os.environ["QT_SCREEN_SCALE_FACTORS"] = "1"
+os.environ["QT_SCALE_FACTOR"] = "1"
+os.environ["QT_DEVICE_PIXEL_RATIO "] = "0"
+PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
+PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
+
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
 from osgeo import gdal
 
 # Initialize Qt resources from file resources.py
 from .resources import *
 
-# high dpi scaling for screens with bigger resolution than 1920x1080
-if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
-    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-
-if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-    PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
+# # high dpi scaling for screens with bigger resolution than 1920x1080
+# if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
+#     PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
+#
+# if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
+#     PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
 
 # Import the code for the dialog
 from .qrvt_dialog import QRVTDialog
