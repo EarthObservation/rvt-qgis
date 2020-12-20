@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
+    <width>1400</width>
     <height>1000</height>
    </rect>
   </property>
@@ -108,7 +108,7 @@ QGroupBox
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>30</height>
+         <height>16777215</height>
         </size>
        </property>
        <property name="currentText">
@@ -353,7 +353,7 @@ QGroupBox
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1054</width>
+              <width>1354</width>
               <height>854</height>
              </rect>
             </property>
@@ -434,7 +434,7 @@ QGroupBox
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>780</width>
+                     <width>0</width>
                      <height>22</height>
                     </size>
                    </property>
@@ -672,7 +672,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>584</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -972,7 +972,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>584</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1185,7 +1185,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>722</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1403,7 +1403,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>680</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1816,7 +1816,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>350</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2106,7 +2106,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>800</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2512,7 +2512,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>250</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2815,7 +2815,7 @@ QGroupBox
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>680</width>
+                      <width>0</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -2991,7 +2991,7 @@ QGroupBox
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>400</width>
+                     <width>0</width>
                      <height>22</height>
                     </size>
                    </property>
@@ -3117,7 +3117,7 @@ QGroupBox
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>1054</width>
+              <width>1354</width>
               <height>854</height>
              </rect>
             </property>
@@ -3214,7 +3214,7 @@ QGroupBox
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>650</width>
+                     <width>0</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3390,7 +3390,7 @@ QGroupBox
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>280</width>
+                     <width>0</width>
                      <height>20</height>
                     </size>
                    </property>
@@ -3496,7 +3496,7 @@ QGroupBox
                    </property>
                    <property name="sizeHint" stdset="0">
                     <size>
-                     <width>550</width>
+                     <width>0</width>
                      <height>20</height>
                     </size>
                    </property>
