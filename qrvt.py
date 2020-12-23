@@ -49,13 +49,6 @@ from osgeo import gdal
 # Initialize Qt resources from file resources.py
 from .resources import *
 
-# # high dpi scaling for screens with bigger resolution than 1920x1080
-# if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
-#     PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-#
-# if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-#     PyQt5.QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-
 # Import the code for the dialog
 from .qrvt_dialog import QRVTDialog
 
