@@ -113,6 +113,7 @@ class QRVT:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = QRVTDialog()
+        self.dlg.adjustSize()  # resize dialog
 
         # Declare instance attributes
         self.actions = []

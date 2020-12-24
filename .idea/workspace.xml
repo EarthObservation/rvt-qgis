@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/processing_provider/rvt_blender.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/provider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +76,8 @@
       <workItem from="1608555382879" duration="2884000" />
       <workItem from="1608558663267" duration="1491000" />
       <workItem from="1608642258648" duration="1746000" />
-      <workItem from="1608725983746" duration="4857000" />
+      <workItem from="1608725983746" duration="5456000" />
+      <workItem from="1608795805917" duration="1681000" />
     </task>
     <servers />
   </component>
