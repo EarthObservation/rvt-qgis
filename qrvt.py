@@ -146,6 +146,7 @@ class QRVT:
                                                                               "default_blender_combinations.json"))
         self.default_blender_combinations = rvt.blend.BlenderCombinations()
         self.default_blender_combinations.read_from_file(self.default_blender_combinations_path)
+        self.load_combinations2cb()  # loads combinations to combo box
         self.combination = rvt.blend.BlenderCombination()  # current combination
 
         # dlg layers
@@ -328,8 +329,8 @@ class QRVT:
         self.dlg.check_svf_noise.stateChanged.connect(lambda: self.checkbox_svf_noise_check())
 
         # BLENDER
-        # check if blender combination radio changed
-        self.check_radio_combination_change()
+        # check if blender combination changed
+        self.check_combination_change()
 
         # if tab widget changes set visualization checkboxes from blender layers
         self.dlg.tab_widget.currentChanged.connect(lambda: self.combo_vis_check())
@@ -339,8 +340,21 @@ class QRVT:
 
         # check if any value in blender layers dialog changed
         self.check_dlg_blender_layers_change()
+
         # check float 8bit checkbox changes in blender
         self.check_blender_checkbox_float_8bit_change()
+
+        # add combination button clicked
+        self.dlg.buttton_comb_add.clicked.connect(lambda: self.add_combination_clicked())
+
+        # remove combination button clicked
+        self.dlg.button_comb_rem.clicked.connect(lambda: self.remove_combination_clicked())
+
+        # save to combination button clicked
+        self.dlg.button_save_comb.clicked.connect(lambda: self.save_combination_to_clicked())
+
+        # load from combination button clicked
+        self.dlg.button_load_comb.clicked.connect(lambda: self.load_combination_from_clicked())
 
         # blend images button clicked
         self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
@@ -474,16 +488,10 @@ class QRVT:
         self.load_dlg2combination()
         # find if dlg_combination has same attributes as one of the combinations
         dlg_combination_name = self.default_blender_combinations.combination_in_combinations(self.combination)
-        if dlg_combination_name == "Archaeological (VAT)":
-            self.dlg.radio_archaeological.setChecked(True)
-        elif dlg_combination_name == "Prismatic openness":
-            self.dlg.radio_prism_opns.setChecked(True)
-        elif dlg_combination_name == "Geomorphological":
-            self.dlg.radio_geomorph.setChecked(True)
-        elif dlg_combination_name == "City":
-            self.dlg.radio_city.setChecked(True)
+        if dlg_combination_name is not None:
+            self.dlg.combo_combinations.setCurrentText(dlg_combination_name)
         else:
-            self.dlg.radio_custom.setChecked(True)
+            self.dlg.combo_combinations.setCurrentText("Custom")
 
     def load_dlg2terrain(self):
         self.load_dlg2default()
@@ -625,26 +633,82 @@ class QRVT:
             self.dlg.check_blender_save_float.setChecked(True)
             self.dlg.check_blender_save_8bit.setChecked(True)
 
-    def check_radio_combination_change(self):
+    def add_combination_clicked(self):
+        new_combination_name = str(self.dlg.line_combination_name.text()).strip()
+        existing_combinations = self.default_blender_combinations.combinations_names()
+        if new_combination_name not in existing_combinations and new_combination_name != "":
+            self.load_dlg2combination()  # loads dlg to self.combination
+            self.combination.name = new_combination_name  # apply new combination name
+            self.default_blender_combinations.add_combination(combination=self.combination)  # add to combinations
+            self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)  # save
+            self.load_combinations2cb()  # load new combinations to combobox
+            self.load_combination2dlg(combination=self.combination)  # loads new combination
+            self.dlg.line_combination_name.setText("")
+        if new_combination_name == "":
+            self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.Warning)
+
+    def remove_combination_clicked(self):
+        selected_combination_name = str(self.dlg.combo_combinations.currentText())
+        if selected_combination_name != "Custom":
+            self.default_blender_combinations.remove_combination_by_name(name=selected_combination_name)
+            self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)
+            self.load_combinations2cb()
+
+    def save_combination_to_clicked(self):
+        new_combination_name = str(self.dlg.line_combination_name.text()).strip()
+        if new_combination_name != "":
+            json_path = str(QFileDialog.getSaveFileName(self.dlg, caption='Save combination JSON',
+                                                        filter="JSON (*.json)")[0])
+            if json_path != "":
+                try:
+                    self.load_dlg2combination()
+                    self.combination.name = new_combination_name
+                    self.combination.save_to_file(json_path)
+                    self.dlg.line_combination_name.setText("")
+                except:
+                    self.iface.messageBar().pushMessage("RVT", "Can't save combination JSON file!", level=Qgis.Warning)
+        else:
+            self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.Warning)
+
+    def load_combination_from_clicked(self):
+        json_path = str(QFileDialog.getOpenFileName(self.dlg, caption="Load combination JSON",
+                                                    filter="JSON (*.json)")[0])
+        if os.path.isfile(json_path):
+            try:
+                existing_combinations = self.default_blender_combinations.combinations_names()
+                combination = rvt.blend.BlenderCombination()
+                combination.read_from_file(json_path)
+                if combination.name not in existing_combinations and combination.name != "":
+                    self.default_blender_combinations.add_combination(combination)
+                    self.default_blender_combinations.save_to_file(self.default_blender_combinations_path)
+                    self.load_combinations2cb()
+                    self.load_combination2dlg(combination=combination)
+                    self.combination = combination
+            except:
+                self.iface.messageBar().pushMessage("RVT", "Can't read combination JSON file!", level=Qgis.Warning)
+
+    def check_combination_change(self):
         """If blender combination radio changes method triggers other methods."""
-        self.dlg.radio_archaeological.clicked.connect(lambda: self.load_blender_combination())
-        self.dlg.radio_prism_opns.clicked.connect(lambda: self.load_blender_combination())
-        self.dlg.radio_geomorph.clicked.connect(lambda: self.load_blender_combination())
-        self.dlg.radio_city.clicked.connect(lambda: self.load_blender_combination())
+        self.dlg.combo_combinations.currentTextChanged.connect(lambda: self.load_blender_combination())
 
     def load_blender_combination(self):
         """Check which blender combination radio is checked, get that combination and fill blender dlg with
          its values."""
-        combination = rvt.blend.BlenderCombination()
-        if self.dlg.radio_archaeological.isChecked():
-            combination = self.default_blender_combinations.select_combination_by_name("Archaeological (VAT)")
-        elif self.dlg.radio_prism_opns.isChecked():
-            combination = self.default_blender_combinations.select_combination_by_name("Prismatic openness")
-        elif self.dlg.radio_geomorph.isChecked():
-            combination = self.default_blender_combinations.select_combination_by_name("Geomorphological")
-        elif self.dlg.radio_city.isChecked():
-            combination = self.default_blender_combinations.select_combination_by_name("City")
-        self.load_combination2dlg(combination)
+        selected_combination = str(self.dlg.combo_combinations.currentText())
+        combination = self.default_blender_combinations.select_combination_by_name(selected_combination)
+        if combination is not None:
+            self.combination = combination
+            self.load_combination2dlg(combination)
+
+    def load_combinations2cb(self, combinations=None):
+        """Load combinations from self.default_blender_combinations to dlg.combo_combinations combobox."""
+        if combinations is None:  # if combinations None it takes self.default_blender_combinations
+            combinations = self.default_blender_combinations
+        self.dlg.combo_combinations.clear()
+        combinations_names = combinations.combinations_names()
+        for combination_name in combinations_names:
+            self.dlg.combo_combinations.addItem(combination_name)
+        self.dlg.combo_combinations.addItem("Custom")
 
     def load_combination2dlg(self, combination, terrain_bool=False):
         """Fill blender dlg parameters (combo boxes, line edits, scroll sliders) with values from combination."""
@@ -821,6 +885,7 @@ class QRVT:
 
     class ComputeVisualizationsTask(QgsTask):
         """Task (thread) for computing visualizations."""
+
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
@@ -1054,6 +1119,7 @@ class QRVT:
 
     class ComputeBlenderTask(QgsTask):
         """Task (thread) for computing Blended image."""
+
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent

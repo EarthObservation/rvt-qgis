@@ -5,9 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/zip_build/rvt-qgis/qrvt_dialog_base.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rvt/blend.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/blend.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/default_blender_combinations.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_blender_combinations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_settings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +77,9 @@
       <workItem from="1608558663267" duration="1491000" />
       <workItem from="1608642258648" duration="1746000" />
       <workItem from="1608725983746" duration="5456000" />
-      <workItem from="1608795805917" duration="1681000" />
+      <workItem from="1608795805917" duration="2281000" />
+      <workItem from="1608997526625" duration="1199000" />
+      <workItem from="1609145822355" duration="9141000" />
     </task>
     <servers />
   </component>

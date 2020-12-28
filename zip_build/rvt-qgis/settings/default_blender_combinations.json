@@ -17,8 +17,8 @@
                         "layer": "2",
                         "visualization_method": "Openness - Positive",
                         "norm": "Value",
-                        "min": 68,
-                        "max": 93,
+                        "min": 68.0,
+                        "max": 93.0,
                         "blend_mode": "Overlay",
                         "opacity": 50
                     },
@@ -26,8 +26,8 @@
                         "layer": "3",
                         "visualization_method": "Slope gradient",
                         "norm": "Value",
-                        "min": 0,
-                        "max": 50,
+                        "min": 0.0,
+                        "max": 50.0,
                         "blend_mode": "Luminosity",
                         "opacity": 50
                     },
@@ -35,8 +35,8 @@
                         "layer": "4",
                         "visualization_method": "Hillshade",
                         "norm": "Value",
-                        "min": 0,
-                        "max": 1,
+                        "min": 0.0,
+                        "max": 1.0,
                         "blend_mode": "Normal",
                         "opacity": 100
                     }
@@ -51,8 +51,8 @@
                         "layer": "1",
                         "visualization_method": "Openness - Positive",
                         "norm": "Value",
-                        "min": 68,
-                        "max": 93,
+                        "min": 68.0,
+                        "max": 93.0,
                         "blend_mode": "Normal",
                         "opacity": 50
                     },
@@ -60,8 +60,8 @@
                         "layer": "2",
                         "visualization_method": "Openness - Negative",
                         "norm": "Value",
-                        "min": 68,
-                        "max": 95,
+                        "min": 68.0,
+                        "max": 95.0,
                         "blend_mode": "Normal",
                         "opacity": 50
                     },
@@ -69,8 +69,8 @@
                         "layer": "3",
                         "visualization_method": "Slope gradient",
                         "norm": "Value",
-                        "min": 0,
-                        "max": 50,
+                        "min": 0.0,
+                        "max": 50.0,
                         "blend_mode": "Luminosity",
                         "opacity": 50
                     }
@@ -94,8 +94,8 @@
                         "layer": "2",
                         "visualization_method": "Openness - Positive",
                         "norm": "Value",
-                        "min": 68,
-                        "max": 93,
+                        "min": 68.0,
+                        "max": 93.0,
                         "blend_mode": "Overlay",
                         "opacity": 50
                     },
@@ -103,8 +103,8 @@
                         "layer": "3",
                         "visualization_method": "Slope gradient",
                         "norm": "Value",
-                        "min": 0,
-                        "max": 50,
+                        "min": 0.0,
+                        "max": 50.0,
                         "blend_mode": "Luminosity",
                         "opacity": 50
                     },
@@ -112,8 +112,8 @@
                         "layer": "4",
                         "visualization_method": "Multiple directions hillshade",
                         "norm": "Value",
-                        "min": 0,
-                        "max": 1,
+                        "min": 0.0,
+                        "max": 1.0,
                         "blend_mode": "Normal",
                         "opacity": 100
                     }
@@ -137,8 +137,8 @@
                         "layer": "2",
                         "visualization_method": "Openness - Positive",
                         "norm": "Value",
-                        "min": 68,
-                        "max": 93,
+                        "min": 68.0,
+                        "max": 93.0,
                         "blend_mode": "Overlay",
                         "opacity": 50
                     },
@@ -146,8 +146,8 @@
                         "layer": "3",
                         "visualization_method": "Slope gradient",
                         "norm": "Value",
-                        "min": 0,
-                        "max": 50,
+                        "min": 0.0,
+                        "max": 50.0,
                         "blend_mode": "Luminosity",
                         "opacity": 50
                     },
@@ -155,8 +155,8 @@
                         "layer": "4",
                         "visualization_method": "Hillshade",
                         "norm": "Value",
-                        "min": 0,
-                        "max": 1,
+                        "min": 0.0,
+                        "max": 1.0,
                         "blend_mode": "Normal",
                         "opacity": 100
                     }
