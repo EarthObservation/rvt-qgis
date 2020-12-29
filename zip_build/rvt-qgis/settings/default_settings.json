@@ -66,7 +66,7 @@
         },
         "Slope gradient": {
             "slp_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Slope. Parameter for GUIs."
             },
             "slp_output_units": {
@@ -90,7 +90,7 @@
         },
         "Simple local relief model": {
             "slrm_compute": {
-                "value": 0,
+                "value": 1,
                 "description": "If compute Simple local relief model. Parameter for GUIs."
             },
             "slrm_rad_cell": {

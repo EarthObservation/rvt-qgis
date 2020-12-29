@@ -705,8 +705,8 @@ class QRVT:
         if combinations is None:  # if combinations None it takes self.default_blender_combinations
             combinations = self.default_blender_combinations
         self.dlg.combo_combinations.clear()
-        combinations_names = combinations.combinations_names()
-        for combination_name in combinations_names:
+        comb_names = combinations.combinations_names()
+        for combination_name in comb_names:
             self.dlg.combo_combinations.addItem(combination_name)
         self.dlg.combo_combinations.addItem("Custom")
 
