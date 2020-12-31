@@ -1,7 +1,7 @@
 {
     "default_settings": {
         "overwrite": {
-            "value": 0,
+            "value": 1,
             "description": "When saving visualisation functions and file already exists, if 0 it doesn't compute it, if 1 it overwrites it."
         },
         "ve_factor": {
@@ -10,7 +10,7 @@
         },
         "Hillshade": {
             "hs_compute": {
-                "value": 0,
+                "value": 1,
                 "description": "If compute Hillshade. Parameter for GUIs."
             },
             "hs_sun_azi": {
@@ -28,6 +28,10 @@
             "hs_save_8bit": {
                 "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
+            },
+            "hs_shadow": {
+                "value": 0,
+                "description": "If 1 it saves shadow binary raster, if 0 it doesn't."
             },
             "hs_bytscl": {
                 "mode": "value",
@@ -74,11 +78,11 @@
                 "description": "Slope output units [radian, degree, percent]."
             },
             "slp_save_float": {
-                "value": 0,
+                "value": 1,
                 "description": "If 1 it saves float raster, if 0 it doesn't."
             },
             "slp_save_8bit": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "slp_bytscl": {
@@ -90,7 +94,7 @@
         },
         "Simple local relief model": {
             "slrm_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Simple local relief model. Parameter for GUIs."
             },
             "slrm_rad_cell": {

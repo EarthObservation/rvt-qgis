@@ -595,6 +595,25 @@ QGroupBox
                     </property>
                    </widget>
                   </item>
+                  <item>
+                   <widget class="QCheckBox" name="check_hs_shadow">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Shadow modeling (binary)</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </item>
                 <item>
@@ -3686,6 +3705,11 @@ QGroupBox
                      <string>Local dominance</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Shadow</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                  <item>
@@ -4054,6 +4078,11 @@ QGroupBox
                      <string>Local dominance</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Shadow</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                  <item>
@@ -4408,6 +4437,11 @@ QGroupBox
                      <string>Local dominance</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Shadow</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                  <item>
@@ -4720,6 +4754,11 @@ QGroupBox
                    <item>
                     <property name="text">
                      <string>Local dominance</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Shadow</string>
                     </property>
                    </item>
                   </widget>
@@ -5153,6 +5192,11 @@ QGroupBox
                    <item>
                     <property name="text">
                      <string>Local dominance</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Shadow</string>
                     </property>
                    </item>
                   </widget>

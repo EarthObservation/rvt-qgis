@@ -688,11 +688,11 @@ class QRVT:
                 self.iface.messageBar().pushMessage("RVT", "Can't read combination JSON file!", level=Qgis.Warning)
 
     def check_combination_change(self):
-        """If blender combination radio changes method triggers other methods."""
+        """If blender combination combo box changes method triggers other methods."""
         self.dlg.combo_combinations.currentTextChanged.connect(lambda: self.load_blender_combination())
 
     def load_blender_combination(self):
-        """Check which blender combination radio is checked, get that combination and fill blender dlg with
+        """Check which blender combination is selected, get that combination and fill blender dlg with
          its values."""
         selected_combination = str(self.dlg.combo_combinations.currentText())
         combination = self.default_blender_combinations.select_combination_by_name(selected_combination)
@@ -762,6 +762,7 @@ class QRVT:
         self.dlg.group_hillshade.setChecked(bool(self.default.hs_compute))
         self.dlg.line_hs_sun_azi.setText(str(self.default.hs_sun_azi))
         self.dlg.line_hs_sun_el.setText(str(self.default.hs_sun_el))
+        self.dlg.check_hs_shadow.setChecked(bool(self.default.hs_shadow))
         self.dlg.group_hillshade_multiple.setChecked(bool(self.default.mhs_compute))
         self.dlg.line_mhs_nr_dir.setText(str(self.default.mhs_nr_dir))
         self.dlg.line_mhs_sun_el.setText(str(self.default.mhs_sun_el))
@@ -832,6 +833,7 @@ class QRVT:
         default.hs_compute = int(self.dlg.group_hillshade.isChecked())
         default.hs_sun_azi = int(self.dlg.line_hs_sun_azi.text())
         default.hs_sun_el = int(self.dlg.line_hs_sun_el.text())
+        default.hs_shadow = int(self.dlg.check_hs_shadow.isChecked())
         default.mhs_compute = int(self.dlg.group_hillshade_multiple.isChecked())
         default.mhs_nr_dir = int(self.dlg.line_mhs_nr_dir.text())
         default.mhs_sun_el = int(self.dlg.line_mhs_sun_el.text())
@@ -954,6 +956,11 @@ class QRVT:
                                 self.parent.remove_layer_by_path(hillshade_8bit_path)  # remove layer if exists
                                 self.parent.iface.addRasterLayer(hillshade_8bit_path,
                                                                  hillshade_8bit_name)  # add layer to qgis
+                            if self.parent.default.hs_shadow:
+                                shadow_name = self.parent.default.get_shadow_file_name(raster_path)
+                                shadow_path = os.path.abspath(os.path.join(save_dir, shadow_name))
+                                self.parent.remove_layer_by_path(shadow_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(shadow_path, shadow_name)  # add layer to qgis
                         # Multiple direction hillshade
                         if self.parent.default.mhs_compute:
                             if self.parent.default.mhs_save_float:
@@ -1081,12 +1088,13 @@ class QRVT:
                 if self.is_calculating:
                     self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
                                                                level=Qgis.Warning)
-                    self.is_calculating = False
                 elif self.no_raster:
                     self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.is_calculating = False
                 else:
                     self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculation Failed!",
                                                                level=Qgis.Critical)
+                    self.parent.is_calculating = False
 
     def compute_visualizations_clicked(self):
         """Start button clicked (Compute visualization button)."""
@@ -1146,6 +1154,7 @@ class QRVT:
                         self.parent.is_calculating = False
                         return True
                 except:  # something went wrong
+                    self.parent.is_calculating = False
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (blended images) into Qgis
@@ -1161,21 +1170,10 @@ class QRVT:
                     else:
                         save_dir = self.parent.dlg.line_save_loc.text()
 
-                    if self.parent.dlg.radio_archaeological.isChecked():
-                        blend_img_name = "{}_{}".format(raster_name, "archaeological")
-                        combination_name = "Archaeological (VAT) "
-                    elif self.parent.dlg.radio_prism_opns.isChecked():
-                        blend_img_name = "{}_{}".format(raster_name, "prismatic_opns")
-                        combination_name = "Prismatic openness"
-                    elif self.parent.dlg.radio_geomorph.isChecked():
-                        blend_img_name = "{}_{}".format(raster_name, "geomorph")
-                        combination_name = "Geomorphological"
-                    elif self.parent.dlg.radio_city.isChecked():
-                        blend_img_name = "{}_{}".format(raster_name, "city")
-                        combination_name = "City"
-                    else:
-                        blend_img_name = "{}_{}".format(raster_name, "custom")
-                        combination_name = "Custom"
+                    # get combination name from combo box
+                    combination_name = str(self.parent.dlg.combo_combinations.currentText())
+                    combination_name = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
+                    blend_img_name = "{}_{}".format(raster_name, combination_name)
 
                     terrain_sett_name = None
                     if self.parent.dlg.chech_terrain_preset.checkState():
@@ -1198,12 +1196,13 @@ class QRVT:
                 if self.is_calculating:
                     self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
                                                                level=Qgis.Warning)
-                    self.is_calculating = False
                 elif self.no_raster:
                     self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.is_calculating = False
                 else:
                     self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculation Failed!",
                                                                level=Qgis.Critical)
+                    self.parent.is_calculating = False
 
     def compute_blended_image_clicked(self):
         """Start button clicked (Compute visualization button)."""
@@ -1217,7 +1216,6 @@ class QRVT:
         self.iface.messageBar().clearWidgets()  # clear all messages
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
-
         for raster_name in selected_input_rasters:  # loop trough all selected rasters
             start_time = time.time()
             raster_path = self.rvt_select_input[raster_name]
@@ -1227,21 +1225,9 @@ class QRVT:
             else:
                 save_dir = self.dlg.line_save_loc.text()
 
-            if self.dlg.radio_archaeological.isChecked():
-                blend_img_name = "{}_{}".format(raster_name, "archaeological")
-                combination_name = "Archaeological (VAT) "
-            elif self.dlg.radio_prism_opns.isChecked():
-                blend_img_name = "{}_{}".format(raster_name, "prismatic_opns")
-                combination_name = "Prismatic openness"
-            elif self.dlg.radio_geomorph.isChecked():
-                blend_img_name = "{}_{}".format(raster_name, "geomorph")
-                combination_name = "Geomorphological"
-            elif self.dlg.radio_city.isChecked():
-                blend_img_name = "{}_{}".format(raster_name, "city")
-                combination_name = "City"
-            else:
-                blend_img_name = "{}_{}".format(raster_name, "custom")
-                combination_name = "Custom"
+            combination_name = str(self.dlg.combo_combinations.currentText())  # get combination name from combo
+            combination_name = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
+            blend_img_name = "{}_{}".format(raster_name, combination_name)
 
             terrain_sett_name = None
             if self.dlg.chech_terrain_preset.checkState():
@@ -1249,7 +1235,6 @@ class QRVT:
                 blend_img_name = "{}_{}".format(blend_img_name, terrain_sett_name)
 
             blend_img_name = "{}.tif".format(blend_img_name)
-
             blend_img_path = os.path.abspath(os.path.join(save_dir, blend_img_name))
             dict_arr_res = rvt.default.get_raster_arr(raster_path)
             self.load_dlg2combination()
@@ -1262,6 +1247,7 @@ class QRVT:
             self.combination.render_all_images(default=self.default, save_visualizations=save_vis,
                                                save_render_path=blend_img_path, save_float=save_float,
                                                save_8bit=save_8bit)
+            print("Lel3")
             end_time = time.time()
             compute_time = end_time - start_time
             self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
