@@ -311,6 +311,9 @@ class QRVT:
         # save to rast loc checkbox
         self.dlg.check_sav_rast_loc.stateChanged.connect(lambda: self.checkbox_save_to_rast_loc())
 
+        # fill no data checkbox locks keep original no data
+        self.dlg.check_fill_no_data.stateChanged.connect(lambda: self.checkbox_fill_no_data())
+
         # save to pressed
         self.dlg.button_save_to.clicked.connect(lambda: self.save_to_clicked())
 
@@ -383,6 +386,14 @@ class QRVT:
         else:
             self.dlg.line_save_loc.setEnabled(True)
             self.dlg.button_save_to.setEnabled(True)
+
+    def checkbox_fill_no_data(self):
+        """Check box fill_no_data state changed. Check box fill_no_data locks keep_original_no_data check box."""
+        if self.dlg.check_fill_no_data.isChecked():
+            self.dlg.check_keep_org_no_data.setEnabled(True)
+        else:
+            self.dlg.check_keep_org_no_data.setChecked(False)
+            self.dlg.check_keep_org_no_data.setEnabled(False)
 
     def save_to_clicked(self):
         """Save to button clicked"""
@@ -758,6 +769,8 @@ class QRVT:
     def load_default2dlg(self):
         """Reads default (rvt.defaul.DeafultValues()) from default_path and fill visualization dlg."""
         self.dlg.check_overwrite.setChecked(bool(self.default.overwrite))
+        self.dlg.check_fill_no_data.setChecked(bool(self.default.fill_no_data))
+        self.dlg.check_keep_org_no_data.setChecked(bool(self.default.keep_original_no_data))
         self.dlg.line_ve_factor.setText(str(self.default.ve_factor))
         self.dlg.group_hillshade.setChecked(bool(self.default.hs_compute))
         self.dlg.line_hs_sun_azi.setText(str(self.default.hs_sun_azi))
@@ -829,6 +842,8 @@ class QRVT:
         """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.defaul.DeafultValues() ."""
         default = rvt.default.DefaultValues()
         default.overwrite = int(self.dlg.check_overwrite.isChecked())
+        default.fill_no_data = int(self.dlg.check_fill_no_data.isChecked())
+        default.keep_original_no_data = int(self.dlg.check_keep_org_no_data.isChecked())
         default.ve_factor = float(self.dlg.line_ve_factor.text())
         default.hs_compute = int(self.dlg.group_hillshade.isChecked())
         default.hs_sun_azi = int(self.dlg.line_hs_sun_azi.text())
