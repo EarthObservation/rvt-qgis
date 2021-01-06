@@ -6,9 +6,10 @@ from qgis.core import (QgsProcessing,
                        QgsProcessingParameterNumber,
                        QgsProcessingParameterRasterLayer,
                        QgsProcessingParameterRasterDestination,
-                       QgsProcessingParameterEnum)
+                       QgsProcessingParameterEnum,
+                       QgsProcessingParameterBoolean)
 from qgis import processing
-from numpy import array
+import numpy as np
 import rvt.default
 import rvt.blend
 import os
@@ -23,12 +24,16 @@ class RVTBlender(QgsProcessingAlgorithm):
     BLEND_COMBINATION = 'BLEND_COMBINATION'
     TERRAIN_TYPE = 'TERRAIN_TYPE'
     OUTPUT = 'OUTPUT'
+    NOISE_REMOVE = "NOISE_REMOVE"
+    SAVE_AS_8BIT = "SAVE_AS_8BIT"
+    FILL_NO_DATA = "FILL_NO_DATA"
+    KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
 
     # read default blender combinations from settings/json, read default terrain settings from settings/json
     default_blender_combinations_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)),
                                                                      "settings", "default_blender_combinations.json"))
     terrains_settings_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                                                               "settings", "default_terrains_settings.json"))
+                                                          "settings", "default_terrains_settings.json"))
     combinations = rvt.blend.BlenderCombinations()
     terrains_settings = rvt.blend.TerrainsSettings()
     combinations.read_from_file(default_blender_combinations_path)
@@ -103,6 +108,27 @@ class RVTBlender(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
+            QgsProcessingParameterBoolean(
+                name="SAVE_AS_8BIT",
+                description="Save as 8bit raster",
+                defaultValue=False
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                name="FILL_NO_DATA",
+                description="Fill no-data (holes)",
+                defaultValue=True
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                name="KEEP_ORIG_NO_DATA",
+                description="Keep original no-data",
+                defaultValue=False
+            )
+        )
+        self.addParameter(
             QgsProcessingParameterRasterDestination(
                 self.OUTPUT,
                 self.tr('Output visualization raster layer')
@@ -128,6 +154,21 @@ class RVTBlender(QgsProcessingAlgorithm):
             self.TERRAIN_TYPE,
             context
         ))]
+        save_8bit = bool(self.parameterAsBool(
+            parameters,
+            self.SAVE_AS_8BIT,
+            context
+        ))
+        fill_no_data = bool(self.parameterAsBool(
+            parameters,
+            self.FILL_NO_DATA,
+            context
+        ))
+        keep_orig_no_data = bool(self.parameterAsBool(
+            parameters,
+            self.KEEP_ORIG_NO_DATA,
+            context
+        ))
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -144,11 +185,21 @@ class RVTBlender(QgsProcessingAlgorithm):
         dict_arr_dem = rvt.default.get_raster_arr(dem_path)
         resolution = dict_arr_dem["resolution"]  # (x_res, y_res)
         dem_arr = dict_arr_dem["array"]
+        no_data = dict_arr_dem["no_data"]
+
+        # if save_8bit = True save_float is False, can only output one
+        save_float = True
+        if save_8bit:
+            save_float = False
+
+        # set fill_no_data and keep_orig_no_data
+        default.fill_no_data = fill_no_data
+        default.keep_original_no_data = keep_orig_no_data
+
         combination.add_dem_arr(dem_arr=dem_arr, dem_resolution=resolution[0])
         combination.add_dem_path(dem_path)
         combination.render_all_images(default=default, save_visualizations=False, save_render_path=visualization_path,
-                                      save_float=True)
+                                      save_float=True, no_data=no_data)
 
         result = {self.OUTPUT: visualization_path}
         return result
-

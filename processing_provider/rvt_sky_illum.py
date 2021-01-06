@@ -6,9 +6,10 @@ from qgis.core import (QgsProcessing,
                        QgsProcessingParameterNumber,
                        QgsProcessingParameterRasterLayer,
                        QgsProcessingParameterRasterDestination,
-                       QgsProcessingParameterEnum)
+                       QgsProcessingParameterEnum,
+                       QgsProcessingParameterBoolean)
 from qgis import processing
-from numpy import array
+import numpy as np
 import rvt.default
 import rvt.vis
 
@@ -25,6 +26,9 @@ class RVTSim(QgsProcessingAlgorithm):
     SHADOW_DIST = "SHADOW_DIST"
     SHADOW_AZIMUTH = "SHADOW_AZIMUTH"
     SHADOW_ELEVATION = "SHADOW_ELEVATION"
+    SAVE_AS_8BIT = "SAVE_AS_8BIT"
+    FILL_NO_DATA = "FILL_NO_DATA"
+    KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
     OUTPUT = 'OUTPUT'
 
     sky_model_options = ["overcast", "uniform"]
@@ -134,6 +138,27 @@ class RVTSim(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
+            QgsProcessingParameterBoolean(
+                name="SAVE_AS_8BIT",
+                description="Save as 8bit raster",
+                defaultValue=False
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                name="FILL_NO_DATA",
+                description="Fill no-data (holes)",
+                defaultValue=True
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                name="KEEP_ORIG_NO_DATA",
+                description="Keep original no-data",
+                defaultValue=False
+            )
+        )
+        self.addParameter(
             QgsProcessingParameterRasterDestination(
                 self.OUTPUT,
                 self.tr('Output visualization raster layer')
@@ -181,6 +206,21 @@ class RVTSim(QgsProcessingAlgorithm):
             self.SHADOW_ELEVATION,
             context
         ))
+        save_8bit = bool(self.parameterAsBool(
+            parameters,
+            self.SAVE_AS_8BIT,
+            context
+        ))
+        fill_no_data = bool(self.parameterAsBool(
+            parameters,
+            self.FILL_NO_DATA,
+            context
+        ))
+        keep_orig_no_data = bool(self.parameterAsBool(
+            parameters,
+            self.KEEP_ORIG_NO_DATA,
+            context
+        ))
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -192,13 +232,22 @@ class RVTSim(QgsProcessingAlgorithm):
         dict_arr_dem = rvt.default.get_raster_arr(dem_path)
         resolution = dict_arr_dem["resolution"]  # (x_res, y_res)
         dem_arr = dict_arr_dem["array"]
+        no_data = dict_arr_dem["no_data"]
 
         visualization_arr = rvt.vis.sky_illumination(dem=dem_arr, resolution=resolution[0], sky_model=sky_model,
                                                      max_fine_radius=max_fine_rad, num_directions=nr_dir,
                                                      ve_factor=ve_factor,
-                                                     compute_shadow=True, shadow_az=shadow_az, shadow_el=shadow_el)
-        rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
-                                out_raster_arr=visualization_arr, e_type=6)
+                                                     compute_shadow=True, shadow_az=shadow_az, shadow_el=shadow_el,
+                                                     no_data=no_data, fill_no_data=fill_no_data,
+                                                     keep_original_no_data=keep_orig_no_data)
+        if not save_8bit:
+            rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
+                                    out_raster_arr=visualization_arr, e_type=6, no_data=np.nan)
+        else:
+            visualization_8bit_arr = rvt.default.DefaultValues().float_to_8bit(float_arr=visualization_arr,
+                                                                               vis="sky illumination")
+            rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
+                                    out_raster_arr=visualization_8bit_arr, e_type=1, no_data=np.nan)
 
         result = {self.OUTPUT: visualization_path}
         return result
