@@ -20,7 +20,6 @@ Copyright:
 import numpy as np
 import scipy.interpolate
 import warnings
-import math
 
 
 def byte_scale(data,
@@ -39,16 +38,22 @@ def byte_scale(data,
 
     Parameters
     ----------
-    data : numpy image data array.
-    c_min : scalar, Bias scaling of small values. Default is ``data.min()``.
-    c_max : scalar, Bias scaling of large values. Default is ``data.max()``.
-    high : scalar, Scale max value to `high`.  Default is 255.
-    low : scalar, Scale min value to `low`.  Default is 0.
-    no_data : value that represents no_data, it is changed to np.nan
+    data : numpy.ndarray
+        Input data (visualization) as 2D numpy array.
+    c_min : int or float
+        Scalar, Bias scaling of small values. Default is ``data.min()``.
+    c_max : int or float
+        Scalar, Bias scaling of large values. Default is ``data.max()``.
+    high : int
+        Scalar, Scale max value to `high`.  Default is 255.
+    low : int
+        Scalar, Scale min value to `low`.  Default is 0.
+    no_data : int or float
+        Value that represents no_data, it is changed to np.nan .
 
     Returns
     -------
-    img_array : uint8 ndarray
+    img_array : uint8 numpy.ndarray
         The byte-scaled array.
     """
 
@@ -104,18 +109,29 @@ def slope_aspect(dem,
 
     Parameters
     ----------
-    dem : input dem 2D numpy array
-    resolution_x : dem resolution in X direction
-    resolution_y : DEM resolution in Y direction
-    output_units : percent, degree, radians
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    resolution_x : int
+        DEM resolution in X direction.
+    resolution_y : int
+        DEM resolution in Y direction.
+    output_units : str
+        Output units, you can choose between: percent, degree, radian. Default value is radian.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where DEM has no_data.
 
     Returns
     -------
-    {"slope": slope_out, "aspect": aspect_out} : dictionaries with 2D numpy arrays
+    dict_out: dict
+        Returns {"slope": slope_out, "aspect": aspect_out};
+        slope_out, slope gradient : 2D numpy array (numpy.ndarray) of slope;
+        aspect_out, aspect : 2D numpy array (numpy.ndarray) of aspect.
     """
     if dem.ndim != 2:
         raise Exception("rvt.vis.slope_aspect: dem has to be 2D np.array!")
@@ -204,21 +220,33 @@ def hillshade(dem,
 
     Parameters
     ----------
-    dem : input DEM 2D numpy array
-    resolution_x : DEM resolution in X direction
-    resolution_y : DEM resolution in Y direction
-    sun_azimuth : solar azimuth angle (clockwise from North) in degrees
-    sun_elevation : solar vertical angle (above the horizon) in degrees
-    slope : slope arr in radians if you don't input it, it is calculated
-    aspect : aspect arr in radians if you don't input it, it is calculated
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    resolution_x : int
+        DEM resolution in X direction.
+    resolution_y : int
+        DEM resolution in Y direction.
+    sun_azimuth : int or float
+        Solar azimuth angle (clockwise from North) in degrees.
+    sun_elevation : int or float
+        Solar vertical angle (above the horizon) in degrees.
+    slope : numpy.ndarray
+        Slope arr in radians if you don't input it, it is calculated.
+    aspect : numpy.ndarray
+        Aspect arr in radians if you don't input it, it is calculated.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan.
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
-    hillshade_out : result numpy array
+    hillshade_out : numpy.ndarray
+        Result hillshade 2D numpy array.
     """
     if dem.ndim != 2:
         raise Exception("rvt.vis.hillshade: dem has to be 2D np.array!")
@@ -301,21 +329,33 @@ def multi_hillshade(dem,
 
     Parameters
     ----------
-    dem : input DEM 2D numpy array
-    resolution_x : DEM resolution in X direction
-    resolution_y : DEM resolution in Y direction
-    nr_directions : number of solar azimuth angles (clockwise from North)
-    sun_elevation : solar vertical angle (above the horizon) in degrees
-    slope : slope in radians if you don't input it, it is calculated
-    aspect : aspect in radians if you don't input it, it is calculated
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    resolution_x : int
+        DEM resolution in X direction.
+    resolution_y : int
+        DEM resolution in Y direction.
+    nr_directions : int
+        Number of solar azimuth angles (clockwise from North).
+    sun_elevation : int or float
+        Solar vertical angle (above the horizon) in degrees.
+    slope : numpy.ndarray
+        Slope in radians if you don't input it, it is calculated.
+    aspect : numpy.ndarray
+        Aspect in radians if you don't input it, it is calculated.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
-    multi_hillshade_out : numpy array containing numpy_arrays of hillshades in different directions
+    multi_hillshade_out : numpy.ndarray
+        Result multiple direction hillshade multidimensional (nr_directions=dimensions) numpy array.
     """
     if dem.ndim != 2:
         raise Exception("rvt.vis.multi_hillshade: dem has to be 2D np.array!")
@@ -384,16 +424,23 @@ def slrm(dem,
 
     Parameters
     ----------
-    dem : input DEM 2D numpy array
-    radius_cell : Radius for trend assessment [pixels]
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    radius_cell : int
+        Radius for trend assessment in pixels.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
-    slrm_out : slrm 2D numpy array
+    slrm_out : numpy.ndarray
+        Simple local relief model 2D numpy array.
     """
     if dem.ndim != 2:
         raise Exception("rvt.vis.slrm: dem has to be 2D np.array!")
@@ -459,13 +506,17 @@ def horizon_shift_vector(num_directions=16,
 
     Parameters
     ----------
-    num_directions : number of directions as input
-    radius_pixels : radius to consider in pixels (not in meters)
-    min_radius : radius to start searching for horizon in pixels (not in meters)
+    num_directions : int
+        Number of directions as input.
+    radius_pixels : int
+        Radius to consider in pixels (not in meters).
+    min_radius : int
+        Radius to start searching for horizon in pixels (not in meters).
 
     Returns
     -------
-    shift : dict with keys corresponding to the directions of search azimuths rounded to 1 decimal number
+    shift : dict
+        Dict with keys corresponding to the directions of search azimuths rounded to 1 decimal number
             - for each key, a subdict contains a key "shift":
                 values for this key is a list of tuples prepared for np.roll - shift along lines and columns
             - the second key is "distance":
@@ -530,28 +581,42 @@ def sky_view_factor_compute(height_arr,
 
     Parameters
     ----------
-    height_arr : elevation (DEM) as 2D numpy array
-    radius_max : maximal search radius in pixels/cells (not in meters)
-    radius_min : minimal search radius in pixels/cells (not in meters), for noise reduction
-    num_directions : number of directions as input
-    compute_svf : if true it computes and outputs svf
-    compute_asvf : if true it computes and outputs asvf
-    compute_opns : if true it computes and outputs opns
-    a_main_direction : main direction of anisotropy
-    a_poly_level : level of polynomial that determines the anisotropy
-    a_min_weight : weight to consider anisotropy:
+    height_arr : numpy.ndarray
+        Elevation (DEM) as 2D numpy array.
+    radius_max : int
+        Maximal search radius in pixels/cells (not in meters).
+    radius_min : int
+        Minimal search radius in pixels/cells (not in meters), for noise reduction.
+    num_directions : int
+        Number of directions as input.
+    compute_svf : bool
+        If true it computes and outputs svf.
+    compute_asvf : bool
+        If true it computes and outputs asvf.
+    compute_opns : bool
+        If true it computes and outputs opns.
+    a_main_direction : int or float
+        Main direction of anisotropy.
+    a_poly_level : int
+        Level of polynomial that determines the anisotropy.
+    a_min_weight : int
+        Weight to consider anisotropy:
                  0 - low anisotropy, 
                  1 - high  anisotropy (no illumination from the direction opposite the main direction)
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
-    {"svf": svf_out, "asvf": asvf_out, "opns": opns_out} : dictionary
-        svf_out, skyview factor : 2D array of skyview factor.
-        asvf_out, anisotropic skyview factor : 2D array of anisotropic skyview factor.
-        opns_out, openness : 2D array openness (elevation angle of horizon)
+    dict_out : dictionary
+        Return {"svf": svf_out, "asvf": asvf_out, "opns": opns_out};
+        svf_out, skyview factor : 2D numpy array (numpy.ndarray) of skyview factor;
+        asvf_out, anisotropic skyview factor : 2D numpy array (numpy.ndarray) of anisotropic skyview factor;
+        opns_out, openness : 2D numpy array (numpy.ndarray) openness (elevation angle of horizon).
     """
     # change no_data to np.nan
     idx_no_data = None
@@ -661,20 +726,34 @@ def sky_view_factor(dem,
 
     Parameters
     ----------
-    dem : input DEM 2D numpy array (Ve Exaggeration and pixel size already considered)
-    compute_svf : compute SVF (True) or not (False)
-    compute_opns : compute OPENNESS (True) or not (False)
-    resolution : pixel resolution
-    svf_n_dir : number of directions
-    svf_r_max : maximal search radius in pixels
-    svf_noise : the level of noise remove (0-don't remove, 1-low, 2-med, 3-high)
-    compute_asvf : compute anisotropic SVF (True) or not (False)
-    asvf_level : level of anisotropy, 1-low, 2-high,
-    asvf_dir : dirction of anisotropy
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    compute_svf : bool
+        Compute SVF (True) or not (False).
+    compute_opns : bool
+        Compute OPENNESS (True) or not (False).
+    resolution : int
+        Pixel resolution.
+    svf_n_dir : int
+        Number of directions.
+    svf_r_max : int
+        Maximal search radius in pixels.
+    svf_noise : int
+        The level of noise remove (0-don't remove, 1-low, 2-med, 3-high).
+    compute_asvf : bool
+        Compute anisotropic SVF (True) or not (False).
+    asvf_level : int
+        Level of anisotropy, 1-low, 2-high.
+    asvf_dir : int or float
+        Dirction of anisotropy.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where dem has no_data.
         CONSTANTS:
             sc_asvf_min : level of polynomial that determines the anisotropy, selected with in_asvf_level
             sc_asvf_pol : level of polynomial that determines the anisotropy, selected with in_asvf_level
@@ -683,10 +762,11 @@ def sky_view_factor(dem,
 
     Returns
     -------
-    {"svf": svf_out, "asvf": asvf_out, "opns": opns_out} : dictionary
-        svf_out, skyview factor : 2D numpy vector of skyview factor.
-        asvf_out, anisotropic skyview factor : 2D numpy vector of anisotropic skyview factor.
-        opns_out, openness : 2D numpy openness (elevation angle of horizon)
+    dict_out : dictionary
+        Return {"svf": svf_out, "asvf": asvf_out, "opns": opns_out};
+        svf_out, skyview factor : 2D numpy array (numpy.ndarray) of skyview factor;
+        asvf_out, anisotropic skyview factor : 2D numpy array (numpy.ndarray) of anisotropic skyview factor;
+        opns_out, openness : 2D numpy array (numpy.ndarray) openness (elevation angle of horizon).
     """
     if dem.ndim != 2:
         raise Exception("rvt.vis.sky_view_factor: dem has to be 2D np.array!")
@@ -764,20 +844,31 @@ def local_dominance(dem,
 
     Parameters
     ----------
-    dem : input DEM 2D numpy array
-    min_rad : minimum radial distance (in pixels) at which the algorithm starts with visualization computation
-    max_rad : maximum radial distance (in pixels) at which the algorithm ends with visualization computation
-    rad_inc : radial distance steps in pixels
-    angular_res : angular step for determination of number of angular directions
-    observer_height : height at which we observe the terrain
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    min_rad : int
+        Minimum radial distance (in pixels) at which the algorithm starts with visualization computation.
+    max_rad : int
+        Maximum radial distance (in pixels) at which the algorithm ends with visualization computation.
+    rad_inc : int
+        Radial distance steps in pixels.
+    angular_res : int
+        Angular step for determination of number of angular directions.
+    observer_height : int or float
+        Height at which we observe the terrain.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
-    local_dom_out - 2D numpy array of local dominance
+    local_dom_out : numpy.ndarray
+        2D numpy array of local dominance
     """
     if dem.ndim != 2:
         raise Exception("rvt.vis.local_dominance: dem has to be 2D np.array!")
@@ -1001,24 +1092,36 @@ def sky_illumination(dem,
 
     Parameters
     ----------
-    shadow_horizon_only
-    dem : numpy 2D array of elevation (DEM)
-    resolution : dem pixel size
-    sky_model : sky model, it can be 'overcast' or 'uniform'
-    compute_shadow : bool compute shadow
-    shadow_horizon_only : returns only dict {"shadow": shadow, "horizon": horizon}
-    max_fine_radius : max shadow modeling distance [pixels]
-    num_directions : number of directions to search for horizon
-    shadow_az : shadow azimuth
-    shadow_el : shadow elevation
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    resolution : int
+        DEM pixel size.
+    sky_model : str
+        Sky model, it can be 'overcast' or 'uniform'.
+    compute_shadow : bool
+        If True it computes and adds shadow.
+    shadow_horizon_only : bool
+        Returns dict {"shadow": shadow, "horizon": horizon}
+    max_fine_radius : int
+        Max shadow modeling distance in pixels.
+    num_directions : int
+        Number of directions to search for horizon.
+    shadow_az : int or float
+        Shadow azimuth.
+    shadow_el : int or float
+        Shadow elevation.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
     keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
 
     Returns
     -------
-    sky_illum_out : 2D numpy result array
+    sky_illum_out : numpy.ndarray
+        2D numpy result array of Sky illumination.
     """
     # standard pyramid settings
     pyramid_scale = 3
@@ -1235,18 +1338,29 @@ def shadow_horizon(dem,
 
     Parameters
     ----------
-    dem : numpy 2D array of elevation (DEM)
-    resolution : raster resolution
-    shadow_az : shadow azimuth
-    shadow_el : shadow elevation
-    ve_factor : vertical exaggeration factor
-    no_data : value that represents no_data, all pixels with this value are changed to np.nan
-    fill_no_data : if True it fills where np.nan (no_data) with mean of surrounding pixels (3x3)
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    resolution : int
+        DEM pixel size.
+    shadow_az : int or float
+        Shadow azimuth.
+    shadow_el : int or float
+        Shadow elevation.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : bool
+        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
-    {"shadow": shadow 2D np.array, "horizon": horizon 2D np.array}
+    dict_out : dict
+        Returns {"shadow": shadow, "horizon": horizon};
+        shadow : 2D binary numpy array (numpy.ndarray) of shadows;
+        horizon; 2D numpy array (numpy.ndarray) of horizon.
     """
     if not (1000 >= ve_factor >= -1000):
         raise Exception("rvt.vis.shadow_horizon: ve_factor must be between -1000 and 1000!")
@@ -1274,82 +1388,6 @@ def fill_where_nan(dem):
         return dem
 
     dem_out = np.copy(dem)
-
-    # removes nan edges (speed up the process)
-    dem_rem_edge_dict = remove_nan_edges(dem_out)  # removes nan edges
-    dem_out = dem_rem_edge_dict["dem"]
-    top_rem = dem_rem_edge_dict["top_rows_rem"]  # number of top rows removed
-    bottom_rem = dem_rem_edge_dict["bottom_rows_rem"]  # number of bottom rows removed
-    left_rem = dem_rem_edge_dict["left_cols_rem"]  # number of left columns removed
-    right_rem = dem_rem_edge_dict["right_cols_rem"]  # number of right columns removed
-
-    # pad 1 nan edge so we can use 3x3 window on edge
-    dem_out = np.pad(array=dem_out, pad_width=1, mode="constant", constant_values=np.nan)
-
-    rows = dem_out.shape[0]
-    cols = dem_out.shape[1]
-    max_nan_nr = 4  # maximum number of nans in surrounding array (3x3) to calculate mean
-    for nr_limit_nan in range(2, max_nan_nr + 1, 1):  # iterate
-        changes = True
-        while changes:
-            idx_nans = np.where(np.isnan(dem_out))  # index of all nans
-            if len(idx_nans[0]) == 0:  # if there is no np.nan
-                break  # exit loop there is no nan anymore
-            changes = False
-            for i_nan in range(len(idx_nans[0])):
-                row_idx_nan = idx_nans[0][i_nan]
-                col_idx_nan = idx_nans[1][i_nan]
-                if row_idx_nan == 0 or col_idx_nan == 0 or row_idx_nan == rows or col_idx_nan == cols:
-                    continue  # skip if edge
-                surr_arr = dem_out[row_idx_nan - 1:row_idx_nan + 2,
-                           col_idx_nan - 1:col_idx_nan + 2]  # surrounding array 3x3
-                nr_surr_nan = np.count_nonzero(np.isnan(surr_arr))  # number of nans in surrounding array
-                if nr_surr_nan <= max_nan_nr:
-                    dem_out[row_idx_nan, col_idx_nan] = np.nanmean(surr_arr)
-                    changes = True
-
-    # remove pad for edges
-    dem_out = dem_out[1:-1, 1:-1]
-    # add nan edges back
-    dem_out = np.pad(array=dem_out, pad_width=((top_rem, bottom_rem), (left_rem, right_rem)), mode="constant",
-                     constant_values=np.nan)  # pad_width=(top, bottom), (left, right)
+    mask = np.isnan(dem_out)
+    dem_out[mask] = np.interp(np.flatnonzero(mask), np.flatnonzero(~mask), dem_out[~mask])
     return dem_out
-
-
-def remove_nan_edges(dem):
-    """Takes 2D np.array (dem) and removes edges where whole edge is np.nan .
-     Returns {"dem": 2D np.array with removed edges, "left_cols_rem": number of removed columns left,
-              "top_rows_rem": number of removed rows top, "right_cols_rem": number of removed columns right,
-              "bottom_rows_rem": number of removed rows bottom}"""
-    # how many cols, rows removed counter
-    left_cols_rem = 0
-    right_cols_rem = 0
-    top_rows_rem = 0
-    bottom_rows_rem = 0
-
-    if np.all(np.isnan(dem)):  # if all np.nan
-        return {"dem": dem, "left_cols_rem": 0, "top_rows_rem": 0,
-                "right_cols_rem": 0, "bottom_rows_rem": 0}
-    if np.all(~np.isnan(dem)):  # if there is no np.nan
-        return {"dem": dem, "left_cols_rem": 0, "top_rows_rem": 0,
-                "right_cols_rem": 0, "bottom_rows_rem": 0}
-
-    dem_out = np.copy(dem)
-    # remove top rows
-    while np.all(np.isnan(dem_out[0, :])) and np.isnan(dem_out[0, :]).size != 0:
-        dem_out = dem_out[1:, :]
-        top_rows_rem += 1
-    # remove bottom rows
-    while np.all(np.isnan(dem_out[-1, :])) and np.isnan(dem_out[-1, :]).size != 0:
-        dem_out = dem_out[:-1, :]
-        bottom_rows_rem += 1
-    # remove left cols
-    while np.all(np.isnan(dem_out[:, 0])) and np.isnan(dem_out[:, 0]).size != 0:
-        dem_out = dem_out[:, 1:]
-        left_cols_rem += 1
-    # remove right cols
-    while np.all(np.isnan(dem_out[:, -1])) and np.isnan(dem_out[:, -1]).size != 0:
-        dem_out = dem_out[:, :-1]
-        right_cols_rem += 1
-    return {"dem": dem_out, "left_cols_rem": left_cols_rem, "top_rows_rem": top_rows_rem,
-            "right_cols_rem": right_cols_rem, "bottom_rows_rem": bottom_rows_rem}
