@@ -61,7 +61,7 @@ QGroupBox
       <enum>QLayout::SetMinAndMaxSize</enum>
      </property>
      <item row="2" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_7" stretch="1,1,30">
+      <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1,30">
        <property name="sizeConstraint">
         <enum>QLayout::SetMinAndMaxSize</enum>
        </property>
@@ -180,7 +180,7 @@ QGroupBox
            <property name="minimumSize">
             <size>
              <width>300</width>
-             <height>22</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -239,6 +239,9 @@ QGroupBox
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_24">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
+         </property>
          <item>
           <widget class="QCheckBox" name="check_fill_no_data">
            <property name="sizePolicy">

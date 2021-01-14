@@ -44,7 +44,10 @@ PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)  # e
 PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
 
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
-from osgeo import gdal
+try:
+    from osgeo import gdal
+except:
+    import gdal
 
 # Initialize Qt resources from file resources.py
 from .resources import *
