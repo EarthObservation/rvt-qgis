@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RvtAbout</class>
+ <widget class="QDialog" name="RvtAbout">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>RvtAbout</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinAndMaxSize</enum>
+     </property>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.3</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
+&lt;span style=&quot; font-weight:600;&quot;&gt;○ By:&lt;/span&gt;
+
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Žiga Kokalj
+
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Krištof Oštir
+
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Klemen Zakšek
+
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Peter Pehani
+
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Klemen Čotar
+
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Maja Somrak
+
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Žiga Maroh (plugin author and maintainer)
+&lt;br&gt;
+&lt;\body&gt;
+&lt;\html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_9">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>240</width>
+               <height>147</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>240</width>
+               <height>147</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap>icon.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
+&lt;span style=&quot; font-weight:600;&quot;&gt;○ Online resources:&lt;/span&gt;&lt;br&gt;
+
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/rvt-qgis&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/RVT_py&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT core python library GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/rvt-arcgis-pro&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT ArcGIS Pro raster functions GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://iaps.zrc-sazu.si/en/rvt#v&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;Old RVT&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+
+&lt;\body&gt;
+&lt;\html&gt;</string>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
+&lt;span style=&quot; font-weight:600;&quot;&gt;○ License agreement:&lt;/span&gt; &lt;br&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;This software is distributed without any warranty and without even the implied warranty of merchantability or fitness 
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+ for a particulat pupose.
+&lt;br&gt;
+&lt;\body&gt;
+&lt;\html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;○ Acknowledgment:&lt;/span&gt;&lt;br/&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+Development of RVT was partly financed by the European Commission's Culture Programme through 
+&lt;br/&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+the ArchaeoLandscapes Europe project and by the Slovenian Research Agency core funding No. P2-0406,
+&lt;br/&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+ and by research projects No. J6-7085 and No. J6-9395. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;○  Refrences:&lt;/span&gt;&lt;br/&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+When using tools, please cite: &lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Kokalj, Ž., Somrak, M. 2019. Why Not a Single Image? Combining Visualizations to Facilitate Fieldwork and
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+ On-Screen Mapping. Remote Sensing 11(7): 747.
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Zakšek, K., Oštir, K., Kokalj, Ž. 2011. Sky-View Factor as a Relief Visualization Technique.
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+ Remote Sensing 3: 398-415.
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+• Kokalj, Ž., Zakšek, K., Oštir, K. 2011. Application of Sky-View Factor for the Visualization of Historic Landscape 
+&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+Features in Lidar-Derived Relief Models. Antiquity 85, 327: 263-273.
+&lt;br&gt;
+&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;○ Bugs and Suggestions:&lt;/span&gt;&lt;br/&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+Please report any bugs to &lt;a href=&quot;https://github.com/EarthObservation/rvt-qgis/issues&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;Issues&lt;/span&gt;&lt;/a&gt; or to email: ziga.maroh@icloud.com
+&lt;br&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+Suggestions for improvments can be sent to email: ziga.kokalj@zrc-sazu.si
+&lt;br&gt;
+&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="openExternalLinks">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;○ © Copyright:&lt;/span&gt;&lt;br/&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+Research Center of the Slovenian Academy of Sciences and Arts (ZRC SAZU) and &lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
+ University of Ljubljana, Faculty of civil and geodetic engineering (UL FGG), 2020
+&lt;br&gt;
+&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,1,5,1,1">
+       <item>
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_report_bug">
+         <property name="text">
+          <string>Report a bug</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_close">
+         <property name="text">
+          <string>Close</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

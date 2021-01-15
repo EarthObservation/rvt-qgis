@@ -28,12 +28,14 @@ import subprocess
 import threading
 import os
 import sys
+import webbrowser
 import PyQt5
 from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt, QThread, QRunnable, \
     QThreadPool
 from PyQt5.QtGui import QIcon, QMovie, QPixmap, QPalette, QColor, QPainterPath
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
     QProgressBar, QApplication, QMessageBox, QErrorMessage, QDialog
+from PyQt5 import uic
 
 # high dpi scaling
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
@@ -61,15 +63,14 @@ import rvt.blend
 from processing_provider.provider import Provider
 
 
-class LoadingScreen:
+class LoadingScreenDlg:
     """Loading screen animation."""
-
     def __init__(self, gif_path):
         self.dlg = QDialog()
         self.dlg.setWindowTitle("Loading")
         self.dlg.setWindowModality(False)
         self.dlg.setFixedSize(200, 200)
-        self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
+        self.dlg.setWindowFlags(Qt.CustomizeWindowHint)
         pal = QPalette()
         role = QPalette.Background
         pal.setColor(role, QColor(255, 255, 255))
@@ -85,6 +86,27 @@ class LoadingScreen:
     def stop_animation(self):
         self.movie.stop()
         self.dlg.done(0)
+
+
+class AboutDlg:
+    """About dialog."""
+    def __init__(self):
+        self.dlg = uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'))
+        self.dlg.setWindowTitle("About")
+        self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
+        self.dlg.setWindowModality(False)
+
+        # if close button clicked
+        self.dlg.button_close.clicked.connect(lambda: self.button_close_clicked())
+        # if report a bug button clicked
+        self.dlg.button_report_bug.clicked.connect(lambda: self.button_report_bug_clicked())
+        self.dlg.exec_()
+
+    def button_close_clicked(self):
+        self.dlg.close()
+
+    def button_report_bug_clicked(self):
+        webbrowser.open('https://github.com/EarthObservation/rvt-qgis/issues')
 
 
 class QRVT:
@@ -310,6 +332,9 @@ class QRVT:
     def run(self):
         """Run method that performs all the real work"""
         self.load_raster_layers()
+
+        # about button clicked
+        self.dlg.button_about.clicked.connect(lambda: AboutDlg())
 
         # save to rast loc checkbox
         self.dlg.check_sav_rast_loc.stateChanged.connect(lambda: self.checkbox_save_to_rast_loc())
@@ -909,7 +934,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreen(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1149,7 +1174,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreen(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False

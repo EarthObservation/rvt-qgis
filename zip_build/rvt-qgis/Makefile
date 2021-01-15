@@ -46,7 +46,7 @@ PY_FILES = \
 	__init__.py \
 	qrvt.py qrvt_dialog.py
 
-UI_FILES = qrvt_dialog_base.ui
+UI_FILES = qrvt_dialog_base.ui qrvt_dialog_about.ui
 
 EXTRAS = metadata.txt icon.png loading.gif Makefile
 

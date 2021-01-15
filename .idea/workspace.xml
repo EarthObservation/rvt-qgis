@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/metadata.txt" beforeDir="false" afterPath="$PROJECT_DIR$/metadata.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pb_tool.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/pb_tool.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +121,8 @@
       <workItem from="1610005627226" duration="3244000" />
       <workItem from="1610363476325" duration="1637000" />
       <workItem from="1610614523182" duration="954000" />
-      <workItem from="1610618801510" duration="1347000" />
+      <workItem from="1610618801510" duration="1946000" />
+      <workItem from="1610713915511" duration="6192000" />
     </task>
     <servers />
   </component>

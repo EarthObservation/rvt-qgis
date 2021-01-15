@@ -56,11 +56,51 @@ QGroupBox
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <item>
-    <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0">
+    <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0">
      <property name="sizeConstraint">
       <enum>QLayout::SetMinAndMaxSize</enum>
      </property>
-     <item row="2" column="0">
+     <item row="5" column="0">
+      <widget class="QgsCheckableComboBox" name="select_input_files">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="currentText">
+        <string>hansi</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>hansi</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>beta</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>zeta</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="6" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1,30">
        <property name="sizeConstraint">
         <enum>QLayout::SetMinAndMaxSize</enum>
@@ -6185,76 +6225,66 @@ QGroupBox
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
-      <widget class="QgsCheckableComboBox" name="select_input_files">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="currentText">
-        <string>hansi</string>
-       </property>
+     <item row="2" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_25">
        <item>
-        <property name="text">
-         <string>hansi</string>
-        </property>
+        <widget class="QLabel" name="label_14">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>List of currently selected files:</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <property name="text">
-         <string>beta</string>
-        </property>
+        <spacer name="horizontalSpacer_16">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
-        <property name="text">
-         <string>zeta</string>
-        </property>
+        <widget class="QPushButton" name="button_about">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>About</string>
+         </property>
+        </widget>
        </item>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_14">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>List of currently selected files:</string>
-       </property>
-      </widget>
+      </layout>
      </item>
     </layout>
    </item>

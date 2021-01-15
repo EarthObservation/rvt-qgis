@@ -6,9 +6,9 @@
 name=Relief Visualization Toolbox
 qgisMinimumVersion=3.0
 description=Relief visualization toolbox (RVT) plugin helps scientists visualize raster elevation model datasets.
-version=0.2
+version=0.3
 author=ZRC SAZU and University of Ljubljana, Žiga Maroh
-email=ziga.kokalj@zrc-sazu.si, ziga.maroh@icloud.com
+email=ziga.maroh@icloud.com
 
 about=Relief Visualization Toolbox was developed to help scientist visualize raster elevation model datasets. We narrowed down the selection to include techniques that have proven to be effective for identification of small scale features. Default settings therefore assume working with high resolution digital elevation models, derived from airborne laser scanning missions (lidar). Despite this, techniques are also used for different other purposes. Sky-view factor, for example, can be efficiently used in numerous studies where digital elevation model visualizations and automatic feature extraction techniques are indispensable, e.g. in geography, geomorphology, cartography, hydrology, glaciology, forestry and disaster management. It can be used even in engineering applications, such as, predicting the availability of the GPS signal in urban areas. Methods currently implemented are: -hillshading, -hillshading from multiple directions, -slope gradient, -simple local relief model, -sky-view factor (as developed by our team), -anisotropic sky-view factor, -positive and negative openness, -sky illumination, and -local dominance. © Copyright 2020 ZRC SAZU and University of Ljubljana
 
