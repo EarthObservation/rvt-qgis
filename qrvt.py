@@ -46,10 +46,8 @@ PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)  # e
 PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
 
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
-try:
-    from osgeo import gdal
-except:
-    import gdal
+
+from osgeo import gdal
 
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -70,7 +68,7 @@ class LoadingScreenDlg:
         self.dlg.setWindowTitle("Loading")
         self.dlg.setWindowModality(False)
         self.dlg.setFixedSize(200, 200)
-        self.dlg.setWindowFlags(Qt.CustomizeWindowHint)
+        self.dlg.setWindowFlags(Qt.X11BypassWindowManagerHint | Qt.CustomizeWindowHint)
         pal = QPalette()
         role = QPalette.Background
         pal.setColor(role, QColor(255, 255, 255))
@@ -93,7 +91,7 @@ class AboutDlg:
     def __init__(self):
         self.dlg = uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'))
         self.dlg.setWindowTitle("About")
-        self.dlg.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
+        self.dlg.setWindowFlags(Qt.X11BypassWindowManagerHint | Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
         self.dlg.setWindowModality(False)
 
         # if close button clicked
