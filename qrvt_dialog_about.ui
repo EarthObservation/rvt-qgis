@@ -41,7 +41,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.3</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.3.1</string>
        </property>
       </widget>
      </item>
@@ -211,7 +211,7 @@
 &lt;span style=&quot; font-weight:600;&quot;&gt;○ License agreement:&lt;/span&gt; &lt;br&gt;
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;This software is distributed without any warranty and without even the implied warranty of merchantability or fitness 
 &lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
- for a particulat pupose.
+ for a particular purpose.
 &lt;br&gt;
 &lt;\body&gt;
 &lt;\html&gt;</string>
@@ -256,10 +256,7 @@ When using tools, please cite: &lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32
 • Zakšek, K., Oštir, K., Kokalj, Ž. 2011. Sky-View Factor as a Relief Visualization Technique.
 &lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
  Remote Sensing 3: 398-415.
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Kokalj, Ž., Zakšek, K., Oštir, K. 2011. Application of Sky-View Factor for the Visualization of Historic Landscape 
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-Features in Lidar-Derived Relief Models. Antiquity 85, 327: 263-273.
+
 &lt;br&gt;
 &lt;/body&gt;&lt;/html&gt;</string>
        </property>

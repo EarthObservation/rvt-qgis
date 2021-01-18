@@ -1164,7 +1164,7 @@ class QRVT:
 
             # compute and save all visualizations
             self.default.save_visualizations(dem_path=raster_path, custom_dir=save_dir)
-            return True
+        return True
 
     class ComputeBlenderTask(QgsTask):
         """Task (thread) for computing Blended image."""
@@ -1294,7 +1294,7 @@ class QRVT:
             self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
                                              render_path=blend_img_path, terrain_sett_name=terrain_sett_name,
                                              default=self.default, custom_dir=save_dir, computation_time=compute_time)
-            return True
+        return True
 
     def load_terrains_settings2dlg(self):
         """Fills preset terrains settings combo box."""
