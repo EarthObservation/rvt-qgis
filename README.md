@@ -4,13 +4,15 @@
 
 Relief Visualization Toolbox was produced to help scientist visualize raster elevation model datasets. We have narrowed down the selection to include techniques that have proven to be effective for identification of small scale features. Default settings therefore assume working with high resolution digital elevation models, derived from airborne laser scanning missions (lidar).
 
+
 ## Installation
 
-Create a ZIP file from the repository and install it via standard QGIS Plugin installation method and select install from ZIP. See [QGIS Plugins — QGIS Documentation documentation](http://docs.qgis.org/latest/en/docs/user_manual/plugins/plugins.html).
+Plugin is uploaded to QGIS plugin repository [Relief visualization toolbox, QGIS plugin repository](https://plugins.qgis.org/plugins/rvt-qgis/).
 
-Later, you can also just update the files located in your Plugins folder. It is located under QGIS profiles, e.g.:
+To install plugin open QGIS and go to:
+
 ```
-C:/Users/UserName/AppData/Roaming/QGIS/QGIS3/profiles/default/python/plugins
+Plugins > Manage and install plugins... > Search Relief Visualization Toolbox > Install
 ```
 
 The plugin has been tested under QGIS 3.12 and later.
