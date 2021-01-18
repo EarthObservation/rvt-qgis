@@ -3,13 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/metadata.txt" beforeDir="false" afterPath="$PROJECT_DIR$/metadata.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qrvt_dialog_about.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_about.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rvt/blend.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/blend.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rvt/default.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/default.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rvt/vis.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/vis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings/default_settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +120,7 @@
       <workItem from="1610618801510" duration="1946000" />
       <workItem from="1610713915511" duration="7303000" />
       <workItem from="1610793653105" duration="1395000" />
-      <workItem from="1610967530485" duration="6161000" />
+      <workItem from="1610967530485" duration="7235000" />
     </task>
     <servers />
   </component>
