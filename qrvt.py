@@ -85,11 +85,11 @@ class LoadingScreenDlg:
         self.movie.stop()
         self.dlg.done(0)
 
-
 class AboutDlg:
     """About dialog."""
     def __init__(self):
-        self.dlg = uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'))
+        self.dlg = QDialog()
+        uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'), self.dlg)
         self.dlg.setWindowTitle("About")
         self.dlg.setWindowFlags(Qt.X11BypassWindowManagerHint | Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
         self.dlg.setWindowModality(False)
@@ -102,6 +102,7 @@ class AboutDlg:
 
     def button_close_clicked(self):
         self.dlg.close()
+        del self
 
     def button_report_bug_clicked(self):
         webbrowser.open('https://github.com/EarthObservation/rvt-qgis/issues')
@@ -215,6 +216,9 @@ class QRVT:
 
         # is already calculating something
         self.is_calculating = False
+
+        # add all gui events (button clicks, cb state changes, ...)
+        self.add_gui_events()
 
     def initProcessing(self):
         self.provider = Provider()
@@ -331,6 +335,10 @@ class QRVT:
         """Run method that performs all the real work"""
         self.load_raster_layers()
 
+        # show the dialog
+        self.dlg.show()
+
+    def add_gui_events(self):
         # about button clicked
         self.dlg.button_about.clicked.connect(lambda: AboutDlg())
 
@@ -387,9 +395,6 @@ class QRVT:
 
         # blend images button clicked
         self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
-
-        # show the dialog
-        self.dlg.show()
 
     def load_raster_layers(self):
         rvt_select_input = {}
@@ -866,65 +871,63 @@ class QRVT:
 
     def load_dlg2default(self):
         """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.defaul.DeafultValues() ."""
-        default = rvt.default.DefaultValues()
-        default.overwrite = int(self.dlg.check_overwrite.isChecked())
-        default.fill_no_data = int(self.dlg.check_fill_no_data.isChecked())
-        default.keep_original_no_data = int(self.dlg.check_keep_org_no_data.isChecked())
-        default.ve_factor = float(self.dlg.line_ve_factor.text())
-        default.hs_compute = int(self.dlg.group_hillshade.isChecked())
-        default.hs_sun_azi = int(self.dlg.line_hs_sun_azi.text())
-        default.hs_sun_el = int(self.dlg.line_hs_sun_el.text())
-        default.hs_shadow = int(self.dlg.check_hs_shadow.isChecked())
-        default.mhs_compute = int(self.dlg.group_hillshade_multiple.isChecked())
-        default.mhs_nr_dir = int(self.dlg.line_mhs_nr_dir.text())
-        default.mhs_sun_el = int(self.dlg.line_mhs_sun_el.text())
-        default.slp_compute = int(self.dlg.group_slope.isChecked())
-        default.slp_output_units = str(self.dlg.combo_slp_output_units.currentText())
-        default.slrm_compute = int(self.dlg.group_local_relief.isChecked())
-        default.slrm_rad_cell = int(self.dlg.line_slrm_rad_cell.text())
-        default.svf_compute = int(self.dlg.group_sky_view.isChecked())
-        default.svf_n_dir = int(self.dlg.combo_svf_n_dir.currentText())
-        default.svf_r_max = int(self.dlg.line_svf_r_max.text())
+        self.default.overwrite = int(self.dlg.check_overwrite.isChecked())
+        self.default.fill_no_data = int(self.dlg.check_fill_no_data.isChecked())
+        self.default.keep_original_no_data = int(self.dlg.check_keep_org_no_data.isChecked())
+        self.default.ve_factor = float(self.dlg.line_ve_factor.text())
+        self.default.hs_compute = int(self.dlg.group_hillshade.isChecked())
+        self.default.hs_sun_azi = int(self.dlg.line_hs_sun_azi.text())
+        self.default.hs_sun_el = int(self.dlg.line_hs_sun_el.text())
+        self.default.hs_shadow = int(self.dlg.check_hs_shadow.isChecked())
+        self.default.mhs_compute = int(self.dlg.group_hillshade_multiple.isChecked())
+        self.default.mhs_nr_dir = int(self.dlg.line_mhs_nr_dir.text())
+        self.default.mhs_sun_el = int(self.dlg.line_mhs_sun_el.text())
+        self.default.slp_compute = int(self.dlg.group_slope.isChecked())
+        self.default.slp_output_units = str(self.dlg.combo_slp_output_units.currentText())
+        self.default.slrm_compute = int(self.dlg.group_local_relief.isChecked())
+        self.default.slrm_rad_cell = int(self.dlg.line_slrm_rad_cell.text())
+        self.default.svf_compute = int(self.dlg.group_sky_view.isChecked())
+        self.default.svf_n_dir = int(self.dlg.combo_svf_n_dir.currentText())
+        self.default.svf_r_max = int(self.dlg.line_svf_r_max.text())
         if not self.dlg.check_svf_noise.isChecked():
-            default.svf_noise = 0
+            self.default.svf_noise = 0
         elif self.dlg.combo_svf_noise.currentText() == str("low"):
-            default.svf_noise = 1
+            self.default.svf_noise = 1
         elif self.dlg.combo_svf_noise.currentText() == str("medium"):
-            default.svf_noise = 2
+            self.default.svf_noise = 2
         elif self.dlg.combo_svf_noise.currentText() == str("high"):
-            default.svf_noise = 3
-        default.asvf_compute = int(self.dlg.group_anisotropic.isChecked())
+            self.default.svf_noise = 3
+        self.default.asvf_compute = int(self.dlg.group_anisotropic.isChecked())
         if self.dlg.combo_asvf_level.currentText() == str("low"):
-            default.asvf_level = 1
+            self.default.asvf_level = 1
         elif self.dlg.combo_asvf_level.currentText() == str("high"):
-            default.asvf_level = 2
-        default.asvf_dir = int(self.dlg.line_asvf_dir.text())
-        default.pos_opns_compute = int(self.dlg.group_openess_pos.isChecked())
-        default.neg_opns_compute = int(self.dlg.group_openess_neg.isChecked())
-        default.sim_compute = int(self.dlg.group_illumination.isChecked())
-        default.sim_sky_mod = str(self.dlg.combo_sim_sky_mod.currentText())
-        default.sim_nr_dir = int(self.dlg.combo_sim_nr_dir.currentText())
-        default.sim_shadow_dist = int(self.dlg.combo_sim_shadow_dist.currentText())
-        default.ld_compute = int(self.dlg.group_local_dominance.isChecked())
-        default.ld_min_rad = int(self.dlg.line_ld_min_rad.text())
-        default.ld_max_rad = int(self.dlg.line_ld_max_rad.text())
-        default.hs_save_float = int(self.dlg.check_hs_float.isChecked())
-        default.hs_save_8bit = int(self.dlg.check_hs_8bit.isChecked())
-        default.mhs_save_float = int(self.dlg.check_mhs_float.isChecked())
-        default.mhs_save_8bit = int(self.dlg.check_mhs_8bit.isChecked())
-        default.slp_save_float = int(self.dlg.check_slp_float.isChecked())
-        default.slp_save_8bit = int(self.dlg.check_slp_8bit.isChecked())
-        default.slrm_save_float = int(self.dlg.check_slrm_float.isChecked())
-        default.slrm_save_8bit = int(self.dlg.check_slrm_8bit.isChecked())
-        default.svf_save_float = int(self.dlg.check_svf_float.isChecked())
-        default.svf_save_8bit = int(self.dlg.check_svf_8bit.isChecked())
-        default.neg_opns_save_float = int(self.dlg.check_svf_float.isChecked())
-        default.neg_opns_save_8bit = int(self.dlg.check_svf_8bit.isChecked())
-        default.sim_save_float = int(self.dlg.check_sim_float.isChecked())
-        default.sim_save_8bit = int(self.dlg.check_sim_8bit.isChecked())
-        default.ld_save_float = int(self.dlg.check_ld_float.isChecked())
-        default.ld_save_8bit = int(self.dlg.check_ld_8bit.isChecked())
-        self.default = default
+            self.default.asvf_level = 2
+        self.default.asvf_dir = int(self.dlg.line_asvf_dir.text())
+        self.default.pos_opns_compute = int(self.dlg.group_openess_pos.isChecked())
+        self.default.neg_opns_compute = int(self.dlg.group_openess_neg.isChecked())
+        self.default.sim_compute = int(self.dlg.group_illumination.isChecked())
+        self.default.sim_sky_mod = str(self.dlg.combo_sim_sky_mod.currentText())
+        self.default.sim_nr_dir = int(self.dlg.combo_sim_nr_dir.currentText())
+        self.default.sim_shadow_dist = int(self.dlg.combo_sim_shadow_dist.currentText())
+        self.default.ld_compute = int(self.dlg.group_local_dominance.isChecked())
+        self.default.ld_min_rad = int(self.dlg.line_ld_min_rad.text())
+        self.default.ld_max_rad = int(self.dlg.line_ld_max_rad.text())
+        self.default.hs_save_float = int(self.dlg.check_hs_float.isChecked())
+        self.default.hs_save_8bit = int(self.dlg.check_hs_8bit.isChecked())
+        self.default.mhs_save_float = int(self.dlg.check_mhs_float.isChecked())
+        self.default.mhs_save_8bit = int(self.dlg.check_mhs_8bit.isChecked())
+        self.default.slp_save_float = int(self.dlg.check_slp_float.isChecked())
+        self.default.slp_save_8bit = int(self.dlg.check_slp_8bit.isChecked())
+        self.default.slrm_save_float = int(self.dlg.check_slrm_float.isChecked())
+        self.default.slrm_save_8bit = int(self.dlg.check_slrm_8bit.isChecked())
+        self.default.svf_save_float = int(self.dlg.check_svf_float.isChecked())
+        self.default.svf_save_8bit = int(self.dlg.check_svf_8bit.isChecked())
+        self.default.neg_opns_save_float = int(self.dlg.check_svf_float.isChecked())
+        self.default.neg_opns_save_8bit = int(self.dlg.check_svf_8bit.isChecked())
+        self.default.sim_save_float = int(self.dlg.check_sim_float.isChecked())
+        self.default.sim_save_8bit = int(self.dlg.check_sim_8bit.isChecked())
+        self.default.ld_save_float = int(self.dlg.check_ld_float.isChecked())
+        self.default.ld_save_8bit = int(self.dlg.check_ld_8bit.isChecked())
 
     class ComputeVisualizationsTask(QgsTask):
         """Task (thread) for computing visualizations."""
