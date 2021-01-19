@@ -1224,13 +1224,23 @@ class QRVT:
                         terrain_sett_name = str(self.parent.dlg.combo_terrains.currentText())
                         blend_img_name = "{}_{}".format(blend_img_name, terrain_sett_name)
 
+                    blend_img_8bit_name = "{}_8bit.tif".format(blend_img_name)
                     blend_img_name = "{}.tif".format(blend_img_name)
 
                     blend_img_path = os.path.abspath(os.path.join(save_dir, blend_img_name))
-                    print()
+                    blend_img_8bit_path = os.path.abspath(os.path.join(save_dir, blend_img_8bit_name))
+
+                    # checkboxes status
+                    save_float = self.parent.dlg.check_blender_save_float.isChecked()
+                    save_8bit = self.parent.dlg.check_blender_save_8bit.isChecked()
+
                     if add_to_qgis:  # add calculated layers to Qgis
-                        self.parent.remove_layer_by_path(blend_img_path)  # remove layer from qgis if exists
-                        self.parent.iface.addRasterLayer(blend_img_path, blend_img_name)  # add layer to qgis
+                        if save_float:
+                            self.parent.remove_layer_by_path(blend_img_path)  # remove layer from qgis if exists
+                            self.parent.iface.addRasterLayer(blend_img_path, blend_img_name)  # add layer to qgis
+                        if save_8bit:
+                            self.parent.remove_layer_by_path(blend_img_8bit_path)  # remove layer from qgis if exists
+                            self.parent.iface.addRasterLayer(blend_img_8bit_path, blend_img_8bit_name)  # add to qgis
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
@@ -1291,7 +1301,6 @@ class QRVT:
             self.combination.render_all_images(default=self.default, save_visualizations=save_vis,
                                                save_render_path=blend_img_path, save_float=save_float,
                                                save_8bit=save_8bit)
-            print("Lel3")
             end_time = time.time()
             compute_time = end_time - start_time
             self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
