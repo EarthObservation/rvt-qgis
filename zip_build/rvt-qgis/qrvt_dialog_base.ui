@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>980</height>
+    <height>1017</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -349,7 +349,7 @@ QGroupBox
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_11">
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,2,2,2,2,2,2,2,2,2,2,1">
+            <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,2,2,2,2,2,2,2,2,2,2,2,1">
              <property name="sizeConstraint">
               <enum>QLayout::SetDefaultConstraint</enum>
              </property>
@@ -412,8 +412,14 @@ QGroupBox
                    <pointsize>8</pointsize>
                   </font>
                  </property>
+                 <property name="inputMask">
+                  <string/>
+                 </property>
                  <property name="text">
-                  <string>1.00</string>
+                  <string>1.0</string>
+                 </property>
+                 <property name="cursorPosition">
+                  <number>3</number>
                  </property>
                 </widget>
                </item>
@@ -564,7 +570,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -646,7 +652,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -883,7 +889,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>16</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -965,7 +971,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -1396,7 +1402,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -1617,7 +1623,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -2099,7 +2105,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -2726,7 +2732,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -2808,7 +2814,7 @@ QGroupBox
                      <bool>true</bool>
                     </property>
                     <property name="placeholderText">
-                     <string>315</string>
+                     <string/>
                     </property>
                     <property name="clearButtonEnabled">
                      <bool>false</bool>
@@ -2867,6 +2873,240 @@ QGroupBox
                   </item>
                   <item>
                    <widget class="QCheckBox" name="check_ld_8bit">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>8 bit</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="group_multi_relief">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="accessibleDescription">
+                <string>multi_scale_relief_model</string>
+               </property>
+               <property name="title">
+                <string>Multi-scale relief model</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_28">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_26">
+                  <item>
+                   <widget class="QLabel" name="label_2">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Feature minimum [meters]:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="line_msrm_f_min">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="inputMask">
+                     <string/>
+                    </property>
+                    <property name="text">
+                     <string>1</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_3">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Feature maximum [meters]:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="line_msrm_f_max">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="inputMask">
+                     <string/>
+                    </property>
+                    <property name="text">
+                     <string>5</string>
+                    </property>
+                    <property name="cursorPosition">
+                     <number>1</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_4">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Scaling factor:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="line_msrm_scale">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="inputMask">
+                     <string>09</string>
+                    </property>
+                    <property name="text">
+                     <string>3</string>
+                    </property>
+                    <property name="maxLength">
+                     <number>2</number>
+                    </property>
+                    <property name="cursorPosition">
+                     <number>0</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="horizontalSpacer_17">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>258</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_27">
+                  <item>
+                   <widget class="QCheckBox" name="check_msrm_float">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>float</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="check_msrm_8bit">
                     <property name="sizePolicy">
                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                       <horstretch>0</horstretch>
@@ -3241,7 +3481,7 @@ QGroupBox
                 </widget>
                </item>
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_12" stretch="2,8,2">
+                <layout class="QVBoxLayout" name="verticalLayout_12" stretch="2,6,2">
                  <item>
                   <spacer name="verticalSpacer_15">
                    <property name="orientation">
@@ -3346,7 +3586,7 @@ QGroupBox
                 </widget>
                </item>
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_50" stretch="2,8,2">
+                <layout class="QVBoxLayout" name="verticalLayout_50" stretch="2,6,2">
                  <item>
                   <spacer name="verticalSpacer_66">
                    <property name="orientation">
@@ -3428,7 +3668,7 @@ QGroupBox
                 </widget>
                </item>
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_13" stretch="2,8,2">
+                <layout class="QVBoxLayout" name="verticalLayout_13" stretch="2,6,2">
                  <item>
                   <spacer name="verticalSpacer_27">
                    <property name="orientation">
@@ -3766,6 +4006,11 @@ QGroupBox
                    <item>
                     <property name="text">
                      <string>Shadow</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Multi-scale relief model</string>
                     </property>
                    </item>
                   </widget>
@@ -4141,6 +4386,11 @@ QGroupBox
                      <string>Shadow</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Multi-scale relief model</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                  <item>
@@ -4500,6 +4750,11 @@ QGroupBox
                      <string>Shadow</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>Multi-scale relief model</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                  <item>
@@ -4817,6 +5072,11 @@ QGroupBox
                    <item>
                     <property name="text">
                      <string>Shadow</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Multi-scale relief model</string>
                     </property>
                    </item>
                   </widget>
@@ -5255,6 +5515,11 @@ QGroupBox
                    <item>
                     <property name="text">
                      <string>Shadow</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Multi-scale relief model</string>
                     </property>
                    </item>
                   </widget>
