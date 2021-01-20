@@ -20,6 +20,7 @@ Copyright:
 # python libraries
 import numpy as np
 import scipy.interpolate
+import scipy.ndimage.filters
 import warnings
 
 
@@ -413,6 +414,31 @@ def multi_hillshade(dem,
     return multi_hillshade_out
 
 
+def mean_filter(dem, kernel_radius):
+    """Applies mean filter (low pass filter) on DEM. Kernel radius is in pixels. Kernel size is 2 * kernel_radius + 1.
+    It uses matrix shifting (roll) instead of convolutional approach (works faster).
+    It returns mean filtered dem as numpy.ndarray (2D numpy array)."""
+    if kernel_radius == 0:
+        return dem
+    # mean filter
+    radius_cell = int(kernel_radius)  # nr_rolls (shifts) in each direction
+    dem_padded = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
+    mean_out = np.copy(dem_padded)
+    for i_y_roll in range(radius_cell):
+        roll = i_y_roll + 1  # y direction roll
+        mean_out += np.roll(np.copy(dem_padded), roll, axis=0)  # roll positive direction
+        mean_out += np.roll(np.copy(dem_padded), -roll, axis=0)  # roll negative direction
+    y_rolls_sum = np.copy(mean_out)  # sum of all rolls in y direction
+    for i_x_roll in range(radius_cell):  # x direction roll
+        roll = i_x_roll + 1
+        mean_out += np.roll(np.copy(y_rolls_sum), roll, axis=1)  # roll positive direction
+        mean_out += np.roll(np.copy(y_rolls_sum), -roll, axis=1)  # roll negative direction
+    del y_rolls_sum
+    mean_out = mean_out / ((2 * radius_cell + 1) ** 2)  # calculate mean
+    mean_out = mean_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
+    return mean_out
+
+
 def slrm(dem,
          radius_cell=20,
          ve_factor=1,
@@ -474,22 +500,8 @@ def slrm(dem,
         dem = fill_where_nan(dem)
 
     # mean filter
-    radius_cell = int(radius_cell)  # nr_rolls in each direction
-    dem_padded = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
-    slrm_out = np.copy(dem_padded)
-    for i_y_roll in range(radius_cell):
-        roll = i_y_roll + 1  # y direction roll
-        slrm_out += np.roll(np.copy(dem_padded), roll, axis=0)  # roll positive direction
-        slrm_out += np.roll(np.copy(dem_padded), -roll, axis=0)  # roll negative direction
-    y_rolls_sum = np.copy(slrm_out)  # sum of all rolls in y direction
-    for i_x_roll in range(radius_cell):  # x direction roll
-        roll = i_x_roll + 1
-        slrm_out += np.roll(np.copy(y_rolls_sum), roll, axis=1)  # roll positive direction
-        slrm_out += np.roll(np.copy(y_rolls_sum), -roll, axis=1)  # roll negative direction
-    del y_rolls_sum
-    slrm_out = slrm_out / ((2 * radius_cell + 1) ** 2)  # calculate mean, 1=current pixel
-    slrm_out = slrm_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
-    slrm_out = dem - slrm_out
+    dem_mean_filter = mean_filter(dem=dem, kernel_radius=radius_cell)
+    slrm_out = dem - dem_mean_filter
 
     # change result to np.nan where dem is no_data
     if no_data is not None and keep_original_no_data:
@@ -1379,6 +1391,106 @@ def shadow_horizon(dem,
     return sky_illumination(dem=dem, resolution=resolution, shadow_horizon_only=True, shadow_el=shadow_el,
                             shadow_az=shadow_az, ve_factor=ve_factor, no_data=no_data, fill_no_data=fill_no_data,
                             keep_original_no_data=keep_original_no_data)
+
+
+def msrm(dem,
+         resolution,
+         feature_min,
+         feature_max,
+         scaling_factor,
+         ve_factor=1,
+         no_data=None,
+         fill_no_data=False,
+         keep_original_no_data=False
+         ):
+    """
+    Compute Multi-scale relief model (MSRM).
+
+    Parameters
+    ----------
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    resolution : int
+        DEM pixel size.
+    feature_min: float
+        Minimum size of the feature you want to detect in meters.
+    feature_max: float
+        Maximum size of the feature you want to detect in meters.
+    scaling_factor: int
+        Scaling factor, if larger than 1 it provides larger range of MSRM values (increase contrast and visibility),
+        but could result in a loss of sensitivity for intermediate sized features.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+
+    Returns
+    -------
+    msrm_out : numpy.ndarray
+        2D numpy result array of Multi-scale relief model.
+    """
+    if not (1000 >= ve_factor >= -1000):
+        raise Exception("rvt.vis.msrm: ve_factor must be between -1000 and 1000!")
+    if no_data is None and fill_no_data:
+        warnings.warn("rvt.vis.msrm: In order to fill no data (fill_no_data = True) you have to input"
+                      " no_data!")
+    if (no_data is None or not fill_no_data) and keep_original_no_data:
+        warnings.warn("rvt.vis.msrm: In order to keep original no data (keep_original_no_data = True)"
+                      " you have to input no_data and fill_no_data has to be True!")
+
+    # change no_data to np.nan
+    idx_no_data = None
+    if no_data is not None:
+        if keep_original_no_data:  # save indexes where is no_data
+            if np.isnan(no_data):
+                idx_no_data = np.where(np.isnan(dem))
+            else:
+                idx_no_data = np.where(dem == no_data)
+        dem[dem == no_data] = np.nan
+
+    dem = dem.astype(np.float32)
+    dem = dem * ve_factor
+
+    # fill no data with mean of surrounding pixels
+    if fill_no_data:
+        dem = fill_where_nan(dem)
+
+    if feature_min < resolution:  # feature min can't be smaller than resolution
+        feature_min = resolution
+
+    scaling_factor = int(scaling_factor)  # has to be integer
+
+    # calculation of i and n (from article)
+    i = int(np.floor(((feature_min - resolution) / (2 * resolution)) ** (1 / scaling_factor)))
+    n = int(np.ceil(((feature_max - resolution) / (2 * resolution)) ** (1 / scaling_factor)))
+
+    # lpf = low pass filter
+    relief_models_sum = np.zeros(dem.shape)  # sum of all substitution of 2 consecutive
+    nr_relief_models = 0  # number of additions (substitutions of 2 consecutive surfaces)
+    last_lpf_surface = 0
+
+    # generation of filtered surfaces (lpf_surface)
+    for ndx in range(i, n + 1, 1):
+        kernel_radius = ndx ** scaling_factor
+        # generate kernel for low pass filtering
+        lpf_kerenel = np.full((2 * kernel_radius + 1, 2 * kernel_radius + 1), 1 / ((2 * kernel_radius + 1) ** 2))
+        # add mean filtered surface to list
+        lpf_surface = mean_filter(dem=dem, kernel_radius=kernel_radius)
+        if not ndx == i:  # if not first surface
+            relief_models_sum += (last_lpf_surface - lpf_surface)  # substitution of 2 consecutive lpf_surface
+            nr_relief_models += 1
+        last_lpf_surface = lpf_surface
+
+    msrm_out = relief_models_sum / nr_relief_models
+
+    # change result to np.nan where dem is no_data
+    if no_data is not None and keep_original_no_data:
+        msrm_out[idx_no_data] = np.nan
+
+    return msrm_out
 
 
 def fill_where_nan(dem):
