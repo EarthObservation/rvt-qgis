@@ -79,8 +79,8 @@ class RVTHillshade(QgsProcessingAlgorithm):
                 description="Vertical exaggeration factor",
                 type=QgsProcessingParameterNumber.Double,
                 defaultValue=1,
-                minValue=0,
-                maxValue=10
+                minValue=-1000,
+                maxValue=1000
             )
         )
         self.addParameter(

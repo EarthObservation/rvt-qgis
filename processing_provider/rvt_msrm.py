@@ -14,14 +14,16 @@ import rvt.default
 import rvt.vis
 
 
-class RVTSlrm(QgsProcessingAlgorithm):
+class RVTMsrm(QgsProcessingAlgorithm):
     """
-    RVT Simple local relief model.
+    RVT Multi-scale relief model.
     """
     # processing function parameters
     INPUT = 'INPUT'
     VE_FACTOR = 'VE_FACTOR'
-    RADIUS = "RADIUS"
+    FEATURE_MIN = "FEATURE_MIN"
+    FEATURE_MAX = "FEATURE_MAX"
+    SCALING_FACTOR = "SCALING_FACTOR"
     SAVE_AS_8BIT = "SAVE_AS_8BIT"
     FILL_NO_DATA = "FILL_NO_DATA"
     KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
@@ -34,7 +36,7 @@ class RVTSlrm(QgsProcessingAlgorithm):
         return QCoreApplication.translate('Processing', string)
 
     def createInstance(self):
-        return RVTSlrm()
+        return RVTMsrm()
 
     def name(self):
         """
@@ -44,14 +46,14 @@ class RVTSlrm(QgsProcessingAlgorithm):
         lowercase alphanumeric characters only and no spaces or other
         formatting characters.
         """
-        return 'rvt_slrm'
+        return 'rvt_msrm'
 
     def displayName(self):
         """
         Returns the translated algorithm name, which should be used for any
         user-visible display of the algorithm name.
         """
-        return self.tr('RVT Simplified local relief model')
+        return self.tr('RVT Multi-scale relief model')
 
     def shortHelpString(self):
         """
@@ -59,8 +61,7 @@ class RVTSlrm(QgsProcessingAlgorithm):
         should provide a basic description about what the algorithm does and the
         parameters and outputs associated with it..
         """
-        return self.tr("Relief visualization toolbox, Simplified local relief model. Calculates Simplified local"
-                       " relief model.")
+        return self.tr("Relief visualization toolbox, Multi-scale relief model. Calculates Multi-scale relief model.")
 
     def initAlgorithm(self, config=None):
         """
@@ -86,12 +87,32 @@ class RVTSlrm(QgsProcessingAlgorithm):
         )
         self.addParameter(
             QgsProcessingParameterNumber(
-                name="RADIUS",
-                description="Radius for trend assessment [pixels]",
+                name="FEATURE_MIN",
+                description="Feature minimum",
+                type=QgsProcessingParameterNumber.Double,
+                defaultValue=1,
+                minValue=0,
+                maxValue=1000
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="FEATURE_MAX",
+                description="Feature maximum",
+                type=QgsProcessingParameterNumber.Double,
+                defaultValue=5,
+                minValue=0,
+                maxValue=1000
+            )
+        )
+        self.addParameter(
+            QgsProcessingParameterNumber(
+                name="SCALING_FACTOR",
+                description="Scaling factor",
                 type=QgsProcessingParameterNumber.Integer,
-                defaultValue=20,
-                minValue=10,
-                maxValue=50
+                defaultValue=3,
+                minValue=1,
+                maxValue=20
             )
         )
         self.addParameter(
@@ -131,15 +152,24 @@ class RVTSlrm(QgsProcessingAlgorithm):
             self.INPUT,
             context
         )
-
         ve_factor = float(self.parameterAsDouble(
             parameters,
             self.VE_FACTOR,
             context
         ))
-        radius = int(self.parameterAsInt(
+        feature_min = float(self.parameterAsDouble(
             parameters,
-            self.RADIUS,
+            self.FEATURE_MIN,
+            context
+        ))
+        feature_max = float(self.parameterAsDouble(
+            parameters,
+            self.FEATURE_MAX,
+            context
+        ))
+        scaling_factor = int(self.parameterAsDouble(
+            parameters,
+            self.SCALING_FACTOR,
             context
         ))
         save_8bit = bool(self.parameterAsBool(
@@ -170,14 +200,21 @@ class RVTSlrm(QgsProcessingAlgorithm):
         dem_arr = dict_arr_dem["array"]
         no_data = dict_arr_dem["no_data"]
 
-        visualization_arr = rvt.vis.slrm(dem=dem_arr, radius_cell=radius, ve_factor=ve_factor, no_data=no_data,
-                                         fill_no_data=fill_no_data, keep_original_no_data=keep_orig_no_data)
+        print(feature_min)
+        print(feature_max)
+        print(scaling_factor)
+
+        visualization_arr = rvt.vis.msrm(dem=dem_arr, resolution=resolution[0], feature_min=feature_min,
+                                         feature_max=feature_max, scaling_factor=scaling_factor,
+                                         ve_factor=ve_factor, no_data=no_data,
+                                         fill_no_data=fill_no_data,
+                                         keep_original_no_data=keep_orig_no_data)
         if not save_8bit:
             rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                     out_raster_arr=visualization_arr, e_type=6, no_data=np.nan)
         else:
             visualization_8bit_arr = rvt.default.DefaultValues().float_to_8bit(float_arr=visualization_arr,
-                                                                               vis="simple local relief model")
+                                                                               vis="multi-scale relief model")
             rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                     out_raster_arr=visualization_8bit_arr, e_type=1, no_data=np.nan)
 
