@@ -349,6 +349,94 @@ QGroupBox
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_11">
            <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_39">
+             <item>
+              <widget class="QLabel" name="label_40">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vertical exaggeration factor:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="line_ve_factor">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                </font>
+               </property>
+               <property name="inputMask">
+                <string/>
+               </property>
+               <property name="text">
+                <string>1.0</string>
+               </property>
+               <property name="cursorPosition">
+                <number>3</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>0</width>
+                 <height>22</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </item>
+           <item>
             <widget class="QScrollArea" name="scrollArea">
              <property name="widgetResizable">
               <bool>true</bool>
@@ -359,103 +447,15 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>935</width>
-                <height>765</height>
+                <height>735</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_14">
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,2,2,2,2,2,2,2,2,2,2,2">
+                <layout class="QVBoxLayout" name="verticalLayout_6" stretch="2,2,2,2,0,2,2,2,2,2,2">
                  <property name="sizeConstraint">
                   <enum>QLayout::SetDefaultConstraint</enum>
                  </property>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_39">
-                   <item>
-                    <widget class="QLabel" name="label_40">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <pointsize>8</pointsize>
-                       <weight>50</weight>
-                       <bold>false</bold>
-                      </font>
-                     </property>
-                     <property name="text">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Vertical exaggeration factor:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLineEdit" name="line_ve_factor">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <pointsize>8</pointsize>
-                      </font>
-                     </property>
-                     <property name="inputMask">
-                      <string/>
-                     </property>
-                     <property name="text">
-                      <string>1.0</string>
-                     </property>
-                     <property name="cursorPosition">
-                      <number>3</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeType">
-                      <enum>QSizePolicy::Expanding</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>0</width>
-                       <height>22</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </item>
                  <item>
                   <widget class="QGroupBox" name="group_hillshade">
                    <property name="sizePolicy">
@@ -1479,6 +1479,240 @@ QGroupBox
                       </item>
                       <item>
                        <widget class="QCheckBox" name="check_slrm_8bit">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>8 bit</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="group_multi_relief">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="font">
+                    <font>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="accessibleDescription">
+                    <string>multi_scale_relief_model</string>
+                   </property>
+                   <property name="title">
+                    <string>Multi-scale relief model</string>
+                   </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                   <property name="checked">
+                    <bool>false</bool>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_28">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_26">
+                      <item>
+                       <widget class="QLabel" name="label_2">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Feature minimum [meters]:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="line_msrm_f_min">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="inputMask">
+                         <string/>
+                        </property>
+                        <property name="text">
+                         <string>1</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_3">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Feature maximum [meters]:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="line_msrm_f_max">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="inputMask">
+                         <string/>
+                        </property>
+                        <property name="text">
+                         <string>5</string>
+                        </property>
+                        <property name="cursorPosition">
+                         <number>1</number>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_4">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Scaling factor:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="line_msrm_scale">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="inputMask">
+                         <string>09</string>
+                        </property>
+                        <property name="text">
+                         <string>3</string>
+                        </property>
+                        <property name="maxLength">
+                         <number>2</number>
+                        </property>
+                        <property name="cursorPosition">
+                         <number>0</number>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_17">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>258</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_27">
+                      <item>
+                       <widget class="QCheckBox" name="check_msrm_float">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>float</string>
+                        </property>
+                        <property name="checked">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QCheckBox" name="check_msrm_8bit">
                         <property name="sizePolicy">
                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                           <horstretch>0</horstretch>
@@ -2921,240 +3155,6 @@ QGroupBox
                    </layout>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QGroupBox" name="group_multi_relief">
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <weight>75</weight>
-                     <bold>true</bold>
-                    </font>
-                   </property>
-                   <property name="accessibleDescription">
-                    <string>multi_scale_relief_model</string>
-                   </property>
-                   <property name="title">
-                    <string>Multi-scale relief model</string>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="checked">
-                    <bool>false</bool>
-                   </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_28">
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_26">
-                      <item>
-                       <widget class="QLabel" name="label_2">
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                          <weight>50</weight>
-                          <bold>false</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Feature minimum [meters]:</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLineEdit" name="line_msrm_f_min">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                          <weight>50</weight>
-                          <bold>false</bold>
-                         </font>
-                        </property>
-                        <property name="inputMask">
-                         <string/>
-                        </property>
-                        <property name="text">
-                         <string>1</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="label_3">
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                          <weight>50</weight>
-                          <bold>false</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Feature maximum [meters]:</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLineEdit" name="line_msrm_f_max">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                          <weight>50</weight>
-                          <bold>false</bold>
-                         </font>
-                        </property>
-                        <property name="inputMask">
-                         <string/>
-                        </property>
-                        <property name="text">
-                         <string>5</string>
-                        </property>
-                        <property name="cursorPosition">
-                         <number>1</number>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="label_4">
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                          <weight>50</weight>
-                          <bold>false</bold>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>Scaling factor:</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLineEdit" name="line_msrm_scale">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                          <weight>50</weight>
-                          <bold>false</bold>
-                         </font>
-                        </property>
-                        <property name="inputMask">
-                         <string>09</string>
-                        </property>
-                        <property name="text">
-                         <string>3</string>
-                        </property>
-                        <property name="maxLength">
-                         <number>2</number>
-                        </property>
-                        <property name="cursorPosition">
-                         <number>0</number>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_17">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>258</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_27">
-                      <item>
-                       <widget class="QCheckBox" name="check_msrm_float">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>float</string>
-                        </property>
-                        <property name="checked">
-                         <bool>true</bool>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QCheckBox" name="check_msrm_8bit">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <pointsize>8</pointsize>
-                         </font>
-                        </property>
-                        <property name="text">
-                         <string>8 bit</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
                 </layout>
                </item>
               </layout>
@@ -3375,7 +3375,7 @@ QGroupBox
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>952</width>
+                <width>935</width>
                 <height>618</height>
                </rect>
               </property>

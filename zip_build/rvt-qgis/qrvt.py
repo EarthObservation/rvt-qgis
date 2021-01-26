@@ -142,7 +142,7 @@ class QRVT:
             # self.dlg.adjustSize()  # resize dialog to fit content
             # size_dlg = self.dlg.size()
             size_screen = QDesktopWidget().screenGeometry(-1)  # get screen size
-            self.dlg.resize(size_screen.width() * 1/2, size_screen.height() * 4/5)
+            self.dlg.resize(size_screen.width() * 2/3, size_screen.height() * 4/5)
         except:
             pass
 
