@@ -3,16 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/provider.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_asvf.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_asvf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_hillshade.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_hillshade.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_local_dom.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_local_dom.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_multi_hillshade.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_multi_hillshade.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_opns.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_opns.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_sky_illum.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_sky_illum.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_slope.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_slope.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_slrm.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_slrm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processing_provider/rvt_svf.py" beforeDir="false" afterPath="$PROJECT_DIR$/processing_provider/rvt_svf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +125,8 @@
       <workItem from="1611148643123" duration="1899000" />
       <workItem from="1611165558972" duration="4088000" />
       <workItem from="1611214442873" duration="4064000" />
-      <workItem from="1611299149360" duration="369000" />
+      <workItem from="1611299149360" duration="824000" />
+      <workItem from="1611667341899" duration="2340000" />
     </task>
     <servers />
   </component>
@@ -154,6 +147,10 @@
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610393799042" />
     <state x="2512" y="220" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1608206101601" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611668829320">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1611668829320" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608056047963">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

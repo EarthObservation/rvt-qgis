@@ -34,7 +34,7 @@ from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFi
     QThreadPool
 from PyQt5.QtGui import QIcon, QMovie, QPixmap, QPalette, QColor, QPainterPath
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
-    QProgressBar, QApplication, QMessageBox, QErrorMessage, QDialog
+    QProgressBar, QApplication, QMessageBox, QErrorMessage, QDialog, QDesktopWidget
 from PyQt5 import uic
 
 # high dpi scaling
@@ -84,6 +84,7 @@ class LoadingScreenDlg:
     def stop_animation(self):
         self.movie.stop()
         self.dlg.done(0)
+
 
 class AboutDlg:
     """About dialog."""
@@ -137,7 +138,13 @@ class QRVT:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = QRVTDialog()
-        self.dlg.adjustSize()  # resize dialog
+        try:
+            # self.dlg.adjustSize()  # resize dialog to fit content
+            # size_dlg = self.dlg.size()
+            size_screen = QDesktopWidget().screenGeometry(-1)  # get screen size
+            self.dlg.resize(size_screen.width() * 1/2, size_screen.height() * 4/5)
+        except:
+            pass
 
         # Declare instance attributes
         self.actions = []
