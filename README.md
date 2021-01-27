@@ -37,7 +37,7 @@ Please report any bugs and suggestions for improvements.
 
 ## Acknowledgment
 
-Development of RVT Python scripts was part financed by the Slovenian Research Agency core funding No. P2-0406, and by research project No. J6-9395. Development of RVT QGIS plugin was part financed by PTS Consultancy.
+Development of RVT Python scripts was part financed by the Slovenian Research Agency core funding No. P2-0406 and by research project No. J6-9395. Development of RVT QGIS plugin was part financed by PTS Consultancy.
 
 ## License
 This project is licensed under the terms of the [Apache License](LICENSE).
