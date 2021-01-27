@@ -619,6 +619,9 @@ class QRVT:
             # update vis checkboxes
             if self.dlg_combo_vis_list[i_layer].currentText() == "Hillshade":
                 self.dlg.group_hillshade.setChecked(True)
+            if self.dlg_combo_vis_list[i_layer].currentText() == "Shadow":
+                self.dlg.group_hillshade.setChecked(True)
+                self.dlg.check_hs_shadow.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Multiple directions hillshade":
                 self.dlg.group_hillshade_multiple.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Slope gradient":
