@@ -798,6 +798,8 @@ def sky_view_factor(dem,
     if (no_data is None or not fill_no_data) and keep_original_no_data:
         warnings.warn("rvt.vis.sky_view_factor: In order to keep original no data (keep_original_no_data = True)"
                       " you have to input no_data and fill_no_data has to be True!")
+    if resolution < 0:
+        raise Exception("rvt.vis.sky_view_factor: resolution must be a positive number!")
 
     # TODO: proper check of input data: DEM 2D nummeric array, resolution, max_radius....
 
@@ -1152,6 +1154,8 @@ def sky_illumination(dem,
     if (no_data is None or not fill_no_data) and keep_original_no_data:
         warnings.warn("rvt.vis.sky_illumination: In order to keep original no data (keep_original_no_data = True)"
                       " you have to input no_data and fill_no_data has to be True!")
+    if resolution < 0:
+        raise Exception("rvt.vis.sky_illumination: resolution must be a positive number!")
 
     # change no_data to np.nan
     idx_no_data = None
@@ -1387,6 +1391,8 @@ def shadow_horizon(dem,
     if (no_data is None or not fill_no_data) and keep_original_no_data:
         warnings.warn("rvt.vis.shadow_horizon: In order to keep original no data (keep_original_no_data = True)"
                       " you have to input no_data and fill_no_data has to be True!")
+    if resolution < 0:
+        raise Exception("rvt.vis.shadow_horizon: resolution must be a positive number!")
 
     return sky_illumination(dem=dem, resolution=resolution, shadow_horizon_only=True, shadow_el=shadow_el,
                             shadow_az=shadow_az, ve_factor=ve_factor, no_data=no_data, fill_no_data=fill_no_data,
@@ -1440,6 +1446,8 @@ def msrm(dem,
     if (no_data is None or not fill_no_data) and keep_original_no_data:
         warnings.warn("rvt.vis.msrm: In order to keep original no data (keep_original_no_data = True)"
                       " you have to input no_data and fill_no_data has to be True!")
+    if resolution < 0:
+        raise Exception("rvt.vis.msrm: resolution must be a positive number!")
 
     # change no_data to np.nan
     idx_no_data = None

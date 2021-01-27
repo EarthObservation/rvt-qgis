@@ -200,10 +200,6 @@ class RVTMsrm(QgsProcessingAlgorithm):
         dem_arr = dict_arr_dem["array"]
         no_data = dict_arr_dem["no_data"]
 
-        print(feature_min)
-        print(feature_max)
-        print(scaling_factor)
-
         visualization_arr = rvt.vis.msrm(dem=dem_arr, resolution=resolution[0], feature_min=feature_min,
                                          feature_max=feature_max, scaling_factor=scaling_factor,
                                          ve_factor=ve_factor, no_data=no_data,

@@ -197,8 +197,8 @@ class RVTMultiHillshade(QgsProcessingAlgorithm):
             default.fill_no_data = fill_no_data
             default.keep_original_no_data = keep_orig_no_data
             visualization_8bit_arr = default.float_to_8bit(float_arr=dem_arr, vis="multiple directions hillshade",
-                                                                               x_res=resolution[0], y_res=resolution[1],
-                                                                               no_data=no_data)
+                                                           x_res=resolution[0], y_res=resolution[1],
+                                                           no_data=no_data)
             rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                     out_raster_arr=visualization_8bit_arr, e_type=1, no_data=np.nan)
 
