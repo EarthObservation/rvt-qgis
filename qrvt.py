@@ -63,6 +63,7 @@ from processing_provider.provider import Provider
 
 class LoadingScreenDlg:
     """Loading screen animation."""
+
     def __init__(self, gif_path):
         self.dlg = QDialog()
         self.dlg.setWindowTitle("Loading")
@@ -88,6 +89,7 @@ class LoadingScreenDlg:
 
 class AboutDlg:
     """About dialog."""
+
     def __init__(self):
         self.dlg = QDialog()
         uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'), self.dlg)
@@ -138,11 +140,13 @@ class QRVT:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = QRVTDialog()
+
+        # resize window
         try:
-            # self.dlg.adjustSize()  # resize dialog to fit content
-            # size_dlg = self.dlg.size()
+            # self.dlg.adjustSize()  # resize dialog to fit content, doesn't work as before because of scroll area
+            # size_dlg = self.dlg.size()  # get curr size
             size_screen = QDesktopWidget().screenGeometry(-1)  # get screen size
-            self.dlg.resize(size_screen.width() * 2/3, size_screen.height() * 4/5)
+            self.dlg.resize(size_screen.width() * 2 / 3, size_screen.height() * 4 / 5)
         except:
             pass
 
@@ -622,6 +626,8 @@ class QRVT:
             if self.dlg_combo_vis_list[i_layer].currentText() == "Shadow":
                 self.dlg.group_hillshade.setChecked(True)
                 self.dlg.check_hs_shadow.setChecked(True)
+                self.dlg.line_hs_sun_azi.setText(str(135))
+                self.dlg.line_hs_sun_el.setText(str(35))
             if self.dlg_combo_vis_list[i_layer].currentText() == "Multiple directions hillshade":
                 self.dlg.group_hillshade_multiple.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Slope gradient":
@@ -1249,6 +1255,10 @@ class QRVT:
                         self.no_raster = True
                         self.parent.is_calculating = False
                         return False
+                    if not compute:
+                        self.no_raster = False
+                        self.parent.is_calculating = False
+                        return False
                     else:
                         self.no_raster = False
                         self.parent.is_calculating = False
@@ -1336,8 +1346,13 @@ class QRVT:
                 save_dir = self.dlg.line_save_loc.text()
 
             combination_name = str(self.dlg.combo_combinations.currentText())  # get combination name from combo
-            combination_name = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
-            blend_img_name = "{}_{}".format(raster_name, combination_name)
+            combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
+            blend_img_name = "{}_{}".format(raster_name, combination_name_u)
+
+            if combination_name == "Archaeological combined (VAT combined)":
+                self.blend_advanced_custom_combination(combination_name=combination_name, raster_name=raster_name,
+                                                       save_dir=save_dir)
+                return True
 
             terrain_sett_name = None
             if self.dlg.chech_terrain_preset.checkState():
@@ -1369,3 +1384,60 @@ class QRVT:
         self.dlg.combo_terrains.clear()
         for terrain_settings in self.terrains_settings.terrains_settings:
             self.dlg.combo_terrains.addItem(terrain_settings.name)
+
+    def blend_advanced_custom_combination(self, combination_name, raster_name, save_dir):
+        """Method for blending advanced custom combination (for example: combination uses other combinations as layers)
+         that can't be built in dialog. These combinations are hard coded."""
+        if combination_name == "Archaeological combined (VAT combined)":
+            start_time = time.time()
+            self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
+            combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
+            blend_img_path = os.path.abspath(os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u)))
+            # 2nd layer: VAT general, 1st layer: VAT flat with 50% transparency
+            vat_combination_json_path = os.path.abspath(os.path.join(self.plugin_dir, "settings", "blender_VAT.json"))
+            default_1 = rvt.default.DefaultValues()  # VAT flat
+            default_2 = rvt.default.DefaultValues()  # VAT general
+            vat_combination_1 = rvt.blend.BlenderCombination()  # VAT flat
+            vat_combination_2 = rvt.blend.BlenderCombination()  # VAT general
+            vat_combination_1.read_from_file(vat_combination_json_path)
+            vat_combination_2.read_from_file(vat_combination_json_path)
+            terrains_settings = rvt.blend.TerrainsSettings()
+            terrains_settings.read_from_file(self.terrains_settings_path)
+            terrain_1 = terrains_settings.select_terrain_settings_by_name("flat")  # VAT flat
+            terrain_2 = terrains_settings.select_terrain_settings_by_name("general")  # VAT general
+            terrain_1.apply_terrain(default=default_1, combination=vat_combination_1)
+            terrain_2.apply_terrain(default=default_2, combination=vat_combination_2)
+
+            raster_path = self.rvt_select_input[raster_name]
+            dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=raster_path)
+
+            vat_combination_1.add_dem_arr(dem_arr=dict_arr_res_nd["array"],
+                                          dem_resolution=dict_arr_res_nd["resolution"][0])
+            vat_arr_1 = vat_combination_1.render_all_images(default=default_1, no_data=dict_arr_res_nd["no_data"])
+            vat_combination_2.add_dem_arr(dem_arr=dict_arr_res_nd["array"],
+                                          dem_resolution=dict_arr_res_nd["resolution"][0])
+            vat_arr_2 = vat_combination_2.render_all_images(default=default_2, no_data=dict_arr_res_nd["no_data"])
+
+            # blend VAT general and VAT flat together
+            combination = rvt.blend.BlenderCombination()
+            combination.create_layer(vis_method="VAT flat", image=vat_arr_1, normalization="Value", minimum=0,
+                                     maximum=1, blend_mode="Normal", opacity=50)
+            combination.create_layer(vis_method="VAT general", image=vat_arr_2, normalization="Value", minimum=0,
+                                     maximum=1, blend_mode="Normal", opacity=100)
+
+            combination.add_dem_path(dem_path=raster_path)
+            save_vis = self.dlg.check_blender_save_vis.isChecked()
+            save_float = self.dlg.check_blender_save_float.isChecked()
+            save_8bit = self.dlg.check_blender_save_8bit.isChecked()
+            combination.render_all_images(save_render_path=blend_img_path, save_visualizations=save_vis,
+                                          save_float=save_float, save_8bit=save_8bit,
+                                          no_data=dict_arr_res_nd["no_data"])
+            end_time = time.time()
+            compute_time = end_time - start_time
+            self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
+                                             render_path=blend_img_path, default=self.default,
+                                             custom_dir=save_dir, computation_time=compute_time)
+            return True
+        else:
+            return False
+

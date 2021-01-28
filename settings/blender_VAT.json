@@ -37,10 +37,6 @@
                 "max": 1,
                 "blend_mode": "Normal",
                 "opacity": 100
-            },
-            {
-                "layer": "5",
-                "visualization_method": "None"
             }
         ]
     }

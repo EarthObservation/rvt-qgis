@@ -3,9 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/metadata.txt" beforeDir="false" afterPath="$PROJECT_DIR$/metadata.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt.py" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qrvt_dialog_about.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_about.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rvt/blend.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/blend.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rvt/vis.py" beforeDir="false" afterPath="$PROJECT_DIR$/rvt/vis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/blender_file_example.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/blender_file_example.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings/default_blender_combinations.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings/default_blender_combinations.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +35,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/settings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Uporabnik\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins\rvt-qgis\settings" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="plugin_upload" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -131,7 +139,8 @@
       <workItem from="1611740592694" duration="741000" />
       <workItem from="1611742617157" duration="10000" />
       <workItem from="1611743816266" duration="269000" />
-      <workItem from="1611751190682" duration="4479000" />
+      <workItem from="1611751190682" duration="5109000" />
+      <workItem from="1611820021691" duration="13813000" />
     </task>
     <servers />
   </component>
@@ -152,10 +161,10 @@
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610393799042" />
     <state x="2512" y="220" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1608206101601" />
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611668829320">
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611827131131">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1611668829320" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1611827131131" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1608056047963">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
