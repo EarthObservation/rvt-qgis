@@ -41,7 +41,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.3.5</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.3.6</string>
        </property>
       </widget>
      </item>
@@ -240,7 +240,7 @@
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
 No. P2-0406 and by research project No. J6-9395. 
 &lt;br/&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Development of RVT QGIS plugin was part financed by PTS Consultancy&lt;i&gt;via the UK Government Culture Recovery Fund. &lt;/i&gt; &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+• Development of RVT QGIS plugin was part financed by PTS Consultancy via the UK Government Culture Recovery Fund. &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
