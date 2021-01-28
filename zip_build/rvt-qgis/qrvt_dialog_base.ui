@@ -1514,14 +1514,30 @@ QGroupBox
                  </item>
                  <item>
                   <widget class="QGroupBox" name="group_multi_relief">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="minimumSize">
                     <size>
                      <width>0</width>
                      <height>0</height>
                     </size>
                    </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
+                     <pointsize>8</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
                     </font>
