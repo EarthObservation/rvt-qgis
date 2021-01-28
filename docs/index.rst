@@ -35,7 +35,6 @@ When using the tools, please cite:
 
 *   Kokalj, Ž., Somrak, M. 2019. `Why Not a Single Image? Combining Visualizations to Facilitate Fieldwork and On-Screen Mapping <https://www.mdpi.com/2072-4292/11/7/747>`_. Remote Sensing 11(7): 747.
 *   Zakšek, K., Oštir, K., Kokalj, Ž. 2011. `Sky-View Factor as a Relief Visualization Technique <https://www.mdpi.com/2072-4292/3/2/398>`_. Remote Sensing 3: 398-415.
-*   Kokalj, Ž., Zakšek, K., Oštir, K. 2011. `Application of Sky-View Factor for the Visualization of Historic Landscape Features in Lidar-Derived Relief Models <https://www.cambridge.org/core/journals/antiquity/article/application-of-skyview-factor-for-the-visualisation-of-historic-landscape-features-in-lidarderived-relief-models/653F5AE9086CE2028974934C3BBDC104>`_. Antiquity 85, 327: 263-273.
 
 Contributing
 ------------
@@ -49,7 +48,7 @@ Please report any bugs and suggestions for improvements.
 Acknowledgment
 --------------
 
-Development of RVT was part financed by the European Commission's Culture Programme through the ArchaeoLandscapes Europe project and by the Slovenian Research Agency core funding No. P2-0406, and by research projects No. J2-9251, No. J6-7085 and No. J6-9395.
+Development of RVT Python scripts was part financed by the Slovenian Research Agency core funding No. P2-0406 and by research projects No. J6-9395 and J2-9251. Development of RVT QGIS plugin was part financed by PTS Consultancy via the UK Government Culture Recovery Fund.
 
 License
 -------
