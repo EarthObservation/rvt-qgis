@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0877a15-c2dd-4b14-a0ac-298668374fe7" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/qrvt_dialog_base.ui" beforeDir="false" afterPath="$PROJECT_DIR$/qrvt_dialog_base.ui" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +138,11 @@
       <workItem from="1611742617157" duration="10000" />
       <workItem from="1611743816266" duration="269000" />
       <workItem from="1611751190682" duration="5109000" />
+<<<<<<< Updated upstream
       <workItem from="1611820021691" duration="15304000" />
+=======
+      <workItem from="1611820021691" duration="17050000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
@@ -150,10 +158,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1338" y="222" width="440" height="564" key="#com.intellij.ide.macro.MacrosDialog/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610363844305" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1610393799042">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1611841118687">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1610393799042" />
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1611841118687" />
     <state x="2512" y="220" key="FileChooserDialogImpl/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1608206101601" />
     <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611827131131">
       <screen x="0" y="0" width="1920" height="1040" />
