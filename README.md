@@ -6,8 +6,9 @@ Relief Visualization Toolbox was produced to help scientist visualize raster ele
 
 
 ## Installation
-
 Plugin is uploaded to QGIS plugin repository [Relief visualization toolbox, QGIS plugin repository](https://plugins.qgis.org/plugins/rvt-qgis/).
+
+Detailed installation guide is available at [Relief visualization toolbox, QGIS Plugin installation](https://rvt-qgis.readthedocs.io/en/latest/install.html).
 
 To install plugin open QGIS and go to:
 
@@ -19,9 +20,9 @@ The plugin has been tested under QGIS 3.12 and later.
 
 ## Documentation
 
-Documentation of the QGIS plugin is available at [Relief Visualization Toolbox QGIS Plugin](https://rvt-qgis.readthedocs.io/).
+Documentation of the QGIS plugin is available at [Relief Visualization Toolbox QGIS Plugin](https://rvt-qgis.readthedocs.io).
 
-RVT Python documentation is available at [Relief Visualization Toolbox]([Relief Visualization Toolbox — Relief Visualization Toolbox in Python documentation](https://rvt-py.readthedocs.io).
+RVT Python (core library) documentation is available at [Relief Visualization Toolbox in Python documentation](https://rvt-py.readthedocs.io).
 
 ## References
 

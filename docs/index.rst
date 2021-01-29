@@ -16,6 +16,7 @@ Methods currently implemented are:
 *   hillshading from multiple directions,
 *   slope gradient,
 *   simple local relief model,
+*   multi-scale relief model,
 *   sky illumination,
 *   sky-view factor (as developed by our team),
 *   anisotropic sky-view factor,
@@ -24,7 +25,7 @@ Methods currently implemented are:
 
 .. image:: ./figures/RVT_visualisations.jpg
 
-For a more detailed description see references given at each method in the manual and a comparative paper describing them (e.g. Kokalj and Hesse 2017, see below).
+For a more detailed description see references given at each method in the manual and a comparative paper describing them.
 
 RVT can be used as a QGIS plugin, ArcGIS raster functions or as a Python library.
 
