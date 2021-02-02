@@ -197,7 +197,7 @@ class Ui_RvtAbout(object):
         self.label_6.setText(_translate("RvtAbout", "<html><head/><body><p><span style=\" font-weight:600;\">○ © Copyright:</span><br/>\n"
 "&#8203;&#32;&#8203;&#32;&#8203;&#32;&#8203;&#32;\n"
 "Research Center of the Slovenian Academy of Sciences and Arts (ZRC SAZU) and <br>&#8203;&#32;&#8203;&#32;&#8203;&#32;&#8203;&#32;\n"
-" University of Ljubljana, Faculty of civil and geodetic engineering (UL FGG), 2020\n"
+" University of Ljubljana, Faculty of Civil and Geodetic Engineering (UL FGG), 2020\n"
 "<br>\n"
 "</body></html>"))
         self.button_report_bug.setText(_translate("RvtAbout", "Report a bug"))
