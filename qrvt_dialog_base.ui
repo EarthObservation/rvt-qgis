@@ -15,19 +15,7 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>0</width>
-    <height>0</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>16777215</width>
-    <height>16777215</height>
-   </size>
-  </property>
+  </property>  
   <property name="acceptDrops">
    <bool>false</bool>
   </property>
@@ -67,19 +55,7 @@ QGroupBox
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
+       </property>       
        <property name="currentText">
         <string>hansi</string>
        </property>
@@ -117,19 +93,7 @@ QGroupBox
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
+           </property>          
            <property name="font">
             <font>
              <pointsize>8</pointsize>
@@ -151,18 +115,6 @@ QGroupBox
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
            <property name="font">
             <font>
              <pointsize>8</pointsize>
@@ -180,19 +132,7 @@ QGroupBox
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
+           </property>           
            <property name="font">
             <font>
              <pointsize>8</pointsize>
@@ -222,13 +162,7 @@ QGroupBox
              <width>300</width>
              <height>0</height>
             </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
+           </property>           
           </widget>
          </item>
          <item>
@@ -241,18 +175,6 @@ QGroupBox
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
            </property>
            <property name="text">
             <string>Save to</string>
@@ -357,19 +279,7 @@ QGroupBox
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
+               </property>               
                <property name="font">
                 <font>
                  <pointsize>8</pointsize>
@@ -389,19 +299,7 @@ QGroupBox
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
+               </property>               
                <property name="font">
                 <font>
                  <pointsize>8</pointsize>
@@ -447,7 +345,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>935</width>
-                <height>736</height>
+                <height>735</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -463,19 +361,7 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
+                   </property>                   
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -517,19 +403,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -549,18 +423,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -599,19 +461,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -631,18 +481,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -720,19 +558,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -753,19 +579,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -791,18 +605,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -837,18 +639,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -868,18 +658,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -919,18 +697,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -950,18 +716,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -1021,18 +775,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1053,18 +795,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -1091,18 +821,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -1137,18 +855,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1169,21 +875,11 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="accessibleDescription">
@@ -1234,18 +930,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1266,18 +950,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -1304,18 +976,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -1350,18 +1010,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1381,18 +1029,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -1452,18 +1088,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1484,18 +1108,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -1522,18 +1134,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -1702,18 +1302,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1734,18 +1322,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -1772,18 +1348,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -1821,18 +1385,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1852,18 +1404,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -1903,18 +1443,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1935,21 +1463,11 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="accessibleDescription">
@@ -1983,18 +1501,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>115</width>
-                          <height>20</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2015,21 +1521,11 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="accessibleDescription">
@@ -2059,18 +1555,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -2115,18 +1599,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2147,18 +1619,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -2185,18 +1645,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -2231,18 +1679,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2263,21 +1699,11 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="accessibleDescription">
@@ -2303,18 +1729,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2334,18 +1748,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -2409,18 +1811,6 @@ QGroupBox
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2456,18 +1846,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -2505,18 +1883,6 @@ QGroupBox
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -2550,18 +1916,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2582,21 +1936,11 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="accessibleDescription">
@@ -2632,18 +1976,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2663,22 +1995,12 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="accessibleDescription">
@@ -2704,18 +2026,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2735,22 +2045,12 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
                          </font>
                         </property>
                         <property name="accessibleDescription">
@@ -2811,18 +2111,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2843,18 +2131,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -2881,18 +2157,6 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>0</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>16777215</height>
-                    </size>
                    </property>
                    <property name="font">
                     <font>
@@ -2930,18 +2194,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2961,19 +2213,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -3012,18 +2252,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -3043,19 +2271,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
+                        </property>                        
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -3111,18 +2327,6 @@ QGroupBox
                           <verstretch>0</verstretch>
                          </sizepolicy>
                         </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -3143,18 +2347,6 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>
-                        <property name="minimumSize">
-                         <size>
-                          <width>0</width>
-                          <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>16777215</height>
-                         </size>
                         </property>
                         <property name="font">
                          <font>
@@ -3205,18 +2397,6 @@ QGroupBox
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
                  <property name="font">
                   <font>
                    <pointsize>8</pointsize>
@@ -3239,18 +2419,6 @@ QGroupBox
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
                  </property>
                  <property name="font">
                   <font>
@@ -3296,18 +2464,6 @@ QGroupBox
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
                  <property name="font">
                   <font>
                    <pointsize>8</pointsize>
@@ -3328,18 +2484,6 @@ QGroupBox
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
                  </property>
                  <property name="font">
                   <font>
@@ -3392,7 +2536,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>935</width>
-                <height>640</height>
+                <height>618</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -3408,18 +2552,6 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Save visualizations</string>
                      </property>
@@ -3432,18 +2564,6 @@ QGroupBox
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
                      </property>
                      <property name="text">
                       <string>Save float blend</string>
@@ -3460,18 +2580,6 @@ QGroupBox
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
                      </property>
                      <property name="text">
                       <string>Save 8bit blend</string>
@@ -3505,18 +2613,6 @@ QGroupBox
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
                      </property>
                      <property name="text">
                       <string>Blend combination:</string>
@@ -3608,18 +2704,6 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Use preset values for terrain type:</string>
                      </property>
@@ -3653,19 +2737,7 @@ QGroupBox
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
-                       </property>
-                       <property name="minimumSize">
-                        <size>
-                         <width>0</width>
-                         <height>0</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
+                       </property>                       
                       </widget>
                      </item>
                      <item>
@@ -3821,12 +2893,6 @@ QGroupBox
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
                          <property name="text">
                           <string>100</string>
                          </property>
@@ -3850,12 +2916,6 @@ QGroupBox
                           <size>
                            <width>180</width>
                            <height>15</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="maximum">
@@ -3906,12 +2966,6 @@ QGroupBox
                         <size>
                          <width>75</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -3983,12 +3037,6 @@ QGroupBox
                         <size>
                          <width>160</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -4105,12 +3153,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -4166,12 +3208,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -4206,18 +3242,6 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Norm</string>
                      </property>
@@ -4235,12 +3259,6 @@ QGroupBox
                       <size>
                        <width>50</width>
                        <height>20</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
@@ -4280,12 +3298,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -4323,12 +3335,6 @@ QGroupBox
                        <height>0</height>
                       </size>
                      </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Opacity</string>
                      </property>
@@ -4361,12 +3367,6 @@ QGroupBox
                         <size>
                          <width>160</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -4499,12 +3499,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <item>
                         <property name="text">
                          <string>Value</string>
@@ -4564,12 +3558,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -4607,12 +3595,6 @@ QGroupBox
                        <height>20</height>
                       </size>
                      </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>2nd:</string>
                      </property>
@@ -4648,12 +3630,6 @@ QGroupBox
                         <size>
                          <width>75</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -4725,12 +3701,6 @@ QGroupBox
                         <size>
                          <width>160</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -4823,18 +3793,6 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Max</string>
                      </property>
@@ -4852,12 +3810,6 @@ QGroupBox
                       <size>
                        <width>50</width>
                        <height>20</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
@@ -4895,12 +3847,6 @@ QGroupBox
                         <size>
                          <width>75</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -4977,12 +3923,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -5049,12 +3989,6 @@ QGroupBox
                         <size>
                          <width>160</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -5171,12 +4105,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -5214,12 +4142,6 @@ QGroupBox
                        <height>20</height>
                       </size>
                      </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>1st:</string>
                      </property>
@@ -5255,12 +4177,6 @@ QGroupBox
                         <size>
                          <width>75</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -5320,12 +4236,6 @@ QGroupBox
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
                          <property name="text">
                           <string>100</string>
                          </property>
@@ -5349,12 +4259,6 @@ QGroupBox
                           <size>
                            <width>180</width>
                            <height>15</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="maximum">
@@ -5387,12 +4291,6 @@ QGroupBox
                       <size>
                        <width>50</width>
                        <height>20</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
@@ -5430,12 +4328,6 @@ QGroupBox
                         <size>
                          <width>50</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -5492,12 +4384,6 @@ QGroupBox
                         <size>
                          <width>160</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -5614,12 +4500,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <item>
                         <property name="text">
                          <string>Value</string>
@@ -5679,12 +4559,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <item>
                         <property name="text">
                          <string>Value</string>
@@ -5720,18 +4594,6 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Min</string>
                      </property>
@@ -5751,12 +4613,6 @@ QGroupBox
                            <horstretch>0</horstretch>
                            <verstretch>0</verstretch>
                           </sizepolicy>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
-                          </size>
                          </property>
                          <property name="text">
                           <string>100</string>
@@ -5781,12 +4637,6 @@ QGroupBox
                           <size>
                            <width>180</width>
                            <height>15</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="maximum">
@@ -5815,18 +4665,6 @@ QGroupBox
                        <verstretch>0</verstretch>
                       </sizepolicy>
                      </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Blending mode</string>
                      </property>
@@ -5839,18 +4677,6 @@ QGroupBox
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
                      </property>
                      <property name="text">
                       <string>Visualization method</string>
@@ -5869,12 +4695,6 @@ QGroupBox
                       <size>
                        <width>50</width>
                        <height>20</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="text">
@@ -5912,12 +4732,6 @@ QGroupBox
                         <size>
                          <width>50</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -5962,12 +4776,6 @@ QGroupBox
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
                          <property name="text">
                           <string>100</string>
                          </property>
@@ -5991,12 +4799,6 @@ QGroupBox
                           <size>
                            <width>180</width>
                            <height>15</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="maximum">
@@ -6047,12 +4849,6 @@ QGroupBox
                         <size>
                          <width>50</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <property name="text">
@@ -6108,12 +4904,6 @@ QGroupBox
                         <size>
                          <width>75</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <item>
@@ -6190,12 +4980,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -6251,12 +5035,6 @@ QGroupBox
                          <height>20</height>
                         </size>
                        </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
-                        </size>
-                       </property>
                        <property name="text">
                         <string>0.0000</string>
                        </property>
@@ -6310,12 +5088,6 @@ QGroupBox
                         <size>
                          <width>50</width>
                          <height>20</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>16777215</width>
-                         <height>16777215</height>
                         </size>
                        </property>
                        <property name="text">
@@ -6375,12 +5147,6 @@ QGroupBox
                            <verstretch>0</verstretch>
                           </sizepolicy>
                          </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
                          <property name="text">
                           <string>100</string>
                          </property>
@@ -6404,12 +5170,6 @@ QGroupBox
                           <size>
                            <width>180</width>
                            <height>15</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
                           </size>
                          </property>
                          <property name="maximum">
@@ -6480,12 +5240,6 @@ QGroupBox
                        <height>25</height>
                       </size>
                      </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
                      <property name="text">
                       <string>Blend images</string>
                      </property>
@@ -6551,12 +5305,6 @@ QGroupBox
           <size>
            <width>0</width>
            <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
           </size>
          </property>
          <property name="font">

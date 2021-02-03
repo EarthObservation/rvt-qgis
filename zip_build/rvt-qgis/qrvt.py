@@ -26,6 +26,7 @@ import importlib
 import time
 import subprocess
 import threading
+import json
 import os
 import sys
 import webbrowser
@@ -36,14 +37,6 @@ from PyQt5.QtGui import QIcon, QMovie, QPixmap, QPalette, QColor, QPainterPath
 from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
     QProgressBar, QApplication, QMessageBox, QErrorMessage, QDialog, QDesktopWidget
 from PyQt5 import uic
-
-# high dpi scaling
-os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
-os.environ["QT_SCREEN_SCALE_FACTORS"] = "1"
-os.environ["QT_SCALE_FACTOR"] = "1"
-os.environ["QT_DEVICE_PIXEL_RATIO "] = "0"
-PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
-PyQt5.QtWidgets.QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)  # use highdpi icons
 
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
 
@@ -57,7 +50,9 @@ from .qrvt_dialog import QRVTDialog
 
 sys.path.append(os.path.dirname(__file__))
 import rvt.default
+importlib.reload(rvt.default)
 import rvt.blend
+importlib.reload(rvt.blend)
 from processing_provider.provider import Provider
 
 
@@ -142,13 +137,13 @@ class QRVT:
         self.dlg = QRVTDialog()
 
         # resize window
-        try:
-            # self.dlg.adjustSize()  # resize dialog to fit content, doesn't work as before because of scroll area
-            # size_dlg = self.dlg.size()  # get curr size
-            size_screen = QDesktopWidget().screenGeometry(-1)  # get screen size
-            self.dlg.resize(size_screen.width() * 2 / 3, size_screen.height() * 4 / 5)
-        except:
-            pass
+        # try:
+        #     # self.dlg.adjustSize()  # resize dialog to fit content, doesn't work as before because of scroll area
+        #     # size_dlg = self.dlg.size()  # get curr size
+        #     size_screen = QDesktopWidget().screenGeometry(-1)  # get screen size
+        #     self.dlg.resize(size_screen.width() * 2 / 3, size_screen.height() * 4 / 5)
+        # except:
+        #     pass
 
         # Declare instance attributes
         self.actions = []
@@ -230,6 +225,11 @@ class QRVT:
 
         # add all gui events (button clicks, cb state changes, ...)
         self.add_gui_events()
+
+        # load saved plugin size if exists
+        self.plugin_size_json_path = os.path.abspath(os.path.join(self.plugin_dir, "settings", "plugin_size.json"))
+        if os.path.isfile(self.plugin_size_json_path):
+            self.load_plugin_size(self.plugin_size_json_path)
 
     def initProcessing(self):
         self.provider = Provider()
@@ -371,6 +371,7 @@ class QRVT:
         # VISUALIZATIONS
         # start button pressed
         self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations_clicked())
+        self.dlg.button_start.clicked.connect(lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
         # check float 8bit checkbox changes
         self.check_checkbox_float_8bit_change()
         # check svf noise rem
@@ -406,6 +407,7 @@ class QRVT:
 
         # blend images button clicked
         self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
+        self.dlg.button_blend.clicked.connect(lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
 
     def load_raster_layers(self):
         rvt_select_input = {}
@@ -1441,3 +1443,21 @@ class QRVT:
         else:
             return False
 
+    def save_plugin_size(self, json_path):
+        try:
+            dat = open(json_path, "w")
+            size_dlg = self.dlg.size()
+            out_json = {"width": size_dlg.width(), "height": size_dlg.height()}
+            json.dump(out_json, dat)
+            dat.close()
+        except:
+            pass
+
+    def load_plugin_size(self, json_path):
+        try:
+            dat = open(json_path, "r")
+            in_json = json.load(dat)
+            dat.close()
+            self.dlg.resize(in_json["width"], in_json["height"])
+        except:
+            pass

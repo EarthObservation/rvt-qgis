@@ -141,3 +141,5 @@ cython_debug/
 
 # VS Code
 .vscode/
+
+settings/plugin_size.json

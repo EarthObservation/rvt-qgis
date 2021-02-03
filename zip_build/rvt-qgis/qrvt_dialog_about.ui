@@ -21,18 +21,6 @@
      </property>
      <item>
       <widget class="QLabel" name="label">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="font">
         <font>
          <pointsize>10</pointsize>
@@ -41,7 +29,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.3.6</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.4.0</string>
        </property>
       </widget>
      </item>
@@ -49,18 +37,6 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLabel" name="label_2">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="text">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
 &lt;span style=&quot; font-weight:600;&quot;&gt;○ By:&lt;/span&gt;
@@ -160,21 +136,11 @@
      </item>
      <item>
       <widget class="QLabel" name="label_3">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
 &lt;span style=&quot; font-weight:600;&quot;&gt;○ Online resources:&lt;/span&gt;&lt;br&gt;
+
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://rvt-qgis.readthedocs.io/&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin documentation&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/rvt-qgis&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
@@ -194,18 +160,6 @@
      </item>
      <item>
       <widget class="QLabel" name="label_4">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
 &lt;span style=&quot; font-weight:600;&quot;&gt;○ License agreement:&lt;/span&gt; &lt;br&gt;
@@ -220,18 +174,6 @@
      </item>
      <item>
       <widget class="QLabel" name="label_5">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;○ Acknowledgment:&lt;/span&gt;&lt;br/&gt;
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;

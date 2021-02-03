@@ -44,7 +44,11 @@ PLUGINNAME = rvt-qgis
 
 PY_FILES = \
 	__init__.py \
-	qrvt.py qrvt_dialog.py
+	qrvt.py qrvt_dialog.py \
+	rvt\__init__.py \
+	rvt\default.py rvt\blend.py \
+	processing_provider\provider.py
+
 
 UI_FILES = qrvt_dialog_base.ui qrvt_dialog_about.ui
 
