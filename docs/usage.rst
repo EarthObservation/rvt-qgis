@@ -45,7 +45,7 @@ If you check the ``Use preset values for terrain type`` it applies the selected 
 
 The blended image is stored as a GeoTIFF in the same folder as the input file or to a custom location (if ``Save to raster location`` check box is unchecked and a directory is set in the line edit next to it).
 
-Usung the processing functions
+Using the processing functions
 ==========================
 
 #. In QGIS go to the ``Processing Toolbox → Relief visualization toolbox`` where all the Relief Visualization Toolbox visualization functions are accessible.
