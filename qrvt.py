@@ -856,6 +856,7 @@ class QRVT:
         if self.default.svf_noise == 0:
             self.dlg.check_svf_noise.setChecked(False)
         else:
+            self.dlg.check_svf_noise.setChecked(True)
             index_combo_svf_noise = 0
             if self.default.svf_noise == 1:
                 index_combo_svf_noise = self.dlg.combo_svf_noise.findText("low")
@@ -863,8 +864,7 @@ class QRVT:
                 index_combo_svf_noise = self.dlg.combo_svf_noise.findText("medium")
             elif self.default.svf_noise == 3:
                 index_combo_svf_noise = self.dlg.combo_svf_noise.findText("high")
-            if index_combo_svf_noise >= 0:
-                self.dlg.combo_slp_output_units.setCurrentIndex(index_combo_svf_noise)
+            self.dlg.combo_svf_noise.setCurrentIndex(index_combo_svf_noise)
         self.checkbox_svf_noise_check()
         self.dlg.group_anisotropic.setChecked(bool(self.default.asvf_compute))
         index_combo_asvf_level = self.dlg.combo_asvf_level.findText(str(self.default.asvf_level))
