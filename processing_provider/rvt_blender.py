@@ -25,7 +25,7 @@ class RVTBlender(QgsProcessingAlgorithm):
     TERRAIN_TYPE = 'TERRAIN_TYPE'
     OUTPUT = 'OUTPUT'
     NOISE_REMOVE = "NOISE_REMOVE"
-    SAVE_AS_8BIT = "SAVE_AS_8BIT"
+    # SAVE_AS_8BIT = "SAVE_AS_8BIT"
     FILL_NO_DATA = "FILL_NO_DATA"
     KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
 
@@ -107,13 +107,13 @@ class RVTBlender(QgsProcessingAlgorithm):
                 options=self.terrains_sett_names
             )
         )
-        self.addParameter(
-            QgsProcessingParameterBoolean(
-                name="SAVE_AS_8BIT",
-                description="Save as 8bit raster",
-                defaultValue=False
-            )
-        )
+        # self.addParameter(
+        #     QgsProcessingParameterBoolean(
+        #         name="SAVE_AS_8BIT",
+        #         description="Save as 8bit raster",
+        #         defaultValue=False
+        #     )
+        # )
         self.addParameter(
             QgsProcessingParameterBoolean(
                 name="FILL_NO_DATA",
@@ -154,11 +154,11 @@ class RVTBlender(QgsProcessingAlgorithm):
             self.TERRAIN_TYPE,
             context
         ))]
-        save_8bit = bool(self.parameterAsBool(
-            parameters,
-            self.SAVE_AS_8BIT,
-            context
-        ))
+        # save_8bit = bool(self.parameterAsBool(
+        #     parameters,
+        #     self.SAVE_AS_8BIT,
+        #     context
+        # ))
         fill_no_data = bool(self.parameterAsBool(
             parameters,
             self.FILL_NO_DATA,
@@ -182,9 +182,9 @@ class RVTBlender(QgsProcessingAlgorithm):
         no_data = dict_arr_dem["no_data"]
 
         # if save_8bit = True save_float is False, can only output one
-        save_float = True
-        if save_8bit:
-            save_float = False
+        # save_float = True
+        # if save_8bit:
+        #     save_float = False
 
         # advanced custom combinations (hard coded) blending (which can't be created in dialog)
         if combination_name == "Archaeological combined (VAT combined)":
@@ -224,7 +224,7 @@ class RVTBlender(QgsProcessingAlgorithm):
                                      maximum=1, blend_mode="Normal", opacity=100)
             combination.add_dem_path(dem_path=dem_path)
             combination.render_all_images(save_render_path=visualization_path, save_visualizations=False,
-                                          save_float=save_float, save_8bit=save_8bit,
+                                          save_float=True, save_8bit=False,
                                           no_data=no_data)
         # normal combination blending
         else:
@@ -242,7 +242,7 @@ class RVTBlender(QgsProcessingAlgorithm):
             combination.add_dem_path(dem_path)
             combination.render_all_images(default=default, save_visualizations=False,
                                           save_render_path=visualization_path,
-                                          save_float=save_float, save_8bit=save_8bit, no_data=no_data)
+                                          save_float=True, save_8bit=False, no_data=no_data)
 
         result = {self.OUTPUT: visualization_path}
         return result
