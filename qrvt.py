@@ -1351,34 +1351,35 @@ class QRVT:
             combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
             blend_img_name = "{}_{}".format(raster_name, combination_name_u)
 
+            # custom advanced (hard coded) blender combinations (can't be selected in dialog)
             if combination_name == "Archaeological combined (VAT combined)":
                 self.blend_advanced_custom_combination(combination_name=combination_name, raster_name=raster_name,
                                                        save_dir=save_dir)
-                return True
+            # normal dialog blender combination
+            else:
+                terrain_sett_name = None
+                if self.dlg.chech_terrain_preset.checkState():
+                    terrain_sett_name = str(self.dlg.combo_terrains.currentText())
+                    blend_img_name = "{}_{}".format(blend_img_name, terrain_sett_name)
 
-            terrain_sett_name = None
-            if self.dlg.chech_terrain_preset.checkState():
-                terrain_sett_name = str(self.dlg.combo_terrains.currentText())
-                blend_img_name = "{}_{}".format(blend_img_name, terrain_sett_name)
-
-            blend_img_name = "{}.tif".format(blend_img_name)
-            blend_img_path = os.path.abspath(os.path.join(save_dir, blend_img_name))
-            dict_arr_res = rvt.default.get_raster_arr(raster_path)
-            self.load_dlg2combination()
-            self.load_dlg2default()
-            self.combination.add_dem_path(raster_path)
-            save_vis = self.dlg.check_blender_save_vis.isChecked()
-            self.combination.add_dem_arr(dem_arr=dict_arr_res["array"], dem_resolution=dict_arr_res["resolution"][0])
-            save_float = self.dlg.check_blender_save_float.isChecked()
-            save_8bit = self.dlg.check_blender_save_8bit.isChecked()
-            self.combination.render_all_images(default=self.default, save_visualizations=save_vis,
-                                               save_render_path=blend_img_path, save_float=save_float,
-                                               save_8bit=save_8bit)
-            end_time = time.time()
-            compute_time = end_time - start_time
-            self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
-                                             render_path=blend_img_path, terrain_sett_name=terrain_sett_name,
-                                             default=self.default, custom_dir=save_dir, computation_time=compute_time)
+                blend_img_name = "{}.tif".format(blend_img_name)
+                blend_img_path = os.path.abspath(os.path.join(save_dir, blend_img_name))
+                dict_arr_res = rvt.default.get_raster_arr(raster_path)
+                self.load_dlg2combination()
+                self.load_dlg2default()
+                self.combination.add_dem_path(raster_path)
+                save_vis = self.dlg.check_blender_save_vis.isChecked()
+                self.combination.add_dem_arr(dem_arr=dict_arr_res["array"], dem_resolution=dict_arr_res["resolution"][0])
+                save_float = self.dlg.check_blender_save_float.isChecked()
+                save_8bit = self.dlg.check_blender_save_8bit.isChecked()
+                self.combination.render_all_images(default=self.default, save_visualizations=save_vis,
+                                                   save_render_path=blend_img_path, save_float=save_float,
+                                                   save_8bit=save_8bit)
+                end_time = time.time()
+                compute_time = end_time - start_time
+                self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
+                                                 render_path=blend_img_path, terrain_sett_name=terrain_sett_name,
+                                                 default=self.default, custom_dir=save_dir, computation_time=compute_time)
         return True
 
     def load_terrains_settings2dlg(self):
@@ -1391,24 +1392,40 @@ class QRVT:
         """Method for blending advanced custom combination (for example: combination uses other combinations as layers)
          that can't be built in dialog. These combinations are hard coded."""
         if combination_name == "Archaeological combined (VAT combined)":
+            # 1st layer: VAT general 50% transparency, 2nd layer: VAT flat
             start_time = time.time()
             self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
             combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
             blend_img_path = os.path.abspath(os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u)))
             # 2nd layer: VAT general, 1st layer: VAT flat with 50% transparency
             vat_combination_json_path = os.path.abspath(os.path.join(self.plugin_dir, "settings", "blender_VAT.json"))
-            default_1 = rvt.default.DefaultValues()  # VAT flat
-            default_2 = rvt.default.DefaultValues()  # VAT general
-            vat_combination_1 = rvt.blend.BlenderCombination()  # VAT flat
-            vat_combination_2 = rvt.blend.BlenderCombination()  # VAT general
+
+            default_1 = rvt.default.DefaultValues()  # VAT general
+            default_2 = rvt.default.DefaultValues()  # VAT flat
+            # check fill no_data and original no data
+            if self.dlg.check_fill_no_data.isChecked():
+                default_1.fill_no_data = 1
+                default_2.fill_no_data = 1
+            else:
+                default_1.fill_no_data = 0
+                default_2.fill_no_data = 0
+            if self.dlg.check_keep_org_no_data.isChecked():
+                default_1.keep_original_no_data = 1
+                default_2.keep_original_no_data = 1
+            else:
+                default_1.keep_original_no_data = 0
+                default_2.keep_original_no_data = 0
+
+            vat_combination_1 = rvt.blend.BlenderCombination()  # VAT general
+            vat_combination_2 = rvt.blend.BlenderCombination()  # VAT flat
             vat_combination_1.read_from_file(vat_combination_json_path)
             vat_combination_2.read_from_file(vat_combination_json_path)
             terrains_settings = rvt.blend.TerrainsSettings()
             terrains_settings.read_from_file(self.terrains_settings_path)
-            terrain_1 = terrains_settings.select_terrain_settings_by_name("flat")  # VAT flat
-            terrain_2 = terrains_settings.select_terrain_settings_by_name("general")  # VAT general
-            terrain_1.apply_terrain(default=default_1, combination=vat_combination_1)
-            terrain_2.apply_terrain(default=default_2, combination=vat_combination_2)
+            terrain_1 = terrains_settings.select_terrain_settings_by_name("general")  # VAT general
+            terrain_2 = terrains_settings.select_terrain_settings_by_name("flat")  # VAT flat
+            terrain_1.apply_terrain(default=default_1, combination=vat_combination_1)  # VAT general
+            terrain_2.apply_terrain(default=default_2, combination=vat_combination_2)  # VAT flat
 
             raster_path = self.rvt_select_input[raster_name]
             dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=raster_path)
@@ -1422,9 +1439,9 @@ class QRVT:
 
             # blend VAT general and VAT flat together
             combination = rvt.blend.BlenderCombination()
-            combination.create_layer(vis_method="VAT flat", image=vat_arr_1, normalization="Value", minimum=0,
+            combination.create_layer(vis_method="VAT general", image=vat_arr_1, normalization="Value", minimum=0,
                                      maximum=1, blend_mode="Normal", opacity=50)
-            combination.create_layer(vis_method="VAT general", image=vat_arr_2, normalization="Value", minimum=0,
+            combination.create_layer(vis_method="VAT flat", image=vat_arr_2, normalization="Value", minimum=0,
                                      maximum=1, blend_mode="Normal", opacity=100)
 
             combination.add_dem_path(dem_path=raster_path)

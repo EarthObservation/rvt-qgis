@@ -175,13 +175,7 @@ class RVTBlender(QgsProcessingAlgorithm):
             context,
         ))
 
-        # apply combinations and terrain settings
-        default = rvt.default.DefaultValues()
-        combination = self.combinations.select_combination_by_name(combination_name)
-        terrain_sett = self.terrains_settings.select_terrain_settings_by_name(terrain_name)
         dem_path = str(dem_layer.source())
-        terrain_sett.apply_terrain(default, combination)
-
         dict_arr_dem = rvt.default.get_raster_arr(dem_path)
         resolution = dict_arr_dem["resolution"]  # (x_res, y_res)
         dem_arr = dict_arr_dem["array"]
@@ -192,14 +186,63 @@ class RVTBlender(QgsProcessingAlgorithm):
         if save_8bit:
             save_float = False
 
-        # set fill_no_data and keep_orig_no_data
-        default.fill_no_data = fill_no_data
-        default.keep_original_no_data = keep_orig_no_data
+        # advanced custom combinations (hard coded) blending (which can't be created in dialog)
+        if combination_name == "Archaeological combined (VAT combined)":
+            vat_combination_json_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                                                                     "settings", "blender_VAT.json"))
+            default_1 = rvt.default.DefaultValues()  # VAT general
+            default_2 = rvt.default.DefaultValues()  # VAT flat
 
-        combination.add_dem_arr(dem_arr=dem_arr, dem_resolution=resolution[0])
-        combination.add_dem_path(dem_path)
-        combination.render_all_images(default=default, save_visualizations=False, save_render_path=visualization_path,
-                                      save_float=True, no_data=no_data)
+            # set fill_no_data and keep_orig_no_data
+            default_1.fill_no_data = fill_no_data
+            default_1.keep_original_no_data = keep_orig_no_data
+            default_2.fill_no_data = fill_no_data
+            default_2.keep_original_no_data = keep_orig_no_data
+
+            vat_combination_1 = rvt.blend.BlenderCombination()  # VAT general
+            vat_combination_2 = rvt.blend.BlenderCombination()  # VAT flat
+            vat_combination_1.read_from_file(vat_combination_json_path)
+            vat_combination_2.read_from_file(vat_combination_json_path)
+            terrain_1 = self.terrains_settings.select_terrain_settings_by_name("general")  # VAT general
+            terrain_2 = self.terrains_settings.select_terrain_settings_by_name("flat")  # VAT flat
+            terrain_1.apply_terrain(default=default_1, combination=vat_combination_1)  # VAT general
+            terrain_2.apply_terrain(default=default_2, combination=vat_combination_2)  # VAT flat
+
+            dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=dem_path)
+            vat_combination_1.add_dem_arr(dem_arr=dict_arr_res_nd["array"],
+                                          dem_resolution=dict_arr_res_nd["resolution"][0])
+            vat_arr_1 = vat_combination_1.render_all_images(default=default_1, no_data=dict_arr_res_nd["no_data"])
+            vat_combination_2.add_dem_arr(dem_arr=dict_arr_res_nd["array"],
+                                          dem_resolution=dict_arr_res_nd["resolution"][0])
+            vat_arr_2 = vat_combination_2.render_all_images(default=default_2, no_data=dict_arr_res_nd["no_data"])
+
+            # blend VAT general and VAT flat together
+            combination = rvt.blend.BlenderCombination()
+            combination.create_layer(vis_method="VAT general", image=vat_arr_1, normalization="Value", minimum=0,
+                                     maximum=1, blend_mode="Normal", opacity=50)
+            combination.create_layer(vis_method="VAT flat", image=vat_arr_2, normalization="Value", minimum=0,
+                                     maximum=1, blend_mode="Normal", opacity=100)
+            combination.add_dem_path(dem_path=dem_path)
+            combination.render_all_images(save_render_path=visualization_path, save_visualizations=False,
+                                          save_float=save_float, save_8bit=save_8bit,
+                                          no_data=no_data)
+        # normal combination blending
+        else:
+            # create default
+            default = rvt.default.DefaultValues()
+            # set fill_no_data and keep_orig_no_data
+            default.fill_no_data = fill_no_data
+            default.keep_original_no_data = keep_orig_no_data
+            # create combination
+            combination = self.combinations.select_combination_by_name(combination_name)
+            # apply terrain settings
+            terrain_sett = self.terrains_settings.select_terrain_settings_by_name(terrain_name)
+            terrain_sett.apply_terrain(default, combination)
+            combination.add_dem_arr(dem_arr=dem_arr, dem_resolution=resolution[0])
+            combination.add_dem_path(dem_path)
+            combination.render_all_images(default=default, save_visualizations=False,
+                                          save_render_path=visualization_path,
+                                          save_float=save_float, save_8bit=save_8bit, no_data=no_data)
 
         result = {self.OUTPUT: visualization_path}
         return result
