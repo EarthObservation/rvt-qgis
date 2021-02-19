@@ -51,13 +51,22 @@ Acknowledgment
 
 Development of RVT Python scripts was part financed by the Slovenian Research Agency core funding No. P2-0406 and by research projects No. J6-9395 and J2-9251. Development of RVT QGIS plugin was part financed by PTS Consultancy via the UK Government Culture Recovery Fund.
 
+Versions
+--------
+
+v 0.5.0
+~~~~~~~
+
+*   Added Other tab where you can cut-off raster values, normalize raster and change raster to 8 bit.
+*   Plugin saves all output raster files as LZW compressed GeoTIFFs (previously it was saving without compression).
+
 License
 -------
 
 This project is licensed under the terms of the `Apache License <http://www.apache.org/licenses/LICENSE-2.0>`_.
 
 
-© Copyright 2020 ZRC SAZU and University of Ljubljana
+© Copyright 2020 Research Centre of the Slovenian Academy of Sciences and Arts (ZRC SAZU) and University of Ljubljana, Faculty of civil and geodetic engineering (UL FGG)
 
 .. toctree::
    :maxdepth: 1

@@ -41,6 +41,7 @@ from PyQt5 import uic
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
 
 from osgeo import gdal
+import numpy as np
 
 # Initialize Qt resources from file resources.py
 from .resources import *
@@ -50,9 +51,17 @@ from .qrvt_dialog import QRVTDialog
 
 sys.path.append(os.path.dirname(__file__))
 import rvt.default
+
 importlib.reload(rvt.default)
 import rvt.blend
+
 importlib.reload(rvt.blend)
+import rvt.blend_func
+
+importlib.reload(rvt.blend_func)
+import rvt.vis
+
+importlib.reload(rvt.vis)
 from processing_provider.provider import Provider
 
 
@@ -371,7 +380,8 @@ class QRVT:
         # VISUALIZATIONS
         # start button pressed
         self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations_clicked())
-        self.dlg.button_start.clicked.connect(lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
+        self.dlg.button_start.clicked.connect(
+            lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
         # check float 8bit checkbox changes
         self.check_checkbox_float_8bit_change()
         # check svf noise rem
@@ -407,7 +417,12 @@ class QRVT:
 
         # blend images button clicked
         self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
-        self.dlg.button_blend.clicked.connect(lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
+        self.dlg.button_blend.clicked.connect(
+            lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
+
+        # OTHER
+        # Cut-off button clicked
+        self.dlg.button_cutoff.clicked.connect(lambda: self.compute_cut_off_norm_8bit_clicked())
 
     def load_raster_layers(self):
         rvt_select_input = {}
@@ -1369,7 +1384,8 @@ class QRVT:
                 self.load_dlg2default()
                 self.combination.add_dem_path(raster_path)
                 save_vis = self.dlg.check_blender_save_vis.isChecked()
-                self.combination.add_dem_arr(dem_arr=dict_arr_res["array"], dem_resolution=dict_arr_res["resolution"][0])
+                self.combination.add_dem_arr(dem_arr=dict_arr_res["array"],
+                                             dem_resolution=dict_arr_res["resolution"][0])
                 save_float = self.dlg.check_blender_save_float.isChecked()
                 save_8bit = self.dlg.check_blender_save_8bit.isChecked()
                 self.combination.render_all_images(default=self.default, save_visualizations=save_vis,
@@ -1379,7 +1395,200 @@ class QRVT:
                 compute_time = end_time - start_time
                 self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
                                                  render_path=blend_img_path, terrain_sett_name=terrain_sett_name,
-                                                 default=self.default, custom_dir=save_dir, computation_time=compute_time)
+                                                 default=self.default, custom_dir=save_dir,
+                                                 computation_time=compute_time)
+        return True
+
+    class ComputeCutoff(QgsTask):
+        """Task (thread) for applying cutoff on raster image."""
+
+        def __init__(self, description, parent):
+            super().__init__(description)
+            self.parent = parent
+            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen.start_animation()  # start loading dlg
+            self.exception = None
+            self.no_raster = False
+            self.is_calculating = False
+            self.no_selected_parameters = False
+
+        def run(self):
+            if self.parent.is_calculating:
+                self.is_calculating = True
+                return False
+            else:
+                self.parent.is_calculating = True
+                try:
+                    compute = self.parent.compute_cut_off_norm_8bit()  # run compute visualizations
+                    if compute == "no raster selected":
+                        self.no_raster = True
+                        self.parent.is_calculating = False
+                        return False
+                    elif compute == "no selected parameters":
+                        self.no_selected_parameters = True
+                        self.parent.is_calculating = False
+                        return False
+                    else:
+                        self.no_raster = False
+                        self.parent.is_calculating = False
+                        return True
+                except:  # something went wrong
+                    return False
+
+        def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
+            if result:  # if self.run returns True
+                add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
+                selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
+                # add saved/computed to qgis
+                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                    raster_path = self.parent.rvt_select_input[raster_name]
+                    # get directory to save in
+                    if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
+                        save_dir = os.path.dirname(raster_path)
+                    else:
+                        save_dir = self.parent.dlg.line_save_loc.text()
+
+                    if add_to_qgis:  # add calculated layers to Qgis
+                        # get parameters
+                        cut_off_mode = str(self.parent.dlg.combo_cutoff_mode.currentText())
+                        no_min = False
+                        cut_off_min = "min"
+                        try:
+                            cut_off_min = float(self.parent.dlg.line_cutoff_min.text())
+                        except:
+                            no_min = True
+                        no_max = False
+                        cut_off_max = "max"
+                        try:
+                            cut_off_max = float(self.parent.dlg.line_cutoff_max.text())
+                        except:
+                            no_max = True
+                        cut_off_norm = bool(self.parent.dlg.check_cutoff_norm.isChecked())
+                        cut_off_8bit = bool(self.parent.dlg.check_cutoff_8bit.isChecked())
+
+                        # get out_raster_name
+                        if no_min and no_max:
+                            out_raster_name = raster_name
+                        else:
+                            out_raster_name = raster_name + "_C-OFF_{}_{}_{}".format(cut_off_mode, cut_off_min,
+                                                                                     cut_off_max)
+                        if cut_off_norm and not cut_off_8bit:
+                            out_raster_name += "_norm"
+                        elif cut_off_8bit:
+                            out_raster_name += "_8bit"
+                        out_raster_name += ".tif"
+                        out_raster_path = os.path.join(save_dir, out_raster_name)
+                        self.parent.remove_layer_by_path(out_raster_path)
+                        self.parent.iface.addRasterLayer(out_raster_path, out_raster_name)  # add layer to qgis
+
+                self.loading_screen.stop_animation()
+                self.parent.is_calculating = False
+                self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculated!", level=Qgis.Success)
+            else:  # if self.run returns False
+                self.loading_screen.stop_animation()
+                if self.is_calculating:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
+                                                               level=Qgis.Warning)
+                elif self.no_raster:
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.is_calculating = False
+                elif self.no_selected_parameters:
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select any parameters!",
+                                                               level=Qgis.Warning)
+                    self.parent.is_calculating = False
+                else:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculation Failed!",
+                                                               level=Qgis.Critical)
+                    self.parent.is_calculating = False
+
+    def compute_cut_off_norm_8bit_clicked(self):
+        """Start button clicked (cut_off_norm_8bit start button)."""
+        task = self.ComputeCutoff(description="Compute Cut-off", parent=self)
+        self.tm.addTask(task)  # add task to task manager and start task
+
+    def compute_cut_off_norm_8bit(self):
+        """Compute cut_off_norm_8bit with set parameters."""
+        selected_input_rasters = self.dlg.select_input_files.checkedItems()
+        self.iface.messageBar().clearWidgets()  # clear all messages
+        if len(selected_input_rasters) == 0:  # no raster selected
+            return "no raster selected"
+
+        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+            raster_path = self.rvt_select_input[raster_name]
+            # get directory to save in
+            if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
+                save_dir = os.path.dirname(raster_path)
+            else:
+                save_dir = self.dlg.line_save_loc.text()
+
+            # get raster arr
+            dict_rast = rvt.default.get_raster_arr(raster_path=raster_path)
+            raster_arr = dict_rast["array"]
+            raster_no_data = dict_rast["no_data"]
+
+            # get parameters
+            cut_off_mode = str(self.dlg.combo_cutoff_mode.currentText())
+            no_min = False
+            cut_off_min = "min"
+            try:
+                cut_off_min = float(self.dlg.line_cutoff_min.text())
+            except:
+                no_min = True
+            no_max = False
+            cut_off_max = "max"
+            try:
+                cut_off_max = float(self.dlg.line_cutoff_max.text())
+            except:
+                no_max = True
+            cut_off_norm = bool(self.dlg.check_cutoff_norm.isChecked())
+            cut_off_8bit = bool(self.dlg.check_cutoff_8bit.isChecked())
+
+            # get out_raster_name
+            if no_min and no_max:
+                out_raster_name = raster_name
+            else:
+                out_raster_name = raster_name + "_C-OFF_{}_{}_{}".format(cut_off_mode, cut_off_min, cut_off_max)
+            if cut_off_norm and not cut_off_8bit:
+                out_raster_name += "_norm"
+            elif cut_off_8bit:
+                out_raster_name += "_8bit"
+            out_raster_name += ".tif"
+            out_raster_path = os.path.join(save_dir, out_raster_name)
+
+            # if nothing to do
+            if no_min and no_max and not cut_off_norm and not cut_off_8bit:
+                return "no selected parameters"
+            if no_min:
+                cut_off_min = None
+            if no_max:
+                cut_off_max = None
+
+            # change no_data to np.nan
+            idx_no_data = None
+            if self.dlg.check_fill_no_data.isChecked():
+                if self.dlg.check_keep_org_no_data.isChecked():  # save indexes where is no_data
+                    if np.isnan(raster_no_data):
+                        idx_no_data = np.where(np.isnan(raster_arr))
+                    else:
+                        idx_no_data = np.where(raster_arr == no_data)
+                raster_arr[raster_arr == raster_no_data] = np.nan
+
+                raster_arr = rvt.vis.fill_where_nan(raster_arr)
+
+            if cut_off_8bit:
+                cut_off_norm = True
+            cut_off_arr = rvt.blend_func.cut_off_normalize(image=raster_arr, mode=cut_off_mode, min=cut_off_min,
+                                                           max=cut_off_max, bool_norm=cut_off_norm)
+            if self.dlg.check_keep_org_no_data.isChecked():
+                cut_off_arr[idx_no_data] = np.nan
+
+            if cut_off_8bit:
+                cut_off_arr = rvt.vis.byte_scale(cut_off_arr)
+                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
+                                        out_raster_arr=cut_off_arr, no_data=np.nan, e_type=1)
+            else:
+                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
+                                        out_raster_arr=cut_off_arr, no_data=np.nan, e_type=6)
         return True
 
     def load_terrains_settings2dlg(self):
@@ -1396,7 +1605,8 @@ class QRVT:
             start_time = time.time()
             self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
             combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
-            blend_img_path = os.path.abspath(os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u)))
+            blend_img_path = os.path.abspath(
+                os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u)))
             # 2nd layer: VAT general, 1st layer: VAT flat with 50% transparency
             vat_combination_json_path = os.path.abspath(os.path.join(self.plugin_dir, "settings", "blender_VAT.json"))
 

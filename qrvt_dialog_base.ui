@@ -15,7 +15,7 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>  
+  </property>
   <property name="acceptDrops">
    <bool>false</bool>
   </property>
@@ -55,7 +55,7 @@ QGroupBox
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>       
+       </property>
        <property name="currentText">
         <string>hansi</string>
        </property>
@@ -93,7 +93,7 @@ QGroupBox
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>          
+           </property>
            <property name="font">
             <font>
              <pointsize>8</pointsize>
@@ -132,7 +132,7 @@ QGroupBox
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>           
+           </property>
            <property name="font">
             <font>
              <pointsize>8</pointsize>
@@ -162,7 +162,7 @@ QGroupBox
              <width>300</width>
              <height>0</height>
             </size>
-           </property>           
+           </property>
           </widget>
          </item>
          <item>
@@ -279,7 +279,7 @@ QGroupBox
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
-               </property>               
+               </property>
                <property name="font">
                 <font>
                  <pointsize>8</pointsize>
@@ -299,7 +299,7 @@ QGroupBox
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
-               </property>               
+               </property>
                <property name="font">
                 <font>
                  <pointsize>8</pointsize>
@@ -361,7 +361,7 @@ QGroupBox
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
-                   </property>                   
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>8</pointsize>
@@ -403,7 +403,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -461,7 +461,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -558,7 +558,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -579,7 +579,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -1995,7 +1995,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2045,7 +2045,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2213,7 +2213,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2271,7 +2271,7 @@ QGroupBox
                           <horstretch>0</horstretch>
                           <verstretch>0</verstretch>
                          </sizepolicy>
-                        </property>                        
+                        </property>
                         <property name="font">
                          <font>
                           <pointsize>8</pointsize>
@@ -2535,19 +2535,19 @@ QGroupBox
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>935</width>
-                <height>618</height>
+                <width>952</width>
+                <height>616</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_15">
                <item>
-                <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,1,1,1,0,0,0">
+                <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,1,1,1,0,0">
                  <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QCheckBox" name="check_blender_save_vis">
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -2560,7 +2560,7 @@ QGroupBox
                    <item>
                     <widget class="QCheckBox" name="check_blender_save_float">
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -2576,7 +2576,7 @@ QGroupBox
                    <item>
                     <widget class="QCheckBox" name="check_blender_save_8bit">
                      <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                        <horstretch>0</horstretch>
                        <verstretch>0</verstretch>
                       </sizepolicy>
@@ -2620,47 +2620,23 @@ QGroupBox
                     </widget>
                    </item>
                    <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_12" stretch="2,6,2">
-                     <item>
-                      <spacer name="verticalSpacer_15">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>20</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item>
-                      <widget class="QComboBox" name="combo_combinations">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="verticalSpacer_16">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>20</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
+                    <widget class="QComboBox" name="combo_combinations">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                    </widget>
                    </item>
                    <item>
                     <widget class="QPushButton" name="button_comb_rem">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Remove</string>
                      </property>
@@ -2668,6 +2644,12 @@ QGroupBox
                    </item>
                    <item>
                     <widget class="QPushButton" name="button_load_comb">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Load ...</string>
                      </property>
@@ -2713,47 +2695,17 @@ QGroupBox
                     </widget>
                    </item>
                    <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_50" stretch="2,6,2">
-                     <item>
-                      <spacer name="verticalSpacer_66">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>20</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item>
-                      <widget class="QComboBox" name="combo_terrains">
-                       <property name="enabled">
-                        <bool>false</bool>
-                       </property>
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>                       
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="verticalSpacer_65">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>20</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
+                    <widget class="QComboBox" name="combo_terrains">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                    </widget>
                    </item>
                    <item>
                     <spacer name="horizontalSpacer_22">
@@ -2783,47 +2735,23 @@ QGroupBox
                     </widget>
                    </item>
                    <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_13" stretch="2,6,2">
-                     <item>
-                      <spacer name="verticalSpacer_27">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>20</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                     <item>
-                      <widget class="QLineEdit" name="line_combination_name">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <spacer name="verticalSpacer_28">
-                       <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                       </property>
-                       <property name="sizeHint" stdset="0">
-                        <size>
-                         <width>20</width>
-                         <height>40</height>
-                        </size>
-                       </property>
-                      </spacer>
-                     </item>
-                    </layout>
+                    <widget class="QLineEdit" name="line_combination_name">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                    </widget>
                    </item>
                    <item>
                     <widget class="QPushButton" name="buttton_comb_add">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Add</string>
                      </property>
@@ -2831,6 +2759,12 @@ QGroupBox
                    </item>
                    <item>
                     <widget class="QPushButton" name="button_save_comb">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="text">
                       <string>Save ...</string>
                      </property>
@@ -2852,20 +2786,46 @@ QGroupBox
                   </layout>
                  </item>
                  <item>
-                  <spacer name="verticalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Expanding</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
+                  <layout class="QHBoxLayout" name="horizontalLayout_30">
+                   <item>
+                    <widget class="QPushButton" name="button_blend">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>100</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="text">
+                      <string>Blend images</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_28">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>40</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                  </layout>
                  </item>
                  <item>
                   <layout class="QGridLayout" name="grid_layers" rowstretch="0,0,0,0,0,0,0" columnstretch="2,0,0,0,0,0,0,0,0">
@@ -5192,98 +5152,295 @@ QGroupBox
                    </item>
                   </layout>
                  </item>
-                 <item>
-                  <layout class="QGridLayout" name="gridLayout" rowstretch="2,0,4" columnstretch="2,0,2" rowminimumheight="2,1,2" columnminimumwidth="2,1,2">
-                   <item row="1" column="0">
-                    <spacer name="horizontalSpacer_20">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeType">
-                      <enum>QSizePolicy::Expanding</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>400</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item row="1" column="2">
-                    <spacer name="horizontalSpacer_21">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeType">
-                      <enum>QSizePolicy::Expanding</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>400</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item row="1" column="1">
-                    <widget class="QPushButton" name="button_blend">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="minimumSize">
-                      <size>
-                       <width>100</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>Blend images</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="1">
-                    <spacer name="verticalSpacer">
-                     <property name="orientation">
-                      <enum>Qt::Vertical</enum>
-                     </property>
-                     <property name="sizeType">
-                      <enum>QSizePolicy::Expanding</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>100</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item row="0" column="1">
-                    <spacer name="verticalSpacer_2">
-                     <property name="orientation">
-                      <enum>Qt::Vertical</enum>
-                     </property>
-                     <property name="sizeType">
-                      <enum>QSizePolicy::Expanding</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>20</width>
-                       <height>40</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </item>
                 </layout>
+               </item>
+               <item>
+                <spacer name="verticalSpacer_5">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Expanding</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>40</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
               </layout>
              </widget>
             </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="other">
+          <attribute name="title">
+           <string>Other</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_17">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_16">
+             <item>
+              <widget class="QGroupBox" name="group_cutoff">
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="title">
+                <string>Cut-off / Normalize / 8 bit</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_48">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_20">
+                  <item>
+                   <widget class="QLabel" name="label_6">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Mode:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="combo_cutoff_mode">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>50</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>Value</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>Perc</string>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_5">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Min:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="line_cutoff_min">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>50</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_9">
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Max:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="line_cutoff_max">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>50</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="check_cutoff_norm">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Normalize</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="check_cutoff_8bit">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>50</weight>
+                      <bold>false</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>8 bit</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_27">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_29">
+                  <item>
+                   <spacer name="horizontalSpacer_26">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="button_cutoff">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>8</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Start</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_25">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_39">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
