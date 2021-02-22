@@ -102,14 +102,11 @@ class AboutDlg:
         self.dlg.setWindowModality(False)
 
         # if close button clicked
-        self.dlg.button_close.clicked.connect(lambda: self.button_close_clicked())
+        self.dlg.button_close.clicked.connect(self.dlg.close)
+
         # if report a bug button clicked
         self.dlg.button_report_bug.clicked.connect(lambda: self.button_report_bug_clicked())
         self.dlg.exec_()
-
-    def button_close_clicked(self):
-        self.dlg.close()
-        del self
 
     def button_report_bug_clicked(self):
         webbrowser.open('https://github.com/EarthObservation/rvt-qgis/issues')
@@ -373,6 +370,7 @@ class QRVT:
 
         # close the application if the exit button is pressed
         self.dlg.button_close.clicked.connect(self.dlg.close)
+        self.dlg.button_close_2.clicked.connect(self.dlg.close)
 
         self.dlg.button_select_all.clicked.connect(lambda: self.activate_all_visualizations())
         self.dlg.button_select_none.clicked.connect(lambda: self.deactivate_all_visualizations())

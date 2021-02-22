@@ -54,6 +54,11 @@ Development of RVT Python scripts was part financed by the Slovenian Research Ag
 Versions
 --------
 
+v 0.5.1
+~~~~~~~
+
+*   Blender tab Blend images button position changed.
+
 v 0.5.0
 ~~~~~~~
 
