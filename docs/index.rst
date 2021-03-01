@@ -54,6 +54,12 @@ Development of RVT Python scripts was part financed by the Slovenian Research Ag
 Versions
 --------
 
+v 0.5.2
+~~~~~~~
+
+*   8-bit no data values changed from 0 to 255 (white).
+*   Added from osgeo import gdal to default module.
+
 v 0.5.1
 ~~~~~~~
 
