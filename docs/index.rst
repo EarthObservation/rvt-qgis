@@ -54,6 +54,11 @@ Development of RVT Python scripts was part financed by the Slovenian Research Ag
 Versions
 --------
 
+v 0.5.3
+~~~~~~~
+
+*   Multi-scale relief model and Sky illumination visualizations temporarily removed, because they don't work as they should. They will be fixed soon.
+
 v 0.5.2
 ~~~~~~~
 
