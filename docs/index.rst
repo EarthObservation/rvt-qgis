@@ -54,6 +54,12 @@ Development of RVT Python scripts was part financed by the Slovenian Research Ag
 Versions
 --------
 
+v 0.6.0
+~~~~~~~
+
+*   Sky illumination visualization fixed and added back.
+
+
 v 0.5.3
 ~~~~~~~
 

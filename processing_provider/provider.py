@@ -22,7 +22,7 @@ class Provider(QgsProcessingProvider):
         self.addAlgorithm(RVTSvf())
         self.addAlgorithm(RVTASvf())
         self.addAlgorithm(RVTOpns())
-        # self.addAlgorithm(RVTSim())
+        self.addAlgorithm(RVTSim())
         self.addAlgorithm(RVTLocalDom())
         self.addAlgorithm(RVTBlender())
         # self.addAlgorithm(RVTMsrm())

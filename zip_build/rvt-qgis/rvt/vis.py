@@ -21,6 +21,7 @@ Copyright:
 import numpy as np
 import scipy.interpolate
 import scipy.ndimage.filters
+import scipy.signal
 import warnings
 
 
@@ -77,7 +78,7 @@ def byte_scale(data,
         c_scale = 1
 
     if data.dtype == np.uint8:
-        # TODO: the following line seems not good to me - if cmin=0, then that pixel will get negative value
+        # TODO: the following line seems not good to  me - if cmin=0, then that pixel will get negative value
         byte_data = (high + 1) * (data - c_min - 1) / (c_max - c_min)  # copied from IDL BYTSCL
         byte_data[byte_data > high] = high
         byte_data[byte_data < 0] = 0
@@ -95,8 +96,8 @@ def byte_scale(data,
 
 
 def slope_aspect(dem,
-                 resolution_x,
-                 resolution_y,
+                 resolution_x=1,
+                 resolution_y=1,
                  output_units="radian",
                  ve_factor=1,
                  no_data=None,
@@ -437,6 +438,21 @@ def mean_filter(dem, kernel_radius):
     mean_out = mean_out / ((2 * radius_cell + 1) ** 2)  # calculate mean
     mean_out = mean_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
     return mean_out
+
+
+def std_filter(dem, kernel_radius):
+    """Applies standard deviation filter on DEM. Kernel radius is in pixels. Kernel size is 2 * kernel_radius + 1.
+    It returns std filtered dem as numpy.ndarray (2D numpy array)."""
+    radius_cell = int(kernel_radius)
+    dem = np.array(dem, dtype=float)
+    dem2 = dem ** 2
+    ones = np.ones(dem.shape)
+    kernel = np.ones((2 * radius_cell + 1, 2 * radius_cell + 1))
+    s = scipy.signal.convolve2d(dem, kernel, mode="same")
+    s2 = scipy.signal.convolve2d(dem2, kernel, mode="same")
+    ns = scipy.signal.convolve2d(ones, kernel, mode="same")
+    std_out = np.sqrt((s2 - s ** 2 / ns) / ns)
+    return std_out
 
 
 def slrm(dem,
@@ -1013,8 +1029,8 @@ def horizon_generate_coarse_dem(dem_fine,
 def horizon_generate_pyramids(dem,
                               num_directions=4,
                               max_fine_radius=100,
-                              max_pyramid_radius=10,
-                              pyramid_scale=5
+                              max_pyramid_radius=7,
+                              pyramid_scale=3,
                               ):
     # In the levels higher than 1, determine the minimal search distance
     # and number of search distances.
@@ -1062,7 +1078,7 @@ def horizon_generate_pyramids(dem,
             min_radius = 1
             dem_fine = np.copy(np.pad(dem, max_pyramid_radius, mode="constant", constant_values=dem.min()))
         else:
-            min_radius = min_pyramid_radius
+            min_radius = min_pyramid_radius-1
             dem_fine = np.copy(dem_coarse)
         # the last level contains the other radius_pixels as the rest of levels
         if level == pyramid_levels:
@@ -1139,8 +1155,8 @@ def sky_illumination(dem,
         2D numpy result array of Sky illumination.
     """
     # standard pyramid settings
-    pyramid_scale = 3
-    max_pyramid_radius = 10
+    pyramid_scale = 2
+    max_pyramid_radius = 20
 
     if not (1000 >= ve_factor >= -1000):
         raise Exception("rvt.vis.sky_illumination: ve_factor must be between -1000 and 1000!")
@@ -1256,7 +1272,7 @@ def sky_illumination(dem,
                 # get shift index from move dictionary
                 shift_indx = move[direction]["shift"][i_rad]
                 # estimate the slope
-                _ = (np.roll(height, shift_indx, axis=(0, 1)) - height) / radius
+                _ = np.maximum((np.roll(height, shift_indx, axis=(0, 1)) - height) / radius, 0.)
                 # compare to the previus max slope and keep the larges
                 max_slope = np.maximum(max_slope, _)
 
@@ -1268,18 +1284,18 @@ def sky_illumination(dem,
                         conv_from + max_pyramid_radius * pyramid_scale - max_pyramid_radius)
                 lin_coarse = pyramid[i_level]["i_lin"] * pyramid_scale
                 col_coarse = pyramid[i_level]["i_col"] * pyramid_scale
-                interp_spline = scipy.interpolate.RectBivariateSpline(lin_coarse, col_coarse, max_slope)
+                interp_spline = scipy.interpolate.RectBivariateSpline(lin_coarse, col_coarse, max_slope, kx=1, ky=1)
                 max_slope = interp_spline(lin_fine, col_fine)
 
         # convert to angle in radians and compute directional output
         _ = np.arctan(max_slope)
         uniform_a = uniform_a + (np.cos(_)) ** 2
-        _d_aspect = np.sin((dir_rad - da) - aspect) - np.sin((dir_rad + da) - aspect)
-        uniform_b = uniform_b + _d_aspect * (np.pi / 4. - _ / 2. - np.sin(2. * _) / 4.)
+        _d_aspect = -2 * np.sin(da) * np.cos(dir_rad - aspect)
+        uniform_b = uniform_b + np.maximum(_d_aspect * (np.pi / 4. - _ / 2. - np.sin(2. * _) / 4.), 0)
         if compute_overcast:
             _cos3 = (np.cos(_)) ** 3
-            overcast_c = overcast_c + _cos3
-            overcast_d = overcast_d + _d_aspect * (2. / 3. - np.cos(_) + _cos3 / 3.)
+            overcast_c = overcast_c + np.maximum(_cos3, 0)
+            overcast_d = overcast_d + np.maximum(_d_aspect * (2. / 3. - np.cos(_) + _cos3 / 3.), 0)
         if compute_shadow and (direction == shadow_az):
             horizon_out = np.degrees(_[max_pyramid_radius:-max_pyramid_radius, max_pyramid_radius:-max_pyramid_radius])
             shadow_out = (horizon_out < shadow_el) * 1
@@ -1289,13 +1305,13 @@ def sky_illumination(dem,
                     shadow_out[idx_no_data] = np.nan
                     horizon_out[idx_no_data] = np.nan
                 return {"shadow": shadow_out, "horizon": horizon_out}
-
-    # because of numeric stabilty check if the uniform_b is less then pi and greater than 0
-    uniform_out = (da) * np.cos(slope) * uniform_a + np.sin(slope) * np.minimum(np.maximum(uniform_b, 0), np.pi)
+        
+    # because of numeric stabilty check if the uniform_b is less then pi
+    uniform_out = (da) * np.cos(slope) * uniform_a + np.sin(slope) * np.minimum(uniform_b, np.pi)
     uniform_out = uniform_out[max_pyramid_radius:-max_pyramid_radius, max_pyramid_radius:-max_pyramid_radius]
+    
     if compute_overcast:
-        # because of numeric stabilty check if the uniform_b is less then pi and greater than 0
-        overcast_out = (2. * da / 3.) * np.cos(slope) * overcast_c + np.sin(slope) * np.maximum(overcast_d, 0)
+        overcast_out = (2. * da / 3.) * np.cos(slope) * overcast_c + np.sin(slope) * overcast_d
         overcast_out = overcast_out[max_pyramid_radius:-max_pyramid_radius, max_pyramid_radius:-max_pyramid_radius]
         overcast_out = 0.33 * uniform_out + 0.67 * overcast_out
         overcast_out = overcast_out / overcast_out.max()
@@ -1410,6 +1426,7 @@ def msrm(dem,
          fill_no_data=False,
          keep_original_no_data=False
          ):
+    # TODO: not working as it should! FIX
     """
     Compute Multi-scale relief model (MSRM).
 
@@ -1500,6 +1517,174 @@ def msrm(dem,
         msrm_out[idx_no_data] = np.nan
 
     return msrm_out
+
+
+def integral_image(dem):
+    """
+    Calculates integral image (summed-area table), where origin is left upper corner.
+
+    References
+    ----------
+    https://en.wikipedia.org/wiki/Summed-area_table
+
+    Examples
+    --------
+    >>> print(integral_image(np.array([[7, 4, 7, 2],
+    ... [6, 9, 9, 5],
+    ... [6, 6, 7, 6]])))
+    [[ 7. 11. 18. 20.]
+     [13. 26. 42. 49.]
+     [19. 38. 61. 74.]]
+    """
+    dem = dem.astype(np.float)
+    return dem.cumsum(axis=0).cumsum(axis=1)
+
+
+def topographic_dev(dem, kernel_radius):
+    """
+    Calculates topographic DEV - Deviation from mean elevation. DEV(D) = (z0 - zmD) / sD.
+    Where D is radius of kernel, z0 is center pixel value, zmD is mean of all kernel values,
+    sD is standard deviation of kernel.
+
+    Parameters
+    ----------
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    kernel_radius : int
+        Kernel radius (D).
+
+    Returns
+    -------
+    dev_out : numpy.ndarray
+        2D numpy result array of topographic DEV - Deviation from mean elevation.
+    """
+    radius_cell = int(kernel_radius)
+    if radius_cell <= 0:
+        return dem
+
+    dem_padded = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
+
+    dev_out = (dem_padded - mean_filter(dem_padded, kernel_radius=kernel_radius)) / (
+            std_filter(dem_padded, kernel_radius=kernel_radius) + 1e-6)  # add 1e-6 to prevent division with 0
+    dev_out = dev_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
+    return dev_out
+
+
+def max_elevation_deviation(dem, minimum_radius, maximum_radius, step):
+    # TODO: not working as it should! FIX
+    """
+    Calculates maximum deviation from mean elevation, DEVmax (Maximum Deviation from mean elevation) for each
+    grid cell in a digital elevation model (DEM) across a range specified spatial scales.
+    """
+    minimum_radius = int(minimum_radius)
+    maximum_radius = int(maximum_radius)
+    step = int(step)
+
+    # kernel approach
+    # dev_max_out = 0
+    # for i_radius in range(minimum_radius, maximum_radius + 1, step):
+    #     dev = topographic_dev(dem, kernel_radius=i_radius)
+    #     if i_radius == minimum_radius:
+    #         dev_max_out = dev
+    #     else:
+    #         dev_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), dev_max_out, dev)
+
+    # integral approach
+    i = integral_image(dem)
+    i2 = integral_image(dem**2)
+    dev_max_out = np.zeros(dem.shape)
+    for i_row in range(dem.shape[0]):  # iterate trough dem rows
+        # if i_row < maximum_radius or i_row >= dem.shape[0] - maximum_radius:  # skip padding
+        #     continue
+        for i_colum in range(dem.shape[1]):  # iterate trough dem columns
+            # if i_colum < maximum_radius or i_colum >= dem.shape[1] - maximum_radius:  # skip padding
+            #     continue
+            cell_value = None
+            for radius_cell in range(minimum_radius, maximum_radius, step):
+                y1 = i_row - radius_cell - 1
+                if y1 < 0:
+                    y1 = 0
+                if y1 >= dem.shape[0]:
+                    y1 = dem.shape[0] - 1
+                y2 = i_row + radius_cell
+                if y2 < 0:
+                    y2 = 0
+                if y2 >= dem.shape[0]:
+                    y2 = dem.shape[0] - 1
+                x1 = i_colum - radius_cell - 1
+                if x1 < 0:
+                    x1 = 0
+                if x1 >= dem.shape[1]:
+                    x1 = dem.shape[1] - 1
+                x2 = i_colum + radius_cell
+                if x2 < 0:
+                    x2 = 0
+                if x2 >= dem.shape[1]:
+                    x2 = dem.shape[1] - 1
+                n = (radius_cell * 2 + 1) ** 2
+                sum = i[(y2, x2)] + i[(y1, x1)] - i[(y1, x2)] - i[(y2, x1)]
+                sum_sqr = i2[(y2, x2)] + i2[(y1, x1)] - i2[(y1, x2)] - i2[(y2, x1)]
+                v = (sum_sqr - (sum * sum) / n) / n
+                if v > 0:
+                    s = np.sqrt(v)
+                    mean = sum / n
+                    z = dem[i_row, i_colum]
+                    calculated_value = (z - mean) / s
+                else:
+                    calculated_value = 0
+                if cell_value is None:
+                    cell_value = calculated_value
+                if calculated_value**2 > cell_value**2:
+                    cell_value = calculated_value
+            dev_max_out[i_row, i_colum] = cell_value
+
+    return dev_max_out
+
+
+def mstp(dem,
+         micro_scale=(1, 10),
+         meso_scale=(10, 100),
+         macro_scale=(100, 1000),
+         ve_factor=1,
+         no_data=None,
+         fill_no_data=True,
+         keep_original_no_data=False):
+    # TODO: not working as it should! FIX
+    """
+    Compute Multi-scale topographic position (MSTP).
+
+    Parameters
+    ----------
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    micro_scale : tuple(int, int)
+        Input
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+
+    Returns
+    -------
+    msrm_out : numpy.ndarray
+        3D numpy RGB result array of Multi-scale topographic position.
+    """
+    micro_step = int(np.ceil((micro_scale[1] - micro_scale[0]) / 10))
+    micro_DEV = max_elevation_deviation(dem=dem, minimum_radius=micro_scale[0], maximum_radius=micro_scale[1],
+                                        step=1)
+    meso_step = int(np.ceil((meso_scale[1] - meso_scale[0]) / 10))
+    meso_DEV = max_elevation_deviation(dem=dem, minimum_radius=meso_scale[0], maximum_radius=meso_scale[1],
+                                       step=10)
+    macro_step = int(np.ceil((macro_scale[1] - macro_scale[0]) / 10))
+    macro_DEV = max_elevation_deviation(dem=dem, minimum_radius=macro_scale[0], maximum_radius=macro_scale[1],
+                                        step=100)
+
+    return np.array([byte_scale(micro_DEV, 2, 2),
+                     byte_scale(meso_DEV, 2, 2),
+                     byte_scale(macro_DEV, 2, 2)])
 
 
 def fill_where_nan(dem):

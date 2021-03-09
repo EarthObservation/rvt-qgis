@@ -657,8 +657,8 @@ class QRVT:
                 self.dlg.group_openess_pos.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Openness - Negative":
                 self.dlg.group_openess_neg.setChecked(True)
-            # if self.dlg_combo_vis_list[i_layer].currentText() == "Sky illumination":
-            #     self.dlg.group_illumination.setChecked(True)
+            if self.dlg_combo_vis_list[i_layer].currentText() == "Sky illumination":
+                self.dlg.group_illumination.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Local dominance":
                 self.dlg.group_local_dominance.setChecked(True)
             # if self.dlg_combo_vis_list[i_layer].currentText() == "Multi-scale relief model":
@@ -676,8 +676,8 @@ class QRVT:
         self.dlg.check_slrm_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_svf_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_svf_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
-        # self.dlg.check_sim_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
-        # self.dlg.check_sim_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
+        self.dlg.check_sim_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
+        self.dlg.check_sim_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_ld_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_ld_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         # self.dlg.check_msrm_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
@@ -705,9 +705,9 @@ class QRVT:
         if not self.dlg.check_svf_float.isChecked() and not self.dlg.check_svf_8bit.isChecked():
             self.dlg.check_svf_float.setChecked(True)
             self.dlg.check_svf_8bit.setChecked(True)
-        # if not self.dlg.check_sim_float.isChecked() and not self.dlg.check_sim_8bit.isChecked():
-        #     self.dlg.check_sim_float.setChecked(True)
-        #     self.dlg.check_sim_8bit.setChecked(True)
+        if not self.dlg.check_sim_float.isChecked() and not self.dlg.check_sim_8bit.isChecked():
+            self.dlg.check_sim_float.setChecked(True)
+            self.dlg.check_sim_8bit.setChecked(True)
         if not self.dlg.check_ld_float.isChecked() and not self.dlg.check_ld_8bit.isChecked():
             self.dlg.check_ld_float.setChecked(True)
             self.dlg.check_ld_8bit.setChecked(True)
@@ -886,16 +886,16 @@ class QRVT:
         self.dlg.line_asvf_dir.setText(str(self.default.asvf_dir))
         self.dlg.group_openess_pos.setChecked(bool(self.default.pos_opns_compute))
         self.dlg.group_openess_neg.setChecked(bool(self.default.neg_opns_compute))
-        # self.dlg.group_illumination.setChecked(bool(self.default.sim_compute))
-        # index_combo_sim_sky_mod = self.dlg.combo_sim_sky_mod.findText(self.default.sim_sky_mod)
-        # if index_combo_sim_sky_mod >= 0:
-        #     self.dlg.combo_sim_sky_mod.setCurrentIndex(index_combo_sim_sky_mod)
-        # index_combo_sim_nr_dir = self.dlg.combo_sim_nr_dir.findText(str(self.default.sim_nr_dir))
-        # if index_combo_sim_nr_dir >= 0:
-        #     self.dlg.combo_sim_nr_dir.setCurrentIndex(index_combo_sim_nr_dir)
-        # index_combo_sim_shadow_dist = self.dlg.combo_sim_shadow_dist.findText(str(self.default.sim_shadow_dist))
-        # if index_combo_sim_shadow_dist >= 0:
-        #     self.dlg.combo_sim_shadow_dist.setCurrentIndex(index_combo_sim_shadow_dist)
+        self.dlg.group_illumination.setChecked(bool(self.default.sim_compute))
+        index_combo_sim_sky_mod = self.dlg.combo_sim_sky_mod.findText(self.default.sim_sky_mod)
+        if index_combo_sim_sky_mod >= 0:
+            self.dlg.combo_sim_sky_mod.setCurrentIndex(index_combo_sim_sky_mod)
+        index_combo_sim_nr_dir = self.dlg.combo_sim_nr_dir.findText(str(self.default.sim_nr_dir))
+        if index_combo_sim_nr_dir >= 0:
+            self.dlg.combo_sim_nr_dir.setCurrentIndex(index_combo_sim_nr_dir)
+        index_combo_sim_shadow_dist = self.dlg.combo_sim_shadow_dist.findText(str(self.default.sim_shadow_dist))
+        if index_combo_sim_shadow_dist >= 0:
+            self.dlg.combo_sim_shadow_dist.setCurrentIndex(index_combo_sim_shadow_dist)
         self.dlg.group_local_dominance.setChecked(bool(self.default.ld_compute))
         self.dlg.line_ld_min_rad.setText(str(self.default.ld_min_rad))
         self.dlg.line_ld_max_rad.setText(str(self.default.ld_max_rad))
@@ -913,8 +913,8 @@ class QRVT:
         self.dlg.check_slrm_8bit.setChecked(bool(self.default.slrm_save_8bit))
         self.dlg.check_svf_float.setChecked(bool(self.default.svf_save_float))
         self.dlg.check_svf_8bit.setChecked(bool(self.default.svf_save_8bit))
-        # self.dlg.check_sim_float.setChecked(bool(self.default.sim_save_float))
-        # self.dlg.check_sim_8bit.setChecked(bool(self.default.sim_save_8bit))
+        self.dlg.check_sim_float.setChecked(bool(self.default.sim_save_float))
+        self.dlg.check_sim_8bit.setChecked(bool(self.default.sim_save_8bit))
         self.dlg.check_ld_float.setChecked(bool(self.default.ld_save_float))
         self.dlg.check_ld_8bit.setChecked(bool(self.default.ld_save_8bit))
         # self.dlg.check_msrm_float.setChecked(bool(self.default.msrm_save_float))
@@ -956,10 +956,10 @@ class QRVT:
         self.default.asvf_dir = int(self.dlg.line_asvf_dir.text())
         self.default.pos_opns_compute = int(self.dlg.group_openess_pos.isChecked())
         self.default.neg_opns_compute = int(self.dlg.group_openess_neg.isChecked())
-        # self.default.sim_compute = int(self.dlg.group_illumination.isChecked())
-        # self.default.sim_sky_mod = str(self.dlg.combo_sim_sky_mod.currentText())
-        # self.default.sim_nr_dir = int(self.dlg.combo_sim_nr_dir.currentText())
-        # self.default.sim_shadow_dist = int(self.dlg.combo_sim_shadow_dist.currentText())
+        self.default.sim_compute = int(self.dlg.group_illumination.isChecked())
+        self.default.sim_sky_mod = str(self.dlg.combo_sim_sky_mod.currentText())
+        self.default.sim_nr_dir = int(self.dlg.combo_sim_nr_dir.currentText())
+        self.default.sim_shadow_dist = int(self.dlg.combo_sim_shadow_dist.currentText())
         self.default.ld_compute = int(self.dlg.group_local_dominance.isChecked())
         self.default.ld_min_rad = int(self.dlg.line_ld_min_rad.text())
         self.default.ld_max_rad = int(self.dlg.line_ld_max_rad.text())
@@ -979,8 +979,8 @@ class QRVT:
         self.default.svf_save_8bit = int(self.dlg.check_svf_8bit.isChecked())
         self.default.neg_opns_save_float = int(self.dlg.check_svf_float.isChecked())
         self.default.neg_opns_save_8bit = int(self.dlg.check_svf_8bit.isChecked())
-        # self.default.sim_save_float = int(self.dlg.check_sim_float.isChecked())
-        # self.default.sim_save_8bit = int(self.dlg.check_sim_8bit.isChecked())
+        self.default.sim_save_float = int(self.dlg.check_sim_float.isChecked())
+        self.default.sim_save_8bit = int(self.dlg.check_sim_8bit.isChecked())
         self.default.ld_save_float = int(self.dlg.check_ld_float.isChecked())
         self.default.ld_save_8bit = int(self.dlg.check_ld_8bit.isChecked())
         # self.default.msrm_save_float = int(self.dlg.check_msrm_float.isChecked())
@@ -1144,24 +1144,24 @@ class QRVT:
                                 self.parent.iface.addRasterLayer(neg_opns_8bit_path,
                                                                  neg_opns_8bit_name)  # add layer to qgis
                         # Sky illumination
-                        # if self.parent.default.sim_compute:
-                        #     if self.parent.default.sim_save_float:
-                        #         sky_illumination_name = self.parent.default.get_sky_illumination_file_name(raster_path)
-                        #         sky_illumination_path = os.path.abspath(os.path.join(save_dir, sky_illumination_name))
-                        #         self.parent.remove_layer_by_path(
-                        #             sky_illumination_path)  # remove layer from qgis if exists
-                        #         self.parent.iface.addRasterLayer(sky_illumination_path,
-                        #                                          sky_illumination_name)  # add layer to qgis
-                        #     if self.parent.default.sim_save_8bit:
-                        #         sky_illumination_8bit_name = self.parent.default.get_sky_illumination_file_name(
-                        #             raster_path,
-                        #             bit8=True)
-                        #         sky_illumination_8bit_path = os.path.abspath(
-                        #             os.path.join(save_dir, sky_illumination_8bit_name))
-                        #         self.parent.remove_layer_by_path(
-                        #             sky_illumination_8bit_path)  # remove layer from qgis if exists
-                        #         self.parent.iface.addRasterLayer(sky_illumination_8bit_path,
-                        #                                          sky_illumination_8bit_name)  # add layer
+                        if self.parent.default.sim_compute:
+                            if self.parent.default.sim_save_float:
+                                sky_illumination_name = self.parent.default.get_sky_illumination_file_name(raster_path)
+                                sky_illumination_path = os.path.abspath(os.path.join(save_dir, sky_illumination_name))
+                                self.parent.remove_layer_by_path(
+                                    sky_illumination_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(sky_illumination_path,
+                                                                 sky_illumination_name)  # add layer to qgis
+                            if self.parent.default.sim_save_8bit:
+                                sky_illumination_8bit_name = self.parent.default.get_sky_illumination_file_name(
+                                    raster_path,
+                                    bit8=True)
+                                sky_illumination_8bit_path = os.path.abspath(
+                                    os.path.join(save_dir, sky_illumination_8bit_name))
+                                self.parent.remove_layer_by_path(
+                                    sky_illumination_8bit_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(sky_illumination_8bit_path,
+                                                                 sky_illumination_8bit_name)  # add layer
                         # Local dominance
                         if self.parent.default.ld_compute:
                             if self.parent.default.ld_save_float:
