@@ -3,7 +3,7 @@
 Installation
 ============
 
-The RVT QGIS plugin is available in the QGIS Python Plugins Repository. `Relief Visualization Toolbox, QGIS plugin repository <https://plugins.qgis.org/plugins/rvt-qgis/>`_.
+The RVT QGIS plugin is available in the QGIS Python Plugins Repository. Download it from `Relief Visualization Toolbox <https://plugins.qgis.org/plugins/rvt-qgis/>`_.
 
 The plugin uses RVT python (core) library. You can find more about it at `Relief Visualization Toolbox in Python <https://rvt-py.readthedocs.io/en/latest/>`_ and `Github Relief Visualization Toolbox in Python <https://github.com/EarthObservation/RVT_py>`_.
 
