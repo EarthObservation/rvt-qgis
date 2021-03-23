@@ -1,7 +1,7 @@
 .. _usage:
 
 Using RVT
-=====
+=========
 
 #. Open a DEM file to be visualized.
 
@@ -12,7 +12,7 @@ Using RVT
    .. image:: ./figures/rvt_qgis_menu.png
 
 Computing visualizations
-====================
+------------------------
 
 #. Chose the DEM in ``List of currently selected files:``, then choose the Visualizations tab. In the Visualization tab select preferred visualizations and set their parameters (options).
 
@@ -28,7 +28,7 @@ Visualizations are also added to the main window of QGIS  if ``Add to QGIS`` che
 The visualizations are described in the `RVT Python core library documentation <https://rvt-py.readthedocs.io>`_.
 
 Using the blender
-=============
+-----------------
 
 #. Chose a DEM in ``List of currently selected files:``, then choose the Blender tab. In the Blender tab select your ``Blend combination:`` or build your own in layers.
 
@@ -46,7 +46,7 @@ If you check the ``Use preset values for terrain type`` it applies the selected 
 The blended image is stored as a GeoTIFF in the same folder as the input file or to a custom location (if ``Save to raster location`` check box is unchecked and a directory is set in the line edit next to it).
 
 Using the processing functions
-==========================
+------------------------------
 
 #. In QGIS go to the ``Processing Toolbox → Relief visualization toolbox`` where all the Relief Visualization Toolbox visualization functions are accessible.
 

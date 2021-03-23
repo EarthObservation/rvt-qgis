@@ -97,3 +97,4 @@ This project is licensed under the terms of the `Apache License <http://www.apac
 
    install
    usage
+   bibliography
