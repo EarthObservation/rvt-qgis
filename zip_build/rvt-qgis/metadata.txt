@@ -6,7 +6,7 @@
 name=Relief Visualization Toolbox
 qgisMinimumVersion=3.0
 description=Relief visualization toolbox (RVT) plugin helps scientists visualize raster elevation model datasets.
-version=0.6.0
+version=0.6.1
 author=ZRC SAZU and University of Ljubljana (UL FGG), Žiga Maroh
 email=ziga.maroh@icloud.com
 
@@ -25,7 +25,7 @@ hasProcessingProvider=no
 # Tags are comma separated with spaces allowed
 tags=python,rvt,relief_visualization_toolbox,relief_visualization,raster_visualization,visualization,dem_visualization
 
-homepage=https://rvt-qgis.readthedocs.io/
+homepage=https://rvt-py.readthedocs.io/en/latest/qgis.html
 category=Plugins
 icon=icon.png
 # experimental flag
