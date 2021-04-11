@@ -9,7 +9,7 @@
             "description": "If 1 (True) it fills where no_data."
         },
         "fill_method": {
-            "value": "idw",
+            "value": "idw_20_2.0",
             "description": "Method for the fill_no_data (fill_no_data has to be 1 (True)) interpolation. Methods are: linear_row, kd_tree, nearest_neighbour."
         },
         "keep_original_no_data": {
