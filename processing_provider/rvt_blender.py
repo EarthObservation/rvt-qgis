@@ -27,7 +27,10 @@ class RVTBlender(QgsProcessingAlgorithm):
     NOISE_REMOVE = "NOISE_REMOVE"
     # SAVE_AS_8BIT = "SAVE_AS_8BIT"
     FILL_NO_DATA = "FILL_NO_DATA"
+    FILL_METHOD = "FILL_METHOD"
     KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
+
+    fill_method_options = ["idw_20_2", "kd_tree", "nearest_neighbour"]
 
     # read default blender combinations from settings/json, read default terrain settings from settings/json
     default_blender_combinations_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)),
@@ -122,6 +125,14 @@ class RVTBlender(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
+            QgsProcessingParameterEnum(
+                name="FILL_METHOD",
+                description="Fill no-data method.",
+                options=self.fill_method_options,
+                defaultValue=self.fill_method_options[0]
+            )
+        )
+        self.addParameter(
             QgsProcessingParameterBoolean(
                 name="KEEP_ORIG_NO_DATA",
                 description="Keep original no-data",
@@ -164,6 +175,12 @@ class RVTBlender(QgsProcessingAlgorithm):
             self.FILL_NO_DATA,
             context
         ))
+        fill_method_enum = int(self.parameterAsEnum(
+            parameters,
+            self.FILL_METHOD,
+            context
+        ))
+        fill_method = self.fill_method_options[fill_method_enum]
         keep_orig_no_data = bool(self.parameterAsBool(
             parameters,
             self.KEEP_ORIG_NO_DATA,
@@ -195,8 +212,10 @@ class RVTBlender(QgsProcessingAlgorithm):
 
             # set fill_no_data and keep_orig_no_data
             default_1.fill_no_data = fill_no_data
+            default_1.fill_method = fill_method
             default_1.keep_original_no_data = keep_orig_no_data
             default_2.fill_no_data = fill_no_data
+            default_2.fill_method = fill_method
             default_2.keep_original_no_data = keep_orig_no_data
 
             vat_combination_1 = rvt.blend.BlenderCombination()  # VAT general
@@ -232,6 +251,7 @@ class RVTBlender(QgsProcessingAlgorithm):
             default = rvt.default.DefaultValues()
             # set fill_no_data and keep_orig_no_data
             default.fill_no_data = fill_no_data
+            default.fill_method = fill_method
             default.keep_original_no_data = keep_orig_no_data
             # create combination
             combination = self.combinations.select_combination_by_name(combination_name)
