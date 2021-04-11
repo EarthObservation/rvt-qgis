@@ -1,19 +1,23 @@
 {
     "default_settings": {
         "overwrite": {
-            "value": 0,
+            "value": 1,
             "description": "When saving visualisation functions and file already exists, if 0 it doesn't compute it, if 1 it overwrites it."
         },
         "fill_no_data": {
             "value": 1,
-            "description": "If 1 (True) it fills where no_data with mean of surrounding pixels (3x3)."
+            "description": "If 1 (True) it fills where no_data."
+        },
+        "fill_method": {
+            "value": "idw",
+            "description": "Method for the fill_no_data (fill_no_data has to be 1 (True)) interpolation. Methods are: linear_row, kd_tree, nearest_neighbour."
         },
         "keep_original_no_data": {
             "value": 0,
             "description": "If 1 (True) it changes all output pixels to no_data where dem has no_data (fill_no_data has to be 1 (True))."
         },
         "ve_factor": {
-            "value": 1,
+            "value": 1.0,
             "description": "Vertical exaggeration."
         },
         "Hillshade": {
@@ -119,8 +123,8 @@
             },
             "slrm_bytscl": {
                 "mode": "percent",
-                "min": 2,
-                "max": 2,
+                "min": 2.0,
+                "max": 2.0,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
         },
@@ -171,8 +175,8 @@
             },
             "asvf_bytscl": {
                 "mode": "percent",
-                "min": 2,
-                "max": 2,
+                "min": 2.0,
+                "max": 2.0,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
         },
@@ -183,7 +187,7 @@
             },
             "pos_opns_bytscl": {
                 "mode": "value",
-                "min": 60,
+                "min": 60.0,
                 "max": 95.0,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
@@ -203,7 +207,7 @@
             },
             "neg_opns_bytscl": {
                 "mode": "value",
-                "min": 60,
+                "min": 60.0,
                 "max": 95.0,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
@@ -248,7 +252,7 @@
             "sim_bytscl": {
                 "mode": "percent",
                 "min": 0.25,
-                "max": 0,
+                "max": 0.0,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
         },
@@ -298,11 +302,11 @@
                 "description": "If compute Multi-scale relief model. Parameter for GUIs."
             },
             "msrm_feature_min": {
-                "value": 0,
+                "value": 0.0,
                 "description": "Minimum size of the feature you want to detect in meters."
             },
             "msrm_feature_max": {
-                "value": 20,
+                "value": 20.0,
                 "description": "Maximum size of the feature you want to detect in meters."
             },
             "msrm_scaling_factor": {
@@ -319,8 +323,8 @@
             },
             "msrm_bytscl": {
                 "mode": "percent",
-                "min": 2,
-                "max": 2,
+                "min": 2.0,
+                "max": 2.0,
                 "description": "Linear stretch and byte scale (0-255) for 8bit raster. Mode can be 'value' or 'percent' (cut-off units). Values min and max define stretch borders (in mode units)."
             }
         }
