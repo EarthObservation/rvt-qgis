@@ -421,6 +421,9 @@ class QRVT:
         # OTHER
         # Cut-off button clicked
         self.dlg.button_cutoff.clicked.connect(lambda: self.compute_cut_off_norm_8bit_clicked())
+        # Fill no-data
+        self.check_fill_no_data_other_fill_method_combo_change()
+        self.dlg.button_fill_no_data.clicked.connect(lambda: self.compute_fill_no_data_clicked())
 
     def load_raster_layers(self):
         rvt_select_input = {}
@@ -445,7 +448,8 @@ class QRVT:
             self.dlg.button_save_to.setEnabled(True)
 
     def checkbox_fill_no_data(self):
-        """Check box fill_no_data state changed. Check box fill_no_data locks keep_original_no_data check box."""
+        """Check box fill_no_data state changed. Check box fill_no_data locks fill_method combo box
+         and keep_original_no_data check box."""
         if self.dlg.check_fill_no_data.isChecked():
             self.dlg.check_keep_org_no_data.setEnabled(True)
         else:
@@ -683,6 +687,21 @@ class QRVT:
         self.dlg.check_msrm_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_msrm_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
 
+    def check_fill_no_data_other_fill_method_combo_change(self):
+        self.dlg.combo_fill_method.currentTextChanged.connect(lambda: self.fill_no_data_other_fill_method_combo_check())
+
+    def fill_no_data_other_fill_method_combo_check(self):
+        if self.dlg.combo_fill_method.currentText() == "Inverse Distance Weighting":
+            self.dlg.label_fill_nan_rad.setEnabled(True)
+            self.dlg.line_fill_nan_rad.setEnabled(True)
+            self.dlg.label_fill_nan_scl.setEnabled(True)
+            self.dlg.line_fill_nan_scl.setEnabled(True)
+        else:
+            self.dlg.label_fill_nan_rad.setEnabled(False)
+            self.dlg.line_fill_nan_rad.setEnabled(False)
+            self.dlg.label_fill_nan_scl.setEnabled(False)
+            self.dlg.line_fill_nan_scl.setEnabled(False)
+
     def check_blender_checkbox_float_8bit_change(self):
         self.dlg.check_blender_save_float.stateChanged.connect(lambda: self.blender_checkbox_float_8bit_check())
         self.dlg.check_blender_save_8bit.stateChanged.connect(lambda: self.blender_checkbox_float_8bit_check())
@@ -842,10 +861,35 @@ class QRVT:
                 return 1
         return 0
 
+    def fill_method_translate(self, fill_method):
+        """Translates fill_method (no data interpolation method) string for function to text for combo box and
+         vice versa."""
+        if fill_method.split("_")[0] == "idw":
+            return "Inverse Distance Weighting"
+        elif fill_method == "Inverse Distance Weighting":
+            try:
+                radius = int(self.dlg.line_fill_nan_rad.text())
+                scale = float(self.dlg.line_fill_nan_scl.text())
+                return "idw_{}_{}".format(radius, scale)
+            except:
+                return "idw"
+        elif fill_method == "kd_tree":
+            return "K-D Tree"
+        elif fill_method == "K-D Tree":
+            return "kd_tree"
+        elif fill_method == "nearest_neighbour":
+            return "Nearest Neighbour"
+        elif fill_method == "Nearest Neighbour":
+            return "nearest_neighbour"
+
     def load_default2dlg(self):
         """Reads default (rvt.defaul.DeafultValues()) from default_path and fill visualization dlg."""
         self.dlg.check_overwrite.setChecked(bool(self.default.overwrite))
         self.dlg.check_fill_no_data.setChecked(bool(self.default.fill_no_data))
+        index_combo_fill_method = self.dlg.combo_fill_method.findText(self.fill_method_translate
+                                                                      (self.default.fill_method))
+        if index_combo_fill_method >= 0:
+            self.dlg.combo_fill_method.setCurrentIndex(index_combo_fill_method)
         self.dlg.check_keep_org_no_data.setChecked(bool(self.default.keep_original_no_data))
         self.dlg.line_ve_factor.setText(str(self.default.ve_factor))
         self.dlg.group_hillshade.setChecked(bool(self.default.hs_compute))
@@ -924,6 +968,7 @@ class QRVT:
         """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.defaul.DeafultValues() ."""
         self.default.overwrite = int(self.dlg.check_overwrite.isChecked())
         self.default.fill_no_data = int(self.dlg.check_fill_no_data.isChecked())
+        self.default.fill_method = str(self.fill_method_translate(self.dlg.combo_fill_method.currentText()))
         self.default.keep_original_no_data = int(self.dlg.check_keep_org_no_data.isChecked())
         self.default.ve_factor = float(self.dlg.line_ve_factor.text())
         self.default.hs_compute = int(self.dlg.group_hillshade.isChecked())
@@ -1571,7 +1616,8 @@ class QRVT:
                         idx_no_data = np.where(raster_arr == no_data)
                 raster_arr[raster_arr == raster_no_data] = np.nan
 
-                raster_arr = rvt.vis.fill_where_nan(raster_arr)
+                raster_arr = rvt.vis.fill_where_nan(
+                    raster_arr, self.fill_method_translate(self.dlg.combo_fill_method.currentText()))
 
             if cut_off_8bit:
                 cut_off_norm = True
@@ -1587,6 +1633,120 @@ class QRVT:
             else:
                 rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
                                         out_raster_arr=cut_off_arr, no_data=np.nan, e_type=6)
+        return True
+
+    class ComputeFillNoData(QgsTask):
+        """Task (thread) for filling no data on raster image."""
+
+        def __init__(self, description, parent):
+            super().__init__(description)
+            self.parent = parent
+            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen.start_animation()  # start loading dlg
+            self.exception = None
+            self.no_raster = False
+            self.is_calculating = False
+            self.no_selected_parameters = False
+
+        def run(self):
+            if self.parent.is_calculating:
+                self.is_calculating = True
+                return False
+            else:
+                self.parent.is_calculating = True
+                try:
+                    compute = self.parent.compute_fill_no_data()  # run compute visualizations
+                    if compute == "no raster selected":
+                        self.no_raster = True
+                        self.parent.is_calculating = False
+                        return False
+                    elif compute == "no selected parameters":
+                        self.no_selected_parameters = True
+                        self.parent.is_calculating = False
+                        return False
+                    else:
+                        self.no_raster = False
+                        self.parent.is_calculating = False
+                        return True
+                except:  # something went wrong
+                    return False
+
+        def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
+            if result:  # if self.run returns True
+                add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
+                selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
+                # add saved/computed to qgis
+                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                    raster_path = self.parent.rvt_select_input[raster_name]
+                    # get directory to save in
+                    if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
+                        save_dir = os.path.dirname(raster_path)
+                    else:
+                        save_dir = self.parent.dlg.line_save_loc.text()
+
+                    if add_to_qgis:  # add calculated layers to Qgis
+                        fill_method = self.parent.fill_method_translate(str(
+                            self.parent.dlg.combo_fill_method.currentText()))
+                        out_raster_name = raster_name + "_NODATA_{}".format(fill_method)
+                        out_raster_name += ".tif"
+                        out_raster_path = os.path.join(save_dir, out_raster_name)
+                        self.parent.remove_layer_by_path(out_raster_path)
+                        self.parent.iface.addRasterLayer(out_raster_path, out_raster_name)  # add layer to qgis
+
+                self.loading_screen.stop_animation()
+                self.parent.is_calculating = False
+                self.parent.iface.messageBar().pushMessage("RVT", "Fill no data calculated!", level=Qgis.Success)
+            else:  # if self.run returns False
+                self.loading_screen.stop_animation()
+                if self.is_calculating:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
+                                                               level=Qgis.Warning)
+                elif self.no_raster:
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.is_calculating = False
+                else:
+                    self.parent.iface.messageBar().pushMessage("RVT", "Fill no-data calculation Failed!",
+                                                               level=Qgis.Critical)
+                    self.parent.is_calculating = False
+
+    def compute_fill_no_data_clicked(self):
+        """Start button clicked (compute_fill_no_data start button)."""
+        task = self.ComputeFillNoData(description="Compute fill no data", parent=self)
+        self.tm.addTask(task)  # add task to task manager and start task
+
+    def compute_fill_no_data(self):
+        """Compute compute_fill_no_data with set parameters."""
+        selected_input_rasters = self.dlg.select_input_files.checkedItems()
+        self.iface.messageBar().clearWidgets()  # clear all messages
+        if len(selected_input_rasters) == 0:  # no raster selected
+            return "no raster selected"
+
+        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+            raster_path = self.rvt_select_input[raster_name]
+            # get directory to save in
+            if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
+                save_dir = os.path.dirname(raster_path)
+            else:
+                save_dir = self.dlg.line_save_loc.text()
+
+            # get raster arr
+            dict_rast = rvt.default.get_raster_arr(raster_path=raster_path)
+            raster_arr = dict_rast["array"]
+            raster_no_data = dict_rast["no_data"]
+
+            # get parameters
+            fill_method = self.fill_method_translate(str(self.dlg.combo_fill_method.currentText()))
+            # get out_raster_name
+            out_raster_name = raster_name + "_NODATA_{}".format(fill_method)
+            out_raster_name += ".tif"
+            out_raster_path = os.path.join(save_dir, out_raster_name)
+
+            raster_arr[raster_arr == raster_no_data] = np.nan
+            raster_arr = rvt.vis.fill_where_nan(
+                raster_arr, self.fill_method_translate(self.dlg.combo_fill_method.currentText()))
+
+            rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
+                                    out_raster_arr=raster_arr, no_data=np.nan, e_type=6)
         return True
 
     def load_terrains_settings2dlg(self):
@@ -1614,6 +1774,8 @@ class QRVT:
             if self.dlg.check_fill_no_data.isChecked():
                 default_1.fill_no_data = 1
                 default_2.fill_no_data = 1
+                default_1.fill_method = self.fill_method_translate(self.dlg.combo_fill_method.currentText())
+                default_2.fill_method = self.fill_method_translate(self.dlg.combo_fill_method.currentText())
             else:
                 default_1.fill_no_data = 0
                 default_2.fill_no_data = 0

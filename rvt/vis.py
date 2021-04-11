@@ -21,7 +21,9 @@ Copyright:
 import numpy as np
 import scipy.interpolate
 import scipy.ndimage.filters
-import scipy.signal
+import scipy.ndimage.morphology
+import scipy.spatial
+# import scipy.signal
 import warnings
 
 
@@ -102,6 +104,7 @@ def slope_aspect(dem,
                  ve_factor=1,
                  no_data=None,
                  fill_no_data=False,
+                 fill_method="idw",
                  keep_original_no_data=False
                  ):
     """
@@ -125,7 +128,9 @@ def slope_aspect(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where DEM has no_data.
 
@@ -164,7 +169,7 @@ def slope_aspect(dem,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        dem = fill_where_nan(dem)
+        dem = fill_where_nan(dem, fill_method)
 
     # derivatives in X and Y direction
     dzdx = ((np.roll(dem, 1, axis=1) - np.roll(dem, -1, axis=1)) / 2) / resolution_x
@@ -216,6 +221,7 @@ def hillshade(dem,
               ve_factor=1,
               no_data=None,
               fill_no_data=False,
+              fill_method="idw",
               keep_original_no_data=False
               ):
     """
@@ -242,7 +248,9 @@ def hillshade(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan.
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where dem has no_data.
 
@@ -281,7 +289,7 @@ def hillshade(dem,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        dem = fill_where_nan(dem)
+        dem = fill_where_nan(dem, fill_method)
 
     # Convert solar position (degrees) to radians
     sun_azimuth_rad = np.deg2rad(sun_azimuth)
@@ -325,6 +333,7 @@ def multi_hillshade(dem,
                     ve_factor=1,
                     no_data=None,
                     fill_no_data=False,
+                    fill_method="idw",
                     keep_original_no_data=False
                     ):
     """
@@ -351,7 +360,9 @@ def multi_hillshade(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where dem has no_data.
 
@@ -392,7 +403,7 @@ def multi_hillshade(dem,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        dem = fill_where_nan(dem)
+        dem = fill_where_nan(dem, fill_method)
 
     # calculates slope and aspect if they are not added
     if slope is None or aspect is None:  # slope and aspect are the same, so we have to calculate it once
@@ -440,19 +451,21 @@ def mean_filter(dem, kernel_radius):
     return mean_out
 
 
-def std_filter(dem, kernel_radius):
-    """Applies standard deviation filter on DEM. Kernel radius is in pixels. Kernel size is 2 * kernel_radius + 1.
-    It returns std filtered dem as numpy.ndarray (2D numpy array)."""
-    radius_cell = int(kernel_radius)
-    dem = np.array(dem, dtype=float)
-    dem2 = dem ** 2
-    ones = np.ones(dem.shape)
-    kernel = np.ones((2 * radius_cell + 1, 2 * radius_cell + 1))
-    s = scipy.signal.convolve2d(dem, kernel, mode="same")
-    s2 = scipy.signal.convolve2d(dem2, kernel, mode="same")
-    ns = scipy.signal.convolve2d(ones, kernel, mode="same")
-    std_out = np.sqrt((s2 - s ** 2 / ns) / ns)
-    return std_out
+# def std_filter(dem, kernel_radius):
+#     """Applies standard deviation filter on DEM. Kernel radius is in pixels. Kernel size is 2 * kernel_radius + 1.
+#     It returns std filtered dem as numpy.ndarray (2D numpy array)."""
+#     radius_cell = int(kernel_radius)
+#     dem_padded = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
+#     dem = np.array(dem_padded, dtype=float)
+#     dem2 = dem_padded ** 2
+#     ones = np.ones(dem.shape)
+#     kernel = np.ones((2 * radius_cell + 1, 2 * radius_cell + 1))
+#     s = scipy.signal.convolve2d(dem, kernel, mode="same")
+#     s2 = scipy.signal.convolve2d(dem2, kernel, mode="same")
+#     ns = scipy.signal.convolve2d(ones, kernel, mode="same")
+#     std_out = np.sqrt((s2 - s ** 2 / ns) / ns)
+#     std_out = std_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
+#     return std_out
 
 
 def slrm(dem,
@@ -460,6 +473,7 @@ def slrm(dem,
          ve_factor=1,
          no_data=None,
          fill_no_data=False,
+         fill_method="idw",
          keep_original_no_data=False
          ):
     """
@@ -476,7 +490,9 @@ def slrm(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where dem has no_data.
 
@@ -513,7 +529,7 @@ def slrm(dem,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        dem = fill_where_nan(dem)
+        dem = fill_where_nan(dem, fill_method)
 
     # mean filter
     dem_mean_filter = mean_filter(dem=dem, kernel_radius=radius_cell)
@@ -603,6 +619,7 @@ def sky_view_factor_compute(height_arr,
                             a_min_weight=0.4,
                             no_data=None,
                             fill_no_data=False,
+                            fill_method="idw",
                             keep_original_no_data=False
                             ):
     """
@@ -635,7 +652,9 @@ def sky_view_factor_compute(height_arr,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where dem has no_data.
 
@@ -659,7 +678,7 @@ def sky_view_factor_compute(height_arr,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        height_arr = fill_where_nan(height_arr)
+        height_arr = fill_where_nan(height_arr, fill_method)
 
     # pad the array for the radius_max on all 4 sides
     height = np.pad(height_arr, radius_max, mode='symmetric')
@@ -748,6 +767,7 @@ def sky_view_factor(dem,
                     ve_factor=1,
                     no_data=None,
                     fill_no_data=False,
+                    fill_method="idw",
                     keep_original_no_data=False
                     ):
     """
@@ -780,14 +800,18 @@ def sky_view_factor(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where dem has no_data.
-        CONSTANTS:
-            sc_asvf_min : level of polynomial that determines the anisotropy, selected with in_asvf_level
-            sc_asvf_pol : level of polynomial that determines the anisotropy, selected with in_asvf_level
-            sc_svf_r_min : the portion (percent) of the maximal search radius to ignore in horizon estimation;
-                           for each noise level, selected with in_svf_noise
+    
+    Constants
+    ---------
+        sc_asvf_min : level of polynomial that determines the anisotropy, selected with in_asvf_level
+        sc_asvf_pol : level of polynomial that determines the anisotropy, selected with in_asvf_level
+        sc_svf_r_min : the portion (percent) of the maximal search radius to ignore in horizon estimation;
+        for each noise level, selected with in_svf_noise
 
     Returns
     -------
@@ -852,6 +876,7 @@ def sky_view_factor(dem,
                                                  a_min_weight=min_weight,
                                                  no_data=no_data,
                                                  fill_no_data=fill_no_data,
+                                                 fill_method=fill_method,
                                                  keep_original_no_data=keep_original_no_data
                                                  )
 
@@ -867,6 +892,7 @@ def local_dominance(dem,
                     ve_factor=1,
                     no_data=None,
                     fill_no_data=False,
+                    fill_method="idw",
                     keep_original_no_data=False
                     ):
     """
@@ -892,7 +918,9 @@ def local_dominance(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where dem has no_data.
 
@@ -927,7 +955,7 @@ def local_dominance(dem,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        dem = fill_where_nan(dem)
+        dem = fill_where_nan(dem, fill_method)
 
     # create a vector with possible distances
     n_dist = int((max_rad - min_rad) / rad_inc + 1)
@@ -1078,7 +1106,7 @@ def horizon_generate_pyramids(dem,
             min_radius = 1
             dem_fine = np.copy(np.pad(dem, max_pyramid_radius, mode="constant", constant_values=dem.min()))
         else:
-            min_radius = min_pyramid_radius-1
+            min_radius = min_pyramid_radius - 1
             dem_fine = np.copy(dem_coarse)
         # the last level contains the other radius_pixels as the rest of levels
         if level == pyramid_levels:
@@ -1116,6 +1144,7 @@ def sky_illumination(dem,
                      ve_factor=1,
                      no_data=None,
                      fill_no_data=False,
+                     fill_method="idw",
                      keep_original_no_data=False
                      ):
     """
@@ -1146,7 +1175,9 @@ def sky_illumination(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
 
     Returns
@@ -1188,7 +1219,7 @@ def sky_illumination(dem,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        dem = fill_where_nan(dem)
+        dem = fill_where_nan(dem, fill_method)
 
     if sky_model.lower() == "overcast":
         compute_overcast = True
@@ -1305,11 +1336,11 @@ def sky_illumination(dem,
                     shadow_out[idx_no_data] = np.nan
                     horizon_out[idx_no_data] = np.nan
                 return {"shadow": shadow_out, "horizon": horizon_out}
-        
+
     # because of numeric stabilty check if the uniform_b is less then pi
     uniform_out = (da) * np.cos(slope) * uniform_a + np.sin(slope) * np.minimum(uniform_b, np.pi)
     uniform_out = uniform_out[max_pyramid_radius:-max_pyramid_radius, max_pyramid_radius:-max_pyramid_radius]
-    
+
     if compute_overcast:
         overcast_out = (2. * da / 3.) * np.cos(slope) * overcast_c + np.sin(slope) * overcast_d
         overcast_out = overcast_out[max_pyramid_radius:-max_pyramid_radius, max_pyramid_radius:-max_pyramid_radius]
@@ -1364,6 +1395,7 @@ def shadow_horizon(dem,
                    ve_factor=1,
                    no_data=None,
                    fill_no_data=False,
+                   fill_method="idw",
                    keep_original_no_data=False
                    ):
     """
@@ -1384,7 +1416,9 @@ def shadow_horizon(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : bool
         If True it changes all output pixels to np.nan where dem has no_data.
 
@@ -1412,7 +1446,7 @@ def shadow_horizon(dem,
 
     return sky_illumination(dem=dem, resolution=resolution, compute_shadow=True,
                             shadow_horizon_only=True, shadow_el=shadow_el, shadow_az=shadow_az, ve_factor=ve_factor,
-                            no_data=no_data, fill_no_data=fill_no_data,
+                            no_data=no_data, fill_no_data=fill_no_data, fill_method=fill_method,
                             keep_original_no_data=keep_original_no_data)
 
 
@@ -1424,9 +1458,9 @@ def msrm(dem,
          ve_factor=1,
          no_data=None,
          fill_no_data=False,
+         fill_method="idw",
          keep_original_no_data=False
          ):
-    # TODO: not working as it should! FIX
     """
     Compute Multi-scale relief model (MSRM).
 
@@ -1448,7 +1482,9 @@ def msrm(dem,
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
     fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
     keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
 
     Returns
@@ -1482,7 +1518,7 @@ def msrm(dem,
 
     # fill no data with mean of surrounding pixels
     if fill_no_data:
-        dem = fill_where_nan(dem)
+        dem = fill_where_nan(dem, fill_method)
 
     if feature_min < resolution:  # feature min can't be smaller than resolution
         feature_min = resolution
@@ -1501,9 +1537,7 @@ def msrm(dem,
     # generation of filtered surfaces (lpf_surface)
     for ndx in range(i, n + 1, 1):
         kernel_radius = ndx ** scaling_factor
-        # generate kernel for low pass filtering
-        lpf_kerenel = np.full((2 * kernel_radius + 1, 2 * kernel_radius + 1), 1 / ((2 * kernel_radius + 1) ** 2))
-        # add mean filtered surface to list
+        # calculate mean filtered surface
         lpf_surface = mean_filter(dem=dem, kernel_radius=kernel_radius)
         if not ndx == i:  # if not first surface
             relief_models_sum += (last_lpf_surface - lpf_surface)  # substitution of 2 consecutive lpf_surface
@@ -1540,161 +1574,248 @@ def integral_image(dem):
     return dem.cumsum(axis=0).cumsum(axis=1)
 
 
-def topographic_dev(dem, kernel_radius):
+# def topographic_dev(dem, kernel_radius):
+#     """
+#     Calculates topographic DEV - Deviation from mean elevation. DEV(D) = (z0 - zmD) / sD.
+#     Where D is radius of kernel, z0 is center pixel value, zmD is mean of all kernel values,
+#     sD is standard deviation of kernel.
+#
+#     Parameters
+#     ----------
+#     dem : numpy.ndarray
+#         Input digital elevation model as 2D numpy array.
+#     kernel_radius : int
+#         Kernel radius (D).
+#
+#     Returns
+#     -------
+#     dev_out : numpy.ndarray
+#         2D numpy result array of topographic DEV - Deviation from mean elevation.
+#     """
+#     radius_cell = int(kernel_radius)
+#     if radius_cell <= 0:
+#         return dem
+#
+#     dev_out = (dem - mean_filter(dem, kernel_radius=kernel_radius)) / (
+#             std_filter(dem, kernel_radius=kernel_radius) + 1e-6)  # add 1e-6 to prevent division with 0
+#
+#     return dev_out
+
+
+# def max_elevation_deviation(dem, minimum_radius, maximum_radius, step):
+#     # TODO: not working as it should! FIX
+#     """
+#     Calculates maximum deviation from mean elevation, DEVmax (Maximum Deviation from mean elevation) for each
+#     grid cell in a digital elevation model (DEM) across a range specified spatial scales.
+#     """
+#     minimum_radius = int(minimum_radius)
+#     maximum_radius = int(maximum_radius)
+#     step = int(step)
+#
+#     # kernel approach
+#     # dev_max_out = 0
+#     # for i_radius in range(minimum_radius, maximum_radius + 1, step):
+#     #     dev = topographic_dev(dem, kernel_radius=i_radius)
+#     #     if i_radius == minimum_radius:
+#     #         dev_max_out = dev
+#     #     else:
+#     #         dev_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), dev_max_out, dev)
+#
+#     # integral approach
+#     i = integral_image(dem)
+#     i2 = integral_image(dem ** 2)
+#     dev_max_out = np.zeros(dem.shape)
+#     scale_out = np.zeros(dem.shape, dtype=int)
+#     for i_row in range(dem.shape[0]):  # iterate trough dem rows
+#         # if i_row < maximum_radius or i_row >= dem.shape[0] - maximum_radius:  # skip padding
+#         #     continue
+#         for i_colum in range(dem.shape[1]):  # iterate trough dem columns
+#             # if i_colum < maximum_radius or i_colum >= dem.shape[1] - maximum_radius:  # skip padding
+#             #     continue
+#             cell_value = None
+#             z = dem[i_row, i_colum]
+#             if np.isnan(z):
+#                 dev_max_out[i_row, i_colum] = np.nan
+#                 scale_out[i_row, i_colum] = 0
+#             else:
+#                 scale_rad_cell = minimum_radius
+#                 for radius_cell in range(minimum_radius, maximum_radius + 1, step):
+#                     y1 = i_row - radius_cell - 1
+#                     if y1 < 0:
+#                         y1 = 0
+#                     if y1 >= dem.shape[0]:
+#                         y1 = dem.shape[0] - 1
+#                     y2 = i_row + radius_cell
+#                     if y2 < 0:
+#                         y2 = 0
+#                     if y2 >= dem.shape[0]:
+#                         y2 = dem.shape[0] - 1
+#                     x1 = i_colum - radius_cell - 1
+#                     if x1 < 0:
+#                         x1 = 0
+#                     if x1 >= dem.shape[1]:
+#                         x1 = dem.shape[1] - 1
+#                     x2 = i_colum + radius_cell
+#                     if x2 < 0:
+#                         x2 = 0
+#                     if x2 >= dem.shape[1]:
+#                         x2 = dem.shape[1] - 1
+#                     n = (radius_cell * 2 + 1) ** 2
+#                     if n > 0:
+#                         sum = i[(y2, x2)] + i[(y1, x1)] - i[(y1, x2)] - i[(y2, x1)]
+#                         sum_sqr = i2[(y2, x2)] + i2[(y1, x1)] - i2[(y1, x2)] - i2[(y2, x1)]
+#                         v = (sum_sqr - (sum * sum) / n) / n
+#                         if v > 0:
+#                             s = np.sqrt(v)
+#                             mean = sum / n
+#                             calculated_value = (z - mean) / s
+#                         else:
+#                             calculated_value = 0
+#                     else:
+#                         calculated_value = 0
+#                     if cell_value is None:
+#                         cell_value = calculated_value
+#                     if calculated_value ** 2 > cell_value ** 2:
+#                         cell_value = calculated_value
+#                         scale_rad_cell = radius_cell
+#
+#                 dev_max_out[i_row, i_colum] = cell_value
+#                 scale_out[i_row, i_colum] = scale_rad_cell
+#     return dev_max_out, scale_out
+
+
+# def mstp(dem,
+#          micro_scale=(1, 10),
+#          meso_scale=(10, 100),
+#          macro_scale=(100, 1000),
+#          ve_factor=1,
+#          no_data=None,
+#          fill_no_data=True,
+#          keep_original_no_data=False):
+#     # TODO: not working as it should! FIX
+#     """
+#     Compute Multi-scale topographic position (MSTP).
+#
+#     Parameters
+#     ----------
+#     dem : numpy.ndarray
+#         Input digital elevation model as 2D numpy array.
+#     micro_scale : tuple(int, int)
+#         Input
+#     ve_factor : int or float
+#         Vertical exaggeration factor.
+#     no_data : int or float
+#         Value that represents no_data, all pixels with this value are changed to np.nan .
+#     fill_no_data : bool
+#         If True it fills where np.nan (no_data).
+#     fill_method : str
+#         Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
+#     keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+#
+#     Returns
+#     -------
+#     msrm_out : numpy.ndarray
+#         3D numpy RGB result array of Multi-scale topographic position.
+#     """
+#     micro_step = int(np.ceil((micro_scale[1] - micro_scale[0]) / 10))
+#     micro_DEV = max_elevation_deviation(dem=dem, minimum_radius=micro_scale[0], maximum_radius=micro_scale[1],
+#                                         step=1)
+#     meso_step = int(np.ceil((meso_scale[1] - meso_scale[0]) / 10))
+#     meso_DEV = max_elevation_deviation(dem=dem, minimum_radius=meso_scale[0], maximum_radius=meso_scale[1],
+#                                        step=10)
+#     macro_step = int(np.ceil((macro_scale[1] - macro_scale[0]) / 10))
+#     macro_DEV = max_elevation_deviation(dem=dem, minimum_radius=macro_scale[0], maximum_radius=macro_scale[1],
+#                                         step=100)
+#
+#     return np.array([byte_scale(micro_DEV, 2, 2),
+#                      byte_scale(meso_DEV, 2, 2),
+#                      byte_scale(macro_DEV, 2, 2)])
+
+
+def fill_where_nan(dem, method="idw"):
     """
-    Calculates topographic DEV - Deviation from mean elevation. DEV(D) = (z0 - zmD) / sD.
-    Where D is radius of kernel, z0 is center pixel value, zmD is mean of all kernel values,
-    sD is standard deviation of kernel.
+    Replaces np.nan values, with interpolation (extrapolation).
 
-    Parameters
-    ----------
-    dem : numpy.ndarray
-        Input digital elevation model as 2D numpy array.
-    kernel_radius : int
-        Kernel radius (D).
-
-    Returns
+    Methods
     -------
-    dev_out : numpy.ndarray
-        2D numpy result array of topographic DEV - Deviation from mean elevation.
+    linear_row : Linear row interpolation (fast) (1D) (array is flattened and then linear interpolation is performed).
+                 This method is fast but very inaccurate.
+    idw_r_p : Inverse Distance Weighting interpolation.
+              If you only input idw it will take default parameters (r=20, p=2).
+              You can also input interpolation radius (r) and power (p) for weights.
+              Example: idw_5_2 means radius = 5, power = 2.
+    kd_tree : K-D Tree interpolation.
+    nearest_neighbour : Nearest neighbour interpolation.
     """
-    radius_cell = int(kernel_radius)
-    if radius_cell <= 0:
-        return dem
-
-    dem_padded = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
-
-    dev_out = (dem_padded - mean_filter(dem_padded, kernel_radius=kernel_radius)) / (
-            std_filter(dem_padded, kernel_radius=kernel_radius) + 1e-6)  # add 1e-6 to prevent division with 0
-    dev_out = dev_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
-    return dev_out
-
-
-def max_elevation_deviation(dem, minimum_radius, maximum_radius, step):
-    # TODO: not working as it should! FIX
-    """
-    Calculates maximum deviation from mean elevation, DEVmax (Maximum Deviation from mean elevation) for each
-    grid cell in a digital elevation model (DEM) across a range specified spatial scales.
-    """
-    minimum_radius = int(minimum_radius)
-    maximum_radius = int(maximum_radius)
-    step = int(step)
-
-    # kernel approach
-    # dev_max_out = 0
-    # for i_radius in range(minimum_radius, maximum_radius + 1, step):
-    #     dev = topographic_dev(dem, kernel_radius=i_radius)
-    #     if i_radius == minimum_radius:
-    #         dev_max_out = dev
-    #     else:
-    #         dev_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), dev_max_out, dev)
-
-    # integral approach
-    i = integral_image(dem)
-    i2 = integral_image(dem**2)
-    dev_max_out = np.zeros(dem.shape)
-    for i_row in range(dem.shape[0]):  # iterate trough dem rows
-        # if i_row < maximum_radius or i_row >= dem.shape[0] - maximum_radius:  # skip padding
-        #     continue
-        for i_colum in range(dem.shape[1]):  # iterate trough dem columns
-            # if i_colum < maximum_radius or i_colum >= dem.shape[1] - maximum_radius:  # skip padding
-            #     continue
-            cell_value = None
-            for radius_cell in range(minimum_radius, maximum_radius, step):
-                y1 = i_row - radius_cell - 1
-                if y1 < 0:
-                    y1 = 0
-                if y1 >= dem.shape[0]:
-                    y1 = dem.shape[0] - 1
-                y2 = i_row + radius_cell
-                if y2 < 0:
-                    y2 = 0
-                if y2 >= dem.shape[0]:
-                    y2 = dem.shape[0] - 1
-                x1 = i_colum - radius_cell - 1
-                if x1 < 0:
-                    x1 = 0
-                if x1 >= dem.shape[1]:
-                    x1 = dem.shape[1] - 1
-                x2 = i_colum + radius_cell
-                if x2 < 0:
-                    x2 = 0
-                if x2 >= dem.shape[1]:
-                    x2 = dem.shape[1] - 1
-                n = (radius_cell * 2 + 1) ** 2
-                sum = i[(y2, x2)] + i[(y1, x1)] - i[(y1, x2)] - i[(y2, x1)]
-                sum_sqr = i2[(y2, x2)] + i2[(y1, x1)] - i2[(y1, x2)] - i2[(y2, x1)]
-                v = (sum_sqr - (sum * sum) / n) / n
-                if v > 0:
-                    s = np.sqrt(v)
-                    mean = sum / n
-                    z = dem[i_row, i_colum]
-                    calculated_value = (z - mean) / s
-                else:
-                    calculated_value = 0
-                if cell_value is None:
-                    cell_value = calculated_value
-                if calculated_value**2 > cell_value**2:
-                    cell_value = calculated_value
-            dev_max_out[i_row, i_colum] = cell_value
-
-    return dev_max_out
-
-
-def mstp(dem,
-         micro_scale=(1, 10),
-         meso_scale=(10, 100),
-         macro_scale=(100, 1000),
-         ve_factor=1,
-         no_data=None,
-         fill_no_data=True,
-         keep_original_no_data=False):
-    # TODO: not working as it should! FIX
-    """
-    Compute Multi-scale topographic position (MSTP).
-
-    Parameters
-    ----------
-    dem : numpy.ndarray
-        Input digital elevation model as 2D numpy array.
-    micro_scale : tuple(int, int)
-        Input
-    ve_factor : int or float
-        Vertical exaggeration factor.
-    no_data : int or float
-        Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data) with mean of surrounding pixels (3x3).
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
-
-    Returns
-    -------
-    msrm_out : numpy.ndarray
-        3D numpy RGB result array of Multi-scale topographic position.
-    """
-    micro_step = int(np.ceil((micro_scale[1] - micro_scale[0]) / 10))
-    micro_DEV = max_elevation_deviation(dem=dem, minimum_radius=micro_scale[0], maximum_radius=micro_scale[1],
-                                        step=1)
-    meso_step = int(np.ceil((meso_scale[1] - meso_scale[0]) / 10))
-    meso_DEV = max_elevation_deviation(dem=dem, minimum_radius=meso_scale[0], maximum_radius=meso_scale[1],
-                                       step=10)
-    macro_step = int(np.ceil((macro_scale[1] - macro_scale[0]) / 10))
-    macro_DEV = max_elevation_deviation(dem=dem, minimum_radius=macro_scale[0], maximum_radius=macro_scale[1],
-                                        step=100)
-
-    return np.array([byte_scale(micro_DEV, 2, 2),
-                     byte_scale(meso_DEV, 2, 2),
-                     byte_scale(macro_DEV, 2, 2)])
-
-
-def fill_where_nan(dem):
-    """Replaces np.nan values. It takes nan surrounding (neighbor) cells (3x3), if number of nans <= max_nan_nr it
-    calculates mean of not nans and writes mean to the center nan pixel.
-    Function iterates and first calculates areas where is less nan values in the surrounding (neighbour) cells."""
     if np.all(~np.isnan(dem)):  # if there is no nan return dem
         return dem
 
     dem_out = np.copy(dem)
     mask = np.isnan(dem_out)
-    dem_out[mask] = np.interp(np.flatnonzero(mask), np.flatnonzero(~mask), dem_out[~mask])
+
+    # 1D row linear interpolation
+    if method == "linear_row":
+        dem_out[mask] = np.interp(np.flatnonzero(mask), np.flatnonzero(~mask), dem_out[~mask])
+
+    if method.split("_")[0] == "idw":
+        radius = 20
+        power = 2
+        if len(method.split("_")) == 3:
+            radius = int(method.split("_")[1])
+            power = float(method.split("_")[2])
+        nan_idx = zip(*np.where(mask))  # find nan positions
+        for i_row, i_column in nan_idx:  # iterate through nans
+            # nan surrounding array based on radius
+            i_row_start = i_row - radius  # start row idx of nan surrounding
+            i_column_start = i_column - radius  # start col idx of nan surrounding
+            i_row_end = i_row + radius + 1  # end row idx of nan surrounding
+            i_column_end = i_column + radius + 1  # end col idx of nan surrounding
+            # row idx center pixel (nan pixel to idw) of nan surrounding array
+            i_row_center = i_row - i_row_start
+            # col idx center pixel (nan pixel to idw) of nan surrounding array
+            i_column_center = i_column - i_column_start
+            if i_row_start < 0:  # edge
+                i_row_center = i_row
+                i_row_start = 0
+            if i_column_start < 0:  # edge
+                i_column_center = i_column
+                i_column_start = 0
+            if i_row_end > dem.shape[0]:  # edge
+                i_row_end = dem.shape[0]
+            if i_column_end > dem.shape[1]:  # edge
+                i_column_end = dem.shape[0]
+            nan_surrounding_arr = dem[i_row_start:i_row_end, i_column_start:i_column_end]
+            if np.all(np.isnan(nan_surrounding_arr)):  # whole surrounding array is nan
+                dem_out[i_row, i_column] = np.nan
+            else:
+                # calculate distance array (wight matrix)
+                dist_arr = np.ones(nan_surrounding_arr.shape)  # all ones
+                # center pixel is 0 to calc distance matrix around 0 pixel with distance_transform_edt
+                dist_arr[i_row_center, i_column_center] = 0
+                dist_arr = scipy.ndimage.morphology.distance_transform_edt(dist_arr)
+                dist_arr[dist_arr == 0] = np.nan  # can't divide with zero
+                dist_arr = 1/dist_arr**power
+                nan_mask = np.isnan(nan_surrounding_arr)
+                dist_arr[nan_mask] = 0  # where nan weight matrix is zero
+                # calculate idw for one nan value
+                dem_out[i_row, i_column] = np.nansum(nan_surrounding_arr * dist_arr) / np.nansum(dist_arr)
+
+    elif method == "kd_tree" or method == "nearest_neighbour" or method == "nearest_neighbor":
+        x, y = np.mgrid[0:dem_out.shape[0], 0:dem_out.shape[1]]
+        xygood = np.array((x[~mask], y[~mask])).T
+        xybad = np.array((x[mask], y[mask])).T
+
+        # cKD-Tree (K-D Tree) interpolation
+        # https://stackoverflow.com/questions/3662361/fill-in-missing-values-with-nearest-neighbour-in-python-numpy-masked-arrays
+        if method == "kd_tree":
+            leaf_size = 1000
+            dem_out[mask] = dem_out[~mask][scipy.spatial.cKDTree(data=xygood, leafsize=leaf_size).query(xybad)[1]]
+
+        # Nearest neighbour interpolation
+        elif method == "nearest_neighbour" or method == "nearest_neighbor":
+            dem_out[mask] = scipy.interpolate.griddata(xygood, dem_out[~mask], xybad,
+                                                       method='nearest')
+    else:
+        raise Exception("rvt.vis.fill_where_nan: Wrong method!")
+
     return dem_out
