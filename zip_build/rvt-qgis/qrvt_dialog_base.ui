@@ -97,6 +97,8 @@ QGroupBox
            <property name="font">
             <font>
              <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="text">
@@ -118,6 +120,8 @@ QGroupBox
            <property name="font">
             <font>
              <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="text">
@@ -136,6 +140,8 @@ QGroupBox
            <property name="font">
             <font>
              <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="text">
@@ -212,6 +218,13 @@ QGroupBox
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
            <property name="text">
             <string>Fill no-data (holes)</string>
            </property>
@@ -227,6 +240,13 @@ QGroupBox
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>8</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
            </property>
            <property name="text">
             <string>Keep original no-data</string>
@@ -303,6 +323,8 @@ QGroupBox
                <property name="font">
                 <font>
                  <pointsize>8</pointsize>
+                 <weight>50</weight>
+                 <bold>false</bold>
                 </font>
                </property>
                <property name="inputMask">
@@ -343,9 +365,9 @@ QGroupBox
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-4</y>
-                <width>935</width>
-                <height>665</height>
+                <y>0</y>
+                <width>931</width>
+                <height>684</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -2260,8 +2282,8 @@ QGroupBox
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>952</width>
-                <height>583</height>
+                <width>931</width>
+                <height>568</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -2729,6 +2751,11 @@ QGroupBox
                        </item>
                        <item>
                         <property name="text">
+                         <string>Sky illumination</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
                          <string>Local dominance</string>
                         </property>
                        </item>
@@ -3050,6 +3077,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Openness - Negative</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Sky illumination</string>
                         </property>
                        </item>
                        <item>
@@ -3383,6 +3415,11 @@ QGroupBox
                        </item>
                        <item>
                         <property name="text">
+                         <string>Sky illumination</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
                          <string>Local dominance</string>
                         </property>
                        </item>
@@ -3662,6 +3699,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Openness - Negative</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Sky illumination</string>
                         </property>
                        </item>
                        <item>
@@ -4052,6 +4094,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Openness - Negative</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Sky illumination</string>
                         </property>
                        </item>
                        <item>
@@ -4931,7 +4978,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>952</width>
-                <height>616</height>
+                <height>599</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -5165,6 +5212,179 @@ QGroupBox
                       </item>
                       <item>
                        <spacer name="horizontalSpacer_25">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QGroupBox" name="group_fill_no_data">
+                   <property name="font">
+                    <font>
+                     <pointsize>8</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
+                   <property name="title">
+                    <string>Fill no-data</string>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_30">
+                      <item>
+                       <widget class="QLabel" name="label_fill_method2">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Fill method:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="combo_fill_method">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>Inverse Distance Weighting</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>K-D Tree</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Nearest Neighbour</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_fill_nan_rad">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>radius:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="line_fill_nan_rad">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>20</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_fill_nan_scl">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>scale:</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="line_fill_nan_scl">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>50</weight>
+                          <bold>false</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>2</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_28">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_33">
+                      <item>
+                       <spacer name="horizontalSpacer_30">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="button_fill_no_data">
+                        <property name="font">
+                         <font>
+                          <pointsize>8</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Start</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_31">
                         <property name="orientation">
                          <enum>Qt::Horizontal</enum>
                         </property>

@@ -27,11 +27,13 @@ class RVTOpns(QgsProcessingAlgorithm):
     OPNS_TYPE = "OPNS_TYPE"
     SAVE_AS_8BIT = "SAVE_AS_8BIT"
     FILL_NO_DATA = "FILL_NO_DATA"
+    FILL_METHOD = "FILL_METHOD"
     KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
     OUTPUT = 'OUTPUT'
 
     noise_options = ["no removal", "low", "medium", "high"]
     opns_options = ["Positive", "Negative"]
+    fill_method_options = ["idw_20_2", "kd_tree", "nearest_neighbour"]
 
     def tr(self, string):
         """
@@ -140,6 +142,14 @@ class RVTOpns(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
+            QgsProcessingParameterEnum(
+                name="FILL_METHOD",
+                description="Fill no-data method.",
+                options=self.fill_method_options,
+                defaultValue=self.fill_method_options[0]
+            )
+        )
+        self.addParameter(
             QgsProcessingParameterBoolean(
                 name="KEEP_ORIG_NO_DATA",
                 description="Keep original no-data",
@@ -198,6 +208,12 @@ class RVTOpns(QgsProcessingAlgorithm):
             self.FILL_NO_DATA,
             context
         ))
+        fill_method_enum = int(self.parameterAsEnum(
+            parameters,
+            self.FILL_METHOD,
+            context
+        ))
+        fill_method = self.fill_method_options[fill_method_enum]
         keep_orig_no_data = bool(self.parameterAsBool(
             parameters,
             self.KEEP_ORIG_NO_DATA,
@@ -223,7 +239,7 @@ class RVTOpns(QgsProcessingAlgorithm):
         visualization_arr = rvt.vis.sky_view_factor(dem=dem_arr, resolution=resolution[0], compute_svf=False,
                                                     compute_asvf=False, compute_opns=True, svf_n_dir=nr_dir,
                                                     svf_r_max=radius, svf_noise=noise, ve_factor=ve_factor,
-                                                    no_data=no_data, fill_no_data=fill_no_data,
+                                                    no_data=no_data, fill_no_data=fill_no_data, fill_method=fill_method,
                                                     keep_original_no_data=keep_orig_no_data)["opns"]
         if not save_8bit:
             rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,

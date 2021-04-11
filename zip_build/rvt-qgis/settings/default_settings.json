@@ -6,7 +6,11 @@
         },
         "fill_no_data": {
             "value": 1,
-            "description": "If 1 (True) it fills where no_data with mean of surrounding pixels (3x3)."
+            "description": "If 1 (True) it fills where no_data."
+        },
+        "fill_method": {
+            "value": "idw_20_2.0",
+            "description": "Method for the fill_no_data (fill_no_data has to be 1 (True)) interpolation. Methods are: linear_row, kd_tree, nearest_neighbour."
         },
         "keep_original_no_data": {
             "value": 0,
@@ -22,7 +26,7 @@
                 "description": "If compute Hillshade. Parameter for GUIs."
             },
             "hs_sun_azi": {
-                "value": 135,
+                "value": 315,
                 "description": "Solar azimuth angle (clockwise from North) in degrees."
             },
             "hs_sun_el": {
@@ -38,7 +42,7 @@
                 "description": "If 1 it saves 8bit raster, if 0 it doesn't."
             },
             "hs_shadow": {
-                "value": 1,
+                "value": 0,
                 "description": "If 1 it saves shadow binary raster, if 0 it doesn't."
             },
             "hs_bytscl": {
@@ -50,7 +54,7 @@
         },
         "Multiple directions hillshade": {
             "mhs_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Multiple directions hillshade. Parameter for GUIs."
             },
             "mhs_nr_dir": {
@@ -78,7 +82,7 @@
         },
         "Slope gradient": {
             "slp_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Slope. Parameter for GUIs."
             },
             "slp_output_units": {
@@ -102,7 +106,7 @@
         },
         "Simple local relief model": {
             "slrm_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Simple local relief model. Parameter for GUIs."
             },
             "slrm_rad_cell": {
@@ -126,11 +130,11 @@
         },
         "Sky-View Factor": {
             "svf_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Sky-View Factor. Parameter for GUIs."
             },
             "svf_n_dir": {
-                "value": 8,
+                "value": 16,
                 "description": "Number of directions."
             },
             "svf_r_max": {
@@ -158,7 +162,7 @@
         },
         "Anisotropic Sky-View Factor": {
             "asvf_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Anisotropic Sky-View Factor. Parameter for GUIs."
             },
             "asvf_dir": {
@@ -178,7 +182,7 @@
         },
         "Openness - Positive": {
             "pos_opns_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Openness - Positive. Parameter for GUIs."
             },
             "pos_opns_bytscl": {
@@ -190,7 +194,7 @@
         },
         "Openness - Negative": {
             "neg_opns_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Openness - Negative. Parameter for GUIs."
             },
             "neg_opns_save_float": {
@@ -254,7 +258,7 @@
         },
         "Local dominance": {
             "ld_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Local dominance. Parameter for GUIs."
             },
             "ld_min_rad": {
@@ -294,7 +298,7 @@
         },
         "Multi-scale relief model": {
             "msrm_compute": {
-                "value": 1,
+                "value": 0,
                 "description": "If compute Multi-scale relief model. Parameter for GUIs."
             },
             "msrm_feature_min": {
