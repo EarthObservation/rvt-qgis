@@ -29,7 +29,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.6.2</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.6.2.1</string>
        </property>
       </widget>
      </item>
@@ -140,11 +140,11 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
 &lt;span style=&quot; font-weight:600;&quot;&gt;○ Online resources:&lt;/span&gt;&lt;br&gt;
 
-&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://rvt-qgis.readthedocs.io/&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin documentation&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://rvt-py.readthedocs.io/en/latest/qgis.html&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin documentation&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/rvt-qgis&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
-&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/RVT_py&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT core python library GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/RVT_py&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT core python library (rvt_py) GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/rvt-arcgis-pro&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT ArcGIS Pro raster functions GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
