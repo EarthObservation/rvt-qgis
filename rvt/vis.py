@@ -23,7 +23,6 @@ import scipy.interpolate
 import scipy.ndimage.filters
 import scipy.ndimage.morphology
 import scipy.spatial
-# import scipy.signal
 import warnings
 
 
@@ -167,7 +166,7 @@ def slope_aspect(dem,
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         dem = fill_where_nan(dem, fill_method)
 
@@ -287,7 +286,7 @@ def hillshade(dem,
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         dem = fill_where_nan(dem, fill_method)
 
@@ -401,7 +400,7 @@ def multi_hillshade(dem,
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         dem = fill_where_nan(dem, fill_method)
 
@@ -430,42 +429,41 @@ def mean_filter(dem, kernel_radius):
     """Applies mean filter (low pass filter) on DEM. Kernel radius is in pixels. Kernel size is 2 * kernel_radius + 1.
     It uses matrix shifting (roll) instead of convolutional approach (works faster).
     It returns mean filtered dem as numpy.ndarray (2D numpy array)."""
+    radius_cell = int(kernel_radius)
+
     if kernel_radius == 0:
         return dem
+
     # mean filter
-    radius_cell = int(kernel_radius)  # nr_rolls (shifts) in each direction
-    dem_padded = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
-    mean_out = np.copy(dem_padded)
-    for i_y_roll in range(radius_cell):
-        roll = i_y_roll + 1  # y direction roll
-        mean_out += np.roll(np.copy(dem_padded), roll, axis=0)  # roll positive direction
-        mean_out += np.roll(np.copy(dem_padded), -roll, axis=0)  # roll negative direction
-    y_rolls_sum = np.copy(mean_out)  # sum of all rolls in y direction
-    for i_x_roll in range(radius_cell):  # x direction roll
-        roll = i_x_roll + 1
-        mean_out += np.roll(np.copy(y_rolls_sum), roll, axis=1)  # roll positive direction
-        mean_out += np.roll(np.copy(y_rolls_sum), -roll, axis=1)  # roll negative direction
-    del y_rolls_sum
-    mean_out = mean_out / ((2 * radius_cell + 1) ** 2)  # calculate mean
-    mean_out = mean_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
+    if np.isnan(dem).any():  # contains at least one nan (can't use summed area table approach)
+        # array shifting approach (a little bit slower that summed area table)
+        dem_pad = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
+        mean_out = np.copy(dem_pad)
+        for i_y_roll in range(radius_cell):
+            roll = i_y_roll + 1  # y direction roll
+            mean_out += np.roll(np.copy(dem_pad), roll, axis=0)  # roll positive direction
+            mean_out += np.roll(np.copy(dem_pad), -roll, axis=0)  # roll negative direction
+        y_rolls_sum = np.copy(mean_out)  # sum of all rolls in y direction
+        for i_x_roll in range(radius_cell):  # x direction roll
+            roll = i_x_roll + 1
+            mean_out += np.roll(np.copy(y_rolls_sum), roll, axis=1)  # roll positive direction
+            mean_out += np.roll(np.copy(y_rolls_sum), -roll, axis=1)  # roll negative direction
+        del y_rolls_sum
+        mean_out = mean_out / ((2 * radius_cell + 1) ** 2)  # calculate mean
+        mean_out = mean_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
+    else:  # dem doesn't contains np.nan
+        # summed area table (integral) approach
+        dem_pad = np.pad(dem, (radius_cell + 1, radius_cell), mode="edge")
+        dem_i1 = integral_image(dem_pad)
+        mean_out = np.roll(dem_i1, (radius_cell, radius_cell), axis=(0, 1)) + \
+                     np.roll(dem_i1, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) - \
+                     np.roll(dem_i1, (-radius_cell - 1, radius_cell), axis=(0, 1)) - \
+                     np.roll(dem_i1, (radius_cell, -radius_cell - 1), axis=(0, 1))
+        mean_out = mean_out.astype(np.float32)
+        mean_out = mean_out / (2 * radius_cell + 1) ** 2
+        mean_out = mean_out[radius_cell:-(radius_cell + 1), radius_cell:-(radius_cell + 1)]  # remove padding
+
     return mean_out
-
-
-# def std_filter(dem, kernel_radius):
-#     """Applies standard deviation filter on DEM. Kernel radius is in pixels. Kernel size is 2 * kernel_radius + 1.
-#     It returns std filtered dem as numpy.ndarray (2D numpy array)."""
-#     radius_cell = int(kernel_radius)
-#     dem_padded = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
-#     dem = np.array(dem_padded, dtype=float)
-#     dem2 = dem_padded ** 2
-#     ones = np.ones(dem.shape)
-#     kernel = np.ones((2 * radius_cell + 1, 2 * radius_cell + 1))
-#     s = scipy.signal.convolve2d(dem, kernel, mode="same")
-#     s2 = scipy.signal.convolve2d(dem2, kernel, mode="same")
-#     ns = scipy.signal.convolve2d(ones, kernel, mode="same")
-#     std_out = np.sqrt((s2 - s ** 2 / ns) / ns)
-#     std_out = std_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
-#     return std_out
 
 
 def slrm(dem,
@@ -527,7 +525,7 @@ def slrm(dem,
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         dem = fill_where_nan(dem, fill_method)
 
@@ -676,7 +674,7 @@ def sky_view_factor_compute(height_arr,
                 idx_no_data = np.where(height_arr == no_data)
         height_arr[height_arr == no_data] = np.nan
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         height_arr = fill_where_nan(height_arr, fill_method)
 
@@ -897,7 +895,7 @@ def local_dominance(dem,
                     ):
     """
     Compute Local Dominance dem visualization.
-    Adapted from original version that is part of the Lida Visualisation Toolbox LiVT developed by Ralf Hesse.
+    Adapted from original version that is part of the Lidar Visualisation Toolbox LiVT developed by Ralf Hesse.
 
     Parameters
     ----------
@@ -953,7 +951,7 @@ def local_dominance(dem,
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         dem = fill_where_nan(dem, fill_method)
 
@@ -1217,7 +1215,7 @@ def sky_illumination(dem,
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         dem = fill_where_nan(dem, fill_method)
 
@@ -1516,7 +1514,7 @@ def msrm(dem,
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data with mean of surrounding pixels
+    # fill no data
     if fill_no_data:
         dem = fill_where_nan(dem, fill_method)
 
@@ -1570,182 +1568,211 @@ def integral_image(dem):
      [13. 26. 42. 49.]
      [19. 38. 61. 74.]]
     """
-    dem = dem.astype(np.float)
+    dem = dem.astype(np.float64)
     return dem.cumsum(axis=0).cumsum(axis=1)
 
 
-# def topographic_dev(dem, kernel_radius):
-#     """
-#     Calculates topographic DEV - Deviation from mean elevation. DEV(D) = (z0 - zmD) / sD.
-#     Where D is radius of kernel, z0 is center pixel value, zmD is mean of all kernel values,
-#     sD is standard deviation of kernel.
-#
-#     Parameters
-#     ----------
-#     dem : numpy.ndarray
-#         Input digital elevation model as 2D numpy array.
-#     kernel_radius : int
-#         Kernel radius (D).
-#
-#     Returns
-#     -------
-#     dev_out : numpy.ndarray
-#         2D numpy result array of topographic DEV - Deviation from mean elevation.
-#     """
-#     radius_cell = int(kernel_radius)
-#     if radius_cell <= 0:
-#         return dem
-#
-#     dev_out = (dem - mean_filter(dem, kernel_radius=kernel_radius)) / (
-#             std_filter(dem, kernel_radius=kernel_radius) + 1e-6)  # add 1e-6 to prevent division with 0
-#
-#     return dev_out
+def topographic_dev(dem, dem_i1, dem_i2, kernel_radius):
+    """
+    Calculates topographic DEV - Deviation from mean elevation. DEV(D) = (z0 - zmD) / sD.
+    Where D is radius of kernel, z0 is center pixel value, zmD is mean of all kernel values,
+    sD is standard deviation of kernel.
+
+    Parameters
+    ----------
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    dem_i1 : numpy.ndarray
+        Summed area table (itegral image) of dem.
+    dem_i2 : numpy.ndarray
+        Summed area table (integral image) of dem squared (dem**2).
+    kernel_radius : int
+        Kernel radius (D).
+
+    Returns
+    -------
+    dev_out : numpy.ndarray
+        2D numpy result array of topographic DEV - Deviation from mean elevation.
+    """
+    radius_cell = int(kernel_radius)
+    if radius_cell <= 0:
+        return dem
+
+    dem_mean = np.roll(dem_i1, (radius_cell, radius_cell), axis=(0, 1)) + \
+               np.roll(dem_i1, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) - \
+               np.roll(dem_i1, (-radius_cell - 1, radius_cell), axis=(0, 1)) - \
+               np.roll(dem_i1, (radius_cell, -radius_cell - 1), axis=(0, 1))
+    dem_mean = dem_mean / (2 * radius_cell + 1) ** 2
+
+    dem_std = np.roll(dem_i2, (radius_cell, radius_cell), axis=(0, 1)) + \
+              np.roll(dem_i2, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) - \
+              np.roll(dem_i2, (-radius_cell - 1, radius_cell), axis=(0, 1)) - \
+              np.roll(dem_i2, (radius_cell, -radius_cell - 1), axis=(0, 1))
+    dem_std = np.sqrt(np.abs(dem_std / (2 * radius_cell + 1) ** 2 - dem_mean ** 2))
+
+    dev_out = (np.roll(dem, (-1, -1), axis=(0, 1)) - dem_mean) / (dem_std + 1e-6)  # add 1e-6 to prevent division with 0
+
+    return dev_out
 
 
-# def max_elevation_deviation(dem, minimum_radius, maximum_radius, step):
-#     # TODO: not working as it should! FIX
-#     """
-#     Calculates maximum deviation from mean elevation, DEVmax (Maximum Deviation from mean elevation) for each
-#     grid cell in a digital elevation model (DEM) across a range specified spatial scales.
-#     """
-#     minimum_radius = int(minimum_radius)
-#     maximum_radius = int(maximum_radius)
-#     step = int(step)
-#
-#     # kernel approach
-#     # dev_max_out = 0
-#     # for i_radius in range(minimum_radius, maximum_radius + 1, step):
-#     #     dev = topographic_dev(dem, kernel_radius=i_radius)
-#     #     if i_radius == minimum_radius:
-#     #         dev_max_out = dev
-#     #     else:
-#     #         dev_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), dev_max_out, dev)
-#
-#     # integral approach
-#     i = integral_image(dem)
-#     i2 = integral_image(dem ** 2)
-#     dev_max_out = np.zeros(dem.shape)
-#     scale_out = np.zeros(dem.shape, dtype=int)
-#     for i_row in range(dem.shape[0]):  # iterate trough dem rows
-#         # if i_row < maximum_radius or i_row >= dem.shape[0] - maximum_radius:  # skip padding
-#         #     continue
-#         for i_colum in range(dem.shape[1]):  # iterate trough dem columns
-#             # if i_colum < maximum_radius or i_colum >= dem.shape[1] - maximum_radius:  # skip padding
-#             #     continue
-#             cell_value = None
-#             z = dem[i_row, i_colum]
-#             if np.isnan(z):
-#                 dev_max_out[i_row, i_colum] = np.nan
-#                 scale_out[i_row, i_colum] = 0
-#             else:
-#                 scale_rad_cell = minimum_radius
-#                 for radius_cell in range(minimum_radius, maximum_radius + 1, step):
-#                     y1 = i_row - radius_cell - 1
-#                     if y1 < 0:
-#                         y1 = 0
-#                     if y1 >= dem.shape[0]:
-#                         y1 = dem.shape[0] - 1
-#                     y2 = i_row + radius_cell
-#                     if y2 < 0:
-#                         y2 = 0
-#                     if y2 >= dem.shape[0]:
-#                         y2 = dem.shape[0] - 1
-#                     x1 = i_colum - radius_cell - 1
-#                     if x1 < 0:
-#                         x1 = 0
-#                     if x1 >= dem.shape[1]:
-#                         x1 = dem.shape[1] - 1
-#                     x2 = i_colum + radius_cell
-#                     if x2 < 0:
-#                         x2 = 0
-#                     if x2 >= dem.shape[1]:
-#                         x2 = dem.shape[1] - 1
-#                     n = (radius_cell * 2 + 1) ** 2
-#                     if n > 0:
-#                         sum = i[(y2, x2)] + i[(y1, x1)] - i[(y1, x2)] - i[(y2, x1)]
-#                         sum_sqr = i2[(y2, x2)] + i2[(y1, x1)] - i2[(y1, x2)] - i2[(y2, x1)]
-#                         v = (sum_sqr - (sum * sum) / n) / n
-#                         if v > 0:
-#                             s = np.sqrt(v)
-#                             mean = sum / n
-#                             calculated_value = (z - mean) / s
-#                         else:
-#                             calculated_value = 0
-#                     else:
-#                         calculated_value = 0
-#                     if cell_value is None:
-#                         cell_value = calculated_value
-#                     if calculated_value ** 2 > cell_value ** 2:
-#                         cell_value = calculated_value
-#                         scale_rad_cell = radius_cell
-#
-#                 dev_max_out[i_row, i_colum] = cell_value
-#                 scale_out[i_row, i_colum] = scale_rad_cell
-#     return dev_max_out, scale_out
+def max_elevation_deviation(dem, minimum_radius, maximum_radius, step):
+    """
+    Calculates maximum deviation from mean elevation, DEVmax (Maximum Deviation from mean elevation) for each
+    grid cell in a digital elevation model (DEM) across a range specified spatial scales.
+
+    Parameters
+    ----------
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    minimum_radius : int
+        Minimum radius to calculate DEV (topographic_dev).
+    maximum_radius : int
+        Maximum radius to calculate DEV (topographic_dev).
+    step : int
+        Step from minimum to maximum radius to calc DEV (topographic_dev).
+
+    Returns
+    -------
+    dev_out : numpy.ndarray
+        2D numpy result array of maxDEV - Maximum Deviation from mean elevation.
+    """
+    minimum_radius = int(minimum_radius)
+    maximum_radius = int(maximum_radius)
+    step = int(step)
+
+    dem_pad = np.pad(dem, (maximum_radius + 1, maximum_radius), mode="symmetric")
+    dem_i1 = integral_image(dem_pad)
+    dem_i2 = integral_image(dem_pad ** 2)
+
+    for kernel_radius in range(minimum_radius, maximum_radius + 1, step):
+        dev = topographic_dev(dem_pad, dem_i1, dem_i2, kernel_radius)[maximum_radius:-(maximum_radius + 1),
+              maximum_radius:-(maximum_radius + 1)]
+        if kernel_radius == minimum_radius:
+            dev_max_out = dev
+            rad_max_out = np.zeros_like(dev) + kernel_radius
+        else:
+            rad_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), rad_max_out, kernel_radius)
+            dev_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), dev_max_out, dev)
+    # rad_max_out, radius of DEV for maxDEV (for each pixel)
+    return dev_max_out
 
 
-# def mstp(dem,
-#          micro_scale=(1, 10),
-#          meso_scale=(10, 100),
-#          macro_scale=(100, 1000),
-#          ve_factor=1,
-#          no_data=None,
-#          fill_no_data=True,
-#          keep_original_no_data=False):
-#     # TODO: not working as it should! FIX
-#     """
-#     Compute Multi-scale topographic position (MSTP).
-#
-#     Parameters
-#     ----------
-#     dem : numpy.ndarray
-#         Input digital elevation model as 2D numpy array.
-#     micro_scale : tuple(int, int)
-#         Input
-#     ve_factor : int or float
-#         Vertical exaggeration factor.
-#     no_data : int or float
-#         Value that represents no_data, all pixels with this value are changed to np.nan .
-#     fill_no_data : bool
-#         If True it fills where np.nan (no_data).
-#     fill_method : str
-#         Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-#     keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
-#
-#     Returns
-#     -------
-#     msrm_out : numpy.ndarray
-#         3D numpy RGB result array of Multi-scale topographic position.
-#     """
-#     micro_step = int(np.ceil((micro_scale[1] - micro_scale[0]) / 10))
-#     micro_DEV = max_elevation_deviation(dem=dem, minimum_radius=micro_scale[0], maximum_radius=micro_scale[1],
-#                                         step=1)
-#     meso_step = int(np.ceil((meso_scale[1] - meso_scale[0]) / 10))
-#     meso_DEV = max_elevation_deviation(dem=dem, minimum_radius=meso_scale[0], maximum_radius=meso_scale[1],
-#                                        step=10)
-#     macro_step = int(np.ceil((macro_scale[1] - macro_scale[0]) / 10))
-#     macro_DEV = max_elevation_deviation(dem=dem, minimum_radius=macro_scale[0], maximum_radius=macro_scale[1],
-#                                         step=100)
-#
-#     return np.array([byte_scale(micro_DEV, 2, 2),
-#                      byte_scale(meso_DEV, 2, 2),
-#                      byte_scale(macro_DEV, 2, 2)])
+def mstp(dem,
+         local_scale=(1, 10, 1),
+         meso_scale=(10, 100, 10),
+         broad_scale=(100, 1000, 100),
+         lightness=1.2,
+         ve_factor=1,
+         no_data=None,
+         fill_no_data=False,
+         fill_method="idw",
+         keep_original_no_data=False):
+    """
+    Compute Multi-scale topographic position (MSTP).
+
+    Parameters
+    ----------
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    local_scale : tuple(int, int, int)
+        Input local scale minimum radius (local_scale[0]), maximum radius (local_scale[1]), step (local_scale[2]).
+    meso_scale : tuple(int, int, int)
+        Input meso scale minimum radius (meso_scale[0]), maximum radius (meso_scale[1]), step (meso_scale[2]).
+    broad_scale : tuple(int, int, int)
+        Input broad scale minimum radius (broad_scale[0]), maximum radius (broad_scale[1]), step (broad_scale[2]).
+    lightness : float
+        Lightness of image.
+    ve_factor : int or float
+        Vertical exaggeration factor.
+    no_data : int or float
+        Value that represents no_data, all pixels with this value are changed to np.nan .
+    fill_no_data : bool
+        If True it fills where np.nan (no_data).
+    fill_method : str
+        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
+    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
+
+    Returns
+    -------
+    msrm_out : numpy.ndarray
+        3D numpy RGB result array of Multi-scale topographic position.
+    """
+    if local_scale[0] > local_scale[1] or meso_scale[0] > meso_scale[1] or broad_scale[0] > broad_scale[1]:
+        raise Exception("rvt.vis.mstp: local_scale, meso_scale, broad_scale min has to be smaller than max!")
+    if (local_scale[1] - local_scale[0] < local_scale[2]) or (meso_scale[1] - meso_scale[0] < meso_scale[2]) or\
+            (broad_scale[1] - broad_scale[0] < broad_scale[2]):
+        raise Exception("rvt.vis.mstp: local_scale, meso_scale, broad_scale step has to be within min and max!")
+    if not (1000 >= ve_factor >= -1000):
+        raise Exception("rvt.vis.mstp: ve_factor must be between -1000 and 1000!")
+    if no_data is None and fill_no_data:
+        warnings.warn("rvt.vis.mstp: In order to fill no data (fill_no_data = True) you have to input"
+                      " no_data!")
+    if (no_data is None or not fill_no_data) and keep_original_no_data:
+        warnings.warn("rvt.vis.mstp: In order to keep original no data (keep_original_no_data = True)"
+                      " you have to input no_data and fill_no_data has to be True!")
+
+    # change no_data to np.nan
+    idx_no_data = None
+    if no_data is not None:
+        if keep_original_no_data:  # save indexes where is no_data
+            if np.isnan(no_data):
+                idx_no_data = np.where(np.isnan(dem))
+            else:
+                idx_no_data = np.where(dem == no_data)
+        dem[dem == no_data] = np.nan
+
+    dem = dem.astype(np.float32)
+    dem = dem * ve_factor
+
+    # fill no data
+    if fill_no_data:
+        dem = fill_where_nan(dem, fill_method)
+
+    local_DEV = max_elevation_deviation(dem=dem, minimum_radius=local_scale[0], maximum_radius=local_scale[1],
+                                        step=local_scale[2])
+    meso_DEV = max_elevation_deviation(dem=dem, minimum_radius=meso_scale[0], maximum_radius=meso_scale[1],
+                                       step=meso_scale[2])
+    broad_DEV = max_elevation_deviation(dem=dem, minimum_radius=broad_scale[0], maximum_radius=broad_scale[1],
+                                        step=broad_scale[2])
+
+    cutoff = lightness
+    red = np.floor(512 / (1 + np.exp(-cutoff * np.abs(broad_DEV)))) - 256  # broad
+    green = np.floor(512 / (1 + np.exp(-cutoff * np.abs(meso_DEV)))) - 256  # meso
+    blue = np.floor(512 / (1 + np.exp(-cutoff * np.abs(local_DEV)))) - 256  # local
+
+    red[red < 0] = 0
+    green[green < 0] = 0
+    blue[blue < 0] = 0
+
+    red[red > 255] = 255
+    green[green > 255] = 255
+    blue[blue > 255] = 255
+
+    # change result to np.nan where dem is no_data
+    if no_data is not None and keep_original_no_data:
+        red[idx_no_data] = np.nan
+        green[idx_no_data] = np.nan
+        blue[idx_no_data] = np.nan
+
+    return np.asarray([red, green, blue])  # RGB 24-bit (3 x 8bit)
 
 
 def fill_where_nan(dem, method="idw"):
     """
     Replaces np.nan values, with interpolation (extrapolation).
 
-    Methods
+    Parameters
     -------
-    linear_row : Linear row interpolation (fast) (1D) (array is flattened and then linear interpolation is performed).
-                 This method is fast but very inaccurate.
-    idw_r_p : Inverse Distance Weighting interpolation.
-              If you only input idw it will take default parameters (r=20, p=2).
-              You can also input interpolation radius (r) and power (p) for weights.
-              Example: idw_5_2 means radius = 5, power = 2.
-    kd_tree : K-D Tree interpolation.
-    nearest_neighbour : Nearest neighbour interpolation.
+    dem : numpy.ndarray
+        Input digital elevation model as 2D numpy array.
+    method : {'linear_row', 'idw_r_p', 'kd_tree', 'nearest_neighbour'}
+        'linear_row', Linear row interpolation, array is flattened and then linear interpolation is performed.
+        This method is fast but very inaccurate.
+        'idw_r_p', Inverse Distance Weighting interpolation. If you only input idw it will take default parameters
+         (r=20, p=2). You can also input interpolation radius (r) and power (p) for weights. (Example:
+         idw_5_2 means radius = 5, power = 2.)
+        'kd_tree', K-D Tree interpolation.
+        'nearest_neighbour', Nearest neighbour interpolation.
     """
     if np.all(~np.isnan(dem)):  # if there is no nan return dem
         return dem
@@ -1794,7 +1821,7 @@ def fill_where_nan(dem, method="idw"):
                 dist_arr[i_row_center, i_column_center] = 0
                 dist_arr = scipy.ndimage.morphology.distance_transform_edt(dist_arr)
                 dist_arr[dist_arr == 0] = np.nan  # can't divide with zero
-                dist_arr = 1/dist_arr**power
+                dist_arr = 1 / dist_arr ** power
                 nan_mask = np.isnan(nan_surrounding_arr)
                 dist_arr[nan_mask] = 0  # where nan weight matrix is zero
                 # calculate idw for one nan value

@@ -480,6 +480,7 @@ class QRVT:
         #self.dlg.group_illumination.setChecked(True)
         self.dlg.group_local_dominance.setChecked(True)
         self.dlg.group_multi_relief.setChecked(True)
+        self.dlg.group_multi_scale_top_pos.setChecked(True)
 
     def deactivate_all_visualizations(self):
         """Deactivate all visualizations."""
@@ -494,6 +495,7 @@ class QRVT:
         # self.dlg.group_illumination.setChecked(False)
         self.dlg.group_local_dominance.setChecked(False)
         self.dlg.group_multi_relief.setChecked(False)
+        self.dlg.group_multi_scale_top_pos.setChecked(False)
 
     def check_dlg_blender_layers_change(self):
         """Check if any layer (combo box, line edit, scroll slider) in blender layers dialog changed
@@ -595,6 +597,10 @@ class QRVT:
         terrain_settings.msrm_feature_min = self.default.msrm_feature_min
         terrain_settings.msrm_feature_max = self.default.msrm_feature_max
         terrain_settings.msrm_scaling_factor = self.default.msrm_scaling_factor
+        terrain_settings.mstp_lightness = self.default.mstp_lightness
+        terrain_settings.mstp_local_scale = self.default.mstp_local_scale
+        terrain_settings.mstp_meso_scale = self.default.mstp_meso_scale
+        terrain_settings.mstp_broad_scale = self.default.mstp_broad_scale
         for layer in self.combination.layers:
             if layer.vis.lower() == "hillshade":
                 terrain_settings.hs_stretch = (layer.min, layer.max)
@@ -618,6 +624,8 @@ class QRVT:
                 terrain_settings.ld_stretch = (layer.min, layer.max)
             if layer.vis.lower() == "multi-scale relief model":
                 terrain_settings.msrm_stretch = (layer.min, layer.max)
+            if layer.vis.lower() == "multi-scale topographic position":
+                terrain_settings.mstp_stretch = (layer.min, layer.max)
         self.terrain_settings = terrain_settings
 
     def combo_vis_check(self):
@@ -667,6 +675,8 @@ class QRVT:
                 self.dlg.group_local_dominance.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Multi-scale relief model":
                 self.dlg.group_multi_reliefgroup_multi_relief.setChecked(True)
+            if self.dlg_combo_vis_list[i_layer].currentText() == "Multi-scale topographic position":
+                self.dlg.group_multi_scale_top_pos.setChecked(True)
 
     def check_checkbox_float_8bit_change(self):
         """One of the checkboxes float or 8bit was clicked."""
@@ -691,6 +701,7 @@ class QRVT:
         self.dlg.combo_fill_method.currentTextChanged.connect(lambda: self.fill_no_data_other_fill_method_combo_check())
 
     def fill_no_data_other_fill_method_combo_check(self):
+        """Fill no data method additional parameters checks."""
         if self.dlg.combo_fill_method.currentText() == "Inverse Distance Weighting":
             self.dlg.label_fill_nan_rad.setEnabled(True)
             self.dlg.line_fill_nan_rad.setEnabled(True)
@@ -947,6 +958,17 @@ class QRVT:
         self.dlg.line_msrm_f_min.setText(str(self.default.msrm_feature_min))
         self.dlg.line_msrm_f_max.setText(str(self.default.msrm_feature_max))
         self.dlg.line_msrm_scale.setText(str(self.default.msrm_scaling_factor))
+        self.dlg.group_multi_scale_top_pos.setChecked(bool(self.default.mstp_compute))
+        self.dlg.line_mstp_loc_min.setText(str(self.default.mstp_local_scale[0]))
+        self.dlg.line_mstp_loc_max.setText(str(self.default.mstp_local_scale[1]))
+        self.dlg.line_mstp_loc_stp.setText(str(self.default.mstp_local_scale[2]))
+        self.dlg.line_mstp_meso_min.setText(str(self.default.mstp_meso_scale[0]))
+        self.dlg.line_mstp_meso_max.setText(str(self.default.mstp_meso_scale[1]))
+        self.dlg.line_mstp_meso_stp.setText(str(self.default.mstp_meso_scale[2]))
+        self.dlg.line_mstp_bro_min.setText(str(self.default.mstp_broad_scale[0]))
+        self.dlg.line_mstp_bro_max.setText(str(self.default.mstp_broad_scale[1]))
+        self.dlg.line_mstp_bro_stp.setText(str(self.default.mstp_broad_scale[2]))
+        self.dlg.line_mstp_light.setText(str(self.default.mstp_lightness))
         self.dlg.check_hs_float.setChecked(bool(self.default.hs_save_float))
         self.dlg.check_hs_8bit.setChecked(bool(self.default.hs_save_8bit))
         self.dlg.check_mhs_float.setChecked(bool(self.default.mhs_save_float))
@@ -1012,6 +1034,17 @@ class QRVT:
         self.default.msrm_feature_min = float(self.dlg.line_msrm_f_min.text())
         self.default.msrm_feature_max = float(self.dlg.line_msrm_f_max.text())
         self.default.msrm_scaling_factor = int(self.dlg.line_msrm_scale.text())
+        self.default.mstp_compute = int(self.dlg.group_multi_scale_top_pos.isChecked())
+        self.default.mstp_lightness = float(self.dlg.line_mstp_light.text())
+        self.default.mstp_local_scale = (int(self.dlg.line_mstp_loc_min.text()),
+                                         int(self.dlg.line_mstp_loc_max.text()),
+                                         int(self.dlg.line_mstp_loc_stp.text()))
+        self.default.mstp_meso_scale = (int(self.dlg.line_mstp_meso_min.text()),
+                                        int(self.dlg.line_mstp_meso_max.text()),
+                                        int(self.dlg.line_mstp_meso_stp.text()))
+        self.default.mstp_broad_scale = (int(self.dlg.line_mstp_bro_min.text()),
+                                         int(self.dlg.line_mstp_bro_max.text()),
+                                         int(self.dlg.line_mstp_bro_stp.text()))
         self.default.hs_save_float = int(self.dlg.check_hs_float.isChecked())
         self.default.hs_save_8bit = int(self.dlg.check_hs_8bit.isChecked())
         self.default.mhs_save_float = int(self.dlg.check_mhs_float.isChecked())
@@ -1245,6 +1278,12 @@ class QRVT:
                                 # if exists
                                 self.parent.iface.addRasterLayer(msrm_8bit_path,
                                                                  msrm_8bit_name)  # add layer
+                        # Multi-scale topographic position
+                        if self.parent.default.mstp_compute:
+                            mstp_name = self.parent.default.get_mstp_file_name(raster_path)
+                            mstp_path = os.path.abspath(os.path.join(save_dir, mstp_name))
+                            self.parent.remove_layer_by_path(mstp_path)  # remove layer from qgis if exists
+                            self.parent.iface.addRasterLayer(mstp_path, mstp_name)  # add layer to qgis
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
@@ -1274,7 +1313,6 @@ class QRVT:
         self.default.save_default_to_file(file_path=self.default_settings_path)
         add_to_qgis = self.dlg.check_addqgis.isChecked()
         selected_input_rasters = self.dlg.select_input_files.checkedItems()
-
         self.iface.messageBar().clearWidgets()  # clear all messages
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
