@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>743</width>
-    <height>784</height>
+    <width>784</width>
+    <height>801</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.6.3</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.6.4</string>
        </property>
       </widget>
      </item>

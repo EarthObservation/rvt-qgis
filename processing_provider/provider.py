@@ -11,6 +11,7 @@ from processing_provider.rvt_sky_illum import RVTSim
 from processing_provider.rvt_local_dom import RVTLocalDom
 from processing_provider.rvt_blender import RVTBlender
 from processing_provider.rvt_msrm import RVTMsrm
+from processing_provider.rvt_mstp import RVTMstp
 
 
 class Provider(QgsProcessingProvider):
@@ -26,6 +27,7 @@ class Provider(QgsProcessingProvider):
         self.addAlgorithm(RVTLocalDom())
         self.addAlgorithm(RVTBlender())
         self.addAlgorithm(RVTMsrm())
+        self.addAlgorithm(RVTMstp())
 
     def id(self, *args, **kwargs):
         """The ID of your plugin, used for identifying the provider.
