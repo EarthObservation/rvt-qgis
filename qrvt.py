@@ -154,8 +154,9 @@ class QRVT:
         # Declare instance attributes
         self.actions = []
         self.menu = self.tr(u'&Relief Visualization Toolbox')
-        self.toolbar = self.iface.addToolBar(u'Relief Visualization Toolbox')
-        self.toolbar.setObjectName(u'Relief Visualization Toolbox')
+        if self.iface:
+            self.toolbar = self.iface.addToolBar(u'Relief Visualization Toolbox')
+            self.toolbar.setObjectName(u'Relief Visualization Toolbox')
 
         self.cwd = os.getcwd()
 
