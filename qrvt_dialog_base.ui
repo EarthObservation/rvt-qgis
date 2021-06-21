@@ -44,39 +44,66 @@ QGroupBox
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_8">
    <item>
-    <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0">
+    <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0,0,0">
      <property name="sizeConstraint">
       <enum>QLayout::SetMinAndMaxSize</enum>
      </property>
-     <item row="5" column="0">
-      <widget class="QgsCheckableComboBox" name="select_input_files">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="currentText">
-        <string>hansi</string>
-       </property>
+     <item row="2" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_25">
        <item>
-        <property name="text">
-         <string>hansi</string>
-        </property>
+        <widget class="QLabel" name="label_14">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>List of currently selected files:</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <property name="text">
-         <string>beta</string>
-        </property>
+        <spacer name="horizontalSpacer_16">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
-        <property name="text">
-         <string>zeta</string>
-        </property>
+        <widget class="QPushButton" name="button_about">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>About</string>
+         </property>
+        </widget>
        </item>
-      </widget>
+      </layout>
      </item>
-     <item row="6" column="0">
+     <item row="8" column="0">
       <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1,30">
        <property name="sizeConstraint">
         <enum>QLayout::SetMinAndMaxSize</enum>
@@ -365,9 +392,9 @@ QGroupBox
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-240</y>
+                <y>0</y>
                 <width>935</width>
-                <height>793</height>
+                <height>799</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -2763,7 +2790,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>952</width>
-                <height>583</height>
+                <height>578</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -3231,6 +3258,11 @@ QGroupBox
                        </item>
                        <item>
                         <property name="text">
+                         <string>Sky illumination</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
                          <string>Local dominance</string>
                         </property>
                        </item>
@@ -3557,6 +3589,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Openness - Negative</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Sky illumination</string>
                         </property>
                        </item>
                        <item>
@@ -3895,6 +3932,11 @@ QGroupBox
                        </item>
                        <item>
                         <property name="text">
+                         <string>Sky illumination</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
                          <string>Local dominance</string>
                         </property>
                        </item>
@@ -4179,6 +4221,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Openness - Negative</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Sky illumination</string>
                         </property>
                        </item>
                        <item>
@@ -4574,6 +4621,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Openness - Negative</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Sky illumination</string>
                         </property>
                        </item>
                        <item>
@@ -5458,7 +5510,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>952</width>
-                <height>616</height>
+                <height>611</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -5906,56 +5958,77 @@ QGroupBox
        </item>
       </layout>
      </item>
-     <item row="2" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout_25">
+     <item row="7" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_41">
        <item>
-        <widget class="QLabel" name="label_14">
+        <layout class="QVBoxLayout" name="verticalLayout_50">
+         <item>
+          <widget class="QgsCheckableComboBox" name="select_input_files">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="currentText">
+            <string>hansi</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>hansi</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>beta</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>zeta</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPushButton" name="button_sel_all_dem">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
          <property name="font">
           <font>
-           <weight>75</weight>
-           <bold>true</bold>
+           <pointsize>8</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
           </font>
          </property>
          <property name="text">
-          <string>List of currently selected files:</string>
+          <string>Select all</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_16">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="button_about">
+        <widget class="QPushButton" name="button_sel_none_dem">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="text">
-          <string>About</string>
+          <string>Select none</string>
          </property>
         </widget>
        </item>

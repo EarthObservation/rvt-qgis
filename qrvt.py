@@ -376,6 +376,9 @@ class QRVT:
         self.dlg.button_select_all.clicked.connect(lambda: self.activate_all_visualizations())
         self.dlg.button_select_none.clicked.connect(lambda: self.deactivate_all_visualizations())
 
+        self.dlg.button_sel_all_dem.clicked.connect(lambda: self.activate_all_dem())
+        self.dlg.button_sel_none_dem.clicked.connect(lambda: self.deactivate_all_dem())
+
         # VISUALIZATIONS
         # start button pressed
         self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations_clicked())
@@ -438,6 +441,12 @@ class QRVT:
                 self.dlg.select_input_files.addItem(layer_name)
                 rvt_select_input[layer_name] = layer_path
         self.rvt_select_input = rvt_select_input
+
+    def activate_all_dem(self):
+        self.dlg.select_input_files.selectAllOptions()
+
+    def deactivate_all_dem(self):
+        self.dlg.select_input_files.deselectAllOptions()
 
     def checkbox_save_to_rast_loc(self):
         """"Check box save to raster location state changed."""
