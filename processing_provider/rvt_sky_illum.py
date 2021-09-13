@@ -27,13 +27,9 @@ class RVTSim(QgsProcessingAlgorithm):
     SHADOW_AZIMUTH = "SHADOW_AZIMUTH"
     SHADOW_ELEVATION = "SHADOW_ELEVATION"
     SAVE_AS_8BIT = "SAVE_AS_8BIT"
-    FILL_NO_DATA = "FILL_NO_DATA"
-    FILL_METHOD = "FILL_METHOD"
-    KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
     OUTPUT = 'OUTPUT'
 
     sky_model_options = ["overcast", "uniform"]
-    fill_method_options = ["idw_20_2", "kd_tree", "nearest_neighbour"]
 
     def tr(self, string):
         """
@@ -147,28 +143,6 @@ class RVTSim(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
-            QgsProcessingParameterBoolean(
-                name="FILL_NO_DATA",
-                description="Fill no-data (holes)",
-                defaultValue=True
-            )
-        )
-        self.addParameter(
-            QgsProcessingParameterEnum(
-                name="FILL_METHOD",
-                description="Fill no-data method.",
-                options=self.fill_method_options,
-                defaultValue=self.fill_method_options[0]
-            )
-        )
-        self.addParameter(
-            QgsProcessingParameterBoolean(
-                name="KEEP_ORIG_NO_DATA",
-                description="Keep original no-data",
-                defaultValue=False
-            )
-        )
-        self.addParameter(
             QgsProcessingParameterRasterDestination(
                 self.OUTPUT,
                 self.tr('Output visualization raster layer')
@@ -221,22 +195,6 @@ class RVTSim(QgsProcessingAlgorithm):
             self.SAVE_AS_8BIT,
             context
         ))
-        fill_no_data = bool(self.parameterAsBool(
-            parameters,
-            self.FILL_NO_DATA,
-            context
-        ))
-        fill_method_enum = int(self.parameterAsEnum(
-            parameters,
-            self.FILL_METHOD,
-            context
-        ))
-        fill_method = self.fill_method_options[fill_method_enum]
-        keep_orig_no_data = bool(self.parameterAsBool(
-            parameters,
-            self.KEEP_ORIG_NO_DATA,
-            context
-        ))
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -254,9 +212,7 @@ class RVTSim(QgsProcessingAlgorithm):
                                                      max_fine_radius=max_fine_rad, num_directions=nr_dir,
                                                      ve_factor=ve_factor,
                                                      compute_shadow=True, shadow_az=shadow_az, shadow_el=shadow_el,
-                                                     no_data=no_data, fill_no_data=fill_no_data,
-                                                     fill_method=fill_method,
-                                                     keep_original_no_data=keep_orig_no_data)
+                                                     no_data=no_data)
         if not save_8bit:
             rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                     out_raster_arr=visualization_arr, e_type=6, no_data=np.nan)

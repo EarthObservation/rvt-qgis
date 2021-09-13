@@ -12,6 +12,7 @@ from qgis import processing
 import numpy as np
 import rvt.default
 import rvt.blend
+import rvt.vis
 import os
 
 
@@ -25,12 +26,7 @@ class RVTBlender(QgsProcessingAlgorithm):
     TERRAIN_TYPE = 'TERRAIN_TYPE'
     OUTPUT = 'OUTPUT'
     NOISE_REMOVE = "NOISE_REMOVE"
-    # SAVE_AS_8BIT = "SAVE_AS_8BIT"
-    FILL_NO_DATA = "FILL_NO_DATA"
-    FILL_METHOD = "FILL_METHOD"
-    KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
-
-    fill_method_options = ["idw_20_2", "kd_tree", "nearest_neighbour"]
+    SAVE_AS_8BIT = "SAVE_AS_8BIT"
 
     # read default blender combinations from settings/json, read default terrain settings from settings/json
     default_blender_combinations_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)),
@@ -110,32 +106,10 @@ class RVTBlender(QgsProcessingAlgorithm):
                 options=self.terrains_sett_names
             )
         )
-        # self.addParameter(
-        #     QgsProcessingParameterBoolean(
-        #         name="SAVE_AS_8BIT",
-        #         description="Save as 8bit raster",
-        #         defaultValue=False
-        #     )
-        # )
         self.addParameter(
             QgsProcessingParameterBoolean(
-                name="FILL_NO_DATA",
-                description="Fill no-data (holes)",
-                defaultValue=True
-            )
-        )
-        self.addParameter(
-            QgsProcessingParameterEnum(
-                name="FILL_METHOD",
-                description="Fill no-data method.",
-                options=self.fill_method_options,
-                defaultValue=self.fill_method_options[0]
-            )
-        )
-        self.addParameter(
-            QgsProcessingParameterBoolean(
-                name="KEEP_ORIG_NO_DATA",
-                description="Keep original no-data",
+                name="SAVE_AS_8BIT",
+                description="Save as 8bit raster",
                 defaultValue=False
             )
         )
@@ -165,25 +139,9 @@ class RVTBlender(QgsProcessingAlgorithm):
             self.TERRAIN_TYPE,
             context
         ))]
-        # save_8bit = bool(self.parameterAsBool(
-        #     parameters,
-        #     self.SAVE_AS_8BIT,
-        #     context
-        # ))
-        fill_no_data = bool(self.parameterAsBool(
+        save_8bit = bool(self.parameterAsBool(
             parameters,
-            self.FILL_NO_DATA,
-            context
-        ))
-        fill_method_enum = int(self.parameterAsEnum(
-            parameters,
-            self.FILL_METHOD,
-            context
-        ))
-        fill_method = self.fill_method_options[fill_method_enum]
-        keep_orig_no_data = bool(self.parameterAsBool(
-            parameters,
-            self.KEEP_ORIG_NO_DATA,
+            self.SAVE_AS_8BIT,
             context
         ))
         visualization_path = (self.parameterAsOutputLayer(
@@ -198,10 +156,10 @@ class RVTBlender(QgsProcessingAlgorithm):
         dem_arr = dict_arr_dem["array"]
         no_data = dict_arr_dem["no_data"]
 
-        # if save_8bit = True save_float is False, can only output one
-        # save_float = True
-        # if save_8bit:
-        #     save_float = False
+        #if save_8bit = True save_float is False, can only output one
+        save_float = True
+        if save_8bit:
+            save_float = False
 
         # advanced custom combinations (hard coded) blending (which can't be created in dialog)
         if combination_name == "Archaeological combined (VAT combined)":
@@ -209,14 +167,6 @@ class RVTBlender(QgsProcessingAlgorithm):
                                                                      "settings", "blender_VAT.json"))
             default_1 = rvt.default.DefaultValues()  # VAT general
             default_2 = rvt.default.DefaultValues()  # VAT flat
-
-            # set fill_no_data and keep_orig_no_data
-            default_1.fill_no_data = fill_no_data
-            default_1.fill_method = fill_method
-            default_1.keep_original_no_data = keep_orig_no_data
-            default_2.fill_no_data = fill_no_data
-            default_2.fill_method = fill_method
-            default_2.keep_original_no_data = keep_orig_no_data
 
             vat_combination_1 = rvt.blend.BlenderCombination()  # VAT general
             vat_combination_2 = rvt.blend.BlenderCombination()  # VAT flat
@@ -243,16 +193,24 @@ class RVTBlender(QgsProcessingAlgorithm):
                                      maximum=1, blend_mode="Normal", opacity=100)
             combination.add_dem_path(dem_path=dem_path)
             combination.render_all_images(save_render_path=visualization_path, save_visualizations=False,
-                                          save_float=True, save_8bit=False,
+                                          save_float=save_float, save_8bit=save_8bit,
                                           no_data=no_data)
+        elif combination_name == "enhanced Multi-Scale Topographic Position version 3":
+            dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=dem_path)
+            e3mstp_arr = rvt.blend.e3mstp(dem=dict_arr_res_nd["array"], resolution=dict_arr_res_nd["resolution"][0],
+                                          no_data=dict_arr_res_nd["no_data"])
+            if save_float:
+                rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
+                                        out_raster_arr=e3mstp_arr, no_data=np.nan, e_type=6)
+            else:
+                rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
+                                        out_raster_arr=rvt.vis.byte_scale(e3mstp_arr, c_min=0.0, c_max=1.0),
+                                        no_data=np.nan, e_type=1)
         # normal combination blending
         else:
             # create default
             default = rvt.default.DefaultValues()
-            # set fill_no_data and keep_orig_no_data
-            default.fill_no_data = fill_no_data
-            default.fill_method = fill_method
-            default.keep_original_no_data = keep_orig_no_data
+
             # create combination
             combination = self.combinations.select_combination_by_name(combination_name)
             # apply terrain settings
@@ -262,7 +220,7 @@ class RVTBlender(QgsProcessingAlgorithm):
             combination.add_dem_path(dem_path)
             combination.render_all_images(default=default, save_visualizations=False,
                                           save_render_path=visualization_path,
-                                          save_float=True, save_8bit=False, no_data=no_data)
+                                          save_float=save_float, save_8bit=save_8bit, no_data=no_data)
 
         result = {self.OUTPUT: visualization_path}
         return result

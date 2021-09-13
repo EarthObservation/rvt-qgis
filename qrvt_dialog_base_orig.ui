@@ -104,7 +104,7 @@ QGroupBox
       </layout>
      </item>
      <item row="8" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,1,30">
+      <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,30">
        <property name="sizeConstraint">
         <enum>QLayout::SetMinAndMaxSize</enum>
        </property>
@@ -233,69 +233,6 @@ QGroupBox
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_24">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetMinimumSize</enum>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="check_fill_no_data">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>8</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Fill no-data (holes)</string>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="check_keep_org_no_data">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>8</pointsize>
-             <weight>50</weight>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Keep original no-data</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_14">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
         <widget class="QTabWidget" name="tab_widget">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -394,7 +331,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>935</width>
-                <height>871</height>
+                <height>863</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1037,7 +974,7 @@ QGroupBox
                     <string>simple_local_relief</string>
                    </property>
                    <property name="title">
-                    <string>Simple local relief model</string>
+                    <string>Simple Local Relief Model</string>
                    </property>
                    <property name="flat">
                     <bool>false</bool>
@@ -1195,7 +1132,7 @@ QGroupBox
                     <string>multi_scale_relief_model</string>
                    </property>
                    <property name="title">
-                    <string>Multi-scale relief model</string>
+                    <string>Multi-Scale Relief Model</string>
                    </property>
                    <property name="checkable">
                     <bool>true</bool>
@@ -1412,7 +1349,7 @@ QGroupBox
                     <bool>false</bool>
                    </property>
                    <property name="title">
-                    <string>Sky-View Factor</string>
+                    <string>Sky-view factor</string>
                    </property>
                    <property name="flat">
                     <bool>false</bool>
@@ -1706,7 +1643,7 @@ QGroupBox
                     <string>anisotropic_svf</string>
                    </property>
                    <property name="title">
-                    <string>Anisotropic Sky-View Factor (set parameters in Sky-View Factor)</string>
+                    <string>Anisotropic sky-view factor (set parameters in sky-view factor)</string>
                    </property>
                    <property name="flat">
                     <bool>false</bool>
@@ -1871,7 +1808,7 @@ QGroupBox
                     <string>positive_openness</string>
                    </property>
                    <property name="title">
-                    <string>Openess - Positive (set parameters in Sky-View Factor)</string>
+                    <string>Openess - positive (set parameters in sky-view factor)</string>
                    </property>
                    <property name="flat">
                     <bool>false</bool>
@@ -1907,7 +1844,7 @@ QGroupBox
                     <string>negative_openness</string>
                    </property>
                    <property name="title">
-                    <string>Openess - Negative (set parameters in Sky-View Factor)</string>
+                    <string>Openess - negative (set parameters in sky-view factor)</string>
                    </property>
                    <property name="flat">
                     <bool>false</bool>
@@ -2425,7 +2362,7 @@ QGroupBox
                     <string>multi-scale_topographic_position</string>
                    </property>
                    <property name="title">
-                    <string>Multi-scale topographic position</string>
+                    <string>Multi-Scale Topographic Position</string>
                    </property>
                    <property name="checkable">
                     <bool>true</bool>
@@ -3065,7 +3002,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>952</width>
-                <height>578</height>
+                <height>606</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_15">
@@ -3438,6 +3375,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Screen</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Soft_light</string>
                         </property>
                        </item>
                       </widget>
@@ -4114,6 +4056,11 @@ QGroupBox
                          <string>Screen</string>
                         </property>
                        </item>
+                       <item>
+                        <property name="text">
+                         <string>Soft_light</string>
+                        </property>
+                       </item>
                       </widget>
                      </item>
                      <item>
@@ -4334,6 +4281,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Screen</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Soft_light</string>
                         </property>
                        </item>
                       </widget>
@@ -4669,6 +4621,11 @@ QGroupBox
                        <item>
                         <property name="text">
                          <string>Screen</string>
+                        </property>
+                       </item>
+                       <item>
+                        <property name="text">
+                         <string>Soft_light</string>
                         </property>
                        </item>
                       </widget>
@@ -5403,6 +5360,11 @@ QGroupBox
                          <string>Screen</string>
                         </property>
                        </item>
+                       <item>
+                        <property name="text">
+                         <string>Soft_light</string>
+                        </property>
+                       </item>
                       </widget>
                      </item>
                      <item>
@@ -5785,7 +5747,7 @@ QGroupBox
                 <x>0</x>
                 <y>0</y>
                 <width>952</width>
-                <height>611</height>
+                <height>639</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_12">

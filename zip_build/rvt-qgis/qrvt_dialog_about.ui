@@ -29,7 +29,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.7.1</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.8.0</string>
        </property>
       </widget>
      </item>

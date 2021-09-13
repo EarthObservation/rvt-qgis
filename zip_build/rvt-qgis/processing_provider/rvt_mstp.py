@@ -31,13 +31,9 @@ class RVTMstp(QgsProcessingAlgorithm):
     BROAD_SCALE_MAX = "BROAD_SCALE_MAX"
     BROAD_SCALE_STEP = "BROAD_SCALE_STEP"
     LIGHTNESS = "LIGHTNESS"
-    FILL_NO_DATA = "FILL_NO_DATA"
-    FILL_METHOD = "FILL_METHOD"
-    KEEP_ORIG_NO_DATA = "KEEP_ORIG_NO_DATA"
     OUTPUT = 'OUTPUT'
 
     noise_options = ["no removal", "low", "medium", "high"]
-    fill_method_options = ["idw_20_2", "kd_tree", "nearest_neighbour"]
 
     def tr(self, string):
         """
@@ -197,28 +193,6 @@ class RVTMstp(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
-            QgsProcessingParameterBoolean(
-                name="FILL_NO_DATA",
-                description="Fill no-data (holes)",
-                defaultValue=True
-            )
-        )
-        self.addParameter(
-            QgsProcessingParameterEnum(
-                name="FILL_METHOD",
-                description="Fill no-data method.",
-                options=self.fill_method_options,
-                defaultValue=self.fill_method_options[0]
-            )
-        )
-        self.addParameter(
-            QgsProcessingParameterBoolean(
-                name="KEEP_ORIG_NO_DATA",
-                description="Keep original no-data",
-                defaultValue=False
-            )
-        )
-        self.addParameter(
             QgsProcessingParameterRasterDestination(
                 self.OUTPUT,
                 self.tr('Output visualization raster layer')
@@ -289,22 +263,6 @@ class RVTMstp(QgsProcessingAlgorithm):
             self.LIGHTNESS,
             context
         ))
-        fill_no_data = bool(self.parameterAsBool(
-            parameters,
-            self.FILL_NO_DATA,
-            context
-        ))
-        fill_method_enum = int(self.parameterAsEnum(
-            parameters,
-            self.FILL_METHOD,
-            context
-        ))
-        fill_method = self.fill_method_options[fill_method_enum]
-        keep_orig_no_data = bool(self.parameterAsBool(
-            parameters,
-            self.KEEP_ORIG_NO_DATA,
-            context
-        ))
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -323,8 +281,7 @@ class RVTMstp(QgsProcessingAlgorithm):
                                          meso_scale=(meso_scale_min, meso_scale_max, meso_scale_step),
                                          broad_scale=(broad_scale_min, broad_scale_max, broad_scale_step),
                                          lightness=lightness, ve_factor=ve_factor,
-                                         no_data=no_data, fill_no_data=fill_no_data, fill_method=fill_method,
-                                         keep_original_no_data=keep_orig_no_data)
+                                         no_data=no_data)
         rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                 out_raster_arr=visualization_arr, e_type=1, no_data=np.nan)
 

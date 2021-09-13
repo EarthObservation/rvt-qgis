@@ -363,9 +363,6 @@ class QRVT:
         # save to rast loc checkbox
         self.dlg.check_sav_rast_loc.stateChanged.connect(lambda: self.checkbox_save_to_rast_loc())
 
-        # fill no data checkbox locks keep original no data
-        self.dlg.check_fill_no_data.stateChanged.connect(lambda: self.checkbox_fill_no_data())
-
         # save to pressed
         self.dlg.button_save_to.clicked.connect(lambda: self.save_to_clicked())
 
@@ -457,15 +454,6 @@ class QRVT:
             self.dlg.line_save_loc.setEnabled(True)
             self.dlg.button_save_to.setEnabled(True)
 
-    def checkbox_fill_no_data(self):
-        """Check box fill_no_data state changed. Check box fill_no_data locks fill_method combo box
-         and keep_original_no_data check box."""
-        if self.dlg.check_fill_no_data.isChecked():
-            self.dlg.check_keep_org_no_data.setEnabled(True)
-        else:
-            self.dlg.check_keep_org_no_data.setChecked(False)
-            self.dlg.check_keep_org_no_data.setEnabled(False)
-
     def save_to_clicked(self):
         """Save to button clicked"""
         save_dir = str(QFileDialog.getExistingDirectory(self.dlg, 'Select a directory'))
@@ -487,7 +475,7 @@ class QRVT:
         self.dlg.group_anisotropic.setChecked(True)
         self.dlg.group_openess_pos.setChecked(True)
         self.dlg.group_openess_neg.setChecked(True)
-        #self.dlg.group_illumination.setChecked(True)
+        # self.dlg.group_illumination.setChecked(True)
         self.dlg.group_local_dominance.setChecked(True)
         self.dlg.group_multi_relief.setChecked(True)
         self.dlg.group_multi_scale_top_pos.setChecked(True)
@@ -572,12 +560,16 @@ class QRVT:
         """Checks if dlg blender combination values are same as any default combination or they
          are Custom combination."""
         self.load_dlg2combination()
-        # find if dlg_combination has same attributes as one of the combinations
-        dlg_combination_name = self.default_blender_combinations.combination_in_combinations(self.combination)
-        if dlg_combination_name is not None:
-            self.dlg.combo_combinations.setCurrentText(dlg_combination_name)
+        if self.dlg.combo_combinations.currentText() == "enhanced Multi-Scale Topographic Position version 3" or \
+                self.dlg.combo_combinations.currentText() == "Archaeological combined (VAT combined)":
+            pass
         else:
-            self.dlg.combo_combinations.setCurrentText("Custom")
+            # find if dlg_combination has same attributes as one of the combinations
+            dlg_combination_name = self.default_blender_combinations.combination_in_combinations(self.combination)
+            if dlg_combination_name is not None:
+                self.dlg.combo_combinations.setCurrentText(dlg_combination_name)
+            else:
+                self.dlg.combo_combinations.setCurrentText("Custom")
 
     def load_dlg2terrain(self):
         self.load_dlg2default()
@@ -906,12 +898,6 @@ class QRVT:
     def load_default2dlg(self):
         """Reads default (rvt.defaul.DeafultValues()) from default_path and fill visualization dlg."""
         self.dlg.check_overwrite.setChecked(bool(self.default.overwrite))
-        self.dlg.check_fill_no_data.setChecked(bool(self.default.fill_no_data))
-        index_combo_fill_method = self.dlg.combo_fill_method.findText(self.fill_method_translate
-                                                                      (self.default.fill_method))
-        if index_combo_fill_method >= 0:
-            self.dlg.combo_fill_method.setCurrentIndex(index_combo_fill_method)
-        self.dlg.check_keep_org_no_data.setChecked(bool(self.default.keep_original_no_data))
         self.dlg.line_ve_factor.setText(str(self.default.ve_factor))
         self.dlg.group_hillshade.setChecked(bool(self.default.hs_compute))
         self.dlg.line_hs_sun_azi.setText(str(self.default.hs_sun_azi))
@@ -999,9 +985,6 @@ class QRVT:
     def load_dlg2default(self):
         """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.defaul.DeafultValues() ."""
         self.default.overwrite = int(self.dlg.check_overwrite.isChecked())
-        self.default.fill_no_data = int(self.dlg.check_fill_no_data.isChecked())
-        self.default.fill_method = str(self.fill_method_translate(self.dlg.combo_fill_method.currentText()))
-        self.default.keep_original_no_data = int(self.dlg.check_keep_org_no_data.isChecked())
         self.default.ve_factor = float(self.dlg.line_ve_factor.text())
         self.default.hs_compute = int(self.dlg.group_hillshade.isChecked())
         self.default.hs_sun_azi = int(self.dlg.line_hs_sun_azi.text())
@@ -1458,7 +1441,8 @@ class QRVT:
             blend_img_name = "{}_{}".format(raster_name, combination_name_u)
 
             # custom advanced (hard coded) blender combinations (can't be selected in dialog)
-            if combination_name == "Archaeological combined (VAT combined)":
+            if combination_name == "Archaeological combined (VAT combined)" or \
+                    combination_name == "enhanced Multi-Scale Topographic Position version 3":
                 self.blend_advanced_custom_combination(combination_name=combination_name, raster_name=raster_name,
                                                        save_dir=save_dir)
             # normal dialog blender combination
@@ -1654,25 +1638,10 @@ class QRVT:
             if no_max:
                 cut_off_max = None
 
-            # change no_data to np.nan
-            idx_no_data = None
-            if self.dlg.check_fill_no_data.isChecked():
-                if self.dlg.check_keep_org_no_data.isChecked():  # save indexes where is no_data
-                    if np.isnan(raster_no_data):
-                        idx_no_data = np.where(np.isnan(raster_arr))
-                    else:
-                        idx_no_data = np.where(raster_arr == no_data)
-                raster_arr[raster_arr == raster_no_data] = np.nan
-
-                raster_arr = rvt.vis.fill_where_nan(
-                    raster_arr, self.fill_method_translate(self.dlg.combo_fill_method.currentText()))
-
             if cut_off_8bit:
                 cut_off_norm = True
             cut_off_arr = rvt.blend_func.cut_off_normalize(image=raster_arr, mode=cut_off_mode, min=cut_off_min,
                                                            max=cut_off_max, bool_norm=cut_off_norm)
-            if self.dlg.check_keep_org_no_data.isChecked():
-                cut_off_arr[idx_no_data] = np.nan
 
             if cut_off_8bit:
                 cut_off_arr = rvt.vis.byte_scale(cut_off_arr)
@@ -1806,6 +1775,9 @@ class QRVT:
     def blend_advanced_custom_combination(self, combination_name, raster_name, save_dir):
         """Method for blending advanced custom combination (for example: combination uses other combinations as layers)
          that can't be built in dialog. These combinations are hard coded."""
+        save_vis = self.dlg.check_blender_save_vis.isChecked()
+        save_float = self.dlg.check_blender_save_float.isChecked()
+        save_8bit = self.dlg.check_blender_save_8bit.isChecked()
         if combination_name == "Archaeological combined (VAT combined)":
             # 1st layer: VAT general 50% transparency, 2nd layer: VAT flat
             start_time = time.time()
@@ -1818,21 +1790,6 @@ class QRVT:
 
             default_1 = rvt.default.DefaultValues()  # VAT general
             default_2 = rvt.default.DefaultValues()  # VAT flat
-            # check fill no_data and original no data
-            if self.dlg.check_fill_no_data.isChecked():
-                default_1.fill_no_data = 1
-                default_2.fill_no_data = 1
-                default_1.fill_method = self.fill_method_translate(self.dlg.combo_fill_method.currentText())
-                default_2.fill_method = self.fill_method_translate(self.dlg.combo_fill_method.currentText())
-            else:
-                default_1.fill_no_data = 0
-                default_2.fill_no_data = 0
-            if self.dlg.check_keep_org_no_data.isChecked():
-                default_1.keep_original_no_data = 1
-                default_2.keep_original_no_data = 1
-            else:
-                default_1.keep_original_no_data = 0
-                default_2.keep_original_no_data = 0
 
             vat_combination_1 = rvt.blend.BlenderCombination()  # VAT general
             vat_combination_2 = rvt.blend.BlenderCombination()  # VAT flat
@@ -1863,12 +1820,36 @@ class QRVT:
                                      maximum=1, blend_mode="Normal", opacity=100)
 
             combination.add_dem_path(dem_path=raster_path)
-            save_vis = self.dlg.check_blender_save_vis.isChecked()
-            save_float = self.dlg.check_blender_save_float.isChecked()
-            save_8bit = self.dlg.check_blender_save_8bit.isChecked()
             combination.render_all_images(save_render_path=blend_img_path, save_visualizations=save_vis,
                                           save_float=save_float, save_8bit=save_8bit,
                                           no_data=dict_arr_res_nd["no_data"])
+            end_time = time.time()
+            compute_time = end_time - start_time
+            self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
+                                             render_path=blend_img_path, default=self.default,
+                                             custom_dir=save_dir, computation_time=compute_time)
+            return True
+        elif combination_name == "enhanced Multi-Scale Topographic Position version 3":
+            start_time = time.time()
+            self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
+            combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
+            blend_img_path = os.path.abspath(
+                os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u)))
+            blend_img_8bit_path = os.path.abspath(
+                os.path.join(save_dir, "{}_{}_8bit.tif".format(raster_name, combination_name_u)))
+            raster_path = self.rvt_select_input[raster_name]
+            dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=raster_path)
+
+            e3mstp_arr = rvt.blend.e3mstp(dem=dict_arr_res_nd["array"], resolution=dict_arr_res_nd["resolution"][0],
+                                          no_data=dict_arr_res_nd["no_data"], default=self.default)
+            if save_float:
+                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=blend_img_path,
+                                        out_raster_arr=e3mstp_arr, no_data=np.nan, e_type=6)
+            if save_8bit:
+                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=blend_img_8bit_path,
+                                        out_raster_arr=rvt.vis.byte_scale(e3mstp_arr, c_min=0.0, c_max=1.0),
+                                        no_data=np.nan, e_type=1)
+
             end_time = time.time()
             compute_time = end_time - start_time
             self.combination.create_log_file(dem_path=raster_path, combination_name=combination_name,
