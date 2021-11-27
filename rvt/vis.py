@@ -43,7 +43,7 @@ def byte_scale(data,
     Parameters
     ----------
     data : numpy.ndarray
-        Input data (visualization) as 2D numpy array.
+        Input data (visualization) as 2D or multi-D numpy array.
     c_min : int or float
         Scalar, Bias scaling of small values. Default is ``data.min()``.
     c_max : int or float
@@ -60,40 +60,59 @@ def byte_scale(data,
     img_array : uint8 numpy.ndarray
         The byte-scaled array.
     """
+    is_2d_arr = False
+    data_bands = data
+    if len(data.shape) == 2:
+        is_2d_arr = True
+        data_bands = np.array([data])
 
-    if high < low:
-        raise ValueError("`high` should be larger than `low`.")
+    c_min_orig = c_min
+    c_max_orig = c_max
 
-    if no_data is not None:  # change no data to np.nan
-        data[data == no_data] = np.nan
+    byte_data_bands = []
+    for i_band in data_bands:
+        data = i_band
+        c_min = c_min_orig
+        c_max = c_max_orig
+        if high < low:
+            raise ValueError("`high` should be larger than `low`.")
 
-    if c_min is None:
-        c_min = np.nanmin(data)
-    if c_max is None:
-        c_max = np.nanmax(data)
+        if no_data is not None:  # change no data to np.nan
+            data[data == no_data] = np.nan
 
-    c_scale = c_max - c_min
-    if c_scale < 0:
-        raise ValueError("`cmax` should be larger than `cmin`.")
-    elif c_scale == 0:
-        c_scale = 1
+        if c_min is None:
+            c_min = np.nanmin(data)
+        if c_max is None:
+            c_max = np.nanmax(data)
 
-    if data.dtype == np.uint8:
-        # TODO: the following line seems not good to  me - if cmin=0, then that pixel will get negative value
-        byte_data = (high + 1) * (data - c_min - 1) / (c_max - c_min)  # copied from IDL BYTSCL
+        c_scale = c_max - c_min
+        if c_scale < 0:
+            raise ValueError("`cmax` should be larger than `cmin`.")
+        elif c_scale == 0:
+            c_scale = 1
+
+        if data.dtype == np.uint8:
+            # TODO: the following line seems not good to  me - if cmin=0, then that pixel will get negative value
+            byte_data = (high + 1) * (data - c_min - 1) / (c_max - c_min)  # copied from IDL BYTSCL
+            byte_data[byte_data > high] = high
+            byte_data[byte_data < 0] = 0
+            byte_data[np.isnan(byte_data)] = 0  # change no_data to 0
+            return np.cast[np.uint8](byte_data) + np.cast[np.uint8](low)
+
+        # scale = float(high - low) / cscale  # old scipy fn
+        # byte_data = (data * 1.0 - cmin) * scale + 0.4999  # old scipy fn
+
+        byte_data = (high + 0.9999) * (data - c_min) / (c_max - c_min)  # copied from IDL BYTSCL
         byte_data[byte_data > high] = high
         byte_data[byte_data < 0] = 0
-        byte_data[np.isnan(byte_data)] = 0  # change no_data to 0
-        return np.cast[np.uint8](byte_data) + np.cast[np.uint8](low)
+        byte_data[np.isnan(byte_data)] = 255  # change no_data to 255
+        byte_data = np.cast[np.uint8](byte_data) + np.cast[np.uint8](low)
+        byte_data_bands.append(byte_data)
 
-    # scale = float(high - low) / cscale  # old scipy fn
-    # byte_data = (data * 1.0 - cmin) * scale + 0.4999  # old scipy fn
-
-    byte_data = (high + 0.9999) * (data - c_min) / (c_max - c_min)  # copied from IDL BYTSCL
-    byte_data[byte_data > high] = high
-    byte_data[byte_data < 0] = 0
-    byte_data[np.isnan(byte_data)] = 255  # change no_data to 255
-    return np.cast[np.uint8](byte_data) + np.cast[np.uint8](low)
+    if is_2d_arr:  # if only one band
+        return byte_data_bands[0]
+    else:  # multiple bands
+        return np.array(byte_data_bands)
 
 
 def slope_aspect(dem,
@@ -101,10 +120,7 @@ def slope_aspect(dem,
                  resolution_y=1,
                  output_units="radian",
                  ve_factor=1,
-                 no_data=None,
-                 fill_no_data=False,
-                 fill_method="idw",
-                 keep_original_no_data=False
+                 no_data=None
                  ):
     """
     Procedure can return terrain slope and aspect in radian units (default) or in alternative units (if specified).
@@ -126,12 +142,6 @@ def slope_aspect(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where DEM has no_data.
 
     Returns
     -------
@@ -146,29 +156,13 @@ def slope_aspect(dem,
         raise Exception("rvt.vis.slope_aspect: ve_factor must be between -10000 and 10000!")
     if resolution_x < 0 or resolution_y < 0:
         raise Exception("rvt.vis.slope_aspect: resolution must be a positive number!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.slope_aspect: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.slope_aspect: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
-
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
 
     # derivatives in X and Y direction
     dzdx = ((np.roll(dem, 1, axis=1) - np.roll(dem, -1, axis=1)) / 2) / resolution_x
@@ -202,11 +196,6 @@ def slope_aspect(dem,
     slope_out[:, -1] = np.nan
     slope_out[-1, :] = np.nan
 
-    # change result to np.nan where dem is no_data
-    if no_data is not None and keep_original_no_data:
-        slope_out[idx_no_data] = np.nan
-        aspect_out[idx_no_data] = np.nan
-
     return {"slope": slope_out, "aspect": aspect_out}
 
 
@@ -218,10 +207,7 @@ def hillshade(dem,
               slope=None,
               aspect=None,
               ve_factor=1,
-              no_data=None,
-              fill_no_data=False,
-              fill_method="idw",
-              keep_original_no_data=False
+              no_data=None
               ):
     """
     Compute hillshade.
@@ -246,12 +232,6 @@ def hillshade(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan.
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
@@ -261,34 +241,18 @@ def hillshade(dem,
     if dem.ndim != 2:
         raise Exception("rvt.vis.hillshade: dem has to be 2D np.array!")
     if not (10000 >= ve_factor >= -10000):
-        raise Exception("rvt.vis.hillshade: ve_factor must be between -10000 and 1000!")
+        raise Exception("rvt.vis.hillshade: ve_factor must be between -10000 and 10000!")
     if sun_azimuth > 360 or sun_elevation > 90 or sun_azimuth < 0 or sun_elevation < 0:
         raise Exception("rvt.vis.hillshade: sun_azimuth must be [0-360] and sun_elevation [0-90]!")
     if resolution_x < 0 or resolution_y < 0:
         raise Exception("rvt.vis.hillshade: resolution must be a positive number!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.hillshade: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.hillshade: In order to keep original no data (keep_original_no_data ="
-                      " True) you have to input no_data and fill_no_data has to be True!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
-
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
 
     # Convert solar position (degrees) to radians
     sun_azimuth_rad = np.deg2rad(sun_azimuth)
@@ -309,15 +273,13 @@ def hillshade(dem,
     hillshade_out = np.cos(sun_zenith_rad) * np.cos(slope) + np.sin(sun_zenith_rad) * np.sin(slope) * np.cos(
         aspect - sun_azimuth_rad)
 
+    hillshade_out[hillshade_out < 0] = 0  # set all negative to 0
+
     # edges to -1
     hillshade_out[:, 0] = np.nan
     hillshade_out[0, :] = np.nan
     hillshade_out[:, -1] = np.nan
     hillshade_out[-1, :] = np.nan
-
-    # change result to np.nan where dem is no_data
-    if no_data is not None and keep_original_no_data:
-        hillshade_out[idx_no_data] = np.nan
 
     return hillshade_out
 
@@ -330,10 +292,7 @@ def multi_hillshade(dem,
                     slope=None,
                     aspect=None,
                     ve_factor=1,
-                    no_data=None,
-                    fill_no_data=False,
-                    fill_method="idw",
-                    keep_original_no_data=False
+                    no_data=None
                     ):
     """
     Calculates hillshades from multiple directions.
@@ -358,12 +317,6 @@ def multi_hillshade(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
@@ -380,29 +333,13 @@ def multi_hillshade(dem,
         raise Exception("rvt.vis.multi_hillshade: nr_directions must be a positive number!")
     if not (10000 >= ve_factor >= -10000):
         raise Exception("rvt.vis.multi_hillshade: ve_factor must be between -10000 and 10000!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.multi_hillshade: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.multi_hillshade: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
-
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
 
     # calculates slope and aspect if they are not added
     if slope is None or aspect is None:  # slope and aspect are the same, so we have to calculate it once
@@ -416,9 +353,6 @@ def multi_hillshade(dem,
         sun_azimuth = (360 / nr_directions) * i_direction
         hillshading = hillshade(dem=dem, resolution_x=resolution_x, resolution_y=resolution_y,
                                 sun_elevation=sun_elevation, sun_azimuth=sun_azimuth, slope=slope, aspect=aspect)
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            hillshading[idx_no_data] = np.nan
         hillshades_arr_list.append(hillshading)
     multi_hillshade_out = np.asarray(hillshades_arr_list)
 
@@ -434,34 +368,36 @@ def mean_filter(dem, kernel_radius):
     if kernel_radius == 0:
         return dem
 
+    # store nans
+    idx_nan_dem = np.isnan(dem)
+
     # mean filter
-    if np.isnan(dem).any():  # contains at least one nan (can't use summed area table approach)
-        # array shifting approach (a little bit slower that summed area table)
-        dem_pad = np.pad(array=dem, pad_width=radius_cell, mode="edge")  # padding
-        mean_out = np.copy(dem_pad)
-        for i_y_roll in range(radius_cell):
-            roll = i_y_roll + 1  # y direction roll
-            mean_out += np.roll(np.copy(dem_pad), roll, axis=0)  # roll positive direction
-            mean_out += np.roll(np.copy(dem_pad), -roll, axis=0)  # roll negative direction
-        y_rolls_sum = np.copy(mean_out)  # sum of all rolls in y direction
-        for i_x_roll in range(radius_cell):  # x direction roll
-            roll = i_x_roll + 1
-            mean_out += np.roll(np.copy(y_rolls_sum), roll, axis=1)  # roll positive direction
-            mean_out += np.roll(np.copy(y_rolls_sum), -roll, axis=1)  # roll negative direction
-        del y_rolls_sum
-        mean_out = mean_out / ((2 * radius_cell + 1) ** 2)  # calculate mean
-        mean_out = mean_out[radius_cell:-radius_cell, radius_cell:-radius_cell]  # remove padding
-    else:  # dem doesn't contains np.nan
-        # summed area table (integral) approach
-        dem_pad = np.pad(dem, (radius_cell + 1, radius_cell), mode="edge")
-        dem_i1 = integral_image(dem_pad)
-        mean_out = np.roll(dem_i1, (radius_cell, radius_cell), axis=(0, 1)) + \
-                     np.roll(dem_i1, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) - \
-                     np.roll(dem_i1, (-radius_cell - 1, radius_cell), axis=(0, 1)) - \
-                     np.roll(dem_i1, (radius_cell, -radius_cell - 1), axis=(0, 1))
-        mean_out = mean_out.astype(np.float32)
-        mean_out = mean_out / (2 * radius_cell + 1) ** 2
-        mean_out = mean_out[radius_cell:-(radius_cell + 1), radius_cell:-(radius_cell + 1)]  # remove padding
+    dem_pad = np.pad(dem, (radius_cell + 1, radius_cell), mode="edge")
+    # store nans
+    idx_nan_dem_pad = np.isnan(dem_pad)
+    # change nan to 0
+    dem_pad[idx_nan_dem_pad] = 0
+
+    # kernel nr pixel integral image
+    dem_i_nr_pixels = np.ones(dem_pad.shape)
+    dem_i_nr_pixels[idx_nan_dem_pad] = 0
+    dem_i_nr_pixels = integral_image(dem_i_nr_pixels, np.int)
+
+    dem_i1 = integral_image(dem_pad)
+
+    kernel_nr_pix_arr = (np.roll(dem_i_nr_pixels, (radius_cell, radius_cell), axis=(0, 1)) +
+                         np.roll(dem_i_nr_pixels, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) -
+                         np.roll(dem_i_nr_pixels, (-radius_cell - 1, radius_cell), axis=(0, 1)) -
+                         np.roll(dem_i_nr_pixels, (radius_cell, -radius_cell - 1), axis=(0, 1)))
+    mean_out = np.roll(dem_i1, (radius_cell, radius_cell), axis=(0, 1)) + \
+               np.roll(dem_i1, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) - \
+               np.roll(dem_i1, (-radius_cell - 1, radius_cell), axis=(0, 1)) - \
+               np.roll(dem_i1, (radius_cell, -radius_cell - 1), axis=(0, 1))
+    mean_out = mean_out / kernel_nr_pix_arr
+    mean_out = mean_out.astype(np.float32)
+    mean_out = mean_out[radius_cell:-(radius_cell + 1), radius_cell:-(radius_cell + 1)]  # remove padding
+    # nan back to nan
+    mean_out[idx_nan_dem] = np.nan
 
     return mean_out
 
@@ -469,10 +405,7 @@ def mean_filter(dem, kernel_radius):
 def slrm(dem,
          radius_cell=20,
          ve_factor=1,
-         no_data=None,
-         fill_no_data=False,
-         fill_method="idw",
-         keep_original_no_data=False
+         no_data=None
          ):
     """
     Calculates Simple local relief model.
@@ -487,12 +420,6 @@ def slrm(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
@@ -505,37 +432,17 @@ def slrm(dem,
         raise Exception("rvt.vis.slrm: Radius for trend assessment needs to be in interval 10-50 pixels!")
     if not (10000 >= ve_factor >= -10000):
         raise Exception("rvt.vis.slrm: ve_factor must be between -10000 and 10000!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.slrm: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.slrm: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
 
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
-
     # mean filter
     dem_mean_filter = mean_filter(dem=dem, kernel_radius=radius_cell)
     slrm_out = dem - dem_mean_filter
-
-    # change result to np.nan where dem is no_data
-    if no_data is not None and keep_original_no_data:
-        slrm_out[idx_no_data] = np.nan
 
     return slrm_out
 
@@ -615,10 +522,7 @@ def sky_view_factor_compute(height_arr,
                             a_main_direction=315.,
                             a_poly_level=4,
                             a_min_weight=0.4,
-                            no_data=None,
-                            fill_no_data=False,
-                            fill_method="idw",
-                            keep_original_no_data=False
+                            no_data=None
                             ):
     """
     Calculates horizon based visualizations: Sky-view factor, Anisotopic SVF and Openess.
@@ -649,12 +553,6 @@ def sky_view_factor_compute(height_arr,
                  1 - high  anisotropy (no illumination from the direction opposite the main direction)
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
@@ -665,18 +563,8 @@ def sky_view_factor_compute(height_arr,
         opns_out, openness : 2D numpy array (numpy.ndarray) openness (elevation angle of horizon).
     """
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(height_arr))
-            else:
-                idx_no_data = np.where(height_arr == no_data)
         height_arr[height_arr == no_data] = np.nan
-
-    # fill no data
-    if fill_no_data:
-        height_arr = fill_where_nan(height_arr, fill_method)
 
     # pad the array for the radius_max on all 4 sides
     height = np.pad(height_arr, radius_max, mode='symmetric')
@@ -731,19 +619,10 @@ def sky_view_factor_compute(height_arr,
     # average the directional output over all directions
     if compute_svf:
         svf_out = svf_out[radius_max:-radius_max, radius_max:-radius_max] / num_directions
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            svf_out[idx_no_data] = np.nan
     if compute_asvf:
         asvf_out = asvf_out[radius_max:-radius_max, radius_max:-radius_max] / np.sum(weight)
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            asvf_out[idx_no_data] = np.nan
     if compute_opns:
         opns_out = np.rad2deg(0.5 * np.pi - (opns_out[radius_max:-radius_max, radius_max:-radius_max] / num_directions))
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            opns_out[idx_no_data] = np.nan
 
     # return results within dict
     dict_svf_asvf_opns = {"svf": svf_out, "asvf": asvf_out, "opns": opns_out}
@@ -763,10 +642,7 @@ def sky_view_factor(dem,
                     asvf_dir=315,
                     asvf_level=1,
                     ve_factor=1,
-                    no_data=None,
-                    fill_no_data=False,
-                    fill_method="idw",
-                    keep_original_no_data=False
+                    no_data=None
                     ):
     """
     Prepare the data, call sky_view_factor_compute, reformat and return back 2D arrays.
@@ -779,7 +655,7 @@ def sky_view_factor(dem,
         Compute SVF (True) or not (False).
     compute_opns : bool
         Compute OPENNESS (True) or not (False).
-    resolution : int
+    resolution : float
         Pixel resolution.
     svf_n_dir : int
         Number of directions.
@@ -797,12 +673,6 @@ def sky_view_factor(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where dem has no_data.
     
     Constants
     ---------
@@ -830,12 +700,6 @@ def sky_view_factor(dem,
         raise Exception("rvt.vis.sky_view_factor: asvf_leve must be one of the following values (1-low, 2-high)!")
     if not compute_svf and not compute_asvf and not compute_opns:
         raise Exception("rvt.vis.sky_view_factor: All computes are false!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.sky_view_factor: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.sky_view_factor: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
     if resolution < 0:
         raise Exception("rvt.vis.sky_view_factor: resolution must be a positive number!")
 
@@ -872,10 +736,7 @@ def sky_view_factor(dem,
                                                  a_main_direction=asvf_dir,
                                                  a_poly_level=poly_level,
                                                  a_min_weight=min_weight,
-                                                 no_data=no_data,
-                                                 fill_no_data=fill_no_data,
-                                                 fill_method=fill_method,
-                                                 keep_original_no_data=keep_original_no_data
+                                                 no_data=no_data
                                                  )
 
     return dict_svf_asvf_opns
@@ -888,10 +749,7 @@ def local_dominance(dem,
                     angular_res=15,
                     observer_height=1.7,
                     ve_factor=1,
-                    no_data=None,
-                    fill_no_data=False,
-                    fill_method="idw",
-                    keep_original_no_data=False
+                    no_data=None
                     ):
     """
     Compute Local Dominance dem visualization.
@@ -915,12 +773,6 @@ def local_dominance(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
@@ -931,29 +783,13 @@ def local_dominance(dem,
         raise Exception("rvt.vis.local_dominance: dem has to be 2D np.array!")
     if not (10000 >= ve_factor >= -10000):
         raise Exception("rvt.vis.local_dominance: ve_factor must be between -10000 and 10000!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.local_dominance: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.local_dominance: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
-
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
 
     # create a vector with possible distances
     n_dist = int((max_rad - min_rad) / rad_inc + 1)
@@ -982,10 +818,6 @@ def local_dominance(dem,
                                                          dem_moved[idx_lower[0], idx_lower[1]]) / \
                                                         distances[i_s] * dist_factr[i_s]
     local_dom_out = local_dom_out / norma
-
-    # change result to np.nan where dem is no_data
-    if no_data is not None and keep_original_no_data:
-        local_dom_out[idx_no_data] = np.nan
 
     return local_dom_out
 
@@ -1140,10 +972,7 @@ def sky_illumination(dem,
                      shadow_az=315,
                      shadow_el=35,
                      ve_factor=1,
-                     no_data=None,
-                     fill_no_data=False,
-                     fill_method="idw",
-                     keep_original_no_data=False
+                     no_data=None
                      ):
     """
     Compute topographic corrections for sky illumination.
@@ -1152,7 +981,7 @@ def sky_illumination(dem,
     ----------
     dem : numpy.ndarray
         Input digital elevation model as 2D numpy array.
-    resolution : int
+    resolution : float
         DEM pixel size.
     sky_model : str
         Sky model, it can be 'overcast' or 'uniform'.
@@ -1172,11 +1001,6 @@ def sky_illumination(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
 
     Returns
     -------
@@ -1193,31 +1017,15 @@ def sky_illumination(dem,
         raise Exception("rvt.vis.sky_illumination: shadow_az must be between 0 and 360!")
     if shadow_el > 90 or shadow_el < 0:
         raise Exception("rvt.vis.sky_illumination: shadow_el must be between 0 and 90!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.sky_illumination: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.sky_illumination: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
     if resolution < 0:
         raise Exception("rvt.vis.sky_illumination: resolution must be a positive number!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
-
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
 
     if sky_model.lower() == "overcast":
         compute_overcast = True
@@ -1329,10 +1137,6 @@ def sky_illumination(dem,
             horizon_out = np.degrees(_[max_pyramid_radius:-max_pyramid_radius, max_pyramid_radius:-max_pyramid_radius])
             shadow_out = (horizon_out < shadow_el) * 1
             if shadow_horizon_only:
-                # change result to np.nan where dem is no_data
-                if no_data is not None and keep_original_no_data:
-                    shadow_out[idx_no_data] = np.nan
-                    horizon_out[idx_no_data] = np.nan
                 return {"shadow": shadow_out, "horizon": horizon_out}
 
     # because of numeric stabilty check if the uniform_b is less then pi
@@ -1365,24 +1169,12 @@ def sky_illumination(dem,
 
     # output
     if compute_uniform and not compute_shadow:
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            uniform_out[idx_no_data] = np.nan
         return uniform_out
     elif compute_uniform and compute_shadow:
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            uniform_sh_out[idx_no_data] = np.nan
         return uniform_sh_out
     elif compute_overcast and not compute_shadow:
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            overcast_out[idx_no_data] = np.nan
         return overcast_out
     elif compute_overcast and compute_shadow:
-        # change result to np.nan where dem is no_data
-        if no_data is not None and keep_original_no_data:
-            overcast_sh_out[idx_no_data] = np.nan
         return overcast_sh_out
 
 
@@ -1391,10 +1183,7 @@ def shadow_horizon(dem,
                    shadow_az=315,
                    shadow_el=35,
                    ve_factor=1,
-                   no_data=None,
-                   fill_no_data=False,
-                   fill_method="idw",
-                   keep_original_no_data=False
+                   no_data=None
                    ):
     """
     Compute shadow and horizon.
@@ -1403,7 +1192,7 @@ def shadow_horizon(dem,
     ----------
     dem : numpy.ndarray
         Input digital elevation model as 2D numpy array.
-    resolution : int
+    resolution : float
         DEM pixel size.
     shadow_az : int or float
         Shadow azimuth.
@@ -1413,12 +1202,6 @@ def shadow_horizon(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : bool
-        If True it changes all output pixels to np.nan where dem has no_data.
 
     Returns
     -------
@@ -1433,19 +1216,12 @@ def shadow_horizon(dem,
         raise Exception("rvt.vis.shadow_horizon: shadow_az must be between 0 and 360!")
     if shadow_el > 90 or shadow_el < 0:
         raise Exception("rvt.vis.shadow_horizon: shadow_el must be between 0 and 90!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.shadow_horizon: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.shadow_horizon: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
     if resolution < 0:
         raise Exception("rvt.vis.shadow_horizon: resolution must be a positive number!")
 
     return sky_illumination(dem=dem, resolution=resolution, compute_shadow=True,
                             shadow_horizon_only=True, shadow_el=shadow_el, shadow_az=shadow_az, ve_factor=ve_factor,
-                            no_data=no_data, fill_no_data=fill_no_data, fill_method=fill_method,
-                            keep_original_no_data=keep_original_no_data)
+                            no_data=no_data)
 
 
 def msrm(dem,
@@ -1454,10 +1230,7 @@ def msrm(dem,
          feature_max,
          scaling_factor,
          ve_factor=1,
-         no_data=None,
-         fill_no_data=False,
-         fill_method="idw",
-         keep_original_no_data=False
+         no_data=None
          ):
     """
     Compute Multi-scale relief model (MSRM).
@@ -1466,7 +1239,7 @@ def msrm(dem,
     ----------
     dem : numpy.ndarray
         Input digital elevation model as 2D numpy array.
-    resolution : int
+    resolution : float
         DEM pixel size.
     feature_min: float
         Minimum size of the feature you want to detect in meters.
@@ -1479,11 +1252,6 @@ def msrm(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
 
     Returns
     -------
@@ -1492,31 +1260,15 @@ def msrm(dem,
     """
     if not (10000 >= ve_factor >= -10000):
         raise Exception("rvt.vis.msrm: ve_factor must be between -10000 and 10000!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.msrm: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.msrm: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
     if resolution < 0:
         raise Exception("rvt.vis.msrm: resolution must be a positive number!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
-
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
 
     if feature_min < resolution:  # feature min can't be smaller than resolution
         feature_min = resolution
@@ -1544,14 +1296,10 @@ def msrm(dem,
 
     msrm_out = relief_models_sum / nr_relief_models
 
-    # change result to np.nan where dem is no_data
-    if no_data is not None and keep_original_no_data:
-        msrm_out[idx_no_data] = np.nan
-
     return msrm_out
 
 
-def integral_image(dem):
+def integral_image(dem, data_type=np.float64):
     """
     Calculates integral image (summed-area table), where origin is left upper corner.
 
@@ -1568,11 +1316,11 @@ def integral_image(dem):
      [13. 26. 42. 49.]
      [19. 38. 61. 74.]]
     """
-    dem = dem.astype(np.float64)
+    dem = dem.astype(data_type)
     return dem.cumsum(axis=0).cumsum(axis=1)
 
 
-def topographic_dev(dem, dem_i1, dem_i2, kernel_radius):
+def topographic_dev(dem, dem_i_nr_pixels, dem_i1, dem_i2, kernel_radius):
     """
     Calculates topographic DEV - Deviation from mean elevation. DEV(D) = (z0 - zmD) / sD.
     Where D is radius of kernel, z0 is center pixel value, zmD is mean of all kernel values,
@@ -1582,6 +1330,8 @@ def topographic_dev(dem, dem_i1, dem_i2, kernel_radius):
     ----------
     dem : numpy.ndarray
         Input digital elevation model as 2D numpy array.
+    dem_i_nr_pixels : numpy.ndarray
+        Summed area table (itegral image) of number of pixels.
     dem_i1 : numpy.ndarray
         Summed area table (itegral image) of dem.
     dem_i2 : numpy.ndarray
@@ -1598,17 +1348,25 @@ def topographic_dev(dem, dem_i1, dem_i2, kernel_radius):
     if radius_cell <= 0:
         return dem
 
+    kernel_nr_pix_arr = (np.roll(dem_i_nr_pixels, (radius_cell, radius_cell), axis=(0, 1)) +
+                         np.roll(dem_i_nr_pixels, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) -
+                         np.roll(dem_i_nr_pixels, (-radius_cell - 1, radius_cell), axis=(0, 1)) -
+                         np.roll(dem_i_nr_pixels, (radius_cell, -radius_cell - 1), axis=(0, 1)))
+
+    # sum
     dem_mean = np.roll(dem_i1, (radius_cell, radius_cell), axis=(0, 1)) + \
                np.roll(dem_i1, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) - \
                np.roll(dem_i1, (-radius_cell - 1, radius_cell), axis=(0, 1)) - \
                np.roll(dem_i1, (radius_cell, -radius_cell - 1), axis=(0, 1))
-    dem_mean = dem_mean / (2 * radius_cell + 1) ** 2
+    # divide with nr of pixels inside kernel
+    dem_mean = dem_mean / kernel_nr_pix_arr
 
+    # std
     dem_std = np.roll(dem_i2, (radius_cell, radius_cell), axis=(0, 1)) + \
               np.roll(dem_i2, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) - \
               np.roll(dem_i2, (-radius_cell - 1, radius_cell), axis=(0, 1)) - \
               np.roll(dem_i2, (radius_cell, -radius_cell - 1), axis=(0, 1))
-    dem_std = np.sqrt(np.abs(dem_std / (2 * radius_cell + 1) ** 2 - dem_mean ** 2))
+    dem_std = np.sqrt(np.abs(dem_std / kernel_nr_pix_arr - dem_mean ** 2))
 
     dev_out = (np.roll(dem, (-1, -1), axis=(0, 1)) - dem_mean) / (dem_std + 1e-6)  # add 1e-6 to prevent division with 0
 
@@ -1640,12 +1398,26 @@ def max_elevation_deviation(dem, minimum_radius, maximum_radius, step):
     maximum_radius = int(maximum_radius)
     step = int(step)
 
+    # store positions of nan
+    idx_nan_dem = np.isnan(dem)
+
     dem_pad = np.pad(dem, (maximum_radius + 1, maximum_radius), mode="symmetric")
+    # store nans
+    idx_nan_dem_pad = np.isnan(dem_pad)
+    # change nan to 0
+    dem_pad[idx_nan_dem_pad] = 0
+
+    # number of pixels for summed area table
+    dem_i_nr_pixels = np.ones(dem_pad.shape)
+    dem_i_nr_pixels[idx_nan_dem_pad] = 0
+    dem_i_nr_pixels = integral_image(dem_i_nr_pixels, np.int)
+
     dem_i1 = integral_image(dem_pad)
     dem_i2 = integral_image(dem_pad ** 2)
 
     for kernel_radius in range(minimum_radius, maximum_radius + 1, step):
-        dev = topographic_dev(dem_pad, dem_i1, dem_i2, kernel_radius)[maximum_radius:-(maximum_radius + 1),
+        dev = topographic_dev(dem_pad, dem_i_nr_pixels, dem_i1, dem_i2, kernel_radius)[
+              maximum_radius:-(maximum_radius + 1),
               maximum_radius:-(maximum_radius + 1)]
         if kernel_radius == minimum_radius:
             dev_max_out = dev
@@ -1654,19 +1426,22 @@ def max_elevation_deviation(dem, minimum_radius, maximum_radius, step):
             rad_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), rad_max_out, kernel_radius)
             dev_max_out = np.where(np.abs(dev_max_out) >= np.abs(dev), dev_max_out, dev)
     # rad_max_out, radius of DEV for maxDEV (for each pixel)
+
+    # change where dem nan back to nan
+    dev_max_out[idx_nan_dem] = np.nan
+    rad_max_out[idx_nan_dem] = np.nan
+
     return dev_max_out
 
 
 def mstp(dem,
-         local_scale=(1, 10, 1),
-         meso_scale=(10, 100, 10),
-         broad_scale=(100, 1000, 100),
+         local_scale=(1, 5, 1),
+         meso_scale=(5, 50, 5),
+         broad_scale=(50, 500, 50),
          lightness=1.2,
          ve_factor=1,
-         no_data=None,
-         fill_no_data=False,
-         fill_method="idw",
-         keep_original_no_data=False):
+         no_data=None
+         ):
     """
     Compute Multi-scale topographic position (MSTP).
 
@@ -1686,11 +1461,6 @@ def mstp(dem,
         Vertical exaggeration factor.
     no_data : int or float
         Value that represents no_data, all pixels with this value are changed to np.nan .
-    fill_no_data : bool
-        If True it fills where np.nan (no_data).
-    fill_method : str
-        Method for the fill_no_data (if true) interpolation (look fill_where_nan() function for methods).
-    keep_original_no_data : if True it changes all output pixels to np.nan where dem has no_data
 
     Returns
     -------
@@ -1699,34 +1469,18 @@ def mstp(dem,
     """
     if local_scale[0] > local_scale[1] or meso_scale[0] > meso_scale[1] or broad_scale[0] > broad_scale[1]:
         raise Exception("rvt.vis.mstp: local_scale, meso_scale, broad_scale min has to be smaller than max!")
-    if (local_scale[1] - local_scale[0] < local_scale[2]) or (meso_scale[1] - meso_scale[0] < meso_scale[2]) or\
+    if (local_scale[1] - local_scale[0] < local_scale[2]) or (meso_scale[1] - meso_scale[0] < meso_scale[2]) or \
             (broad_scale[1] - broad_scale[0] < broad_scale[2]):
         raise Exception("rvt.vis.mstp: local_scale, meso_scale, broad_scale step has to be within min and max!")
-    if not (10000 >= ve_factor >= -10000):
+    if not (10000 >= ve_factor >= -1000):
         raise Exception("rvt.vis.mstp: ve_factor must be between -10000 and 10000!")
-    if no_data is None and fill_no_data:
-        warnings.warn("rvt.vis.mstp: In order to fill no data (fill_no_data = True) you have to input"
-                      " no_data!")
-    if (no_data is None or not fill_no_data) and keep_original_no_data:
-        warnings.warn("rvt.vis.mstp: In order to keep original no data (keep_original_no_data = True)"
-                      " you have to input no_data and fill_no_data has to be True!")
 
     # change no_data to np.nan
-    idx_no_data = None
     if no_data is not None:
-        if keep_original_no_data:  # save indexes where is no_data
-            if np.isnan(no_data):
-                idx_no_data = np.where(np.isnan(dem))
-            else:
-                idx_no_data = np.where(dem == no_data)
         dem[dem == no_data] = np.nan
 
     dem = dem.astype(np.float32)
     dem = dem * ve_factor
-
-    # fill no data
-    if fill_no_data:
-        dem = fill_where_nan(dem, fill_method)
 
     local_DEV = max_elevation_deviation(dem=dem, minimum_radius=local_scale[0], maximum_radius=local_scale[1],
                                         step=local_scale[2])
@@ -1748,12 +1502,6 @@ def mstp(dem,
     green[green > 255] = 255
     blue[blue > 255] = 255
 
-    # change result to np.nan where dem is no_data
-    if no_data is not None and keep_original_no_data:
-        red[idx_no_data] = np.nan
-        green[idx_no_data] = np.nan
-        blue[idx_no_data] = np.nan
-
     return np.asarray([red, green, blue])  # RGB 24-bit (3 x 8bit)
 
 
@@ -1769,8 +1517,8 @@ def fill_where_nan(dem, method="idw"):
         'linear_row', Linear row interpolation, array is flattened and then linear interpolation is performed.
         This method is fast but very inaccurate.
         'idw_r_p', Inverse Distance Weighting interpolation. If you only input idw it will take default parameters
-         (r=20, p=2). You can also input interpolation radius (r) and power (p) for weights. (Example:
-         idw_5_2 means radius = 5, power = 2.)
+        (r=20, p=2). You can also input interpolation radius (r) and power (p) for weights. (Example:
+        idw_5_2 means radius = 5, power = 2.)
         'kd_tree', K-D Tree interpolation.
         'nearest_neighbour', Nearest neighbour interpolation.
     """
