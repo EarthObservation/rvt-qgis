@@ -50,17 +50,15 @@ from .resources import *
 from .qrvt_dialog import QRVTDialog
 
 sys.path.append(os.path.dirname(__file__))
+import rvt.tile
+importlib.reload(rvt.tile)
 import rvt.default
-
 importlib.reload(rvt.default)
 import rvt.blend
-
 importlib.reload(rvt.blend)
 import rvt.blend_func
-
 importlib.reload(rvt.blend_func)
 import rvt.vis
-
 importlib.reload(rvt.vis)
 from processing_provider.provider import Provider
 
@@ -1262,7 +1260,7 @@ class QRVT:
                                 self.parent.iface.addRasterLayer(msrm_path,
                                                                  msrm_name)  # add layer to qgis
                             if self.parent.default.msrm_save_8bit:
-                                msrm_8bit_name = self.parent.default.get_local_dominance_file_name(
+                                msrm_8bit_name = self.parent.default.get_msrm_file_name(
                                     raster_path,
                                     bit8=True)
                                 msrm_8bit_path = os.path.abspath(
