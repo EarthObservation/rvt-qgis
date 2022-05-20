@@ -12,6 +12,7 @@ from processing_provider.rvt_local_dom import RVTLocalDom
 from processing_provider.rvt_blender import RVTBlender
 from processing_provider.rvt_msrm import RVTMsrm
 from processing_provider.rvt_mstp import RVTMstp
+from processing_provider.rvt_fill_no_data import RVTFillNoData, RVTFillNoDataIDW
 
 
 class Provider(QgsProcessingProvider):
@@ -28,6 +29,8 @@ class Provider(QgsProcessingProvider):
         self.addAlgorithm(RVTBlender())
         self.addAlgorithm(RVTMsrm())
         self.addAlgorithm(RVTMstp())
+        self.addAlgorithm(RVTFillNoData())
+        self.addAlgorithm(RVTFillNoDataIDW())
 
     def id(self, *args, **kwargs):
         """The ID of your plugin, used for identifying the provider.
