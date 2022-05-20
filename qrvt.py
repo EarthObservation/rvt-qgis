@@ -41,6 +41,13 @@ from PyQt5 import uic
 from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
 
 from osgeo import gdal
+try:
+    import scipy
+except:
+    # try to install scipy
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "scipy"])
+    import scipy
+
 import numpy as np
 
 # Initialize Qt resources from file resources.py
