@@ -12,6 +12,7 @@ from qgis import processing
 import numpy as np
 import rvt.default
 import rvt.vis
+from rvt.default import RVTVisualization
 
 
 class RVTOpns(QgsProcessingAlgorithm):
@@ -190,9 +191,9 @@ class RVTOpns(QgsProcessingAlgorithm):
         dem_arr = dict_arr_dem["array"]
         no_data = dict_arr_dem["no_data"]
 
-        vis = "openness - positive"
+        vis = RVTVisualization.POSITIVE_OPENNESS
         if opns_type == 1:
-            vis = "openness - negative"
+            vis = RVTVisualization.NEGATIVE_OPENNESS
             dem_arr = dem_arr * -1  # negative openness is openness where dem * -1
         visualization_arr = rvt.vis.sky_view_factor(dem=dem_arr, resolution=resolution[0], compute_svf=False,
                                                     compute_asvf=False, compute_opns=True, svf_n_dir=nr_dir,
@@ -203,7 +204,7 @@ class RVTOpns(QgsProcessingAlgorithm):
                                     out_raster_arr=visualization_arr, e_type=6, no_data=np.nan)
         else:
             visualization_8bit_arr = rvt.default.DefaultValues().float_to_8bit(float_arr=visualization_arr,
-                                                                               vis=vis)
+                                                                               visualization=vis)
             rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                     out_raster_arr=visualization_8bit_arr, e_type=1, no_data=np.nan)
 
