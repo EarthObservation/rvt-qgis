@@ -301,7 +301,7 @@ class RVTMstp(QgsProcessingAlgorithm):
                                     out_raster_arr=visualization_arr, e_type=6, no_data=np.nan)
         else:
             visualization_8bit_arr = rvt.default.DefaultValues().float_to_8bit(
-                float_arr=visualization_arr, visualization="mstp"
+                float_arr=visualization_arr, visualization=RVTVisualization.MULTI_SCALE_TOPOGRAPHIC_POSITION
             )
             rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
                                     out_raster_arr=visualization_8bit_arr, e_type=1, no_data=np.nan)
