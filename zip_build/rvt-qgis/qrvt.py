@@ -703,8 +703,6 @@ class QRVT:
         self.dlg.check_ld_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_msrm_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
         self.dlg.check_msrm_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
-        self.dlg.check_mstp_float.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
-        self.dlg.check_mstp_8bit.stateChanged.connect(lambda: self.checkbox_float_8bit_check())
 
     def check_fill_no_data_other_fill_method_combo_change(self):
         self.dlg.combo_fill_method.currentTextChanged.connect(lambda: self.fill_no_data_other_fill_method_combo_check())
@@ -753,9 +751,6 @@ class QRVT:
         if not self.dlg.check_msrm_float.isChecked() and not self.dlg.check_msrm_8bit.isChecked():
             self.dlg.check_msrm_float.setChecked(True)
             self.dlg.check_msrm_8bit.setChecked(True)
-        if not self.dlg.check_mstp_float.isChecked() and not self.dlg.check_msrm_8bit.isChecked():
-            self.dlg.check_mstp_float.setChecked(True)
-            self.dlg.check_mstp_8bit.setChecked(True)
 
     def blender_checkbox_float_8bit_check(self):
         if not self.dlg.check_blender_save_float.isChecked() and not self.dlg.check_blender_save_8bit.isChecked():
@@ -1287,7 +1282,7 @@ class QRVT:
                                                                  msrm_8bit_name)  # add layer
                         # Multi-scale topographic position
                         if self.parent.default.mstp_compute:
-                            if self.parent.mstp_save_float:
+                            if self.parent.default.mstp_save_float:
                                 mstp_name = self.parent.default.get_mstp_file_name(raster_path)
                                 mstp_path = os.path.abspath(os.path.join(save_dir, mstp_name))
                                 self.parent.remove_layer_by_path(mstp_path)  # remove layer from qgis if exists
@@ -1295,13 +1290,13 @@ class QRVT:
                             if self.parent.default.mstp_save_8bit:
                                 mstp_8bit_name = self.parent.default.get_mstp_file_name(
                                     raster_path,
-                                    bit8=True
-                                )
+                                    bit8=True)
                                 mstp_8bit_path = os.path.abspath(
                                     os.path.join(save_dir, mstp_8bit_name))
-                                self.parent.remove_layer_by_path(mstp_8bit_name)  # remove layer from qgis
+                                self.parent.remove_layer_by_path(mstp_8bit_path)  # remove layer from qgis
                                 # if exists
-                                self.parent.iface.addRasterLayer(mstp_8bit_path, mstp_8bit_name)  # add layer
+                                self.parent.iface.addRasterLayer(mstp_8bit_path,
+                                                                 mstp_8bit_name)  # add layer
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False

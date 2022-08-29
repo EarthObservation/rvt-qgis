@@ -12,6 +12,7 @@ from qgis import processing
 import numpy as np
 import rvt.default
 import rvt.vis
+from rvt.default import RVTVisualization
 
 
 class RVTMstp(QgsProcessingAlgorithm):
@@ -31,6 +32,7 @@ class RVTMstp(QgsProcessingAlgorithm):
     BROAD_SCALE_MAX = "BROAD_SCALE_MAX"
     BROAD_SCALE_STEP = "BROAD_SCALE_STEP"
     LIGHTNESS = "LIGHTNESS"
+    SAVE_AS_8BIT = "SAVE_AS_8BIT"
     OUTPUT = 'OUTPUT'
 
     noise_options = ["no removal", "low", "medium", "high"]
@@ -193,6 +195,13 @@ class RVTMstp(QgsProcessingAlgorithm):
             )
         )
         self.addParameter(
+            QgsProcessingParameterBoolean(
+                name="SAVE_AS_8BIT",
+                description="Save as 8bit raster",
+                defaultValue=False
+            )
+        )
+        self.addParameter(
             QgsProcessingParameterRasterDestination(
                 self.OUTPUT,
                 self.tr('Output visualization raster layer')
@@ -263,6 +272,11 @@ class RVTMstp(QgsProcessingAlgorithm):
             self.LIGHTNESS,
             context
         ))
+        save_8bit = bool(self.parameterAsBool(
+            parameters,
+            self.SAVE_AS_8BIT,
+            context
+        ))
         visualization_path = (self.parameterAsOutputLayer(
             parameters,
             self.OUTPUT,
@@ -282,8 +296,15 @@ class RVTMstp(QgsProcessingAlgorithm):
                                          broad_scale=(broad_scale_min, broad_scale_max, broad_scale_step),
                                          lightness=lightness, ve_factor=ve_factor,
                                          no_data=no_data)
-        rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
-                                out_raster_arr=visualization_arr, e_type=1, no_data=np.nan)
+        if not save_8bit:
+            rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
+                                    out_raster_arr=visualization_arr, e_type=6, no_data=np.nan)
+        else:
+            visualization_8bit_arr = rvt.default.DefaultValues().float_to_8bit(
+                float_arr=visualization_arr, visualization="mstp"
+            )
+            rvt.default.save_raster(src_raster_path=dem_path, out_raster_path=visualization_path,
+                                    out_raster_arr=visualization_8bit_arr, e_type=1, no_data=np.nan)
 
         result = {self.OUTPUT: visualization_path}
         return result
