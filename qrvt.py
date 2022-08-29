@@ -986,6 +986,8 @@ class QRVT:
         self.dlg.check_ld_8bit.setChecked(bool(self.default.ld_save_8bit))
         self.dlg.check_msrm_float.setChecked(bool(self.default.msrm_save_float))
         self.dlg.check_msrm_8bit.setChecked(bool(self.default.msrm_save_8bit))
+        self.dlg.check_mstp_float.setChecked(bool(self.default.mstp_save_float))
+        self.dlg.check_mstp_8bit.setChecked(bool(self.default.mstp_save_8bit))
 
     def load_dlg2default(self):
         """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.defaul.DeafultValues() ."""
@@ -1061,6 +1063,8 @@ class QRVT:
         self.default.ld_save_8bit = int(self.dlg.check_ld_8bit.isChecked())
         self.default.msrm_save_float = int(self.dlg.check_msrm_float.isChecked())
         self.default.msrm_save_8bit = int(self.dlg.check_msrm_8bit.isChecked())
+        self.default.mstp_save_float = int(self.dlg.check_mstp_float.isChecked())
+        self.default.mstp_save_8bit = int(self.dlg.check_mstp_8bit.isChecked())
 
     class ComputeVisualizationsTask(QgsTask):
         """Task (thread) for computing visualizations."""
@@ -1278,10 +1282,21 @@ class QRVT:
                                                                  msrm_8bit_name)  # add layer
                         # Multi-scale topographic position
                         if self.parent.default.mstp_compute:
-                            mstp_name = self.parent.default.get_mstp_file_name(raster_path)
-                            mstp_path = os.path.abspath(os.path.join(save_dir, mstp_name))
-                            self.parent.remove_layer_by_path(mstp_path)  # remove layer from qgis if exists
-                            self.parent.iface.addRasterLayer(mstp_path, mstp_name)  # add layer to qgis
+                            if self.parent.default.mstp_save_float:
+                                mstp_name = self.parent.default.get_mstp_file_name(raster_path)
+                                mstp_path = os.path.abspath(os.path.join(save_dir, mstp_name))
+                                self.parent.remove_layer_by_path(mstp_path)  # remove layer from qgis if exists
+                                self.parent.iface.addRasterLayer(mstp_path, mstp_name)  # add layer to qgis
+                            if self.parent.default.mstp_save_8bit:
+                                mstp_8bit_name = self.parent.default.get_mstp_file_name(
+                                    raster_path,
+                                    bit8=True)
+                                mstp_8bit_path = os.path.abspath(
+                                    os.path.join(save_dir, mstp_8bit_name))
+                                self.parent.remove_layer_by_path(mstp_8bit_path)  # remove layer from qgis
+                                # if exists
+                                self.parent.iface.addRasterLayer(mstp_8bit_path,
+                                                                 mstp_8bit_name)  # add layer
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
