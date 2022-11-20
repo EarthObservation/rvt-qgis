@@ -29,7 +29,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.9.4</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.9.4.1</string>
        </property>
       </widget>
      </item>
@@ -140,7 +140,7 @@
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
 &lt;span style=&quot; font-weight:600;&quot;&gt;○ Online resources:&lt;/span&gt;&lt;br&gt;
 
-&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://rvt-py.readthedocs.io/en/latest/qgis.html&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin documentation&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://rvt-py.readthedocs.io/en/latest/rvtfor_qgis.html&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin documentation&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/rvt-qgis&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT QGIS plugin GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
@@ -149,6 +149,8 @@
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://github.com/EarthObservation/rvt-arcgis-pro&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;RVT ArcGIS Pro raster functions GitHub&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
 &amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://iaps.zrc-sazu.si/en/rvt#v&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;Old RVT&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
+
+&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;• &lt;a href=&quot;https://www.zrc-sazu.si/sites/default/files/rvt_2.2.1_0.pdf&quot;&gt;&lt;span style=&quot; text-decoration: none; color:#0000ff;&quot;&gt;Old RVT manual&lt;/span&gt;&lt;/a&gt;&lt;br&gt;
 
 &lt;\body&gt;
 &lt;\html&gt;</string>
