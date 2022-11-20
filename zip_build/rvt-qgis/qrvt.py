@@ -67,7 +67,7 @@ import rvt.blend_func
 importlib.reload(rvt.blend_func)
 import rvt.vis
 importlib.reload(rvt.vis)
-from processing_provider.provider import Provider
+from .processing_provider.provider import Provider
 
 
 class LoadingScreenDlg:

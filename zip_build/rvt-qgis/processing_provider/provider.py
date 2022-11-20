@@ -1,18 +1,18 @@
 from qgis.core import QgsProcessingProvider
 
-from processing_provider.rvt_hillshade import RVTHillshade
-from processing_provider.rvt_multi_hillshade import RVTMultiHillshade
-from processing_provider.rvt_slope import RVTSlope
-from processing_provider.rvt_slrm import RVTSlrm
-from processing_provider.rvt_svf import RVTSvf
-from processing_provider.rvt_asvf import RVTASvf
-from processing_provider.rvt_opns import RVTOpns
-from processing_provider.rvt_sky_illum import RVTSim
-from processing_provider.rvt_local_dom import RVTLocalDom
-from processing_provider.rvt_blender import RVTBlender
-from processing_provider.rvt_msrm import RVTMsrm
-from processing_provider.rvt_mstp import RVTMstp
-from processing_provider.rvt_fill_no_data import RVTFillNoData, RVTFillNoDataIDW
+from .rvt_hillshade import RVTHillshade
+from .rvt_multi_hillshade import RVTMultiHillshade
+from .rvt_slope import RVTSlope
+from .rvt_slrm import RVTSlrm
+from .rvt_svf import RVTSvf
+from .rvt_asvf import RVTASvf
+from .rvt_opns import RVTOpns
+from .rvt_sky_illum import RVTSim
+from .rvt_local_dom import RVTLocalDom
+from .rvt_blender import RVTBlender
+from .rvt_msrm import RVTMsrm
+from .rvt_mstp import RVTMstp
+from .rvt_fill_no_data import RVTFillNoData, RVTFillNoDataIDW
 
 
 class Provider(QgsProcessingProvider):
