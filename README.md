@@ -1,4 +1,4 @@
-# QGIS Plugin for Relief Visualization Toolbox
+# Relief Visualization Toolbox QGIS Plugin
 
 ![](./docs/figures/RVT_head.png)
 
