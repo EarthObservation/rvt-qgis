@@ -1,4 +1,4 @@
-# QGIS Plugin for Relief Visualization Toolbox
+# Relief Visualization Toolbox QGIS Plugin
 
 ![](./docs/figures/RVT_head.png)
 
@@ -41,3 +41,6 @@ Development of RVT Python scripts was part financed by the Slovenian Research Ag
 ## License
 This project is licensed under the terms of the [Apache License](LICENSE).
 
+## About
+RVT plugin for QGIS by Žiga Kokalj, Žiga Maroh and Krištof Oštir, 2022.
+It is developed in collaboration between ZRC SAZU and University of Ljubljana.
