@@ -7,7 +7,7 @@ Qt Creator software to change version in about dialogue (can also be done with t
 
 To release/upload changes (new version):
 *   Change version in `metadata.txt`.
-*   Open file `qrvt_dialog_about.py` (about dialogue) with Qt Creator and change version.
+*   Open file `qrvt_dialog_about.ui` (about dialogue) with Qt Creator and change version.
 *   Run `remove_before_zip.bat` to remove all pycache files.
 *   Create new zip release file with pb_tool plugin: run `pbt zip` in root project directory (`rvt-qgis`). 
     Newly created zip file `rvt-qgis.zip` will be created/overwritten in `zip_build` subdirectory.
