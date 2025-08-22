@@ -281,10 +281,10 @@ class DefaultValues:
         self.msrm_scaling_factor = 2
         # multi-scale topographic position
         self.mstp_compute = 0
-        self.mstp_local_scale = (1, 5, 1)
-        self.mstp_meso_scale = (5, 50, 5)
-        self.mstp_broad_scale = (50, 500, 50)
-        self.mstp_lightness = 0.9
+        self.mstp_local_scale = (3, 21, 2)
+        self.mstp_meso_scale = (23, 203, 18)
+        self.mstp_broad_scale = (223, 2023, 180)
+        self.mstp_lightness = 1.2
         # save float
         self.slp_save_float = 1
         self.hs_save_float = 1
@@ -2622,7 +2622,7 @@ def save_raster(src_raster_path, out_raster_path, out_raster_arr: np.ndarray, no
                                            ysize=out_raster_arr.shape[0],
                                            bands=1,
                                            eType=e_type,  # eType: 6 = GDT_Float32
-                                           options=['COMPRESS=LZW'])
+                                           options=['COMPRESS=LZW', 'BIGTIFF=IF_SAFER'])
         out_data_set.SetProjection(src_data_set.GetProjection())
         out_data_set.SetGeoTransform(src_data_set.GetGeoTransform())
         out_data_set.GetRasterBand(1).WriteArray(out_raster_arr)
@@ -2634,7 +2634,7 @@ def save_raster(src_raster_path, out_raster_path, out_raster_arr: np.ndarray, no
                                            ysize=out_raster_arr.shape[1],
                                            bands=out_raster_arr.shape[0],
                                            eType=e_type,  # eType: 6 = GDT_Float32
-                                           options=['COMPRESS=LZW'])
+                                           options=['COMPRESS=LZW', 'BIGTIFF=IF_SAFER'])
         out_data_set.SetProjection(src_data_set.GetProjection())
         out_data_set.SetGeoTransform(src_data_set.GetGeoTransform())
         for i_band in range(out_raster_arr.shape[0]):

@@ -96,7 +96,7 @@ def byte_scale(data,
             byte_data[byte_data > high] = high
             byte_data[byte_data < 0] = 0
             byte_data[np.isnan(byte_data)] = 0  # change no_data to 0
-            return np.cast[np.uint8](byte_data) + np.cast[np.uint8](low)
+            return np.asarray(byte_data, dtype=np.uint8) + np.asarray(low, dtype=np.uint8)
 
         # scale = float(high - low) / cscale  # old scipy fn
         # byte_data = (data * 1.0 - cmin) * scale + 0.4999  # old scipy fn
@@ -105,7 +105,7 @@ def byte_scale(data,
         byte_data[byte_data > high] = high
         byte_data[byte_data < 0] = 0
         byte_data[np.isnan(byte_data)] = 255  # change no_data to 255
-        byte_data = np.cast[np.uint8](byte_data) + np.cast[np.uint8](low)
+        byte_data = np.asarray(byte_data, dtype=np.uint8) + np.asarray(low, dtype=np.uint8)
         byte_data_bands.append(byte_data)
 
     if is_2d_arr:  # if only one band
@@ -135,9 +135,9 @@ def slope_aspect(dem,
     ----------
     dem : numpy.ndarray
         Input digital elevation model as 2D numpy array.
-    resolution_x : int
+    resolution_x : float
         DEM resolution in X direction.
-    resolution_y : int
+    resolution_y : float
         DEM resolution in Y direction.
     output_units : str
         Output units, you can choose between: percent, degree, radian. Default value is radian.
@@ -421,7 +421,9 @@ def mean_filter(dem, kernel_radius):
                 np.roll(dem_i1, (-radius_cell - 1, -radius_cell - 1), axis=(0, 1)) -
                 np.roll(dem_i1, (-radius_cell - 1, radius_cell), axis=(0, 1)) -
                 np.roll(dem_i1, (radius_cell, -radius_cell - 1), axis=(0, 1)))
-    mean_out = mean_out / kernel_nr_pix_arr
+    # Ignore warnings for dividing with nan
+    with np.errstate(divide='ignore', invalid='ignore'):
+        mean_out = mean_out / kernel_nr_pix_arr
     mean_out = mean_out.astype(np.float32)
     mean_out = mean_out[radius_cell:-(radius_cell + 1), radius_cell:-(radius_cell + 1)]  # remove padding
     # nan back to nan
