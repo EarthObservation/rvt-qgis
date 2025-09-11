@@ -565,8 +565,8 @@ class QRVT:
         """Checks if dlg blender combination values are same as any default combination or they
          are Custom combination."""
         self.load_dlg2combination()
-        if self.dlg.combo_combinations.currentText() == "enhanced Multi-Scale Topographic Position version 3" or \
-                self.dlg.combo_combinations.currentText() == "Archaeological combined (VAT combined)":
+        if self.dlg.combo_combinations.currentText() == "e3MSTP - enhanced Multi-Scale Topographic Position v3" or \
+                self.dlg.combo_combinations.currentText() == "Visualization for Archaeological Topography (VAT)":
             pass
         else:
             # find if dlg_combination has same attributes as one of the combinations
@@ -1461,8 +1461,8 @@ class QRVT:
             blend_img_name = "{}_{}".format(raster_name, combination_name_u)
 
             # custom advanced (hard coded) blender combinations (can't be selected in dialog)
-            if combination_name == "Archaeological combined (VAT combined)" or \
-                    combination_name == "enhanced Multi-Scale Topographic Position version 3":
+            if combination_name == "Visualization for Archaeological Topography (VAT)" or \
+                    combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
                 self.blend_advanced_custom_combination(combination_name=combination_name, raster_name=raster_name,
                                                        save_dir=save_dir)
             # normal dialog blender combination
@@ -1798,7 +1798,7 @@ class QRVT:
         save_vis = self.dlg.check_blender_save_vis.isChecked()
         save_float = self.dlg.check_blender_save_float.isChecked()
         save_8bit = self.dlg.check_blender_save_8bit.isChecked()
-        if combination_name == "Archaeological combined (VAT combined)":
+        if combination_name == "Visualization for Archaeological Topography (VAT)":
             # 1st layer: VAT general 50% transparency, 2nd layer: VAT flat
             start_time = time.time()
             self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
@@ -1849,7 +1849,7 @@ class QRVT:
                                              render_path=blend_img_path, default=self.default,
                                              custom_dir=save_dir, computation_time=compute_time)
             return True
-        elif combination_name == "enhanced Multi-Scale Topographic Position version 3":
+        elif combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
             start_time = time.time()
             self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
             combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
