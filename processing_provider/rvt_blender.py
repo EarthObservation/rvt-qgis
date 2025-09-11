@@ -162,7 +162,7 @@ class RVTBlender(QgsProcessingAlgorithm):
             save_float = False
 
         # advanced custom combinations (hard coded) blending (which can't be created in dialog)
-        if combination_name == "Visualization for Archaeological Topography (VAT)":
+        if combination_name == "Combined Visualization for Archaeological Topography (CVAT)":
             vat_combination_json_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)),
                                                                      "settings", "blender_VAT.json"))
             default_1 = rvt.default.DefaultValues()  # VAT general

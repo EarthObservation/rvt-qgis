@@ -566,7 +566,7 @@ class QRVT:
          are Custom combination."""
         self.load_dlg2combination()
         if self.dlg.combo_combinations.currentText() == "e3MSTP - enhanced Multi-Scale Topographic Position v3" or \
-                self.dlg.combo_combinations.currentText() == "Visualization for Archaeological Topography (VAT)":
+                self.dlg.combo_combinations.currentText() == "Combined Visualization for Archaeological Topography (CVAT)":
             pass
         else:
             # find if dlg_combination has same attributes as one of the combinations
@@ -1461,7 +1461,7 @@ class QRVT:
             blend_img_name = "{}_{}".format(raster_name, combination_name_u)
 
             # custom advanced (hard coded) blender combinations (can't be selected in dialog)
-            if combination_name == "Visualization for Archaeological Topography (VAT)" or \
+            if combination_name == "Combined Visualization for Archaeological Topography (CVAT)" or \
                     combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
                 self.blend_advanced_custom_combination(combination_name=combination_name, raster_name=raster_name,
                                                        save_dir=save_dir)
@@ -1798,7 +1798,7 @@ class QRVT:
         save_vis = self.dlg.check_blender_save_vis.isChecked()
         save_float = self.dlg.check_blender_save_float.isChecked()
         save_8bit = self.dlg.check_blender_save_8bit.isChecked()
-        if combination_name == "Visualization for Archaeological Topography (VAT)":
+        if combination_name == "Combined Visualization for Archaeological Topography (CVAT)":
             # 1st layer: VAT general 50% transparency, 2nd layer: VAT flat
             start_time = time.time()
             self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
