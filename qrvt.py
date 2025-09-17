@@ -566,7 +566,8 @@ class QRVT:
          are Custom combination."""
         self.load_dlg2combination()
         if self.dlg.combo_combinations.currentText() == "e3MSTP - enhanced Multi-Scale Topographic Position v3" or \
-                self.dlg.combo_combinations.currentText() == "Combined Visualization for Archaeological Topography (CVAT)":
+                self.dlg.combo_combinations.currentText() == "Combined Visualization for Archaeological Topography (CVAT)" or \
+                self.dlg.combo_combinations.currentText() == "e4MSTP":
             pass
         else:
             # find if dlg_combination has same attributes as one of the combinations
@@ -1462,9 +1463,14 @@ class QRVT:
 
             # custom advanced (hard coded) blender combinations (can't be selected in dialog)
             if combination_name == "Combined Visualization for Archaeological Topography (CVAT)" or \
-                    combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
-                self.blend_advanced_custom_combination(combination_name=combination_name, raster_name=raster_name,
-                                                       save_dir=save_dir)
+                    combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3" or \
+                    combination_name == "e4MSTP":
+                self.blend_advanced_custom_combination(
+                    combination_name=combination_name,
+                    raster_name=raster_name,
+                    save_dir=save_dir
+                )
+
             # normal dialog blender combination
             else:
                 terrain_sett_name = None
@@ -1876,6 +1882,64 @@ class QRVT:
                                              render_path=blend_img_path, default=self.default,
                                              custom_dir=save_dir, computation_time=compute_time)
             return True
+
+        elif combination_name == "e4MSTP":
+
+            start_time = time.time()
+
+            self.dlg.chech_terrain_preset.setCheckState(False)  # disable terrain settings
+            combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
+
+            blend_img_path = os.path.abspath(
+                os.path.join(
+                    save_dir, "{}_{}.tif".format(raster_name, combination_name_u))
+            )
+            blend_img_8bit_path = os.path.abspath(
+                os.path.join(save_dir, "{}_{}_8bit.tif".format(raster_name, combination_name_u))
+            )
+            raster_path = self.rvt_select_input[raster_name]
+
+            dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=raster_path)
+
+
+            e4mstp_arr = rvt.blend.e4mstp(
+                dem=dict_arr_res_nd["array"],
+                resolution=dict_arr_res_nd["resolution"][0],
+                no_data=dict_arr_res_nd["no_data"]
+            )
+            
+            if save_float:
+                rvt.default.save_raster(
+                    src_raster_path=raster_path,
+                    out_raster_path=blend_img_path,
+                    out_raster_arr=e4mstp_arr,
+                    no_data=np.nan,
+                    e_type=6
+                )
+            
+            if save_8bit:
+                rvt.default.save_raster(
+                    src_raster_path=raster_path,
+                    out_raster_path=blend_img_8bit_path,
+                    out_raster_arr=rvt.vis.byte_scale(e4mstp_arr, c_min=0.0, c_max=1.0),
+                    no_data=np.nan,
+                    e_type=1
+                )
+            
+            compute_time = time.time() - start_time
+            
+            # LOG FILE
+            self.combination.create_log_file(
+                dem_path=raster_path,
+                combination_name=combination_name,
+                render_path=blend_img_path,
+                default=self.default,
+                custom_dir=save_dir,
+                computation_time=compute_time
+            )
+
+            return True
+
         else:
             return False
 
