@@ -42,5 +42,5 @@ Development of RVT Python scripts was part financed by the Slovenian Research Ag
 This project is licensed under the terms of the [Apache License](LICENSE).
 
 ## About
-RVT plugin for QGIS by Žiga Kokalj, Žiga Maroh and Krištof Oštir, 2022.
+RVT plugin for QGIS by Žiga Kokalj, Žiga Maroh, Nejc Čož and Krištof Oštir, 2022.
 It is developed in collaboration between ZRC SAZU and University of Ljubljana.

@@ -29,7 +29,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.9.6</string>
+        <string>Relief Visualization Toolbox (RVT) QGIS plugin, ver. 0.10.0</string>
        </property>
       </widget>
      </item>
@@ -38,32 +38,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;
-&lt;span style=&quot; font-weight:600;&quot;&gt;○ By:&lt;/span&gt;
-
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Žiga Kokalj
-
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Krištof Oštir
-
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Klemen Zakšek
-
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Peter Pehani
-
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Klemen Čotar
-
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Maja Somrak
-
-&lt;br&gt;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;&amp;#8203;&amp;#32;
-• Žiga Maroh (plugin author and maintainer)
-&lt;br&gt;
-&lt;\body&gt;
-&lt;\html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;○ By:&lt;/span&gt;&lt;br/&gt;​ ​ ​ ​ • Žiga Kokalj &lt;br/&gt;​ ​ ​ ​ • Krištof Oštir &lt;br/&gt;​ ​ ​ ​ • Klemen Zakšek &lt;br/&gt;​ ​ ​ ​ • Peter Pehani &lt;br/&gt;​ ​ ​ ​ • Klemen Čotar &lt;br/&gt;​ ​ ​ ​ • Maja Somrak ​&lt;br/&gt;​ ​ ​ ​ • Nejc Čož (maintainer) &lt;br/&gt;​ ​ ​ ​ • Žiga Maroh (plugin author and maintainer) &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
