@@ -25,22 +25,18 @@
 import importlib
 import time
 import subprocess
-import threading
 import json
 import os
 import sys
 import webbrowser
-import PyQt5
-from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QFile, QFileInfo, Qt, QThread, QRunnable, \
-    QThreadPool
-from PyQt5.QtGui import QIcon, QMovie, QPixmap, QPalette, QColor, QPainterPath
-from PyQt5.QtWidgets import QAction, QFileDialog, QGroupBox, QLineEdit, QCheckBox, QComboBox, QWidget, QLabel, \
-    QProgressBar, QApplication, QMessageBox, QErrorMessage, QDialog, QDesktopWidget
+
+from PyQt5.QtCore import QSettings, QTranslator, QCoreApplication, Qt
+from PyQt5.QtGui import QIcon, QMovie, QPalette, QColor
+from PyQt5.QtWidgets import QAction, QFileDialog, QLabel, QDialog
 from PyQt5 import uic
 
-from qgis.core import QgsProject, QgsRasterLayer, QgsTask, QgsApplication, Qgis
+from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis
 
-from osgeo import gdal
 try:
     import scipy
 except:
@@ -384,8 +380,12 @@ class QRVT:
         # VISUALIZATIONS
         # start button pressed
         self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations_clicked())
+        
+        # save plugin size
         self.dlg.button_start.clicked.connect(
-            lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
+            lambda: self.save_plugin_size(self.plugin_size_json_path)
+        )
+        
         # check float 8bit checkbox changes
         self.check_checkbox_float_8bit_change()
         # check svf noise rem
@@ -421,9 +421,12 @@ class QRVT:
 
         # blend images button clicked
         self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
+        
+        # save plugin size
         self.dlg.button_blend.clicked.connect(
-            lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
-
+            lambda: self.save_plugin_size(self.plugin_size_json_path)
+        )  
+        
         # OTHER
         # Cut-off button clicked
         self.dlg.button_cutoff.clicked.connect(lambda: self.compute_cut_off_norm_8bit_clicked())
@@ -1397,7 +1400,7 @@ class QRVT:
                     # get combination name from combo box
                     combination_name = str(self.parent.dlg.combo_combinations.currentText())
                     combination_name = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
-                    blend_img_name = "{}_{}".format(raster_name, combination_name)
+                    blend_img_name = "{}_{}".format(raster_name, combination_name) # TODO: Naming of qgis layer
 
                     terrain_sett_name = None
                     if self.parent.dlg.chech_terrain_preset.checkState():
