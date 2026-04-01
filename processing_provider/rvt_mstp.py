@@ -81,14 +81,14 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
             QgsProcessingParameterNumber(
                 name="VE_FACTOR",
                 description="Vertical exaggeration factor",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1,
                 minValue=-1000,
                 maxValue=1000
@@ -98,7 +98,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="LOCAL_SCALE_MIN",
                 description="Local scale minimum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=3,
                 minValue=1,
                 maxValue=1000000000
@@ -108,7 +108,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="LOCAL_SCALE_MAX",
                 description="Local scale maximum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=21,
                 minValue=1,
                 maxValue=1000000000
@@ -118,7 +118,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="LOCAL_SCALE_STEP",
                 description="Local scale step [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=2,
                 minValue=1,
                 maxValue=1000000000
@@ -128,7 +128,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="MESO_SCALE_MIN",
                 description="Meso scale minimum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=23,
                 minValue=1,
                 maxValue=1000000000
@@ -138,7 +138,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="MESO_SCALE_MAX",
                 description="Meso scale maximum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=203,
                 minValue=1,
                 maxValue=1000000000
@@ -148,7 +148,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="MESO_SCALE_STEP",
                 description="Meso scale step [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=18,
                 minValue=1,
                 maxValue=1000000000
@@ -158,7 +158,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="BROAD_SCALE_MIN",
                 description="Broad scale minimum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=223,
                 minValue=1,
                 maxValue=1000000000
@@ -168,7 +168,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="BROAD_SCALE_MAX",
                 description="Broad scale maximum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=2023,
                 minValue=1,
                 maxValue=1000000000
@@ -178,7 +178,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="BROAD_SCALE_STEP",
                 description="Broad scale step [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=180,
                 minValue=1,
                 maxValue=1000000000
@@ -188,7 +188,7 @@ class RVTMstp(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="LIGHTNESS",
                 description="Lightness of image",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1.2,
                 minValue=0.1,
                 maxValue=5.0

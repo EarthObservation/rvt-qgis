@@ -30,10 +30,10 @@ import os
 import sys
 import webbrowser
 
-from PyQt5.QtCore import QSettings, QTranslator, QCoreApplication, Qt
-from PyQt5.QtGui import QIcon, QMovie, QPalette, QColor
-from PyQt5.QtWidgets import QAction, QFileDialog, QLabel, QDialog
-from PyQt5 import uic
+from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
+from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
+from qgis.PyQt.QtWidgets import QAction, QFileDialog, QLabel, QDialog
+from qgis.PyQt import uic
 
 from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis
 
@@ -74,7 +74,7 @@ class LoadingScreenDlg:
         self.dlg.setWindowTitle("Loading")
         self.dlg.setWindowModality(False)
         self.dlg.setFixedSize(200, 200)
-        self.dlg.setWindowFlags(Qt.X11BypassWindowManagerHint | Qt.CustomizeWindowHint)
+        self.dlg.setWindowFlags(Qt.WindowType.X11BypassWindowManagerHint | Qt.WindowType.CustomizeWindowHint)
         pal = QPalette()
         role = QPalette.Background
         pal.setColor(role, QColor(255, 255, 255))
@@ -99,7 +99,7 @@ class AboutDlg:
         self.dlg = QDialog()
         uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'), self.dlg)
         self.dlg.setWindowTitle("About")
-        self.dlg.setWindowFlags(Qt.X11BypassWindowManagerHint | Qt.WindowStaysOnTopHint | Qt.CustomizeWindowHint)
+        self.dlg.setWindowFlags(Qt.WindowType.X11BypassWindowManagerHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.CustomizeWindowHint)
         self.dlg.setWindowModality(False)
 
         # if close button clicked
@@ -107,7 +107,7 @@ class AboutDlg:
 
         # if report a bug button clicked
         self.dlg.button_report_bug.clicked.connect(lambda: self.button_report_bug_clicked())
-        self.dlg.exec_()
+        self.dlg.exec()
 
     def button_report_bug_clicked(self):
         webbrowser.open('https://github.com/EarthObservation/rvt-qgis/issues')
@@ -775,7 +775,7 @@ class QRVT:
             self.load_combination2dlg(combination=self.combination)  # loads new combination
             self.dlg.line_combination_name.setText("")
         if new_combination_name == "":
-            self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.Warning)
+            self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.MessageLevel.Warning)
 
     def remove_combination_clicked(self):
         selected_combination_name = str(self.dlg.combo_combinations.currentText())
@@ -796,9 +796,9 @@ class QRVT:
                     self.combination.save_to_file(json_path)
                     self.dlg.line_combination_name.setText("")
                 except:
-                    self.iface.messageBar().pushMessage("RVT", "Can't save combination JSON file!", level=Qgis.Warning)
+                    self.iface.messageBar().pushMessage("RVT", "Can't save combination JSON file!", level=Qgis.MessageLevel.Warning)
         else:
-            self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.Warning)
+            self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.MessageLevel.Warning)
 
     def load_combination_from_clicked(self):
         json_path = str(QFileDialog.getOpenFileName(self.dlg, caption="Load combination JSON",
@@ -815,7 +815,7 @@ class QRVT:
                     self.load_combination2dlg(combination=combination)
                     self.combination = combination
             except:
-                self.iface.messageBar().pushMessage("RVT", "Can't read combination JSON file!", level=Qgis.Warning)
+                self.iface.messageBar().pushMessage("RVT", "Can't read combination JSON file!", level=Qgis.MessageLevel.Warning)
 
     def check_combination_change(self):
         """If blender combination combo box changes method triggers other methods."""
@@ -1306,18 +1306,18 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculated!", level=Qgis.Success)
+                self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
                     self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.Warning)
+                                                               level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
                     self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculation Failed!",
-                                                               level=Qgis.Critical)
+                                                               level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_visualizations_clicked(self):
@@ -1427,18 +1427,18 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculated!", level=Qgis.Success)
+                self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
                     self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.Warning)
+                                                               level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
                     self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculation Failed!",
-                                                               level=Qgis.Critical)
+                                                               level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_blended_image_clicked(self):
@@ -1627,22 +1627,22 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculated!", level=Qgis.Success)
+                self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
                     self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.Warning)
+                                                               level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 elif self.no_selected_parameters:
                     self.parent.iface.messageBar().pushMessage("RVT", "You didn't select any parameters!",
-                                                               level=Qgis.Warning)
+                                                               level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
                     self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculation Failed!",
-                                                               level=Qgis.Critical)
+                                                               level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_cut_off_norm_8bit_clicked(self):
@@ -1781,18 +1781,18 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Fill no data calculated!", level=Qgis.Success)
+                self.parent.iface.messageBar().pushMessage("RVT", "Fill no data calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
                     self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.Warning)
+                                                               level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.Warning)
+                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
                     self.parent.iface.messageBar().pushMessage("RVT", "Fill no-data calculation Failed!",
-                                                               level=Qgis.Critical)
+                                                               level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_fill_no_data_clicked(self):

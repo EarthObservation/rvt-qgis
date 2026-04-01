@@ -75,14 +75,14 @@ class RVTOpns(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
             QgsProcessingParameterNumber(
                 name="VE_FACTOR",
                 description="Vertical exaggeration factor",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1,
                 minValue=-1000,
                 maxValue=1000
@@ -92,7 +92,7 @@ class RVTOpns(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="RADIUS",
                 description="Search radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=10,
                 minValue=10,
                 maxValue=50
@@ -102,7 +102,7 @@ class RVTOpns(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="NUM_DIRECTIONS",
                 description="Number of search directions",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=16,
                 minValue=8,
                 maxValue=64
