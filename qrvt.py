@@ -72,13 +72,19 @@ class LoadingScreenDlg:
     def __init__(self, gif_path):
         self.dlg = QDialog()
         self.dlg.setWindowTitle("Loading")
-        self.dlg.setWindowModality(False)
+        self.dlg.setWindowModality(Qt.WindowModality.NonModal)
         self.dlg.setFixedSize(200, 200)
-        self.dlg.setWindowFlags(Qt.WindowType.X11BypassWindowManagerHint | Qt.WindowType.CustomizeWindowHint)
-        pal = QPalette()
-        role = QPalette.Background
-        pal.setColor(role, QColor(255, 255, 255))
-        self.dlg.setPalette(pal)
+        self.dlg.setWindowFlags(
+            Qt.WindowType.X11BypassWindowManagerHint |
+            Qt.WindowType.CustomizeWindowHint
+        )
+
+        palette = self.dlg.palette()
+        role = QPalette.ColorRole.Window
+        palette.setColor(role, QColor(255, 255, 255))
+        self.dlg.setAutoFillBackground(True)
+        self.dlg.setPalette(palette)
+
         self.label_animation = QLabel(self.dlg)
         self.movie = QMovie(gif_path)
         self.label_animation.setMovie(self.movie)
@@ -100,7 +106,7 @@ class AboutDlg:
         uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'), self.dlg)
         self.dlg.setWindowTitle("About")
         self.dlg.setWindowFlags(Qt.WindowType.X11BypassWindowManagerHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.CustomizeWindowHint)
-        self.dlg.setWindowModality(False)
+        self.dlg.setWindowModality(Qt.WindowModality.NonModal)
 
         # if close button clicked
         self.dlg.button_close.clicked.connect(self.dlg.close)
@@ -843,7 +849,7 @@ class QRVT:
     def load_combination2dlg(self, combination, terrain_bool=False):
         """Fill blender dlg parameters (combo boxes, line edits, scroll sliders) with values from combination."""
         if not terrain_bool:
-            self.dlg.chech_terrain_preset.setCheckState(False)
+            self.dlg.chech_terrain_preset.setChecked(False)
         nr_layers = len(combination.layers)  # number of layers
         self.combination = combination
         for i_layer in range(5):
@@ -1877,7 +1883,7 @@ class QRVT:
             start_time = time.time()
             
             # Disable terrain settings
-            self.dlg.chech_terrain_preset.setCheckState(False)  
+            self.dlg.chech_terrain_preset.setChecked(False)
             
             # Replace spaces with underscores for filename, used for saving
             combination_name_u = combination_name.strip().replace(" ", "_") 
@@ -1974,7 +1980,7 @@ class QRVT:
             start_time = time.time()
 
             # Disable terrain settings
-            self.dlg.chech_terrain_preset.setCheckState(False) 
+            self.dlg.chech_terrain_preset.setChecked(False)
             
             # Create paths for saving
             combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
@@ -2031,7 +2037,7 @@ class QRVT:
             start_time = time.time()
 
             # Disable terrain settings
-            self.dlg.chech_terrain_preset.setCheckState(False)
+            self.dlg.chech_terrain_preset.setChecked(False)
             
             # Create paths for saving
             combination_name_u = combination_name.strip().replace(" ", "_")
