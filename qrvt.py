@@ -1729,16 +1729,31 @@ class QRVT:
 
             if cut_off_8bit:
                 cut_off_norm = True
-            cut_off_arr = rvt.blend_func.cut_off_normalize(image=raster_arr, mode=cut_off_mode, min=cut_off_min,
-                                                           max=cut_off_max, bool_norm=cut_off_norm) # todo
+            cut_off_arr = rvt.blend_func.cut_off_normalize(
+                image=raster_arr,
+                mode=cut_off_mode,
+                cutoff_min=cut_off_min,
+                cutoff_max=cut_off_max,
+                bool_norm=cut_off_norm
+            )
 
             if cut_off_8bit:
                 cut_off_arr = rvt.vis.byte_scale(cut_off_arr)
-                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
-                                        out_raster_arr=cut_off_arr, no_data=np.nan, e_type=1)
+                rvt.default.save_raster(
+                    src_raster_path=raster_path,
+                    out_raster_path=str(out_raster_path),
+                    out_raster_arr=cut_off_arr,
+                    no_data=np.nan,
+                    e_type=1
+                )
             else:
-                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
-                                        out_raster_arr=cut_off_arr, no_data=np.nan, e_type=6)
+                rvt.default.save_raster(
+                    src_raster_path=raster_path,
+                    out_raster_path=str(out_raster_path),
+                    out_raster_arr=cut_off_arr,
+                    no_data=np.nan,
+                    e_type=6
+                )
         return True
 
     class ComputeFillNoData(QgsTask):
