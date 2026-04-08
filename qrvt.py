@@ -179,8 +179,8 @@ class QRVT:
         self.default_settings_path = os.path.abspath(os.path.join(self.plugin_dir, "settings", "default_settings.json"))
         if os.path.isfile(self.default_settings_path):  # if default_settings.json exists
             self.default.read_default_from_file(self.default_settings_path)  # load values in dialog
-        else:  # if doesn't exist
-            if not os.path.exists(os.path.dirname(self.default_settings_path)):  # if dir settings doesn't exists
+        else:
+            if not os.path.exists(os.path.dirname(self.default_settings_path)):  # if dir settings doesn't exist
                 os.makedirs(os.path.dirname(self.default_settings_path))  # create settings dir
             self.default.save_default_to_file(self.default_settings_path)  # create default_settings.json
 
@@ -445,7 +445,7 @@ class QRVT:
         self.dlg.select_input_files.clear()
 
         for layer in QgsProject.instance().mapLayers().values():
-            # If layer is a raster and it is not a multiband type
+            # If layer is a raster, and it is not a multiband type
             if layer.type() == 1 and layer.bandCount() == 1:
                 layer_name = layer.name()
                 layer_path = layer.dataProvider().dataSourceUri()
@@ -460,7 +460,7 @@ class QRVT:
         self.dlg.select_input_files.deselectAllOptions()
 
     def checkbox_save_to_rast_loc(self):
-        """"Check box save to raster location state changed."""
+        """Check box save to raster location state changed."""
         if self.dlg.check_sav_rast_loc.isChecked():
             self.dlg.line_save_loc.setEnabled(False)
             self.dlg.button_save_to.setEnabled(False)
@@ -571,7 +571,7 @@ class QRVT:
         self.combination = combination
 
     def check_dlg_comb_default_combs(self):
-        """Checks if dlg blender combination values are same as any default combination or they
+        """Checks if dlg blender combination values are same as any default combination or if they
          are Custom combination."""
         self.load_dlg2combination()
         if self.dlg.combo_combinations.currentText() in [
@@ -913,7 +913,7 @@ class QRVT:
             return "nearest_neighbour"
 
     def load_default2dlg(self):
-        """Reads default (rvt.defaul.DeafultValues()) from default_path and fill visualization dlg."""
+        """Reads default (rvt.default.DefaultValues()) from default_path and fill visualization dlg."""
         self.dlg.check_overwrite.setChecked(bool(self.default.overwrite))
         self.dlg.line_ve_factor.setText(str(self.default.ve_factor))
         self.dlg.group_hillshade.setChecked(bool(self.default.hs_compute))
@@ -1002,7 +1002,7 @@ class QRVT:
         self.dlg.check_mstp_8bit.setChecked(bool(self.default.mstp_save_8bit))
 
     def load_dlg2default(self):
-        """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.defaul.DeafultValues() ."""
+        """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.default.DefaultValues() ."""
         self.default.overwrite = int(self.dlg.check_overwrite.isChecked())
         self.default.ve_factor = float(self.dlg.line_ve_factor.text())
         self.default.hs_compute = int(self.dlg.group_hillshade.isChecked())
@@ -1114,7 +1114,7 @@ class QRVT:
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1343,7 +1343,7 @@ class QRVT:
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
 
-        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+        for raster_name in selected_input_rasters:  # loop through all selected rasters
             raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1434,7 +1434,11 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Blended image calculated!",
+                    level=Qgis.MessageLevel.Success
+                )
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
@@ -1450,7 +1454,12 @@ class QRVT:
 
     def compute_blended_image_clicked(self):
         """Start button clicked ("Blend images" button)."""
-        self.iface.messageBar().pushMessage("RVT", "Starting blended image computation...", level=Qgis.Info, duration=3)
+        self.iface.messageBar().pushMessage(
+            "RVT",
+            "Starting blended image computation...",
+            level=Qgis.Info,
+            duration=3
+        )
         task = self.ComputeBlenderTask(description="Compute blended image", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1592,7 +1601,7 @@ class QRVT:
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1666,7 +1675,7 @@ class QRVT:
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
 
-        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+        for raster_name in selected_input_rasters:  # loop through all selected rasters
             raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1771,7 +1780,7 @@ class QRVT:
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1817,7 +1826,7 @@ class QRVT:
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
 
-        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+        for raster_name in selected_input_rasters:  # loop through all selected rasters
             raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
