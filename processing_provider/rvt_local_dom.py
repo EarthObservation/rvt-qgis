@@ -72,14 +72,14 @@ class RVTLocalDom(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
             QgsProcessingParameterNumber(
                 name="VE_FACTOR",
                 description="Vertical exaggeration factor",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1,
                 minValue=-1000,
                 maxValue=1000
@@ -89,7 +89,7 @@ class RVTLocalDom(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="MIN_RADIUS",
                 description="Minimum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=10,
                 minValue=0,
                 maxValue=100
@@ -99,7 +99,7 @@ class RVTLocalDom(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="MAX_RADIUS",
                 description="Maximum radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=20,
                 minValue=0,
                 maxValue=100
@@ -109,7 +109,7 @@ class RVTLocalDom(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="ANGULAR_RES",
                 description="Number of angular directions",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=15,
                 minValue=4,
                 maxValue=32
@@ -119,7 +119,7 @@ class RVTLocalDom(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="OBSERVER_H",
                 description="Height at which we observe the terrain",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1.7,
                 minValue=0.5,
                 maxValue=20

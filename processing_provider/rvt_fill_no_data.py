@@ -69,7 +69,7 @@ class RVTFillNoData(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
@@ -178,14 +178,14 @@ class RVTFillNoDataIDW(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
             QgsProcessingParameterNumber(
                 name="RADIUS",
                 description="Search radius [pixels]",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=20,
                 minValue=1,
                 maxValue=200
@@ -195,7 +195,7 @@ class RVTFillNoDataIDW(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="POWER",
                 description="Power",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=2,
                 minValue=0.2,
                 maxValue=10

@@ -70,14 +70,14 @@ class RVTHillshade(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
             QgsProcessingParameterNumber(
                 name="VE_FACTOR",
                 description="Vertical exaggeration factor",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1,
                 minValue=-1000,
                 maxValue=1000
@@ -87,7 +87,7 @@ class RVTHillshade(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="SUN_AZIMUTH",
                 description="Solar azimuth angle (clockwise from North) in degrees",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=315,
                 minValue=0,
                 maxValue=360
@@ -97,7 +97,7 @@ class RVTHillshade(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="SUN_ELEVATION",
                 description="Solar vertical angle (above the horizon) in degrees",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=35,
                 minValue=0,
                 maxValue=90
