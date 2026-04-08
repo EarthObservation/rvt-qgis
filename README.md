@@ -26,7 +26,7 @@ Documentation of the package and its usage is available at [Relief Visualization
 
 When using the tools, please cite:
 
-*   Kokalj, Ž., Somrak, M. 2019. Why Not a Single Image? Combining Visualizations to Facilitate Fieldwork and On-Screen Mapping. Remote Sensing 11(7): 747.
+*   Kokalj, Ž. 2025. Standardizing visualization in ancient Maya lidar research: Techniques, challenges and recommendations. Archaeological Prospection, 32 (4), 967–988. DOI: 10.1002/arp.70002
 *   Zakšek, K., Oštir, K., Kokalj, Ž. 2011. Sky-View Factor as a Relief Visualization Technique. Remote Sensing 3: 398-415.
 
 ## Contributing
@@ -42,5 +42,5 @@ Development of RVT Python scripts was part financed by the Slovenian Research Ag
 This project is licensed under the terms of the [Apache License](LICENSE).
 
 ## About
-RVT plugin for QGIS by Žiga Kokalj, Žiga Maroh, Nejc Čož and Krištof Oštir, 2022.
+RVT plugin for QGIS by Žiga Kokalj, Žiga Maroh, Nejc Čož and Krištof Oštir, 2026.
 It is developed in collaboration between ZRC SAZU and University of Ljubljana.
