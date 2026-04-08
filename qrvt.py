@@ -32,7 +32,7 @@ import webbrowser
 
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QLabel, QDialog
+from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QDialog
 from qgis.PyQt import uic
 
 from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis
@@ -67,35 +67,31 @@ from .processing_provider.provider import Provider
 
 
 class LoadingScreenDlg:
-    """Loading screen animation."""
+    """Native QGIS message-bar busy indicator."""
 
-    def __init__(self, gif_path):
-        self.dlg = QDialog()
-        self.dlg.setWindowTitle("Loading")
-        self.dlg.setWindowModality(Qt.WindowModality.NonModal)
-        self.dlg.setFixedSize(200, 200)
-        self.dlg.setWindowFlags(
-            Qt.WindowType.X11BypassWindowManagerHint |
-            Qt.WindowType.CustomizeWindowHint
-        )
-
-        palette = self.dlg.palette()
-        role = QPalette.ColorRole.Window
-        palette.setColor(role, QColor(255, 255, 255))
-        self.dlg.setAutoFillBackground(True)
-        self.dlg.setPalette(palette)
-
-        self.label_animation = QLabel(self.dlg)
-        self.movie = QMovie(gif_path)
-        self.label_animation.setMovie(self.movie)
+    def __init__(self, iface, text):
+        self.iface = iface
+        self.text = text
+        self.message = None
+        self.widget = None
 
     def start_animation(self):
-        self.movie.start()
-        self.dlg.show()
+        self.message = self.iface.messageBar().createMessage("RVT", self.text)
+        self.widget = QProgressBar()
+        self.widget.setRange(0, 0)
+        self.widget.setTextVisible(False)
+        self.widget.setMaximumWidth(180)
+        self.message.layout().addWidget(self.widget)
+        self.iface.messageBar().pushWidget(self.message, Qgis.Info)
 
     def stop_animation(self):
-        self.movie.stop()
-        self.dlg.done(0)
+        if self.message is not None:
+            try:
+                self.iface.messageBar().popWidget(self.message)
+            except RuntimeError:
+                pass
+            self.message = None
+            self.widget = None
 
 
 class AboutDlg:
@@ -105,7 +101,11 @@ class AboutDlg:
         self.dlg = QDialog()
         uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'), self.dlg)
         self.dlg.setWindowTitle("About")
-        self.dlg.setWindowFlags(Qt.WindowType.X11BypassWindowManagerHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.CustomizeWindowHint)
+        self.dlg.setWindowFlags(
+            Qt.WindowType.X11BypassWindowManagerHint
+            | Qt.WindowType.WindowStaysOnTopHint
+            | Qt.WindowType.CustomizeWindowHint
+        )
         self.dlg.setWindowModality(Qt.WindowModality.NonModal)
 
         # if close button clicked
@@ -1084,7 +1084,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Computing visualizations...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1328,6 +1328,7 @@ class QRVT:
 
     def compute_visualizations_clicked(self):
         """Start button clicked (Compute visualization button)."""
+        self.iface.messageBar().pushMessage("RVT", "Starting visualizations...", level=Qgis.Info, duration=3)
         task = self.ComputeVisualizationsTask(description="Compute visualizations", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1360,7 +1361,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Computing blended image...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1449,6 +1450,7 @@ class QRVT:
 
     def compute_blended_image_clicked(self):
         """Start button clicked ("Blend images" button)."""
+        self.iface.messageBar().pushMessage("RVT", "Starting blended image computation...", level=Qgis.Info, duration=3)
         task = self.ComputeBlenderTask(description="Compute blended image", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1555,7 +1557,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Applying cut-off...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1653,6 +1655,7 @@ class QRVT:
 
     def compute_cut_off_norm_8bit_clicked(self):
         """Start button clicked (cut_off_norm_8bit start button)."""
+        self.iface.messageBar().pushMessage("RVT", "Starting cut-off computation...", level=Qgis.Info, duration=3)
         task = self.ComputeCutoff(description="Compute Cut-off", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1716,7 +1719,7 @@ class QRVT:
             if cut_off_8bit:
                 cut_off_norm = True
             cut_off_arr = rvt.blend_func.cut_off_normalize(image=raster_arr, mode=cut_off_mode, min=cut_off_min,
-                                                           max=cut_off_max, bool_norm=cut_off_norm)
+                                                           max=cut_off_max, bool_norm=cut_off_norm) # todo
 
             if cut_off_8bit:
                 cut_off_arr = rvt.vis.byte_scale(cut_off_arr)
@@ -1733,7 +1736,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Filling no-data...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1803,6 +1806,7 @@ class QRVT:
 
     def compute_fill_no_data_clicked(self):
         """Start button clicked (compute_fill_no_data start button)."""
+        self.iface.messageBar().pushMessage("RVT", "Starting fill no-data computation...", level=Qgis.Info, duration=3)
         task = self.ComputeFillNoData(description="Compute fill no data", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
