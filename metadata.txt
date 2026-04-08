@@ -1,40 +1,43 @@
-# This file contains metadata for your plugin.
-
-# This file should be included when you package your plugin.# Mandatory items:
+# Mandatory items:
 
 [general]
 name=Relief Visualization Toolbox
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
-description=Relief visualization toolbox (RVT) plugin helps scientists visualize raster elevation model datasets.
+description=Relief visualization toolbox (RVT) plugin helps scientists visualise digital elevation model datasets.
 version=0.10.0
 author=ZRC SAZU and University of Ljubljana (UL FGG)
 email=zkokalj@zrc-sazu.si
 
-about=Relief Visualization Toolbox was developed to help scientist visualize raster elevation model datasets. We narrowed down the selection to include techniques that have proven to be effective for identification of small scale features. Default settings therefore assume working with high resolution digital elevation models, derived from airborne laser scanning missions (lidar). Despite this, techniques are also used for different other purposes. Sky-view factor, for example, can be efficiently used in numerous studies where digital elevation model visualizations and automatic feature extraction techniques are indispensable, e.g. in geography, geomorphology, cartography, hydrology, glaciology, forestry and disaster management. It can even beused in engineering applications such as predicting the availability of the GNSS signal, for heat balance studies in urban areas, or for predicting wind environment in a football stadium. Methods currently implemented are: hillshading, hillshading from multiple directions, slope, simple local relief model (topographic position index), sky-view factor (as developed by our team), anisotropic sky-view factor, positive and negative openness, local dominance, multiscale topographic position, visualisation for acrhaelogical topography (VAT), enhanced prismatic openness, and enhanced multiscale topographic position (e4MSTP). © Copyright 2026 ZRC SAZU and University of Ljubljana
+about=The Relief Visualization Toolbox was developed to help scientists visualise raster elevation model datasets. We narrowed down the selection to include techniques proven effective for identifying small-scale features. The default settings therefore assume work with high-resolution digital elevation models derived from airborne laser scanning missions (lidar). Despite this, the techniques are also used for various other purposes. For example, the sky-view factor can be efficiently applied in numerous studies where digital elevation model visualisations and automatic feature extraction techniques are indispensable, such as in geography, geomorphology, cartography, hydrology, glaciology, forestry, and disaster management. It can even be used in engineering applications, such as predicting the availability of the GNSS signal, conducting heat balance studies in urban areas, or predicting wind environments in football stadiums.
+
+    The methods currently implemented are: hillshading, hillshading from multiple directions, slope, simple local relief model (topographic position index), sky-view factor (as developed by our team), anisotropic sky-view factor, positive and negative openness, local dominance, multiscale topographic position, visualisation for archaeological topography (VAT), enhanced prismatic openness, enhanced multiscale topographic position (e4MSTP).
+
+    © Copyright 2026 ZRC SAZU and University of Ljubljana
 
 tracker=https://github.com/EarthObservation/rvt-qgis/issues
 repository=https://github.com/EarthObservation/rvt-qgis
-# End of mandatory metadata
+
 
 # Recommended items:
 
-hasProcessingProvider=yes
-# Uncomment the following line and add your changelog:
-changelog=
-    [0.11.0] - 2026.03.31:
-	* Migration to QGIS4 and Qt6
+changelog=[1.0.0] - 2026.04.08:
+    - Migration to QGIS4 and Qt6
+    - New reference for citing (Kokalj et al., 2025)
+
     [0.10.0] - 2025.09.19:
-        * Updated to RVT version 2.2.3
-        * Added e4MSTP to Blender combinations
-        * Fixed minor bugs
+    - Updated to RVT version 2.2.3
+    - Added e4MSTP to Blender combinations
+    - Fixed minor bugs
 
 # Tags are comma separated with spaces allowed
-tags=python,rvt,relief visualization toolbox,relief visualization,raster visualization,visualization,dem visualization,dem,lidar
+tags=rvt,relief visualization toolbox,visualisation,relief,dem,dtm,dsm,lidar,archaeology,hillshade,slope,slrm,sky-view factor,vat,mstp
 
 homepage=https://rvt-py.readthedocs.io/en/latest/rvtfor_qgis.html
 category=Plugins
+hasProcessingProvider=yes
 icon=icon.png
+
 # experimental flag
 experimental=False
 
