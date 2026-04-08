@@ -1392,11 +1392,13 @@ class QRVT:
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (blended images) into Qgis
+            self.parent.dlg.button_blend.setEnabled(True)
+
             if result:  # if self.run returns True
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
