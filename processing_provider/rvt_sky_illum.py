@@ -75,14 +75,14 @@ class RVTSim(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
             QgsProcessingParameterNumber(
                 name="VE_FACTOR",
                 description="Vertical exaggeration factor",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1,
                 minValue=-1000,
                 maxValue=1000
@@ -100,7 +100,7 @@ class RVTSim(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="NUM_DIRECTIONS",
                 description="Number of horizon search directions",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=32,
                 minValue=8,
                 maxValue=128
@@ -110,7 +110,7 @@ class RVTSim(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="SHADOW_DIST",
                 description="Max shadow modeling distance",
-                type=QgsProcessingParameterNumber.Integer,
+                type=QgsProcessingParameterNumber.Type.Integer,
                 defaultValue=100,
                 minValue=10,
                 maxValue=1000
@@ -120,7 +120,7 @@ class RVTSim(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="SHADOW_AZIMUTH",
                 description="Shadow azimuth",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=315,
                 minValue=0,
                 maxValue=360
@@ -130,7 +130,7 @@ class RVTSim(QgsProcessingAlgorithm):
             QgsProcessingParameterNumber(
                 name="SHADOW_ELEVATION",
                 description="Shadow elevation",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=35,
                 minValue=0,
                 maxValue=90

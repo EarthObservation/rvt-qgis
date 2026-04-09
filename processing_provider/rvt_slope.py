@@ -71,14 +71,14 @@ class RVTSlope(QgsProcessingAlgorithm):
             QgsProcessingParameterRasterLayer(
                 self.INPUT,
                 self.tr('Input DEM raster layer'),
-                [QgsProcessing.TypeRaster]
+                [QgsProcessing.SourceType.TypeRaster]
             )
         )
         self.addParameter(
             QgsProcessingParameterNumber(
                 name="VE_FACTOR",
                 description="Vertical exaggeration factor",
-                type=QgsProcessingParameterNumber.Double,
+                type=QgsProcessingParameterNumber.Type.Double,
                 defaultValue=1,
                 minValue=-1000,
                 maxValue=1000
