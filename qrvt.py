@@ -32,7 +32,7 @@ import webbrowser
 
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QLabel, QDialog
+from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QDialog
 from qgis.PyQt import uic
 
 from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis
@@ -67,35 +67,31 @@ from .processing_provider.provider import Provider
 
 
 class LoadingScreenDlg:
-    """Loading screen animation."""
+    """Native QGIS message-bar busy indicator."""
 
-    def __init__(self, gif_path):
-        self.dlg = QDialog()
-        self.dlg.setWindowTitle("Loading")
-        self.dlg.setWindowModality(Qt.WindowModality.NonModal)
-        self.dlg.setFixedSize(200, 200)
-        self.dlg.setWindowFlags(
-            Qt.WindowType.X11BypassWindowManagerHint |
-            Qt.WindowType.CustomizeWindowHint
-        )
-
-        palette = self.dlg.palette()
-        role = QPalette.ColorRole.Window
-        palette.setColor(role, QColor(255, 255, 255))
-        self.dlg.setAutoFillBackground(True)
-        self.dlg.setPalette(palette)
-
-        self.label_animation = QLabel(self.dlg)
-        self.movie = QMovie(gif_path)
-        self.label_animation.setMovie(self.movie)
+    def __init__(self, iface, text):
+        self.iface = iface
+        self.text = text
+        self.message = None
+        self.widget = None
 
     def start_animation(self):
-        self.movie.start()
-        self.dlg.show()
+        self.message = self.iface.messageBar().createMessage("RVT", self.text)
+        self.widget = QProgressBar()
+        self.widget.setRange(0, 0)
+        self.widget.setTextVisible(False)
+        self.widget.setMaximumWidth(180)
+        self.message.layout().addWidget(self.widget)
+        self.iface.messageBar().pushWidget(self.message, Qgis.Info)
 
     def stop_animation(self):
-        self.movie.stop()
-        self.dlg.done(0)
+        if self.message is not None:
+            try:
+                self.iface.messageBar().popWidget(self.message)
+            except RuntimeError:
+                pass
+            self.message = None
+            self.widget = None
 
 
 class AboutDlg:
@@ -105,7 +101,11 @@ class AboutDlg:
         self.dlg = QDialog()
         uic.loadUi(os.path.join(os.path.dirname(__file__), 'qrvt_dialog_about.ui'), self.dlg)
         self.dlg.setWindowTitle("About")
-        self.dlg.setWindowFlags(Qt.WindowType.X11BypassWindowManagerHint | Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.CustomizeWindowHint)
+        self.dlg.setWindowFlags(
+            Qt.WindowType.X11BypassWindowManagerHint
+            | Qt.WindowType.WindowStaysOnTopHint
+            | Qt.WindowType.CustomizeWindowHint
+        )
         self.dlg.setWindowModality(Qt.WindowModality.NonModal)
 
         # if close button clicked
@@ -179,8 +179,8 @@ class QRVT:
         self.default_settings_path = os.path.abspath(os.path.join(self.plugin_dir, "settings", "default_settings.json"))
         if os.path.isfile(self.default_settings_path):  # if default_settings.json exists
             self.default.read_default_from_file(self.default_settings_path)  # load values in dialog
-        else:  # if doesn't exist
-            if not os.path.exists(os.path.dirname(self.default_settings_path)):  # if dir settings doesn't exists
+        else:
+            if not os.path.exists(os.path.dirname(self.default_settings_path)):  # if dir settings doesn't exist
                 os.makedirs(os.path.dirname(self.default_settings_path))  # create settings dir
             self.default.save_default_to_file(self.default_settings_path)  # create default_settings.json
 
@@ -445,7 +445,7 @@ class QRVT:
         self.dlg.select_input_files.clear()
 
         for layer in QgsProject.instance().mapLayers().values():
-            # If layer is a raster and it is not a multiband type
+            # If layer is a raster, and it is not a multiband type
             if layer.type() == 1 and layer.bandCount() == 1:
                 layer_name = layer.name()
                 layer_path = layer.dataProvider().dataSourceUri()
@@ -460,7 +460,7 @@ class QRVT:
         self.dlg.select_input_files.deselectAllOptions()
 
     def checkbox_save_to_rast_loc(self):
-        """"Check box save to raster location state changed."""
+        """Check box save to raster location state changed."""
         if self.dlg.check_sav_rast_loc.isChecked():
             self.dlg.line_save_loc.setEnabled(False)
             self.dlg.button_save_to.setEnabled(False)
@@ -571,7 +571,7 @@ class QRVT:
         self.combination = combination
 
     def check_dlg_comb_default_combs(self):
-        """Checks if dlg blender combination values are same as any default combination or they
+        """Checks if dlg blender combination values are same as any default combination or if they
          are Custom combination."""
         self.load_dlg2combination()
         if self.dlg.combo_combinations.currentText() in [
@@ -913,7 +913,7 @@ class QRVT:
             return "nearest_neighbour"
 
     def load_default2dlg(self):
-        """Reads default (rvt.defaul.DeafultValues()) from default_path and fill visualization dlg."""
+        """Reads default (rvt.default.DefaultValues()) from default_path and fill visualization dlg."""
         self.dlg.check_overwrite.setChecked(bool(self.default.overwrite))
         self.dlg.line_ve_factor.setText(str(self.default.ve_factor))
         self.dlg.group_hillshade.setChecked(bool(self.default.hs_compute))
@@ -1002,7 +1002,7 @@ class QRVT:
         self.dlg.check_mstp_8bit.setChecked(bool(self.default.mstp_save_8bit))
 
     def load_dlg2default(self):
-        """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.defaul.DeafultValues() ."""
+        """Read Qgis plugin dialog visualization functions parameters and fill them to rvt.default.DefaultValues() ."""
         self.default.overwrite = int(self.dlg.check_overwrite.isChecked())
         self.default.ve_factor = float(self.dlg.line_ve_factor.text())
         self.default.hs_compute = int(self.dlg.group_hillshade.isChecked())
@@ -1084,7 +1084,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Computing visualizations...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1114,7 +1114,7 @@ class QRVT:
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1328,6 +1328,7 @@ class QRVT:
 
     def compute_visualizations_clicked(self):
         """Start button clicked (Compute visualization button)."""
+        self.iface.messageBar().pushMessage("RVT", "Starting visualizations...", level=Qgis.Info, duration=3)
         task = self.ComputeVisualizationsTask(description="Compute visualizations", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1342,7 +1343,7 @@ class QRVT:
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
 
-        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+        for raster_name in selected_input_rasters:  # loop through all selected rasters
             raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1360,7 +1361,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Computing blended image...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1391,11 +1392,13 @@ class QRVT:
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (blended images) into Qgis
+            self.parent.dlg.button_blend.setEnabled(True)
+
             if result:  # if self.run returns True
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1433,7 +1436,11 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Blended image calculated!",
+                    level=Qgis.MessageLevel.Success
+                )
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
@@ -1449,6 +1456,12 @@ class QRVT:
 
     def compute_blended_image_clicked(self):
         """Start button clicked ("Blend images" button)."""
+        self.iface.messageBar().pushMessage(
+            "RVT",
+            "Starting blended image computation...",
+            level=Qgis.Info,
+            duration=3
+        )
         task = self.ComputeBlenderTask(description="Compute blended image", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1555,7 +1568,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Applying cut-off...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1590,7 +1603,7 @@ class QRVT:
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1653,6 +1666,7 @@ class QRVT:
 
     def compute_cut_off_norm_8bit_clicked(self):
         """Start button clicked (cut_off_norm_8bit start button)."""
+        self.iface.messageBar().pushMessage("RVT", "Starting cut-off computation...", level=Qgis.Info, duration=3)
         task = self.ComputeCutoff(description="Compute Cut-off", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1663,7 +1677,7 @@ class QRVT:
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
 
-        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+        for raster_name in selected_input_rasters:  # loop through all selected rasters
             raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1715,16 +1729,31 @@ class QRVT:
 
             if cut_off_8bit:
                 cut_off_norm = True
-            cut_off_arr = rvt.blend_func.cut_off_normalize(image=raster_arr, mode=cut_off_mode, min=cut_off_min,
-                                                           max=cut_off_max, bool_norm=cut_off_norm)
+            cut_off_arr = rvt.blend_func.cut_off_normalize(
+                image=raster_arr,
+                mode=cut_off_mode,
+                cutoff_min=cut_off_min,
+                cutoff_max=cut_off_max,
+                bool_norm=cut_off_norm
+            )
 
             if cut_off_8bit:
                 cut_off_arr = rvt.vis.byte_scale(cut_off_arr)
-                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
-                                        out_raster_arr=cut_off_arr, no_data=np.nan, e_type=1)
+                rvt.default.save_raster(
+                    src_raster_path=raster_path,
+                    out_raster_path=str(out_raster_path),
+                    out_raster_arr=cut_off_arr,
+                    no_data=np.nan,
+                    e_type=1
+                )
             else:
-                rvt.default.save_raster(src_raster_path=raster_path, out_raster_path=out_raster_path,
-                                        out_raster_arr=cut_off_arr, no_data=np.nan, e_type=6)
+                rvt.default.save_raster(
+                    src_raster_path=raster_path,
+                    out_raster_path=str(out_raster_path),
+                    out_raster_arr=cut_off_arr,
+                    no_data=np.nan,
+                    e_type=6
+                )
         return True
 
     class ComputeFillNoData(QgsTask):
@@ -1733,7 +1762,7 @@ class QRVT:
         def __init__(self, description, parent):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(gif_path=parent.gif_path)  # init loading dlg
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Filling no-data...")  # init loading dlg
             self.loading_screen.start_animation()  # start loading dlg
             self.exception = None
             self.no_raster = False
@@ -1768,7 +1797,7 @@ class QRVT:
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
                 selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
                 # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop trough all selected rasters
+                for raster_name in selected_input_rasters:  # loop through all selected rasters
                     raster_path = self.parent.rvt_select_input[raster_name]
                     # get directory to save in
                     if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
@@ -1803,6 +1832,7 @@ class QRVT:
 
     def compute_fill_no_data_clicked(self):
         """Start button clicked (compute_fill_no_data start button)."""
+        self.iface.messageBar().pushMessage("RVT", "Starting fill no-data computation...", level=Qgis.Info, duration=3)
         task = self.ComputeFillNoData(description="Compute fill no data", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1813,7 +1843,7 @@ class QRVT:
         if len(selected_input_rasters) == 0:  # no raster selected
             return "no raster selected"
 
-        for raster_name in selected_input_rasters:  # loop trough all selected rasters
+        for raster_name in selected_input_rasters:  # loop through all selected rasters
             raster_path = self.rvt_select_input[raster_name]
             # get directory to save in
             if self.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
