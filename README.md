@@ -16,7 +16,7 @@ To install plugin open QGIS and go to:
 Plugins > Manage and install plugins... > Search Relief Visualization Toolbox > Install
 ```
 
-The plugin has been tested under QGIS 3.12 and later.
+QGIS 3.0 or higher (tested up to QGIS 4.x)
 
 ## Documentation
 
@@ -24,7 +24,7 @@ Documentation of the package and its usage is available at [Relief Visualization
 
 ## References
 
-When using the tools, please cite:
+You are encouraged to cite:
 
 *   Kokalj, Ž. 2025. Standardizing visualization in ancient Maya lidar research: Techniques, challenges and recommendations. Archaeological Prospection, 32 (4), 967–988. DOI: [10.1002/arp.70002](https://doi.org/10.1002/arp.70002)
 *   Zakšek, K., Oštir, K., Kokalj, Ž. 2011. Sky-view factor as a relief visualization technique. Remote Sensing 3, 398–415. DOI: [10.3390/rs3020398](https://doi.org/10.3390/rs3020398)
