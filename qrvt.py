@@ -184,7 +184,8 @@ class QRVT:
                 os.makedirs(os.path.dirname(self.default_settings_path))  # create settings dir
             self.default.save_default_to_file(self.default_settings_path)  # create default_settings.json
 
-        # blender
+        # Intitalise BLENDER dialog
+        # =========================
         # read combinations
         self.default_blender_combinations_path = os.path.abspath(os.path.join(self.plugin_dir, "settings",
                                                                               "default_blender_combinations.json"))
@@ -192,6 +193,10 @@ class QRVT:
         self.default_blender_combinations.read_from_file(self.default_blender_combinations_path)
         self.load_combinations2cb()  # loads combinations to combo box
         self.combination = rvt.blend.BlenderCombination()  # current combination
+        
+        # Initialize Blender checkboxes: only 8bit checked by default
+        self.dlg.check_blender_save_8bit.setChecked(True)
+        self.dlg.check_blender_save_float.setChecked(False)
 
         # dlg layers
         self.dlg_combo_vis_list = [self.dlg.combo1_vis, self.dlg.combo2_vis, self.dlg.combo3_vis,
@@ -386,12 +391,8 @@ class QRVT:
         # VISUALIZATIONS
         # start button pressed
         self.dlg.button_start.clicked.connect(lambda: self.compute_visualizations_clicked())
-        
-        # save plugin size
         self.dlg.button_start.clicked.connect(
-            lambda: self.save_plugin_size(self.plugin_size_json_path)
-        )
-        
+            lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
         # check float 8bit checkbox changes
         self.check_checkbox_float_8bit_change()
         # check svf noise rem
@@ -427,12 +428,9 @@ class QRVT:
 
         # blend images button clicked
         self.dlg.button_blend.clicked.connect(lambda: self.compute_blended_image_clicked())
-        
-        # save plugin size
         self.dlg.button_blend.clicked.connect(
-            lambda: self.save_plugin_size(self.plugin_size_json_path)
-        )  
-        
+            lambda: self.save_plugin_size(self.plugin_size_json_path))  # save plugin size
+
         # OTHER
         # Cut-off button clicked
         self.dlg.button_cutoff.clicked.connect(lambda: self.compute_cut_off_norm_8bit_clicked())
@@ -574,9 +572,10 @@ class QRVT:
         """Checks if dlg blender combination values are same as any default combination or if they
          are Custom combination."""
         self.load_dlg2combination()
+        # TODO: Check if naming here is correct!
         if self.dlg.combo_combinations.currentText() in [
-            "enhanced Multi-Scale Topographic Position version 3",
-            "Archaeological combined (VAT combined)",
+            "e3MSTP - enhanced Multi-Scale Topographic Position v3",
+            "Combined Visualization for Archaeological Topography (CVAT)",
             "e4MSTP"
         ]:
             pass
@@ -1467,7 +1466,7 @@ class QRVT:
 
     def compute_blended_image(self):
         """Compute Blended image from set parameters (in blender dlg). (blend images button clicked)"""
-        
+
         # Get selected rasters
         selected_input_rasters = self.dlg.select_input_files.checkedItems()
 
@@ -1477,7 +1476,7 @@ class QRVT:
         # Cancel if no raster selected
         if len(selected_input_rasters) == 0:
             return "no raster selected"
-        
+
         # Run for all selected rasters (loop sequentially)
         for raster_name in selected_input_rasters:
             start_time = time.time()
@@ -1496,23 +1495,20 @@ class QRVT:
             combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
             blend_img_name = "{}_{}".format(raster_name, combination_name_u)
 
-            # Different processing for "advanced" and "normal" combinations
+            # custom advanced (hard coded) blender combinations (can't be selected in dialog)
+            # TODO: Check names of these blends!
             if combination_name in (
-                "Archaeological combined (VAT combined)",
-                "enhanced Multi-Scale Topographic Position version 3",
+                "Combined Visualization for Archaeological Topography (CVAT)",
+                "e3MSTP - enhanced Multi-Scale Topographic Position v3",
                 "e4MSTP"
             ):
-                # Custom advanced (HARD CODED) blender combinations (can't be selected in dialog)
-                # Advanced custom blender combinations (hard-coded, not selectable in dialog)
                 self.blend_advanced_custom_combination(
                     combination_name=combination_name,
                     raster_name=raster_name,
                     save_dir=save_dir
                 )
+            # normal dialog blender combination
             else:
-                # Normal blender combination
-
-                # Terrain preset name if checked
                 terrain_sett_name = None
                 if self.dlg.chech_terrain_preset.checkState():
                     terrain_sett_name = str(self.dlg.combo_terrains.currentText())
@@ -1909,24 +1905,24 @@ class QRVT:
         save_float = self.dlg.check_blender_save_float.isChecked()
         save_8bit = self.dlg.check_blender_save_8bit.isChecked()
 
-        if combination_name == "Archaeological combined (VAT combined)":
+        if combination_name == "Combined Visualization for Archaeological Topography (CVAT)":
             start_time = time.time()
-            
+
             # Disable terrain settings
             self.dlg.chech_terrain_preset.setChecked(False)
-            
+
             # Replace spaces with underscores for filename, used for saving
-            combination_name_u = combination_name.strip().replace(" ", "_") 
+            combination_name_u = combination_name.strip().replace(" ", "_")
             blend_img_path = os.path.abspath(
                 os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u))
             )
-            
+
             # Path to Combined VAT combination settings JSON
             vat_combination_json_path = os.path.abspath(
                 os.path.join(self.plugin_dir, "settings", "blender_VAT.json")
             )
 
-            # Initialize default values 
+            # Initialize default values
             default_general = rvt.default.DefaultValues()
             default_flat = rvt.default.DefaultValues()
             vat_comb_general = rvt.blend.BlenderCombination()
@@ -1934,7 +1930,7 @@ class QRVT:
             # Set values from VAT combination JSON
             vat_comb_general.read_from_file(vat_combination_json_path)
             vat_comb_flat.read_from_file(vat_combination_json_path)
-            
+
             # Initialize and read terrain presets
             terrains_settings = rvt.blend.TerrainsSettings()
             terrains_settings.read_from_file(self.terrains_settings_path)
@@ -1957,7 +1953,7 @@ class QRVT:
                 default=default_general,
                 no_data=dict_arr_res_nd["no_data"]
             )
-            
+
             # Render VAT flat
             vat_comb_flat.add_dem_arr(
                 dem_arr=dict_arr_res_nd["array"],
@@ -1968,7 +1964,7 @@ class QRVT:
                 no_data=dict_arr_res_nd["no_data"]
             )
 
-            # Blend VAT general and VAT flat together: 
+            # Blend VAT general and VAT flat together:
             combination = rvt.blend.BlenderCombination()
             # 1st layer: VAT general 50% transparency
             combination.create_layer(
@@ -2005,13 +2001,13 @@ class QRVT:
             )
 
             return True
-        
-        elif combination_name == "enhanced Multi-Scale Topographic Position version 3":
+
+        elif combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
             start_time = time.time()
 
             # Disable terrain settings
             self.dlg.chech_terrain_preset.setChecked(False)
-            
+
             # Create paths for saving
             combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
             blend_img_path = os.path.abspath(
@@ -2032,7 +2028,7 @@ class QRVT:
                 no_data=dict_arr_res_nd["no_data"],
                 default=self.default
             )
-            
+
             if save_float:
                 rvt.default.save_raster(
                     src_raster_path=raster_path,
@@ -2060,15 +2056,15 @@ class QRVT:
                 custom_dir=save_dir,
                 computation_time=compute_time
             )
-            
+
             return True
-        
+
         elif combination_name == "e4MSTP":
             start_time = time.time()
 
             # Disable terrain settings
             self.dlg.chech_terrain_preset.setChecked(False)
-            
+
             # Create paths for saving
             combination_name_u = combination_name.strip().replace(" ", "_")
             blend_img_path = os.path.abspath(
@@ -2078,7 +2074,7 @@ class QRVT:
             blend_img_8bit_path = os.path.abspath(
                 os.path.join(save_dir, "{}_{}_8bit.tif".format(raster_name, combination_name_u))
             )
-            
+
             # Read raster array, resolution, and no-data value
             raster_path = self.rvt_select_input[raster_name]
             dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=raster_path)
@@ -2089,7 +2085,7 @@ class QRVT:
                 resolution=dict_arr_res_nd["resolution"][0],
                 no_data=dict_arr_res_nd["no_data"]
             )
-            
+
             if save_float:
                 rvt.default.save_raster(
                     src_raster_path=raster_path,
@@ -2106,7 +2102,7 @@ class QRVT:
                     no_data=np.nan,
                     e_type=1
                 )
-            
+
             # Log
             compute_time = time.time() - start_time
             self.combination.create_log_file(
@@ -2119,7 +2115,7 @@ class QRVT:
             )
 
             return True
-        
+
         else:
             return False
 

@@ -162,7 +162,7 @@ class RVTBlender(QgsProcessingAlgorithm):
             save_float = False
 
         # advanced custom combinations (hard coded) blending (which can't be created in dialog)
-        if combination_name == "Archaeological combined (VAT combined)":
+        if combination_name == "Combined Visualization for Archaeological Topography (CVAT)":
             vat_combination_json_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)),
                                                                      "settings", "blender_VAT.json"))
             default_1 = rvt.default.DefaultValues()  # VAT general
@@ -195,7 +195,7 @@ class RVTBlender(QgsProcessingAlgorithm):
             combination.render_all_images(save_render_path=visualization_path, save_visualizations=False,
                                           save_float=save_float, save_8bit=save_8bit,
                                           no_data=no_data)
-        elif combination_name == "enhanced Multi-Scale Topographic Position version 3":
+        elif combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
             dict_arr_res_nd = rvt.default.get_raster_arr(raster_path=dem_path)
             e3mstp_arr = rvt.blend.e3mstp(dem=dict_arr_res_nd["array"], resolution=dict_arr_res_nd["resolution"][0],
                                           no_data=dict_arr_res_nd["no_data"])
