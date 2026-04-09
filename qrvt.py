@@ -184,7 +184,8 @@ class QRVT:
                 os.makedirs(os.path.dirname(self.default_settings_path))  # create settings dir
             self.default.save_default_to_file(self.default_settings_path)  # create default_settings.json
 
-        # blender
+        # Intitalise BLENDER dialog
+        # =========================
         # read combinations
         self.default_blender_combinations_path = os.path.abspath(os.path.join(self.plugin_dir, "settings",
                                                                               "default_blender_combinations.json"))
@@ -192,6 +193,10 @@ class QRVT:
         self.default_blender_combinations.read_from_file(self.default_blender_combinations_path)
         self.load_combinations2cb()  # loads combinations to combo box
         self.combination = rvt.blend.BlenderCombination()  # current combination
+        
+        # Initialize Blender checkboxes: only 8bit checked by default
+        self.dlg.check_blender_save_8bit.setChecked(True)
+        self.dlg.check_blender_save_float.setChecked(False)
 
         # dlg layers
         self.dlg_combo_vis_list = [self.dlg.combo1_vis, self.dlg.combo2_vis, self.dlg.combo3_vis,
