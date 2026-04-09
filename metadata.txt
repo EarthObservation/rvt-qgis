@@ -13,6 +13,10 @@ about=The Relief Visualization Toolbox was developed to help scientists visualis
 
     The methods currently implemented are: hillshading, hillshading from multiple directions, slope, simple local relief model (topographic position index), sky-view factor (as developed by our team), anisotropic sky-view factor, positive and negative openness, local dominance, multiscale topographic position, visualisation for archaeological topography (VAT), enhanced prismatic openness, enhanced multiscale topographic position (e4MSTP).
 
+    You are encouraged to cite these papers:
+    - Kokalj, Ž. 2025. Standardizing visualization in ancient Maya lidar research: Techniques, challenges and recommendations. Archaeological Prospection, 32 (4), 967–988. DOI: 10.1002/arp.70002
+    - Zakšek, K., Oštir, K., Kokalj, Ž. 2011. Sky-View Factor as a Relief Visualization Technique. Remote Sensing 3: 398-415.
+
     © Copyright 2026 ZRC SAZU and University of Ljubljana
 
 tracker=https://github.com/EarthObservation/rvt-qgis/issues
@@ -24,6 +28,8 @@ repository=https://github.com/EarthObservation/rvt-qgis
 changelog=[1.0.0] - 2026.04.08:
     - Migration to QGIS4 and Qt6
     - New reference for citing (Kokalj et al., 2025)
+    - Updated metadata and "About" dialog window
+    - Fixed "Cut-off" function
 
     [0.10.0] - 2025.09.19:
     - Updated to RVT version 2.2.3
