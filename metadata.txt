@@ -5,7 +5,7 @@ name=Relief Visualization Toolbox
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Relief visualization toolbox (RVT) plugin helps scientists visualise digital elevation model datasets.
-version=0.10.0
+version=1.0.0
 author=ZRC SAZU and University of Ljubljana (UL FGG)
 email=zkokalj@zrc-sazu.si
 
@@ -15,7 +15,7 @@ about=The Relief Visualization Toolbox was developed to help scientists visualis
 
     You are encouraged to cite these papers:
     - Kokalj, Ž. 2025. Standardizing visualization in ancient Maya lidar research: Techniques, challenges and recommendations. Archaeological Prospection, 32 (4), 967–988. DOI: 10.1002/arp.70002
-    - Zakšek, K., Oštir, K., Kokalj, Ž. 2011. Sky-View Factor as a Relief Visualization Technique. Remote Sensing 3: 398-415.
+    - Zakšek, K., Oštir, K., Kokalj, Ž. 2011. Sky-View factor as a relief visualization technique. Remote Sensing 3: 398-415. DOI: 10.3390/rs3020398
 
     © Copyright 2026 ZRC SAZU and University of Ljubljana
 
