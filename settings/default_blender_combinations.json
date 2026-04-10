@@ -2,13 +2,7 @@
     "combinations": [
         {
             "combination": {
-                "name": "Combined Visualization for Archaeological Topography (CVAT)",
-                "layers": []
-            }
-        },
-        {
-            "combination": {
-                "name": "Visualization for Archaeological Topography (VAT)",
+                "name": "VAT",
                 "layers": [
                     {
                         "layer": "1",
@@ -47,18 +41,6 @@
                         "opacity": 100
                     }
                 ]
-            }
-        },
-		{
-            "combination": {
-                "name": "e3MSTP - enhanced Multi-Scale Topographic Position v3",
-                "layers": []
-            }
-        },
-        {
-            "combination": {
-                "name": "e4MSTP",
-                "layers": []
             }
         },
         {

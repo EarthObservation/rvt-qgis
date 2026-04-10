@@ -35,7 +35,8 @@ from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QDialog
 from qgis.PyQt import uic
 
-from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis
+import traceback
+from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis, QgsMessageLog
 
 try:
     import scipy
@@ -123,6 +124,23 @@ class AboutDlg:
 class QRVT:
     """QGIS Plugin Implementation."""
 
+    # Advanced combinations are defined directly in code. Their short handles
+    # are used internally for selection logic, output naming, and logging.
+    ADVANCED_HANDLES = ("CVAT", "e3MSTP", "e4MSTP")
+
+    # Text shown in the combo box for advanced combinations.
+    ADVANCED_LABELS = {
+        "CVAT": "CVAT - combined visualization for archaeological topography",
+        "e3MSTP": "e3MSTP - enhanced multi-scale topographic position v3",
+        "e4MSTP": "e4MSTP - enhanced multi-scale topographic position v4",
+    }
+
+    # Internal handle used for the always-present "Custom" combo-box entry.
+    CUSTOM_COMBINATION_HANDLE = "__custom__"
+
+    # Combination selected by default when the dialog is initialized.
+    DEFAULT_COMBINATION_HANDLE = "CVAT"
+
     def __init__(self, iface):
         """Constructor.
 
@@ -185,15 +203,22 @@ class QRVT:
                 os.makedirs(os.path.dirname(self.default_settings_path))  # create settings dir
             self.default.save_default_to_file(self.default_settings_path)  # create default_settings.json
 
-        # Intitalise BLENDER dialog
+        # Initialise BLENDER dialog
         # =========================
         # read combinations
         self.default_blender_combinations_path = os.path.abspath(os.path.join(self.plugin_dir, "settings",
                                                                               "default_blender_combinations.json"))
+        # JSON-backed loading of combinations happens here
         self.default_blender_combinations = rvt.blend.BlenderCombinations()
         self.default_blender_combinations.read_from_file(self.default_blender_combinations_path)
-        self.load_combinations2cb()  # loads combinations to combo box
-        self.combination = rvt.blend.BlenderCombination()  # current combination
+        # Populate the combo box with advanced entries first and JSON-backed normal combinations after that.
+        self.load_combinations2cb()
+
+        # Current blender combination object.
+        self.combination = rvt.blend.BlenderCombination()
+
+        # Select CVAT by default when the UI starts.
+        self.set_combination_by_handle(self.DEFAULT_COMBINATION_HANDLE)
         
         # Initialize Blender checkboxes: only 8bit checked by default
         self.dlg.check_blender_save_8bit.setChecked(True)
@@ -570,23 +595,27 @@ class QRVT:
         self.combination = combination
 
     def check_dlg_comb_default_combs(self):
-        """Checks if dlg blender combination values are same as any default combination or if they
-         are Custom combination."""
+        """Update combo-box selection based on current blender layer settings.
+
+        If the current dialog state matches one of the normal JSON-backed
+        combinations, that combination is selected in the combo box. If the
+        current selection is one of the advanced hard-coded combinations, the
+        method does nothing because those combinations are not represented by
+        editable layer definitions in the dialog.
+        """
         self.load_dlg2combination()
-        # TODO: Check if naming here is correct!
-        if self.dlg.combo_combinations.currentText() in [
-            "e3MSTP - enhanced Multi-Scale Topographic Position v3",
-            "Combined Visualization for Archaeological Topography (CVAT)",
-            "e4MSTP"
-        ]:
-            pass
+        selected_handle = self.get_selected_combination_handle()
+
+        # Advanced combinations are handled separately and should keep their
+        # current selection even though their layer editor state is empty.
+        if selected_handle in self.ADVANCED_HANDLES:
+            return
+
+        dlg_combination_name = self.default_blender_combinations.combination_in_combinations(self.combination)
+        if dlg_combination_name is not None:
+            self.set_combination_by_handle(dlg_combination_name)
         else:
-            # find if dlg_combination has same attributes as one of the combinations
-            dlg_combination_name = self.default_blender_combinations.combination_in_combinations(self.combination)
-            if dlg_combination_name is not None:
-                self.dlg.combo_combinations.setCurrentText(dlg_combination_name)
-            else:
-                self.dlg.combo_combinations.setCurrentText("Custom")
+            self.set_combination_by_handle(self.CUSTOM_COMBINATION_HANDLE)
 
     def load_dlg2terrain(self):
         self.load_dlg2default()
@@ -777,18 +806,34 @@ class QRVT:
             self.combination.name = new_combination_name  # apply new combination name
             self.default_blender_combinations.add_combination(combination=self.combination)  # add to combinations
             self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)  # save
-            self.load_combinations2cb()  # load new combinations to combobox
-            self.load_combination2dlg(combination=self.combination)  # loads new combination
+
+            # Load ne combination to Combobox
+            self.load_combinations2cb()
+            # Make sure combo box always stays in sync with the stored handle logic
+            self.set_combination_by_handle(new_combination_name)
+            self.load_combination2dlg(combination=self.combination)
+
             self.dlg.line_combination_name.setText("")
         if new_combination_name == "":
             self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.MessageLevel.Warning)
 
     def remove_combination_clicked(self):
-        selected_combination_name = str(self.dlg.combo_combinations.currentText())
-        if selected_combination_name != "Custom":
-            self.default_blender_combinations.remove_combination_by_name(name=selected_combination_name)
-            self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)
-            self.load_combinations2cb()
+        """Remove the selected normal combination from the JSON-backed list.
+
+        Advanced combinations and the GUI-only "Custom" entry cannot be removed
+        because they are not stored in ``default_blender_combinations.json``.
+        """
+        selected_handle = self.get_selected_combination_handle()
+
+        if selected_handle in self.ADVANCED_HANDLES:
+            return
+        if selected_handle == self.CUSTOM_COMBINATION_HANDLE:
+            return
+
+        self.default_blender_combinations.remove_combination_by_name(name=selected_handle)
+        self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)
+        self.load_combinations2cb()
+        self.set_combination_by_handle(self.DEFAULT_COMBINATION_HANDLE)
 
     def save_combination_to_clicked(self):
         new_combination_name = str(self.dlg.line_combination_name.text()).strip()
@@ -817,7 +862,10 @@ class QRVT:
                 if combination.name not in existing_combinations and combination.name != "":
                     self.default_blender_combinations.add_combination(combination)
                     self.default_blender_combinations.save_to_file(self.default_blender_combinations_path)
+
                     self.load_combinations2cb()
+                    # Make sure combo box always stays in sync with the stored handle logic
+                    self.set_combination_by_handle(combination.name)
                     self.load_combination2dlg(combination=combination)
                     self.combination = combination
             except:
@@ -827,24 +875,88 @@ class QRVT:
         """If blender combination combo box changes method triggers other methods."""
         self.dlg.combo_combinations.currentTextChanged.connect(lambda: self.load_blender_combination())
 
+    @classmethod
+    def combination_label_from_handle(cls, handle):
+        """Return the user-visible label for a combination handle.
+
+        Advanced combinations use short internal handles such as ``CVAT`` and
+        display a longer descriptive label in the combo box. Normal combinations
+        are loaded from JSON and use their JSON name both as label and as handle.
+        """
+        return cls.ADVANCED_LABELS.get(handle, handle)
+
+    def get_selected_combination_handle(self):
+        """Return the internal handle of the selected combo-box item.
+
+        The blender combination combo box stores the visible text in the item
+        label and the internal identifier in the item data. For advanced
+        combinations this returns a short handle such as ``CVAT``. For normal
+        combinations it returns the JSON combination name.
+        """
+        handle = self.dlg.combo_combinations.currentData()
+        if handle is None:
+            return str(self.dlg.combo_combinations.currentText())
+        return str(handle)
+
+    def set_combination_by_handle(self, handle):
+        """Select a combo-box entry by its internal handle."""
+        index = self.dlg.combo_combinations.findData(handle)
+        if index >= 0:
+            self.dlg.combo_combinations.setCurrentIndex(index)
+
     def load_blender_combination(self):
-        """Check which blender combination is selected, get that combination and fill blender dlg with
-         its values."""
-        selected_combination = str(self.dlg.combo_combinations.currentText())
-        combination = self.default_blender_combinations.select_combination_by_name(selected_combination)
+        """Load the currently selected combination into the blender dialog.
+
+        Advanced combinations are not loaded from JSON. They are represented by
+        an empty ``BlenderCombination`` in the layer editor because their actual
+        computation is hard-coded elsewhere. Normal combinations are loaded from
+        ``self.default_blender_combinations``.
+        """
+        selected_handle = self.get_selected_combination_handle()
+
+        if selected_handle in self.ADVANCED_HANDLES:
+            combination = rvt.blend.BlenderCombination()
+            combination.name = selected_handle
+            self.combination = combination
+            self.load_combination2dlg(combination)
+            return
+
+        if selected_handle == self.CUSTOM_COMBINATION_HANDLE:
+            return
+
+        combination = self.default_blender_combinations.select_combination_by_name(selected_handle)
         if combination is not None:
             self.combination = combination
             self.load_combination2dlg(combination)
 
     def load_combinations2cb(self, combinations=None):
-        """Load combinations from self.default_blender_combinations to dlg.combo_combinations combobox."""
-        if combinations is None:  # if combinations None it takes self.default_blender_combinations
+        """Populate the blender combination combo box.
+
+        Advanced combinations are inserted directly in code and use short
+        internal handles stored in the combo-box item data. Normal combinations
+        are loaded from ``self.default_blender_combinations`` and use their JSON
+        name both as visible text and as handle.
+        """
+        if combinations is None:
             combinations = self.default_blender_combinations
+
         self.dlg.combo_combinations.clear()
-        comb_names = combinations.combinations_names()
-        for combination_name in comb_names:
-            self.dlg.combo_combinations.addItem(combination_name)
-        self.dlg.combo_combinations.addItem("Custom")
+
+        # Add advanced, hard-coded combinations first.
+        for handle in self.ADVANCED_HANDLES:
+            self.dlg.combo_combinations.addItem(
+                self.combination_label_from_handle(handle),
+                handle
+            )
+
+        # Add normal combinations from JSON. For these, the JSON name is also
+        # the internal handle so users can freely add or remove combinations.
+        for combination_name in combinations.combinations_names():
+            self.dlg.combo_combinations.addItem(combination_name, combination_name)
+
+        # "Custom" is a GUI-only entry used when current layer settings do not
+        # match any saved combination.
+        self.dlg.combo_combinations.addItem("Custom", self.CUSTOM_COMBINATION_HANDLE)
 
     def load_combination2dlg(self, combination, terrain_bool=False):
         """Fill blender dlg parameters (combo boxes, line edits, scroll sliders) with values from combination."""
@@ -1518,23 +1630,19 @@ class QRVT:
                 # Save to specified location
                 save_dir = self.dlg.line_save_loc.text()
 
-            # Get combination name from ComboBox (blender dropdown list)
-            # TODO: From ComboBox only get handles not the whole name!
-            combination_name = str(self.dlg.combo_combinations.currentText())  # get combination name from combo
+            # Read the internal handle from combo-box item data. The visible label may be longer, but all processing
+            # logic should use handles.
+            combination_handle = self.get_selected_combination_handle()
 
-            # Modify name for output
-            combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
-            blend_img_name = "{}_{}".format(raster_name, combination_name_u)
+            # Use the handle for output naming. Normal combinations use their JSON name as handle, while advanced
+            # combinations use short handles such as CVAT, e3MSTP, and e4MSTP.
+            combination_handle_u = combination_handle.strip().replace(" ", "_")
+            blend_img_name = "{}_{}".format(raster_name, combination_handle_u)
 
-            # If one of the advanced (hard-coded) blends are called, run special process:
-            # TODO: change these strings to handles
-            if combination_name in (
-                "Combined Visualization for Archaeological Topography (CVAT)",
-                "e3MSTP - enhanced Multi-Scale Topographic Position v3",
-                "e4MSTP"
-            ):
+            # Advanced combinations are computed by dedicated hard-coded logic.
+            if combination_handle in self.ADVANCED_HANDLES:
                 outputs = self.blend_advanced_custom_combination(
-                    combination_name=combination_name,
+                    combination_handle=combination_handle,
                     raster_name=raster_name,
                     save_dir=save_dir
                 )
@@ -1594,7 +1702,7 @@ class QRVT:
                 compute_time = time.time() - start_time
                 self.combination.create_log_file(
                     dem_path=raster_path,
-                    combination_name=combination_name,
+                    combination_name=combination_handle,
                     render_path=blend_img_path,
                     terrain_sett_name=terrain_sett_name,
                     default=self.default,
@@ -1919,8 +2027,8 @@ class QRVT:
         for terrain_settings in self.terrains_settings.terrains_settings:
             self.dlg.combo_terrains.addItem(terrain_settings.name)
 
-    def blend_advanced_custom_combination(self, combination_name, raster_name, save_dir):
-        """Compute a hard-coded advanced blended visualization and return created files.
+    def blend_advanced_custom_combination(self, combination_handle, raster_name, save_dir):
+        """Compute a hard-coded advanced blended visualization and return paths of created files.
 
         This method handles special blender combinations that are not assembled
         directly from the dialog layer settings. Each supported combination has
@@ -1928,12 +2036,9 @@ class QRVT:
 
         Parameters
         ----------
-        combination_name : str
-            Name of the advanced custom combination selected in the blender combo box.
-            Supported values are:
-            - "Combined Visualization for Archaeological Topography (CVAT)"
-            - "e3MSTP - enhanced Multi-Scale Topographic Position v3"
-            - "e4MSTP"
+        combination_handle : str
+            Internal handle of the selected advanced combination.
+            Supported values are ``CVAT``, ``e3MSTP``, and ``e4MSTP``.
         raster_name : str
             Name of the selected input raster as stored in ``self.rvt_select_input``.
         save_dir : str
@@ -1954,17 +2059,12 @@ class QRVT:
         save_8bit = self.dlg.check_blender_save_8bit.isChecked()
 
         outputs = []
-        if combination_name == "Combined Visualization for Archaeological Topography (CVAT)":
+        if combination_handle == "CVAT":
             start_time = time.time()
 
             # Disable terrain settings
             self.dlg.chech_terrain_preset.setChecked(False)
 
-            # Determine naming (path) of output
-            #combination_name_u = combination_name.strip().replace(" ", "_") # TODO: change simply to CVAT
-            # blend_img_path = os.path.abspath(
-            #     os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u))
-            # )
             blend_img_path = os.path.abspath(
                 os.path.join(save_dir, "{}_CVAT.tif".format(raster_name))
             )
@@ -2057,14 +2157,14 @@ class QRVT:
             compute_time = time.time() - start_time
             self.combination.create_log_file(
                 dem_path=raster_path,
-                combination_name=combination_name,
+                combination_name=combination_handle ,
                 render_path=blend_img_path,
                 default=self.default,
                 custom_dir=save_dir,
                 computation_time=compute_time
             )
 
-        elif combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
+        elif combination_handle == "e3MSTP":
             start_time = time.time()
 
             # Disable terrain settings
@@ -2113,14 +2213,14 @@ class QRVT:
             compute_time = time.time() - start_time
             self.combination.create_log_file(
                 dem_path=raster_path,
-                combination_name=combination_name,
+                combination_name=combination_handle ,
                 render_path=blend_img_path,
                 default=self.default,
                 custom_dir=save_dir,
                 computation_time=compute_time
             )
 
-        elif combination_name == "e4MSTP":
+        elif combination_handle  == "e4MSTP":
             start_time = time.time()
 
             # Disable terrain settings
@@ -2169,7 +2269,7 @@ class QRVT:
             compute_time = time.time() - start_time
             self.combination.create_log_file(
                 dem_path=raster_path,
-                combination_name=combination_name,
+                combination_name=combination_handle ,
                 render_path=blend_img_path,
                 default=self.default,
                 custom_dir=save_dir,
