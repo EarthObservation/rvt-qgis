@@ -35,7 +35,8 @@ from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QDialog
 from qgis.PyQt import uic
 
-from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis
+import traceback
+from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis, QgsMessageLog
 
 try:
     import scipy
@@ -115,12 +116,30 @@ class AboutDlg:
         self.dlg.button_report_bug.clicked.connect(lambda: self.button_report_bug_clicked())
         self.dlg.exec()
 
-    def button_report_bug_clicked(self):
+    @staticmethod
+    def button_report_bug_clicked():
         webbrowser.open('https://github.com/EarthObservation/rvt-qgis/issues')
 
 
 class QRVT:
     """QGIS Plugin Implementation."""
+
+    # Advanced combinations are defined directly in code. Their short handles
+    # are used internally for selection logic, output naming, and logging.
+    ADVANCED_HANDLES = ("CVAT", "e3MSTP", "e4MSTP")
+
+    # Text shown in the combo box for advanced combinations.
+    ADVANCED_LABELS = {
+        "CVAT": "CVAT - combined visualization for archaeological topography",
+        "e3MSTP": "e3MSTP - enhanced multi-scale topographic position v3",
+        "e4MSTP": "e4MSTP - enhanced multi-scale topographic position v4",
+    }
+
+    # Internal handle used for the always-present "Custom" combo-box entry.
+    CUSTOM_COMBINATION_HANDLE = "__custom__"
+
+    # Combination selected by default when the dialog is initialized.
+    DEFAULT_COMBINATION_HANDLE = "CVAT"
 
     def __init__(self, iface):
         """Constructor.
@@ -184,15 +203,22 @@ class QRVT:
                 os.makedirs(os.path.dirname(self.default_settings_path))  # create settings dir
             self.default.save_default_to_file(self.default_settings_path)  # create default_settings.json
 
-        # Intitalise BLENDER dialog
+        # Initialise BLENDER dialog
         # =========================
         # read combinations
         self.default_blender_combinations_path = os.path.abspath(os.path.join(self.plugin_dir, "settings",
                                                                               "default_blender_combinations.json"))
+        # JSON-backed loading of combinations happens here
         self.default_blender_combinations = rvt.blend.BlenderCombinations()
         self.default_blender_combinations.read_from_file(self.default_blender_combinations_path)
-        self.load_combinations2cb()  # loads combinations to combo box
-        self.combination = rvt.blend.BlenderCombination()  # current combination
+        # Populate the combo box with advanced entries first and JSON-backed normal combinations after that.
+        self.load_combinations2cb()
+
+        # Current blender combination object.
+        self.combination = rvt.blend.BlenderCombination()
+
+        # Select CVAT by default when the UI starts.
+        self.set_combination_by_handle(self.DEFAULT_COMBINATION_HANDLE)
         
         # Initialize Blender checkboxes: only 8bit checked by default
         self.dlg.check_blender_save_8bit.setChecked(True)
@@ -569,23 +595,27 @@ class QRVT:
         self.combination = combination
 
     def check_dlg_comb_default_combs(self):
-        """Checks if dlg blender combination values are same as any default combination or if they
-         are Custom combination."""
+        """Update combo-box selection based on current blender layer settings.
+
+        If the current dialog state matches one of the normal JSON-backed
+        combinations, that combination is selected in the combo box. If the
+        current selection is one of the advanced hard-coded combinations, the
+        method does nothing because those combinations are not represented by
+        editable layer definitions in the dialog.
+        """
         self.load_dlg2combination()
-        # TODO: Check if naming here is correct!
-        if self.dlg.combo_combinations.currentText() in [
-            "e3MSTP - enhanced Multi-Scale Topographic Position v3",
-            "Combined Visualization for Archaeological Topography (CVAT)",
-            "e4MSTP"
-        ]:
-            pass
+        selected_handle = self.get_selected_combination_handle()
+
+        # Advanced combinations are handled separately and should keep their
+        # current selection even though their layer editor state is empty.
+        if selected_handle in self.ADVANCED_HANDLES:
+            return
+
+        dlg_combination_name = self.default_blender_combinations.combination_in_combinations(self.combination)
+        if dlg_combination_name is not None:
+            self.set_combination_by_handle(dlg_combination_name)
         else:
-            # find if dlg_combination has same attributes as one of the combinations
-            dlg_combination_name = self.default_blender_combinations.combination_in_combinations(self.combination)
-            if dlg_combination_name is not None:
-                self.dlg.combo_combinations.setCurrentText(dlg_combination_name)
-            else:
-                self.dlg.combo_combinations.setCurrentText("Custom")
+            self.set_combination_by_handle(self.CUSTOM_COMBINATION_HANDLE)
 
     def load_dlg2terrain(self):
         self.load_dlg2default()
@@ -776,18 +806,34 @@ class QRVT:
             self.combination.name = new_combination_name  # apply new combination name
             self.default_blender_combinations.add_combination(combination=self.combination)  # add to combinations
             self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)  # save
-            self.load_combinations2cb()  # load new combinations to combobox
-            self.load_combination2dlg(combination=self.combination)  # loads new combination
+
+            # Load ne combination to Combobox
+            self.load_combinations2cb()
+            # Make sure combo box always stays in sync with the stored handle logic
+            self.set_combination_by_handle(new_combination_name)
+            self.load_combination2dlg(combination=self.combination)
+
             self.dlg.line_combination_name.setText("")
         if new_combination_name == "":
             self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.MessageLevel.Warning)
 
     def remove_combination_clicked(self):
-        selected_combination_name = str(self.dlg.combo_combinations.currentText())
-        if selected_combination_name != "Custom":
-            self.default_blender_combinations.remove_combination_by_name(name=selected_combination_name)
-            self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)
-            self.load_combinations2cb()
+        """Remove the selected normal combination from the JSON-backed list.
+
+        Advanced combinations and the GUI-only "Custom" entry cannot be removed
+        because they are not stored in ``default_blender_combinations.json``.
+        """
+        selected_handle = self.get_selected_combination_handle()
+
+        if selected_handle in self.ADVANCED_HANDLES:
+            return
+        if selected_handle == self.CUSTOM_COMBINATION_HANDLE:
+            return
+
+        self.default_blender_combinations.remove_combination_by_name(name=selected_handle)
+        self.default_blender_combinations.save_to_file(file_path=self.default_blender_combinations_path)
+        self.load_combinations2cb()
+        self.set_combination_by_handle(self.DEFAULT_COMBINATION_HANDLE)
 
     def save_combination_to_clicked(self):
         new_combination_name = str(self.dlg.line_combination_name.text()).strip()
@@ -816,7 +862,10 @@ class QRVT:
                 if combination.name not in existing_combinations and combination.name != "":
                     self.default_blender_combinations.add_combination(combination)
                     self.default_blender_combinations.save_to_file(self.default_blender_combinations_path)
+
                     self.load_combinations2cb()
+                    # Make sure combo box always stays in sync with the stored handle logic
+                    self.set_combination_by_handle(combination.name)
                     self.load_combination2dlg(combination=combination)
                     self.combination = combination
             except:
@@ -826,24 +875,88 @@ class QRVT:
         """If blender combination combo box changes method triggers other methods."""
         self.dlg.combo_combinations.currentTextChanged.connect(lambda: self.load_blender_combination())
 
+    @classmethod
+    def combination_label_from_handle(cls, handle):
+        """Return the user-visible label for a combination handle.
+
+        Advanced combinations use short internal handles such as ``CVAT`` and
+        display a longer descriptive label in the combo box. Normal combinations
+        are loaded from JSON and use their JSON name both as label and as handle.
+        """
+        return cls.ADVANCED_LABELS.get(handle, handle)
+
+    def get_selected_combination_handle(self):
+        """Return the internal handle of the selected combo-box item.
+
+        The blender combination combo box stores the visible text in the item
+        label and the internal identifier in the item data. For advanced
+        combinations this returns a short handle such as ``CVAT``. For normal
+        combinations it returns the JSON combination name.
+        """
+        handle = self.dlg.combo_combinations.currentData()
+        if handle is None:
+            return str(self.dlg.combo_combinations.currentText())
+        return str(handle)
+
+    def set_combination_by_handle(self, handle):
+        """Select a combo-box entry by its internal handle."""
+        index = self.dlg.combo_combinations.findData(handle)
+        if index >= 0:
+            self.dlg.combo_combinations.setCurrentIndex(index)
+
     def load_blender_combination(self):
-        """Check which blender combination is selected, get that combination and fill blender dlg with
-         its values."""
-        selected_combination = str(self.dlg.combo_combinations.currentText())
-        combination = self.default_blender_combinations.select_combination_by_name(selected_combination)
+        """Load the currently selected combination into the blender dialog.
+
+        Advanced combinations are not loaded from JSON. They are represented by
+        an empty ``BlenderCombination`` in the layer editor because their actual
+        computation is hard-coded elsewhere. Normal combinations are loaded from
+        ``self.default_blender_combinations``.
+        """
+        selected_handle = self.get_selected_combination_handle()
+
+        if selected_handle in self.ADVANCED_HANDLES:
+            combination = rvt.blend.BlenderCombination()
+            combination.name = selected_handle
+            self.combination = combination
+            self.load_combination2dlg(combination)
+            return
+
+        if selected_handle == self.CUSTOM_COMBINATION_HANDLE:
+            return
+
+        combination = self.default_blender_combinations.select_combination_by_name(selected_handle)
         if combination is not None:
             self.combination = combination
             self.load_combination2dlg(combination)
 
     def load_combinations2cb(self, combinations=None):
-        """Load combinations from self.default_blender_combinations to dlg.combo_combinations combobox."""
-        if combinations is None:  # if combinations None it takes self.default_blender_combinations
+        """Populate the blender combination combo box.
+
+        Advanced combinations are inserted directly in code and use short
+        internal handles stored in the combo-box item data. Normal combinations
+        are loaded from ``self.default_blender_combinations`` and use their JSON
+        name both as visible text and as handle.
+        """
+        if combinations is None:
             combinations = self.default_blender_combinations
+
         self.dlg.combo_combinations.clear()
-        comb_names = combinations.combinations_names()
-        for combination_name in comb_names:
-            self.dlg.combo_combinations.addItem(combination_name)
-        self.dlg.combo_combinations.addItem("Custom")
+
+        # Add advanced, hard-coded combinations first.
+        for handle in self.ADVANCED_HANDLES:
+            self.dlg.combo_combinations.addItem(
+                self.combination_label_from_handle(handle),
+                handle
+            )
+
+        # Add normal combinations from JSON. For these, the JSON name is also
+        # the internal handle so users can freely add or remove combinations.
+        for combination_name in combinations.combinations_names():
+            self.dlg.combo_combinations.addItem(combination_name, combination_name)
+
+        # "Custom" is a GUI-only entry used when current layer settings do not
+        # match any saved combination.
+        self.dlg.combo_combinations.addItem("Custom", self.CUSTOM_COMBINATION_HANDLE)
 
     def load_combination2dlg(self, combination, terrain_bool=False):
         """Fill blender dlg parameters (combo boxes, line edits, scroll sliders) with values from combination."""
@@ -889,6 +1002,122 @@ class QRVT:
                 QgsProject.instance().removeMapLayer(layer)
                 return 1
         return 0
+
+    def is_layer_loaded_by_path(self, layer_path):
+        """Return True if a raster with the given file path is already loaded in QGIS."""
+        layer_path = os.path.abspath(layer_path)
+        for layer in QgsProject.instance().mapLayers().values():
+            try:
+                if os.path.abspath(layer.dataProvider().dataSourceUri()) == layer_path:
+                    return True
+            except Exception:
+                continue
+        return False
+
+    def get_requested_blend_output_paths(self, raster_name, save_dir, combination_handle=None):
+        """Build the list of output file paths requested by the current blender settings.
+
+        The returned list contains only the files that the user asked to save:
+        float output, 8-bit output, or both.
+        """
+        if combination_handle is None:
+            combination_handle = self.get_selected_combination_handle()
+
+        save_float = self.dlg.check_blender_save_float.isChecked()
+        save_8bit = self.dlg.check_blender_save_8bit.isChecked()
+
+        output_paths = []
+
+        # Advanced combinations use fixed names.
+        if combination_handle == "CVAT":
+            base_path = os.path.abspath(os.path.join(save_dir, f"{raster_name}_CVAT.tif"))
+        elif combination_handle == "e3MSTP":
+            base_path = os.path.abspath(os.path.join(save_dir, f"{raster_name}_e3MSTP.tif"))
+        elif combination_handle == "e4MSTP":
+            base_path = os.path.abspath(os.path.join(save_dir, f"{raster_name}_e4MSTP.tif"))
+        else:
+            combination_handle_u = combination_handle.strip().replace(" ", "_")
+            blend_img_name = f"{raster_name}_{combination_handle_u}"
+
+            # Terrain preset suffix is used only for normal combinations.
+            if self.dlg.chech_terrain_preset.checkState():
+                terrain_sett_name = str(self.dlg.combo_terrains.currentText())
+                blend_img_name = f"{blend_img_name}_{terrain_sett_name}"
+
+            base_path = os.path.abspath(os.path.join(save_dir, f"{blend_img_name}.tif"))
+
+        if save_float:
+            output_paths.append(base_path)
+        if save_8bit:
+            output_paths.append(
+                os.path.abspath(
+                    os.path.join(
+                        save_dir,
+                        f"{os.path.splitext(os.path.basename(base_path))[0]}_8bit.tif"
+                    )
+                )
+            )
+
+        return output_paths
+
+    def load_existing_blend_outputs_to_qgis(self, output_paths):
+        """Load existing blend outputs into QGIS if they are not already loaded."""
+        for out_path in output_paths:
+            if os.path.isfile(out_path) and not self.is_layer_loaded_by_path(out_path):
+                self.iface.addRasterLayer(out_path, os.path.basename(out_path))
+
+    def inspect_requested_blend_outputs(self, selected_input_rasters):
+        """Split selected rasters into compute/load/skip groups.
+
+        Returns a dict with:
+        - to_compute: rasters whose requested outputs do not all exist yet
+        - load_only: rasters whose requested outputs all exist but are not loaded in QGIS
+        - already_loaded: rasters whose requested outputs all exist and at least one is already loaded in QGIS
+        """
+        result = {
+            "to_compute": [],
+            "load_only": [],
+            "already_loaded": [],
+        }
+
+        combination_handle = self.get_selected_combination_handle()
+
+        for raster_name in selected_input_rasters:
+            raster_path = self.rvt_select_input[raster_name]
+
+            if self.dlg.check_sav_rast_loc.isChecked():
+                save_dir = os.path.dirname(raster_path)
+            else:
+                save_dir = self.dlg.line_save_loc.text()
+
+            requested_outputs = self.get_requested_blend_output_paths(
+                raster_name=raster_name,
+                save_dir=save_dir,
+                combination_handle=combination_handle
+            )
+
+            # Skip only when all requested saved outputs already exist.
+            # If you later want the stricter "do not touch anything if any output already exists"
+            # behaviour, replace all(...) with any(...).
+            outputs_exist = bool(requested_outputs) and all(os.path.isfile(path) for path in requested_outputs)
+
+            if outputs_exist:
+                loaded_outputs = [path for path in requested_outputs if self.is_layer_loaded_by_path(path)]
+                if loaded_outputs:
+                    result["already_loaded"].append({
+                        "raster_name": raster_name,
+                        "output_paths": requested_outputs,
+                        "loaded_outputs": loaded_outputs,
+                    })
+                else:
+                    result["load_only"].append({
+                        "raster_name": raster_name,
+                        "output_paths": requested_outputs,
+                    })
+            else:
+                result["to_compute"].append(raster_name)
+
+        return result
 
     def fill_method_translate(self, fill_method):
         """Translates fill_method (no data interpolation method) string for function to text for combo box and
@@ -1076,6 +1305,7 @@ class QRVT:
         self.default.msrm_save_8bit = int(self.dlg.check_msrm_8bit.isChecked())
         self.default.mstp_save_float = int(self.dlg.check_mstp_float.isChecked())
         self.default.mstp_save_8bit = int(self.dlg.check_mstp_8bit.isChecked())
+
 
     class ComputeVisualizationsTask(QgsTask):
         """Task (thread) for computing visualizations."""
@@ -1354,31 +1584,61 @@ class QRVT:
             self.default.save_visualizations(dem_path=raster_path, custom_dir=save_dir)
         return True
 
-    class ComputeBlenderTask(QgsTask):
-        """Task (thread) for computing Blended image."""
 
-        def __init__(self, description, parent):
+    class ComputeBlenderTask(QgsTask):
+        """Task for computing blended images and tracking the files that were created."""
+
+        def __init__(self, description, parent, selected_input_rasters):
             super().__init__(description)
             self.parent = parent
-            self.loading_screen = LoadingScreenDlg(parent.iface, "Computing blended image...")  # init loading dlg
-            self.loading_screen.start_animation()  # start loading dlg
+            # Store a fixed copy of the raster selection at the moment the task starts. This is important because QGIS
+            # layer add/remove events can refresh the available raster list while the task is running.
+            self.selected_input_rasters = list(selected_input_rasters)
+            # Show a busy indicator in the QGIS message bar while the blend task runs.
+            self.loading_screen = LoadingScreenDlg(parent.iface, "Computing blended image...")
+            self.loading_screen.start_animation()
+
+            # Will hold the traceback text if an exception happens during task execution
             self.exception = None
+            # Task cannot start because no input raster was selected
             self.no_raster = False
+            # Another RVT task is already running
             self.is_calculating = False
 
+            # Stores the exact output file paths created during computation. These are later used in finished()
+            # so QGIS loads the real files, instead of rebuilding file names from UI text.
+            self.created_outputs = []
+
         def run(self):
+            """Run blended image computation in the task thread.
+
+            Compute_blended_image() should now return:
+                - "no raster selected" if nothing was selected
+                - [] or False if computation failed
+                - a list of created output paths on success
+            These results are then stored in the self.created_outputs!
+
+            Returns
+            -------
+            bool
+                True when computation produced output files successfully,
+                False when no raster was selected or computation failed.
+            """
             if self.parent.is_calculating:
                 self.is_calculating = True
                 return False
             else:
                 self.parent.is_calculating = True
                 try:
-                    compute = self.parent.compute_blended_image()  # run compute blended image
-                    if compute == "no raster selected":
+                    # Here the actual computation of Blend is executed
+                    self.created_outputs = self.parent.compute_blended_image(
+                        selected_input_rasters=self.selected_input_rasters
+                    )
+                    if self.created_outputs == "no raster selected":
                         self.no_raster = True
                         self.parent.is_calculating = False
                         return False
-                    if not compute:
+                    if not self.created_outputs:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return False
@@ -1386,52 +1646,30 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:  # something went wrong
+                except:
                     self.parent.is_calculating = False
                     return False
 
-        def finished(self, result):  # when finished close loading dlg and load rasters (blended images) into Qgis
+        def finished(self, result):
+            """Load the files created by run() into QGIS when computation succeeds."""
+
+            # Enable the Blend button when processing has finished
+            # TODO: Check if this enable/disable of Blend button actually works
             self.parent.dlg.button_blend.setEnabled(True)
 
-            if result:  # if self.run returns True
+            if result:
+                # If calculation was successful proceed with uploading the image into QGIS
                 add_to_qgis = self.parent.dlg.check_addqgis.isChecked()
-                selected_input_rasters = self.parent.dlg.select_input_files.checkedItems()
-                # add saved/computed to qgis
-                for raster_name in selected_input_rasters:  # loop through all selected rasters
-                    raster_path = self.parent.rvt_select_input[raster_name]
-                    # get directory to save in
-                    if self.parent.dlg.check_sav_rast_loc.isChecked():  # means to save in raster path
-                        save_dir = os.path.dirname(raster_path)
-                    else:
-                        save_dir = self.parent.dlg.line_save_loc.text()
 
-                    # get combination name from combo box
-                    combination_name = str(self.parent.dlg.combo_combinations.currentText())
-                    combination_name = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
-                    blend_img_name = "{}_{}".format(raster_name, combination_name) # TODO: Naming of qgis layer
+                # Add calculated rasters as layers to qgis
+                if add_to_qgis and isinstance(self.created_outputs, list):
 
-                    terrain_sett_name = None
-                    if self.parent.dlg.chech_terrain_preset.checkState():
-                        terrain_sett_name = str(self.parent.dlg.combo_terrains.currentText())
-                        blend_img_name = "{}_{}".format(blend_img_name, terrain_sett_name)
-
-                    blend_img_8bit_name = "{}_8bit.tif".format(blend_img_name)
-                    blend_img_name = "{}.tif".format(blend_img_name)
-
-                    blend_img_path = os.path.abspath(os.path.join(save_dir, blend_img_name))
-                    blend_img_8bit_path = os.path.abspath(os.path.join(save_dir, blend_img_8bit_name))
-
-                    # checkboxes status
-                    save_float = self.parent.dlg.check_blender_save_float.isChecked()
-                    save_8bit = self.parent.dlg.check_blender_save_8bit.isChecked()
-
-                    if add_to_qgis:  # add calculated layers to Qgis
-                        if save_float:
-                            self.parent.remove_layer_by_path(blend_img_path)  # remove layer from qgis if exists
-                            self.parent.iface.addRasterLayer(blend_img_path, blend_img_name)  # add layer to qgis
-                        if save_8bit:
-                            self.parent.remove_layer_by_path(blend_img_8bit_path)  # remove layer from qgis if exists
-                            self.parent.iface.addRasterLayer(blend_img_8bit_path, blend_img_8bit_name)  # add to qgis
+                    # Loop over all generated images (float, 8bit)
+                    for out_path in self.created_outputs:
+                        layer_name = os.path.basename(out_path)
+                        # First remove layer from qgis if it already exists
+                        self.parent.remove_layer_by_path(out_path)
+                        self.parent.iface.addRasterLayer(out_path, layer_name)
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
@@ -1440,42 +1678,132 @@ class QRVT:
                     "Blended image calculated!",
                     level=Qgis.MessageLevel.Success
                 )
-            else:  # if self.run returns False
+            else:
+                # If calculation failed
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT",
+                        "Wait you are already calculating something!",
+                        level=Qgis.MessageLevel.Warning
+                    )
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT",
+                        "You didn't select raster!",
+                        level=Qgis.MessageLevel.Warning
+                    )
                     self.parent.is_calculating = False
                 else:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Blended image calculation Failed!",
-                                                               level=Qgis.MessageLevel.Critical)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT",
+                        "Blended image calculation Failed!",
+                        level=Qgis.MessageLevel.Critical
+                    )
                     self.parent.is_calculating = False
 
+
     def compute_blended_image_clicked(self):
-        """Start button clicked ("Blend images" button)."""
-        self.iface.messageBar().pushMessage(
-            "RVT",
-            "Starting blended image computation...",
-            level=Qgis.Info,
-            duration=3
-        )
-        task = self.ComputeBlenderTask(description="Compute blended image", parent=self)
-        self.tm.addTask(task)  # add task to task manager and start task
-
-    def compute_blended_image(self):
-        """Compute Blended image from set parameters (in blender dlg). (blend images button clicked)"""
-
-        # Get selected rasters
-        selected_input_rasters = self.dlg.select_input_files.checkedItems()
-
-        # Clear all messages
+        """`Blend images` button clicked."""
+        selected_input_rasters = list(self.dlg.select_input_files.checkedItems())
         self.iface.messageBar().clearWidgets()
 
-        # Cancel if no raster selected
+        if len(selected_input_rasters) == 0:
+            self.iface.messageBar().pushMessage(
+                "RVT",
+                "You didn't select raster!",
+                level=Qgis.MessageLevel.Warning
+            )
+            return
+
+        precheck = self.inspect_requested_blend_outputs(selected_input_rasters)
+
+        # Load existing outputs from disk when they already exist but are not yet loaded in QGIS.
+        loaded_from_disk_count = 0
+        if self.dlg.check_addqgis.isChecked():
+            for entry in precheck["load_only"]:
+                self.load_existing_blend_outputs_to_qgis(entry["output_paths"])
+                loaded_from_disk_count += 1
+
+        already_loaded_count = len(precheck["already_loaded"])
+        to_compute_count = len(precheck["to_compute"])
+
+        # If nothing needs to be computed, finish here with a clear message.
+        if to_compute_count == 0:
+            if loaded_from_disk_count > 0 and already_loaded_count == 0:
+                self.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Requested blended image file(s) already exist. Loaded existing file(s) into QGIS.",
+                    level=Qgis.MessageLevel.Info,
+                    duration=5
+                )
+            elif already_loaded_count > 0 and loaded_from_disk_count == 0:
+                self.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Requested blended image file(s) already exist and are already loaded in QGIS.",
+                    level=Qgis.MessageLevel.Info,
+                    duration=5
+                )
+            else:
+                self.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Requested blended image file(s) already exist. Some were loaded from disk and some were already loaded in QGIS.",
+                    level=Qgis.MessageLevel.Info,
+                    duration=6
+                )
+            return
+
+        # Mixed case: some rasters are skipped, some still need computation.
+        if loaded_from_disk_count > 0 or already_loaded_count > 0:
+            self.iface.messageBar().pushMessage(
+                "RVT",
+                (
+                    f"Computing {to_compute_count} raster set(s). "
+                    f"Skipped {loaded_from_disk_count + already_loaded_count} raster set(s) because requested output file(s) already exist."
+                ),
+                level=Qgis.MessageLevel.Info,
+                duration=5
+            )
+        else:
+            self.iface.messageBar().pushMessage(
+                "RVT",
+                "Starting blended image computation...",
+                level=Qgis.Info,
+                duration=3
+            )
+
+        task = self.ComputeBlenderTask(
+            description="Compute blended image",
+            parent=self,
+            selected_input_rasters=precheck["to_compute"]
+        )
+        self.tm.addTask(task)
+
+    def compute_blended_image(self, selected_input_rasters=None):
+        """Compute blended images for selected rasters.
+
+        Parameters
+        ----------
+        selected_input_rasters : list[str] or None
+            Snapshot of input raster names to compute. If None, the method reads
+            the current GUI selection.
+
+        Returns
+        -------
+        list[str] or str
+            A list of created output file paths on success, or
+            "no raster selected" if no input raster was selected.
+        """
+        if selected_input_rasters is None:
+            selected_input_rasters = self.dlg.select_input_files.checkedItems()
+
+        self.iface.messageBar().clearWidgets()
+
         if len(selected_input_rasters) == 0:
             return "no raster selected"
+
+        # List of paths to created output rasters
+        created_outputs = []
 
         # Run for all selected rasters (loop sequentially)
         for raster_name in selected_input_rasters:
@@ -1490,24 +1818,26 @@ class QRVT:
                 # Save to specified location
                 save_dir = self.dlg.line_save_loc.text()
 
-            # Get combination name from ComboBox (blender dropdown list)
-            combination_name = str(self.dlg.combo_combinations.currentText())  # get combination name from combo
-            combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
-            blend_img_name = "{}_{}".format(raster_name, combination_name_u)
+            # Read the internal handle from combo-box item data. The visible label may be longer, but all processing
+            # logic should use handles.
+            combination_handle = self.get_selected_combination_handle()
 
-            # custom advanced (hard coded) blender combinations (can't be selected in dialog)
-            # TODO: Check names of these blends!
-            if combination_name in (
-                "Combined Visualization for Archaeological Topography (CVAT)",
-                "e3MSTP - enhanced Multi-Scale Topographic Position v3",
-                "e4MSTP"
-            ):
-                self.blend_advanced_custom_combination(
-                    combination_name=combination_name,
+            # Use the handle for output naming. Normal combinations use their JSON name as handle, while advanced
+            # combinations use short handles such as CVAT, e3MSTP, and e4MSTP.
+            combination_handle_u = combination_handle.strip().replace(" ", "_")
+            blend_img_name = "{}_{}".format(raster_name, combination_handle_u)
+
+            # Advanced combinations are computed by dedicated hard-coded logic.
+            if combination_handle in self.ADVANCED_HANDLES:
+                outputs = self.blend_advanced_custom_combination(
+                    combination_handle=combination_handle,
                     raster_name=raster_name,
                     save_dir=save_dir
                 )
-            # normal dialog blender combination
+                if outputs:
+                    created_outputs.extend(outputs)
+
+            # Run this for `normal` blender combinations:
             else:
                 terrain_sett_name = None
                 if self.dlg.chech_terrain_preset.checkState():
@@ -1545,18 +1875,30 @@ class QRVT:
                     save_8bit=save_8bit
                 )
 
+                # Add paths of the results to `created_outputs` dict
+                if save_float:
+                    created_outputs.append(blend_img_path)
+                if save_8bit:
+                    created_outputs.append(
+                        os.path.abspath(os.path.join(
+                            save_dir,
+                            f"{os.path.splitext(blend_img_name)[0]}_8bit.tif"
+                        ))
+                    )
+
                 # Log
                 compute_time = time.time() - start_time
                 self.combination.create_log_file(
                     dem_path=raster_path,
-                    combination_name=combination_name,
+                    combination_name=combination_handle,
                     render_path=blend_img_path,
                     terrain_sett_name=terrain_sett_name,
                     default=self.default,
                     custom_dir=save_dir,
                     computation_time=compute_time
                 )
-        return True
+        return created_outputs
+
 
     class ComputeCutoff(QgsTask):
         """Task (thread) for applying cutoff on raster image."""
@@ -1873,51 +2215,52 @@ class QRVT:
         for terrain_settings in self.terrains_settings.terrains_settings:
             self.dlg.combo_terrains.addItem(terrain_settings.name)
 
-    def blend_advanced_custom_combination(self, combination_name, raster_name, save_dir):
-        """
-        Blend and render an advanced custom raster visualization combination.
+    def blend_advanced_custom_combination(self, combination_handle, raster_name, save_dir):
+        """Compute a hard-coded advanced blended visualization and return paths of created files.
 
-        This method handles special, hard-coded blending combinations that cannot
-        be created interactively through the dialog interface. For example,*Combined VAT*,
-        which blends multiple terrain presets (VAT general and VAT flat) into a
-        composite visualization.
+        This method handles special blender combinations that are not assembled
+        directly from the dialog layer settings. Each supported combination has
+        its own computation and output naming logic.
 
         Parameters
         ----------
-        combination_name : str
-            Name of the advanced custom combination as defined in blender settings (and in blender dropdown list).
-            Currently supports:
-            - "Combined Visualization for Archaeological Topography (CVAT)"
-            - "e3MSTP - enhanced Multi-Scale Topographic Position v3"
-            - "e4MSTP"
+        combination_handle : str
+            Internal handle of the selected advanced combination.
+            Supported values are ``CVAT``, ``e3MSTP``, and ``e4MSTP``.
         raster_name : str
-            Key identifying the input raster in `self.rvt_select_input`.
+            Name of the selected input raster as stored in ``self.rvt_select_input``.
         save_dir : str
-            Directory path where the blended visualization output will be saved.
+            Directory where the output raster file or files will be saved.
 
         Returns
         -------
-        bool
-            True if the blending and rendering process completed successfully.
+        list[str]
+            List of output raster paths that were created. The list may contain
+            the float raster path, the 8-bit raster path, or both, depending on
+            the selected save options. Returns an empty list if nothing was saved
+            or if the combination name is not supported.
         """
+
         # Get save options
         save_vis = self.dlg.check_blender_save_vis.isChecked()
         save_float = self.dlg.check_blender_save_float.isChecked()
         save_8bit = self.dlg.check_blender_save_8bit.isChecked()
 
-        if combination_name == "Combined Visualization for Archaeological Topography (CVAT)":
+        outputs = []
+        if combination_handle == "CVAT":
             start_time = time.time()
 
             # Disable terrain settings
             self.dlg.chech_terrain_preset.setChecked(False)
 
-            # Replace spaces with underscores for filename, used for saving
-            combination_name_u = combination_name.strip().replace(" ", "_")
             blend_img_path = os.path.abspath(
-                os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u))
+                os.path.join(save_dir, "{}_CVAT.tif".format(raster_name))
+            )
+            blend_img_8bit_path = os.path.abspath(
+                os.path.join(save_dir, "{}_CVAT_8bit.tif".format(raster_name))
             )
 
-            # Path to Combined VAT combination settings JSON
+            # Prepare combinations for CVAT (from JSON file)
             vat_combination_json_path = os.path.abspath(
                 os.path.join(self.plugin_dir, "settings", "blender_VAT.json")
             )
@@ -1966,6 +2309,7 @@ class QRVT:
 
             # Blend VAT general and VAT flat together:
             combination = rvt.blend.BlenderCombination()
+
             # 1st layer: VAT general 50% transparency
             combination.create_layer(
                 vis_method="VAT general",
@@ -1981,6 +2325,8 @@ class QRVT:
                 blend_mode="Normal", opacity=100
             )
             combination.add_dem_path(dem_path=raster_path)
+
+            # Calculation of CVAT is done here
             combination.render_all_images(
                 save_render_path=blend_img_path,
                 save_visualizations=save_vis,
@@ -1989,32 +2335,35 @@ class QRVT:
                 no_data=dict_arr_res_nd["no_data"]
             )
 
+            # Add paths to output for the images that were selected
+            if save_float:
+                outputs.append(blend_img_path)
+            if save_8bit:
+                outputs.append(blend_img_8bit_path)
+
             # Log
             compute_time = time.time() - start_time
-            self.combination.create_log_file(
+            combination.create_log_file(
                 dem_path=raster_path,
-                combination_name=combination_name,
+                combination_name=combination_handle,
                 render_path=blend_img_path,
                 default=self.default,
                 custom_dir=save_dir,
                 computation_time=compute_time
             )
 
-            return True
-
-        elif combination_name == "e3MSTP - enhanced Multi-Scale Topographic Position v3":
+        elif combination_handle == "e3MSTP":
             start_time = time.time()
 
             # Disable terrain settings
             self.dlg.chech_terrain_preset.setChecked(False)
 
             # Create paths for saving
-            combination_name_u = combination_name.strip().replace(" ", "_")  # replace spaces with underscore
             blend_img_path = os.path.abspath(
-                os.path.join(save_dir, "{}_{}.tif".format(raster_name, combination_name_u))
+                os.path.join(save_dir, "{}_e3MSTP.tif".format(raster_name))
             )
             blend_img_8bit_path = os.path.abspath(
-                os.path.join(save_dir, "{}_{}_8bit.tif".format(raster_name, combination_name_u))
+                os.path.join(save_dir, "{}_e3MSTP_8bit.tif".format(raster_name))
             )
 
             # Read raster array, resolution, and no-data value
@@ -2037,6 +2386,7 @@ class QRVT:
                     no_data=np.nan,
                     e_type=6
                 )
+                outputs.append(blend_img_path)
             if save_8bit:
                 rvt.default.save_raster(
                     src_raster_path=raster_path,
@@ -2045,34 +2395,32 @@ class QRVT:
                     no_data=np.nan,
                     e_type=1
                 )
+                outputs.append(blend_img_8bit_path)
 
             # Log
             compute_time = time.time() - start_time
             self.combination.create_log_file(
                 dem_path=raster_path,
-                combination_name=combination_name,
+                combination_name=combination_handle ,
                 render_path=blend_img_path,
                 default=self.default,
                 custom_dir=save_dir,
                 computation_time=compute_time
             )
 
-            return True
-
-        elif combination_name == "e4MSTP":
+        elif combination_handle  == "e4MSTP":
             start_time = time.time()
 
             # Disable terrain settings
             self.dlg.chech_terrain_preset.setChecked(False)
 
             # Create paths for saving
-            combination_name_u = combination_name.strip().replace(" ", "_")
             blend_img_path = os.path.abspath(
                 os.path.join(
-                    save_dir, "{}_{}.tif".format(raster_name, combination_name_u))
+                    save_dir, "{}_e4MSTP.tif".format(raster_name, ))
             )
             blend_img_8bit_path = os.path.abspath(
-                os.path.join(save_dir, "{}_{}_8bit.tif".format(raster_name, combination_name_u))
+                os.path.join(save_dir, "{}_e4MSTP_8bit.tif".format(raster_name))
             )
 
             # Read raster array, resolution, and no-data value
@@ -2094,6 +2442,7 @@ class QRVT:
                     no_data=np.nan,
                     e_type=6
                 )
+                outputs.append(blend_img_path)
             if save_8bit:
                 rvt.default.save_raster(
                     src_raster_path=raster_path,
@@ -2102,22 +2451,20 @@ class QRVT:
                     no_data=np.nan,
                     e_type=1
                 )
+                outputs.append(blend_img_8bit_path)
 
             # Log
             compute_time = time.time() - start_time
             self.combination.create_log_file(
                 dem_path=raster_path,
-                combination_name=combination_name,
+                combination_name=combination_handle ,
                 render_path=blend_img_path,
                 default=self.default,
                 custom_dir=save_dir,
                 computation_time=compute_time
             )
 
-            return True
-
-        else:
-            return False
+        return outputs
 
     def save_plugin_size(self, json_path):
         try:
