@@ -25,11 +25,14 @@ repository=https://github.com/EarthObservation/rvt-qgis
 
 # Recommended items:
 
-changelog=[1.0.0] - 2026.04.08:
+changelog=[1.0.0] - 2026.04.10:
     - Migration to QGIS4 and Qt6
     - New reference for citing (Kokalj et al., 2025)
     - Updated metadata and "About" dialog window
     - Fixed "Cut-off" function
+    - Blender and CVAT are selected when the plugin starts
+    - Update labels and filenames of blender combinations
+    - Add logic to detect, load and skip existing blended output files
 
     [0.10.0] - 2025.09.19:
     - Updated to RVT version 2.2.3
