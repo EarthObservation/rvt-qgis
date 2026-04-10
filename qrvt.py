@@ -115,7 +115,8 @@ class AboutDlg:
         self.dlg.button_report_bug.clicked.connect(lambda: self.button_report_bug_clicked())
         self.dlg.exec()
 
-    def button_report_bug_clicked(self):
+    @staticmethod
+    def button_report_bug_clicked():
         webbrowser.open('https://github.com/EarthObservation/rvt-qgis/issues')
 
 
