@@ -1003,6 +1003,122 @@ class QRVT:
                 return 1
         return 0
 
+    def is_layer_loaded_by_path(self, layer_path):
+        """Return True if a raster with the given file path is already loaded in QGIS."""
+        layer_path = os.path.abspath(layer_path)
+        for layer in QgsProject.instance().mapLayers().values():
+            try:
+                if os.path.abspath(layer.dataProvider().dataSourceUri()) == layer_path:
+                    return True
+            except Exception:
+                continue
+        return False
+
+    def get_requested_blend_output_paths(self, raster_name, save_dir, combination_handle=None):
+        """Build the list of output file paths requested by the current blender settings.
+
+        The returned list contains only the files that the user asked to save:
+        float output, 8-bit output, or both.
+        """
+        if combination_handle is None:
+            combination_handle = self.get_selected_combination_handle()
+
+        save_float = self.dlg.check_blender_save_float.isChecked()
+        save_8bit = self.dlg.check_blender_save_8bit.isChecked()
+
+        output_paths = []
+
+        # Advanced combinations use fixed names.
+        if combination_handle == "CVAT":
+            base_path = os.path.abspath(os.path.join(save_dir, f"{raster_name}_CVAT.tif"))
+        elif combination_handle == "e3MSTP":
+            base_path = os.path.abspath(os.path.join(save_dir, f"{raster_name}_e3MSTP.tif"))
+        elif combination_handle == "e4MSTP":
+            base_path = os.path.abspath(os.path.join(save_dir, f"{raster_name}_e4MSTP.tif"))
+        else:
+            combination_handle_u = combination_handle.strip().replace(" ", "_")
+            blend_img_name = f"{raster_name}_{combination_handle_u}"
+
+            # Terrain preset suffix is used only for normal combinations.
+            if self.dlg.chech_terrain_preset.checkState():
+                terrain_sett_name = str(self.dlg.combo_terrains.currentText())
+                blend_img_name = f"{blend_img_name}_{terrain_sett_name}"
+
+            base_path = os.path.abspath(os.path.join(save_dir, f"{blend_img_name}.tif"))
+
+        if save_float:
+            output_paths.append(base_path)
+        if save_8bit:
+            output_paths.append(
+                os.path.abspath(
+                    os.path.join(
+                        save_dir,
+                        f"{os.path.splitext(os.path.basename(base_path))[0]}_8bit.tif"
+                    )
+                )
+            )
+
+        return output_paths
+
+    def load_existing_blend_outputs_to_qgis(self, output_paths):
+        """Load existing blend outputs into QGIS if they are not already loaded."""
+        for out_path in output_paths:
+            if os.path.isfile(out_path) and not self.is_layer_loaded_by_path(out_path):
+                self.iface.addRasterLayer(out_path, os.path.basename(out_path))
+
+    def inspect_requested_blend_outputs(self, selected_input_rasters):
+        """Split selected rasters into compute/load/skip groups.
+
+        Returns a dict with:
+        - to_compute: rasters whose requested outputs do not all exist yet
+        - load_only: rasters whose requested outputs all exist but are not loaded in QGIS
+        - already_loaded: rasters whose requested outputs all exist and at least one is already loaded in QGIS
+        """
+        result = {
+            "to_compute": [],
+            "load_only": [],
+            "already_loaded": [],
+        }
+
+        combination_handle = self.get_selected_combination_handle()
+
+        for raster_name in selected_input_rasters:
+            raster_path = self.rvt_select_input[raster_name]
+
+            if self.dlg.check_sav_rast_loc.isChecked():
+                save_dir = os.path.dirname(raster_path)
+            else:
+                save_dir = self.dlg.line_save_loc.text()
+
+            requested_outputs = self.get_requested_blend_output_paths(
+                raster_name=raster_name,
+                save_dir=save_dir,
+                combination_handle=combination_handle
+            )
+
+            # Skip only when all requested saved outputs already exist.
+            # If you later want the stricter "do not touch anything if any output already exists"
+            # behaviour, replace all(...) with any(...).
+            outputs_exist = bool(requested_outputs) and all(os.path.isfile(path) for path in requested_outputs)
+
+            if outputs_exist:
+                loaded_outputs = [path for path in requested_outputs if self.is_layer_loaded_by_path(path)]
+                if loaded_outputs:
+                    result["already_loaded"].append({
+                        "raster_name": raster_name,
+                        "output_paths": requested_outputs,
+                        "loaded_outputs": loaded_outputs,
+                    })
+                else:
+                    result["load_only"].append({
+                        "raster_name": raster_name,
+                        "output_paths": requested_outputs,
+                    })
+            else:
+                result["to_compute"].append(raster_name)
+
+        return result
+
     def fill_method_translate(self, fill_method):
         """Translates fill_method (no data interpolation method) string for function to text for combo box and
          vice versa."""
@@ -1472,15 +1588,21 @@ class QRVT:
     class ComputeBlenderTask(QgsTask):
         """Task for computing blended images and tracking the files that were created."""
 
-        def __init__(self, description, parent):
+        def __init__(self, description, parent, selected_input_rasters):
             super().__init__(description)
             self.parent = parent
+            # Store a fixed copy of the raster selection at the moment the task starts. This is important because QGIS
+            # layer add/remove events can refresh the available raster list while the task is running.
+            self.selected_input_rasters = list(selected_input_rasters)
+            # Show a busy indicator in the QGIS message bar while the blend task runs.
             self.loading_screen = LoadingScreenDlg(parent.iface, "Computing blended image...")
             self.loading_screen.start_animation()
 
-            # TODO: Explaine what these flags are used for!
+            # Will hold the traceback text if an exception happens during task execution
             self.exception = None
+            # Task cannot start because no input raster was selected
             self.no_raster = False
+            # Another RVT task is already running
             self.is_calculating = False
 
             # Stores the exact output file paths created during computation. These are later used in finished()
@@ -1509,7 +1631,9 @@ class QRVT:
                 self.parent.is_calculating = True
                 try:
                     # Here the actual computation of Blend is executed
-                    self.created_outputs = self.parent.compute_blended_image()
+                    self.created_outputs = self.parent.compute_blended_image(
+                        selected_input_rasters=self.selected_input_rasters
+                    )
                     if self.created_outputs == "no raster selected":
                         self.no_raster = True
                         self.parent.is_calculating = False
@@ -1581,21 +1705,88 @@ class QRVT:
 
     def compute_blended_image_clicked(self):
         """`Blend images` button clicked."""
-        self.iface.messageBar().pushMessage(
-            "RVT",
-            "Starting blended image computation...",
-            level=Qgis.Info,
-            duration=3
-        )
+        selected_input_rasters = list(self.dlg.select_input_files.checkedItems())
+        self.iface.messageBar().clearWidgets()
+
+        if len(selected_input_rasters) == 0:
+            self.iface.messageBar().pushMessage(
+                "RVT",
+                "You didn't select raster!",
+                level=Qgis.MessageLevel.Warning
+            )
+            return
+
+        precheck = self.inspect_requested_blend_outputs(selected_input_rasters)
+
+        # Load existing outputs from disk when they already exist but are not yet loaded in QGIS.
+        loaded_from_disk_count = 0
+        if self.dlg.check_addqgis.isChecked():
+            for entry in precheck["load_only"]:
+                self.load_existing_blend_outputs_to_qgis(entry["output_paths"])
+                loaded_from_disk_count += 1
+
+        already_loaded_count = len(precheck["already_loaded"])
+        to_compute_count = len(precheck["to_compute"])
+
+        # If nothing needs to be computed, finish here with a clear message.
+        if to_compute_count == 0:
+            if loaded_from_disk_count > 0 and already_loaded_count == 0:
+                self.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Requested blended image file(s) already exist. Loaded existing file(s) into QGIS.",
+                    level=Qgis.MessageLevel.Info,
+                    duration=5
+                )
+            elif already_loaded_count > 0 and loaded_from_disk_count == 0:
+                self.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Requested blended image file(s) already exist and are already loaded in QGIS.",
+                    level=Qgis.MessageLevel.Info,
+                    duration=5
+                )
+            else:
+                self.iface.messageBar().pushMessage(
+                    "RVT",
+                    "Requested blended image file(s) already exist. Some were loaded from disk and some were already loaded in QGIS.",
+                    level=Qgis.MessageLevel.Info,
+                    duration=6
+                )
+            return
+
+        # Mixed case: some rasters are skipped, some still need computation.
+        if loaded_from_disk_count > 0 or already_loaded_count > 0:
+            self.iface.messageBar().pushMessage(
+                "RVT",
+                (
+                    f"Computing {to_compute_count} raster set(s). "
+                    f"Skipped {loaded_from_disk_count + already_loaded_count} raster set(s) because requested output file(s) already exist."
+                ),
+                level=Qgis.MessageLevel.Info,
+                duration=5
+            )
+        else:
+            self.iface.messageBar().pushMessage(
+                "RVT",
+                "Starting blended image computation...",
+                level=Qgis.Info,
+                duration=3
+            )
+
         task = self.ComputeBlenderTask(
             description="Compute blended image",
-            parent=self
+            parent=self,
+            selected_input_rasters=precheck["to_compute"]
         )
-        # Add task to task manager and start task
         self.tm.addTask(task)
 
-    def compute_blended_image(self):
+    def compute_blended_image(self, selected_input_rasters=None):
         """Compute blended images for selected rasters.
+
+        Parameters
+        ----------
+        selected_input_rasters : list[str] or None
+            Snapshot of input raster names to compute. If None, the method reads
+            the current GUI selection.
 
         Returns
         -------
@@ -1603,14 +1794,11 @@ class QRVT:
             A list of created output file paths on success, or
             "no raster selected" if no input raster was selected.
         """
+        if selected_input_rasters is None:
+            selected_input_rasters = self.dlg.select_input_files.checkedItems()
 
-        # Get selected rasters
-        selected_input_rasters = self.dlg.select_input_files.checkedItems()
-
-        # Clear all messages
         self.iface.messageBar().clearWidgets()
 
-        # Cancel if no raster selected
         if len(selected_input_rasters) == 0:
             return "no raster selected"
 
@@ -2155,9 +2343,9 @@ class QRVT:
 
             # Log
             compute_time = time.time() - start_time
-            self.combination.create_log_file(
+            combination.create_log_file(
                 dem_path=raster_path,
-                combination_name=combination_handle ,
+                combination_name=combination_handle,
                 render_path=blend_img_path,
                 default=self.default,
                 custom_dir=save_dir,
