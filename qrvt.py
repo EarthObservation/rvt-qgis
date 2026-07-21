@@ -24,7 +24,6 @@
 """
 import importlib
 import time
-import subprocess
 import json
 import os
 import sys
@@ -37,13 +36,6 @@ from qgis.PyQt import uic
 
 import traceback
 from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis, QgsMessageLog
-
-try:
-    import scipy
-except:
-    # try to install scipy
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "scipy"])
-    import scipy
 
 import numpy as np
 
