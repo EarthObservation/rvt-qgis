@@ -29,7 +29,7 @@ import os
 import sys
 import webbrowser
 
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
+from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt, QTimer
 from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QDialog
 from qgis.PyQt import uic
@@ -178,12 +178,25 @@ class QRVT:
 
         self.cwd = os.getcwd()
 
-        self.rvt_select_input = {}  # qgis DEM rasters, available in rvt select box
+        # qgis DEM rasters, available in rvt select box
+        self.rvt_select_input = {}  
+        
+        # Indicates that the raster layer list in the dialog is out of date and
+        # should be rebuilt before it is shown or used again.
+        self._raster_layers_dirty = True
 
-        # if a layer is added / removed update the available raster layers in the
-        # selection dialog
-        QgsProject.instance().layersAdded.connect(lambda: self.load_raster_layers())
-        QgsProject.instance().layersRemoved.connect(lambda: self.load_raster_layers())
+        # Only refresh the raster selector when the dialog is visible.
+        # During project load the dialog is hidden, so layer change notifications
+        # only mark the list as stale. Once the dialog is visible, the timer
+        # coalesces rapid add/remove events and rebuilds the list once.
+        self._reload_timer = QTimer(self.dlg)
+        self._reload_timer.setSingleShot(True)
+        self._reload_timer.setInterval(200)
+        self._reload_timer.timeout.connect(self._refresh_visible_raster_layers)
+
+        project = QgsProject.instance()
+        project.layersAdded.connect(self._on_project_layers_changed)
+        project.layersRemoved.connect(self._on_project_layers_changed)
 
         # read settings from .json file and fill visualizations dialog
         self.default = rvt.default.DefaultValues()
@@ -468,6 +481,18 @@ class QRVT:
                 self.dlg.select_input_files.addItem(layer_name)
                 rvt_select_input[layer_name] = layer_path
         self.rvt_select_input = rvt_select_input
+        self._raster_layers_dirty = False
+
+    def _on_project_layers_changed(self, *_):
+        """Mark the raster list stale and trigger a delayed refresh only when the dialog is visible."""
+        self._raster_layers_dirty = True
+        if self.dlg.isVisible():
+            self._reload_timer.start()
+
+    def _refresh_visible_raster_layers(self):
+        """Refresh the raster list only when the dialog is visible and the list is stale."""
+        if self.dlg.isVisible() and self._raster_layers_dirty:
+            self.load_raster_layers()
 
     def activate_all_dem(self):
         self.dlg.select_input_files.selectAllOptions()
