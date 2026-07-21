@@ -23,40 +23,50 @@
  ***************************************************************************/
 """
 import importlib
-import time
 import json
 import os
 import sys
+import time
 import webbrowser
 
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt, QTimer
-from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QDialog
 from qgis.PyQt import uic
+from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator, QTimer, Qt
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction, QDialog, QFileDialog, QProgressBar
 
-import traceback
-from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis, QgsMessageLog
+from qgis.core import QgsApplication, QgsProject, QgsTask, Qgis
 
 import numpy as np
 
-# Initialize Qt resources from file resources.py
+# Initialize Qt resources from file resources.py (kept as wildcard for Qt resources)
 from .resources import *
 
-# Import the code for the dialog
+# Import the code for the dialog and processing provider
 from .qrvt_dialog import QRVTDialog
+from .processing_provider.provider import Provider
 
+# Ensure local `rvt` submodules are imported
 sys.path.append(os.path.dirname(__file__))
 import rvt.tile
-importlib.reload(rvt.tile)
 import rvt.default
-importlib.reload(rvt.default)
 import rvt.blend
-importlib.reload(rvt.blend)
 import rvt.blend_func
-importlib.reload(rvt.blend_func)
 import rvt.vis
-importlib.reload(rvt.vis)
-from .processing_provider.provider import Provider
+
+# Reload local `rvt` modules when running in development mode so code
+# changes are picked up without restarting QGIS. Enable this temporarily
+# by setting the `QRVT_DEV` environment variable to `'1'`, or persistently
+# by setting the QSettings key `QRVT/DEV` to `'1'`, `'true'` or `'yes'`.
+# WARNING: `importlib.reload()` may leave stale references or inconsistent
+# state in long-lived objects — use only for interactive development.
+dev_env = os.environ.get('QRVT_DEV', '')
+dev_qsettings = str(QSettings().value('QRVT/DEV', '')).lower()
+if dev_env == '1' or dev_qsettings in ('1', 'true', 'yes'):
+    importlib.reload(rvt.tile)
+    importlib.reload(rvt.default)
+    importlib.reload(rvt.blend)
+    importlib.reload(rvt.blend_func)
+    importlib.reload(rvt.vis)
 
 
 class LoadingScreenDlg:
