@@ -5,7 +5,7 @@ name=Relief Visualization Toolbox
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Relief visualization toolbox (RVT) plugin helps scientists visualise digital elevation model datasets.
-version=1.0.0
+version=1.0.1
 author=ZRC SAZU and University of Ljubljana (UL FGG)
 email=zkokalj@zrc-sazu.si
 
@@ -25,7 +25,13 @@ repository=https://github.com/EarthObservation/rvt-qgis
 
 # Recommended items:
 
-changelog=[1.0.0] - 2026.04.10:
+changelog=[1.0.1] - 2026.07.21:
+    - Fixed initial dialog layer loading when the plugin starts
+    - Optimized imports and removed unused QGIS/PyQt imports in qrvt.py
+    - Added development mode guard for reloading local rvt modules via `QRVT_DEV` or `QRVT/DEV`
+    - Improved dependency handling notes for development and packaging
+
+    [1.0.0] - 2026.04.10:
     - Migration to QGIS4 and Qt6
     - New reference for citing (Kokalj et al., 2025)
     - Updated metadata and "About" dialog window
