@@ -23,48 +23,50 @@
  ***************************************************************************/
 """
 import importlib
-import time
-import subprocess
 import json
 import os
 import sys
+import time
 import webbrowser
 
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
-from qgis.PyQt.QtGui import QIcon, QMovie, QPalette, QColor
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QProgressBar, QDialog
 from qgis.PyQt import uic
+from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator, QTimer, Qt
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction, QDialog, QFileDialog, QProgressBar
 
-import traceback
-from qgis.core import QgsProject, QgsTask, QgsApplication, Qgis, QgsMessageLog
-
-try:
-    import scipy
-except:
-    # try to install scipy
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "scipy"])
-    import scipy
+from qgis.core import QgsApplication, QgsProject, QgsTask, Qgis
 
 import numpy as np
 
-# Initialize Qt resources from file resources.py
+# Initialize Qt resources from file resources.py (kept as wildcard for Qt resources)
 from .resources import *
 
-# Import the code for the dialog
+# Import the code for the dialog and processing provider
 from .qrvt_dialog import QRVTDialog
+from .processing_provider.provider import Provider
 
+# Ensure local `rvt` submodules are imported
 sys.path.append(os.path.dirname(__file__))
 import rvt.tile
-importlib.reload(rvt.tile)
 import rvt.default
-importlib.reload(rvt.default)
 import rvt.blend
-importlib.reload(rvt.blend)
 import rvt.blend_func
-importlib.reload(rvt.blend_func)
 import rvt.vis
-importlib.reload(rvt.vis)
-from .processing_provider.provider import Provider
+
+# Reload local `rvt` modules when running in development mode so code
+# changes are picked up without restarting QGIS. Enable this temporarily
+# by setting the `QRVT_DEV` environment variable to `'1'`, or persistently
+# by setting the QSettings key `QRVT/DEV` to `'1'`, `'true'` or `'yes'`.
+# WARNING: `importlib.reload()` may leave stale references or inconsistent
+# state in long-lived objects — use only for interactive development.
+dev_env = os.environ.get('QRVT_DEV', '')
+dev_qsettings = str(QSettings().value('QRVT/DEV', '')).lower()
+if dev_env == '1' or dev_qsettings in ('1', 'true', 'yes'):
+    importlib.reload(rvt.tile)
+    importlib.reload(rvt.default)
+    importlib.reload(rvt.blend)
+    importlib.reload(rvt.blend_func)
+    importlib.reload(rvt.vis)
 
 
 class LoadingScreenDlg:
@@ -186,12 +188,25 @@ class QRVT:
 
         self.cwd = os.getcwd()
 
-        self.rvt_select_input = {}  # qgis DEM rasters, available in rvt select box
+        # qgis DEM rasters, available in rvt select box
+        self.rvt_select_input = {}  
+        
+        # Indicates that the raster layer list in the dialog is out of date and
+        # should be rebuilt before it is shown or used again.
+        self._raster_layers_dirty = True
 
-        # if a layer is added / removed update the available raster layers in the
-        # selection dialog
-        QgsProject.instance().layersAdded.connect(lambda: self.load_raster_layers())
-        QgsProject.instance().layersRemoved.connect(lambda: self.load_raster_layers())
+        # Only refresh the raster selector when the dialog is visible.
+        # During project load the dialog is hidden, so layer change notifications
+        # only mark the list as stale. Once the dialog is visible, the timer
+        # coalesces rapid add/remove events and rebuilds the list once.
+        self._reload_timer = QTimer(self.dlg)
+        self._reload_timer.setSingleShot(True)
+        self._reload_timer.setInterval(200)
+        self._reload_timer.timeout.connect(self._refresh_visible_raster_layers)
+
+        project = QgsProject.instance()
+        project.layersAdded.connect(self._on_project_layers_changed)
+        project.layersRemoved.connect(self._on_project_layers_changed)
 
         # read settings from .json file and fill visualizations dialog
         self.default = rvt.default.DefaultValues()
@@ -476,6 +491,18 @@ class QRVT:
                 self.dlg.select_input_files.addItem(layer_name)
                 rvt_select_input[layer_name] = layer_path
         self.rvt_select_input = rvt_select_input
+        self._raster_layers_dirty = False
+
+    def _on_project_layers_changed(self, *_):
+        """Mark the raster list stale and trigger a delayed refresh only when the dialog is visible."""
+        self._raster_layers_dirty = True
+        if self.dlg.isVisible():
+            self._reload_timer.start()
+
+    def _refresh_visible_raster_layers(self):
+        """Refresh the raster list only when the dialog is visible and the list is stale."""
+        if self.dlg.isVisible() and self._raster_layers_dirty:
+            self.load_raster_layers()
 
     def activate_all_dem(self):
         self.dlg.select_input_files.selectAllOptions()

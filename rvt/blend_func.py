@@ -23,8 +23,15 @@ Copyright:
 import warnings
 
 import numpy as np
-from matplotlib.cm import get_cmap
 from matplotlib.colors import LinearSegmentedColormap
+
+try:
+    from matplotlib.cm import get_cmap
+except ImportError:
+    from matplotlib import colormaps
+
+    def get_cmap(name):
+        return colormaps.get_cmap(name)
 
 
 def gray_scale_to_color_ramp(gray_scale, colormap, min_colormap_cut=None, max_colormap_cut=None, alpha=False,

@@ -23,6 +23,53 @@
  This script initializes the plugin, making it known to QGIS.
 """
 
+import importlib
+
+
+DEPENDENCIES = {
+    "Matplotlib": {
+        "modules": (
+            "matplotlib.cm",
+            "matplotlib.colors",
+        ),
+        "osgeo4w_package": "python3-matplotlib",
+    },
+    "SciPy": {
+        "modules": (
+            "scipy.interpolate",
+            "scipy.ndimage",
+            "scipy.spatial",
+        ),
+        "osgeo4w_package": "python3-scipy",
+    },
+}
+
+
+def _check_dependencies():
+    """Return information about unavailable Python dependencies."""
+    unavailable = []
+
+    for dependency_name, dependency in DEPENDENCIES.items():
+        error = None
+
+        for module_name in dependency["modules"]:
+            try:
+                importlib.import_module(module_name)
+            except Exception as exc:  # pylint: disable=broad-except
+                error = exc
+                break
+
+        if error is not None:
+            unavailable.append(
+                {
+                    "name": dependency_name,
+                    "osgeo4w_package": dependency["osgeo4w_package"],
+                    "error": error,
+                }
+            )
+
+    return unavailable
+
 
 # noinspection PyPep8Naming
 def classFactory(iface):  # pylint: disable=invalid-name
@@ -31,6 +78,51 @@ def classFactory(iface):  # pylint: disable=invalid-name
     :param iface: A QGIS interface instance.
     :type iface: QgsInterface
     """
-    #
+    unavailable = _check_dependencies()
+
+    if unavailable:
+        from qgis.PyQt.QtWidgets import QMessageBox
+
+        package_lines = "\n".join(
+            f"• {item['name']} — OSGeo4W package: {item['osgeo4w_package']}"
+            for item in unavailable
+        )
+
+        error_lines = "\n".join(
+            f"{item['name']}: {type(item['error']).__name__}: {item['error']}"
+            for item in unavailable
+        )
+
+        message = (
+            "Relief Visualization Toolbox cannot be loaded because one or more "
+            "required Python packages are missing or cannot be imported.\n\n"
+            f"{package_lines}\n\n"
+            "To install the packages:\n\n"
+            "A) Reinstall a standalone version.\n\n"
+            "or\n\n"
+            "B) Follow these steps using the Online (OSGeo4W) installer:\n"
+            "  1. Close QGIS.\n"
+            "  2. Run the OSGeo4W installer.\n"
+            "  3. Choose Advanced Install.\n"
+            "  4. Open the package-selection screen.\n"
+            "  5. Search for the package names shown above.\n"
+            "  6. Change Skip to the available version.\n"
+            "  7. Complete the installation and restart QGIS.\n\n"
+            "Technical details:\n"
+            f"  {error_lines}"
+        )
+
+        QMessageBox.critical(
+            iface.mainWindow(),
+            "RVT — missing Python dependencies",
+            message,
+        )
+
+        missing_names = ", ".join(item["name"] for item in unavailable)
+        raise ImportError(
+            f"RVT cannot load because these dependencies are unavailable: "
+            f"{missing_names}"
+        )
+
     from .qrvt import QRVT
     return QRVT(iface)

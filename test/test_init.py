@@ -12,8 +12,17 @@ import os
 import unittest
 import logging
 import configparser
+import importlib.util
+from unittest import mock
 
 LOGGER = logging.getLogger('QGIS')
+
+PLUGIN_INIT_PATH = os.path.abspath(os.path.join(
+    os.path.dirname(__file__), os.pardir, '__init__.py'))
+PLUGIN_INIT_SPEC = importlib.util.spec_from_file_location(
+    'rvt_qgis_init', PLUGIN_INIT_PATH)
+PLUGIN_INIT = importlib.util.module_from_spec(PLUGIN_INIT_SPEC)
+PLUGIN_INIT_SPEC.loader.exec_module(PLUGIN_INIT)
 
 
 class TestInit(unittest.TestCase):
@@ -26,6 +35,13 @@ class TestInit(unittest.TestCase):
              plugins/validator.py
 
     """
+
+    def test_check_dependencies_reports_missing_packages(self):
+        """The initializer should report both required Python packages."""
+        with mock.patch.object(PLUGIN_INIT.importlib, 'import_module', side_effect=ImportError('boom')):
+            unavailable = PLUGIN_INIT._check_dependencies()
+
+        self.assertEqual([item['name'] for item in unavailable], ['Matplotlib', 'SciPy'])
 
     def test_read_init(self):
         """Test that the plugin __init__ will validate on plugins.qgis.org."""
