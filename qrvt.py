@@ -184,10 +184,9 @@ class QRVT:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&Relief Visualization Toolbox')
-        if self.iface:
-            self.toolbar = self.iface.addToolBar(u'Relief Visualization Toolbox')
-            self.toolbar.setObjectName(u'Relief Visualization Toolbox')
+
+        # Defines the label used for the plugin’s submenu under QGIS’s Raster menu
+        self.menu = self.tr('&Relief Visualization Toolbox')
 
         self.cwd = os.getcwd()
 
@@ -401,8 +400,7 @@ class QRVT:
         """Removes the plugin menu item and icon from QGIS GUI."""
         QgsApplication.processingRegistry().removeProvider(self.provider)
         for action in self.actions:
-            self.iface.removePluginRasterMenu(self.menu,
-                                              action)
+            self.iface.removePluginRasterMenu(self.menu, action)
             self.iface.removeToolBarIcon(action)
 
     def run(self):
