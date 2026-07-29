@@ -41,9 +41,8 @@ import numpy as np
 # Initialize Qt resources from file resources.py
 from . import resources
 
-# Import the code for the dialog and processing provider
+# Import the code for the dialog
 from .qrvt_dialog import QRVTDialog
-from .processing_provider.provider import Provider
 
 # Ensure local `rvt` submodules are imported
 sys.path.append(os.path.dirname(__file__))
@@ -52,6 +51,10 @@ import rvt.default
 import rvt.blend
 import rvt.blend_func
 import rvt.vis
+
+# The processing algorithms import the bundled `rvt` package, so the provider
+# must be imported only after that package is available on `sys.path`.
+from .processing_provider.provider import Provider
 
 # Reload local `rvt` modules when running in development mode so code
 # changes are picked up without restarting QGIS. Enable this temporarily
