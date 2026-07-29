@@ -34,7 +34,7 @@ from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator, QTimer, Q
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QDialog, QFileDialog, QProgressBar
 
-from qgis.core import QgsApplication, QgsProject, QgsTask, Qgis
+from qgis.core import QgsApplication, QgsMessageLog, QgsProject, QgsTask, Qgis
 
 import numpy as np
 
@@ -1037,8 +1037,14 @@ class QRVT:
             try:
                 if os.path.abspath(layer.dataProvider().dataSourceUri()) == layer_path:
                     return True
-            except Exception:
-                continue
+            except RuntimeError as error:
+                # A layer can be removed while QGIS is iterating over the
+                # project layer snapshot, leaving its wrapped C++ object invalid.
+                QgsMessageLog.logMessage(
+                    "Could not inspect a project layer: {}".format(error),
+                    "RVT",
+                    Qgis.MessageLevel.Warning,
+                )
         return False
 
     def get_requested_blend_output_paths(self, raster_name, save_dir, combination_handle=None):
@@ -2494,20 +2500,41 @@ class QRVT:
         return outputs
 
     def save_plugin_size(self, json_path):
+        """Persist the current plugin dialog size."""
         try:
-            dat = open(json_path, "w")
             size_dlg = self.dlg.size()
             out_json = {"width": size_dlg.width(), "height": size_dlg.height()}
-            json.dump(out_json, dat)
-            dat.close()
-        except:
-            pass
+            with open(json_path, "w", encoding="utf-8") as dat:
+                json.dump(out_json, dat)
+        except OSError as error:
+            QgsMessageLog.logMessage(
+                "Could not save the plugin window size: {}".format(error),
+                "RVT",
+                Qgis.MessageLevel.Warning,
+            )
 
     def load_plugin_size(self, json_path):
+        """Restore the plugin dialog size from a JSON settings file."""
         try:
-            dat = open(json_path, "r")
-            in_json = json.load(dat)
-            dat.close()
-            self.dlg.resize(in_json["width"], in_json["height"])
-        except:
-            pass
+            with open(json_path, "r", encoding="utf-8") as dat:
+                in_json = json.load(dat)
+
+            width = in_json["width"]
+            height = in_json["height"]
+            if (
+                isinstance(width, bool)
+                or not isinstance(width, int)
+                or isinstance(height, bool)
+                or not isinstance(height, int)
+                or width <= 0
+                or height <= 0
+            ):
+                raise ValueError("window dimensions must be positive integers")
+
+            self.dlg.resize(width, height)
+        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError, OverflowError) as error:
+            QgsMessageLog.logMessage(
+                "Could not load the plugin window size: {}".format(error),
+                "RVT",
+                Qgis.MessageLevel.Warning,
+            )
