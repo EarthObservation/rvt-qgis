@@ -38,8 +38,8 @@ from qgis.core import QgsApplication, QgsMessageLog, QgsProject, QgsTask, Qgis
 
 import numpy as np
 
-# Initialize Qt resources from file resources.py (kept as wildcard for Qt resources)
-from .resources import *
+# Initialize Qt resources from file resources.py
+from . import resources
 
 # Import the code for the dialog and processing provider
 from .qrvt_dialog import QRVTDialog
@@ -873,7 +873,7 @@ class QRVT:
                     self.combination.name = new_combination_name
                     self.combination.save_to_file(json_path)
                     self.dlg.line_combination_name.setText("")
-                except:
+                except Exception:
                     self.iface.messageBar().pushMessage("RVT", "Can't save combination JSON file!", level=Qgis.MessageLevel.Warning)
         else:
             self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.MessageLevel.Warning)
@@ -895,7 +895,7 @@ class QRVT:
                     self.set_combination_by_handle(combination.name)
                     self.load_combination2dlg(combination=combination)
                     self.combination = combination
-            except:
+            except Exception:
                 self.iface.messageBar().pushMessage("RVT", "Can't read combination JSON file!", level=Qgis.MessageLevel.Warning)
 
     def check_combination_change(self):
@@ -1162,7 +1162,7 @@ class QRVT:
                 radius = int(self.dlg.line_fill_nan_rad.text())
                 scale = float(self.dlg.line_fill_nan_scl.text())
                 return "idw_{}_{}".format(radius, scale)
-            except:
+            except ValueError:
                 return "idw"
         elif fill_method == "kd_tree":
             return "K-D Tree"
@@ -1368,7 +1368,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:  # something went wrong
+                except Exception:  # something went wrong
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
@@ -1679,7 +1679,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:
+                except Exception:
                     self.parent.is_calculating = False
                     return False
 
@@ -1966,7 +1966,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:  # something went wrong
+                except Exception:  # something went wrong
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
@@ -1989,13 +1989,13 @@ class QRVT:
                         cut_off_min = "min"
                         try:
                             cut_off_min = float(self.parent.dlg.line_cutoff_min.text())
-                        except:
+                        except ValueError:
                             no_min = True
                         no_max = False
                         cut_off_max = "max"
                         try:
                             cut_off_max = float(self.parent.dlg.line_cutoff_max.text())
-                        except:
+                        except ValueError:
                             no_max = True
                         cut_off_norm = bool(self.parent.dlg.check_cutoff_norm.isChecked())
                         cut_off_8bit = bool(self.parent.dlg.check_cutoff_8bit.isChecked())
@@ -2067,13 +2067,13 @@ class QRVT:
             cut_off_min = "min"
             try:
                 cut_off_min = float(self.dlg.line_cutoff_min.text())
-            except:
+            except ValueError:
                 no_min = True
             no_max = False
             cut_off_max = "max"
             try:
                 cut_off_max = float(self.dlg.line_cutoff_max.text())
-            except:
+            except ValueError:
                 no_max = True
             cut_off_norm = bool(self.dlg.check_cutoff_norm.isChecked())
             cut_off_8bit = bool(self.dlg.check_cutoff_8bit.isChecked())
@@ -2160,7 +2160,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:  # something went wrong
+                except Exception:  # something went wrong
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
