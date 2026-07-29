@@ -30,6 +30,7 @@ changelog=[1.0.1] - 2026.07.21:
     - Optimized imports and removed unused QGIS/PyQt imports in qrvt.py
     - Added development mode guard for reloading local rvt modules via `QRVT_DEV` or `QRVT/DEV`
     - Improved dependency handling notes for development and packaging
+    - Fixed critical issues raised by plugin manager
 
     [1.0.0] - 2026.04.10:
     - Migration to QGIS4 and Qt6

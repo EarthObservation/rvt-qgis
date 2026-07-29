@@ -88,7 +88,7 @@ class LoadingScreenDlg:
         self.widget.setTextVisible(False)
         self.widget.setMaximumWidth(180)
         self.message.layout().addWidget(self.widget)
-        self.iface.messageBar().pushWidget(self.message, Qgis.Info)
+        self.iface.messageBar().pushWidget(self.message, Qgis.MessageLevel.Info)
 
     def stop_animation(self):
         if self.message is not None:
@@ -1575,23 +1575,26 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT", "Visualizations calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Wait you are already calculating something!", level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculation Failed!",
-                                                               level=Qgis.MessageLevel.Critical)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Visualizations calculation Failed!", level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_visualizations_clicked(self):
         """Start button clicked (Compute visualization button)."""
-        self.iface.messageBar().pushMessage("RVT", "Starting visualizations...", level=Qgis.Info, duration=3)
+        self.iface.messageBar().pushMessage(
+            "RVT", "Starting visualizations...", level=Qgis.MessageLevel.Info, duration=3)
         task = self.ComputeVisualizationsTask(description="Compute visualizations", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1802,7 +1805,7 @@ class QRVT:
             self.iface.messageBar().pushMessage(
                 "RVT",
                 "Starting blended image computation...",
-                level=Qgis.Info,
+                level=Qgis.MessageLevel.Info,
                 duration=3
             )
 
@@ -2018,27 +2021,30 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT", "Cut-off calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Wait you are already calculating something!", level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 elif self.no_selected_parameters:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select any parameters!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select any parameters!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculation Failed!",
-                                                               level=Qgis.MessageLevel.Critical)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Cut-off calculation Failed!", level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_cut_off_norm_8bit_clicked(self):
         """Start button clicked (cut_off_norm_8bit start button)."""
-        self.iface.messageBar().pushMessage("RVT", "Starting cut-off computation...", level=Qgis.Info, duration=3)
+        self.iface.messageBar().pushMessage(
+            "RVT", "Starting cut-off computation...", level=Qgis.MessageLevel.Info, duration=3)
         task = self.ComputeCutoff(description="Compute Cut-off", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -2188,23 +2194,26 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Fill no data calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT", "Fill no data calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Wait you are already calculating something!", level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Fill no-data calculation Failed!",
-                                                               level=Qgis.MessageLevel.Critical)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Fill no-data calculation Failed!", level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_fill_no_data_clicked(self):
         """Start button clicked (compute_fill_no_data start button)."""
-        self.iface.messageBar().pushMessage("RVT", "Starting fill no-data computation...", level=Qgis.Info, duration=3)
+        self.iface.messageBar().pushMessage(
+            "RVT", "Starting fill no-data computation...", level=Qgis.MessageLevel.Info, duration=3)
         task = self.ComputeFillNoData(description="Compute fill no data", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
