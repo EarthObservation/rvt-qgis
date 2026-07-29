@@ -5,8 +5,8 @@ rem Source folder (relative to this .bat file)
 set "SRC=%~dp0zip_build\rvt-qgis"
 
 rem Target folders
-set "DST1=C:\Users\ncoz\AppData\Roaming\QGIS\QGIS4\profiles\plugin-test\python\plugins\rvt-qgis"
-set "DST2=C:\Users\ncoz\AppData\Roaming\QGIS\QGIS3\profiles\plugin-test\python\plugins\rvt-qgis"
+set "DST1=C:\Users\ncoz\AppData\Roaming\QGIS\QGIS4\profiles\plugin-dev\python\plugins\rvt-qgis"
+set "DST2=C:\Users\ncoz\AppData\Roaming\QGIS\QGIS3\profiles\plugin-dev\python\plugins\rvt-qgis"
 
 rem Check source exists
 if not exist "%SRC%\" (
