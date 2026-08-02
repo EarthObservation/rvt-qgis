@@ -538,8 +538,8 @@ class QRVT:
         self.dlg.group_local_relief.setChecked(True)
         self.dlg.group_sky_view.setChecked(True)
         self.dlg.group_anisotropic.setChecked(True)
-        self.dlg.group_openess_pos.setChecked(True)
-        self.dlg.group_openess_neg.setChecked(True)
+        self.dlg.group_openness_pos.setChecked(True)
+        self.dlg.group_openness_neg.setChecked(True)
         # self.dlg.group_illumination.setChecked(True)
         self.dlg.group_local_dominance.setChecked(True)
         self.dlg.group_multi_relief.setChecked(True)
@@ -553,8 +553,8 @@ class QRVT:
         self.dlg.group_local_relief.setChecked(False)
         self.dlg.group_sky_view.setChecked(False)
         self.dlg.group_anisotropic.setChecked(False)
-        self.dlg.group_openess_pos.setChecked(False)
-        self.dlg.group_openess_neg.setChecked(False)
+        self.dlg.group_openness_pos.setChecked(False)
+        self.dlg.group_openness_neg.setChecked(False)
         # self.dlg.group_illumination.setChecked(False)
         self.dlg.group_local_dominance.setChecked(False)
         self.dlg.group_multi_relief.setChecked(False)
@@ -741,9 +741,9 @@ class QRVT:
             if self.dlg_combo_vis_list[i_layer].currentText() == "Anisotropic Sky-View Factor":
                 self.dlg.group_anisotropic.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Openness - Positive":
-                self.dlg.group_openess_pos.setChecked(True)
+                self.dlg.group_openness_pos.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Openness - Negative":
-                self.dlg.group_openess_neg.setChecked(True)
+                self.dlg.group_openness_neg.setChecked(True)
             # if self.dlg_combo_vis_list[i_layer].currentText() == "Sky illumination":
             #     self.dlg.group_illumination.setChecked(True)
             if self.dlg_combo_vis_list[i_layer].currentText() == "Local dominance":
@@ -1207,8 +1207,8 @@ class QRVT:
         if index_combo_asvf_level >= 0:
             self.dlg.combo_asvf_level.setCurrentIndex(index_combo_asvf_level)
         self.dlg.line_asvf_dir.setText(str(self.default.asvf_dir))
-        self.dlg.group_openess_pos.setChecked(bool(self.default.pos_opns_compute))
-        self.dlg.group_openess_neg.setChecked(bool(self.default.neg_opns_compute))
+        self.dlg.group_openness_pos.setChecked(bool(self.default.pos_opns_compute))
+        self.dlg.group_openness_neg.setChecked(bool(self.default.neg_opns_compute))
         # self.dlg.group_illumination.setChecked(bool(self.default.sim_compute))
         # index_combo_sim_sky_mod = self.dlg.combo_sim_sky_mod.findText(self.default.sim_sky_mod)
         # if index_combo_sim_sky_mod >= 0:
@@ -1288,8 +1288,8 @@ class QRVT:
         elif self.dlg.combo_asvf_level.currentText() == str("high"):
             self.default.asvf_level = 2
         self.default.asvf_dir = int(self.dlg.line_asvf_dir.text())
-        self.default.pos_opns_compute = int(self.dlg.group_openess_pos.isChecked())
-        self.default.neg_opns_compute = int(self.dlg.group_openess_neg.isChecked())
+        self.default.pos_opns_compute = int(self.dlg.group_openness_pos.isChecked())
+        self.default.neg_opns_compute = int(self.dlg.group_openness_neg.isChecked())
         # self.default.sim_compute = int(self.dlg.group_illumination.isChecked())
         # self.default.sim_sky_mod = str(self.dlg.combo_sim_sky_mod.currentText())
         # self.default.sim_nr_dir = int(self.dlg.combo_sim_nr_dir.currentText())
