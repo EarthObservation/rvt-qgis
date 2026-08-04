@@ -34,16 +34,15 @@ from qgis.PyQt.QtCore import QCoreApplication, QSettings, QTranslator, QTimer, Q
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QDialog, QFileDialog, QProgressBar
 
-from qgis.core import QgsApplication, QgsProject, QgsTask, Qgis
+from qgis.core import QgsApplication, QgsMessageLog, QgsProject, QgsTask, Qgis
 
 import numpy as np
 
-# Initialize Qt resources from file resources.py (kept as wildcard for Qt resources)
-from .resources import *
+# Initialize Qt resources from file resources.py
+from . import resources
 
-# Import the code for the dialog and processing provider
+# Import the code for the dialog
 from .qrvt_dialog import QRVTDialog
-from .processing_provider.provider import Provider
 
 # Ensure local `rvt` submodules are imported
 sys.path.append(os.path.dirname(__file__))
@@ -52,6 +51,10 @@ import rvt.default
 import rvt.blend
 import rvt.blend_func
 import rvt.vis
+
+# The processing algorithms import the bundled `rvt` package, so the provider
+# must be imported only after that package is available on `sys.path`.
+from .processing_provider.provider import Provider
 
 # Reload local `rvt` modules when running in development mode so code
 # changes are picked up without restarting QGIS. Enable this temporarily
@@ -85,7 +88,7 @@ class LoadingScreenDlg:
         self.widget.setTextVisible(False)
         self.widget.setMaximumWidth(180)
         self.message.layout().addWidget(self.widget)
-        self.iface.messageBar().pushWidget(self.message, Qgis.Info)
+        self.iface.messageBar().pushWidget(self.message, Qgis.MessageLevel.Info)
 
     def stop_animation(self):
         if self.message is not None:
@@ -181,10 +184,9 @@ class QRVT:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&Relief Visualization Toolbox')
-        if self.iface:
-            self.toolbar = self.iface.addToolBar(u'Relief Visualization Toolbox')
-            self.toolbar.setObjectName(u'Relief Visualization Toolbox')
+
+        # Defines the label used for the plugin’s submenu under QGIS’s Raster menu
+        self.menu = self.tr('&Relief Visualization Toolbox')
 
         self.cwd = os.getcwd()
 
@@ -398,8 +400,7 @@ class QRVT:
         """Removes the plugin menu item and icon from QGIS GUI."""
         QgsApplication.processingRegistry().removeProvider(self.provider)
         for action in self.actions:
-            self.iface.removePluginRasterMenu(self.menu,
-                                              action)
+            self.iface.removePluginRasterMenu(self.menu, action)
             self.iface.removeToolBarIcon(action)
 
     def run(self):
@@ -873,7 +874,7 @@ class QRVT:
                     self.combination.name = new_combination_name
                     self.combination.save_to_file(json_path)
                     self.dlg.line_combination_name.setText("")
-                except:
+                except Exception:
                     self.iface.messageBar().pushMessage("RVT", "Can't save combination JSON file!", level=Qgis.MessageLevel.Warning)
         else:
             self.iface.messageBar().pushMessage("RVT", "Combination name is empty!", level=Qgis.MessageLevel.Warning)
@@ -895,7 +896,7 @@ class QRVT:
                     self.set_combination_by_handle(combination.name)
                     self.load_combination2dlg(combination=combination)
                     self.combination = combination
-            except:
+            except Exception:
                 self.iface.messageBar().pushMessage("RVT", "Can't read combination JSON file!", level=Qgis.MessageLevel.Warning)
 
     def check_combination_change(self):
@@ -1037,8 +1038,14 @@ class QRVT:
             try:
                 if os.path.abspath(layer.dataProvider().dataSourceUri()) == layer_path:
                     return True
-            except Exception:
-                continue
+            except RuntimeError as error:
+                # A layer can be removed while QGIS is iterating over the
+                # project layer snapshot, leaving its wrapped C++ object invalid.
+                QgsMessageLog.logMessage(
+                    "Could not inspect a project layer: {}".format(error),
+                    "RVT",
+                    Qgis.MessageLevel.Warning,
+                )
         return False
 
     def get_requested_blend_output_paths(self, raster_name, save_dir, combination_handle=None):
@@ -1156,7 +1163,7 @@ class QRVT:
                 radius = int(self.dlg.line_fill_nan_rad.text())
                 scale = float(self.dlg.line_fill_nan_scl.text())
                 return "idw_{}_{}".format(radius, scale)
-            except:
+            except ValueError:
                 return "idw"
         elif fill_method == "kd_tree":
             return "K-D Tree"
@@ -1362,7 +1369,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:  # something went wrong
+                except Exception:  # something went wrong
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
@@ -1568,23 +1575,26 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT", "Visualizations calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Wait you are already calculating something!", level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Visualizations calculation Failed!",
-                                                               level=Qgis.MessageLevel.Critical)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Visualizations calculation Failed!", level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_visualizations_clicked(self):
         """Start button clicked (Compute visualization button)."""
-        self.iface.messageBar().pushMessage("RVT", "Starting visualizations...", level=Qgis.Info, duration=3)
+        self.iface.messageBar().pushMessage(
+            "RVT", "Starting visualizations...", level=Qgis.MessageLevel.Info, duration=3)
         task = self.ComputeVisualizationsTask(description="Compute visualizations", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -1673,7 +1683,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:
+                except Exception:
                     self.parent.is_calculating = False
                     return False
 
@@ -1795,7 +1805,7 @@ class QRVT:
             self.iface.messageBar().pushMessage(
                 "RVT",
                 "Starting blended image computation...",
-                level=Qgis.Info,
+                level=Qgis.MessageLevel.Info,
                 duration=3
             )
 
@@ -1960,7 +1970,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:  # something went wrong
+                except Exception:  # something went wrong
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
@@ -1983,13 +1993,13 @@ class QRVT:
                         cut_off_min = "min"
                         try:
                             cut_off_min = float(self.parent.dlg.line_cutoff_min.text())
-                        except:
+                        except ValueError:
                             no_min = True
                         no_max = False
                         cut_off_max = "max"
                         try:
                             cut_off_max = float(self.parent.dlg.line_cutoff_max.text())
-                        except:
+                        except ValueError:
                             no_max = True
                         cut_off_norm = bool(self.parent.dlg.check_cutoff_norm.isChecked())
                         cut_off_8bit = bool(self.parent.dlg.check_cutoff_8bit.isChecked())
@@ -2011,27 +2021,30 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT", "Cut-off calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Wait you are already calculating something!", level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 elif self.no_selected_parameters:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select any parameters!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select any parameters!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Cut-off calculation Failed!",
-                                                               level=Qgis.MessageLevel.Critical)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Cut-off calculation Failed!", level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_cut_off_norm_8bit_clicked(self):
         """Start button clicked (cut_off_norm_8bit start button)."""
-        self.iface.messageBar().pushMessage("RVT", "Starting cut-off computation...", level=Qgis.Info, duration=3)
+        self.iface.messageBar().pushMessage(
+            "RVT", "Starting cut-off computation...", level=Qgis.MessageLevel.Info, duration=3)
         task = self.ComputeCutoff(description="Compute Cut-off", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -2061,13 +2074,13 @@ class QRVT:
             cut_off_min = "min"
             try:
                 cut_off_min = float(self.dlg.line_cutoff_min.text())
-            except:
+            except ValueError:
                 no_min = True
             no_max = False
             cut_off_max = "max"
             try:
                 cut_off_max = float(self.dlg.line_cutoff_max.text())
-            except:
+            except ValueError:
                 no_max = True
             cut_off_norm = bool(self.dlg.check_cutoff_norm.isChecked())
             cut_off_8bit = bool(self.dlg.check_cutoff_8bit.isChecked())
@@ -2154,7 +2167,7 @@ class QRVT:
                         self.no_raster = False
                         self.parent.is_calculating = False
                         return True
-                except:  # something went wrong
+                except Exception:  # something went wrong
                     return False
 
         def finished(self, result):  # when finished close loading dlg and load rasters (visualizations) into Qgis
@@ -2181,23 +2194,26 @@ class QRVT:
 
                 self.loading_screen.stop_animation()
                 self.parent.is_calculating = False
-                self.parent.iface.messageBar().pushMessage("RVT", "Fill no data calculated!", level=Qgis.MessageLevel.Success)
+                self.parent.iface.messageBar().pushMessage(
+                    "RVT", "Fill no data calculated!", level=Qgis.MessageLevel.Success)
             else:  # if self.run returns False
                 self.loading_screen.stop_animation()
                 if self.is_calculating:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Wait you are already calculating something!",
-                                                               level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Wait you are already calculating something!", level=Qgis.MessageLevel.Warning)
                 elif self.no_raster:
-                    self.parent.iface.messageBar().pushMessage("RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "You didn't select raster!", level=Qgis.MessageLevel.Warning)
                     self.parent.is_calculating = False
                 else:
-                    self.parent.iface.messageBar().pushMessage("RVT", "Fill no-data calculation Failed!",
-                                                               level=Qgis.MessageLevel.Critical)
+                    self.parent.iface.messageBar().pushMessage(
+                        "RVT", "Fill no-data calculation Failed!", level=Qgis.MessageLevel.Critical)
                     self.parent.is_calculating = False
 
     def compute_fill_no_data_clicked(self):
         """Start button clicked (compute_fill_no_data start button)."""
-        self.iface.messageBar().pushMessage("RVT", "Starting fill no-data computation...", level=Qgis.Info, duration=3)
+        self.iface.messageBar().pushMessage(
+            "RVT", "Starting fill no-data computation...", level=Qgis.MessageLevel.Info, duration=3)
         task = self.ComputeFillNoData(description="Compute fill no data", parent=self)
         self.tm.addTask(task)  # add task to task manager and start task
 
@@ -2494,20 +2510,41 @@ class QRVT:
         return outputs
 
     def save_plugin_size(self, json_path):
+        """Persist the current plugin dialog size."""
         try:
-            dat = open(json_path, "w")
             size_dlg = self.dlg.size()
             out_json = {"width": size_dlg.width(), "height": size_dlg.height()}
-            json.dump(out_json, dat)
-            dat.close()
-        except:
-            pass
+            with open(json_path, "w", encoding="utf-8") as dat:
+                json.dump(out_json, dat)
+        except OSError as error:
+            QgsMessageLog.logMessage(
+                "Could not save the plugin window size: {}".format(error),
+                "RVT",
+                Qgis.MessageLevel.Warning,
+            )
 
     def load_plugin_size(self, json_path):
+        """Restore the plugin dialog size from a JSON settings file."""
         try:
-            dat = open(json_path, "r")
-            in_json = json.load(dat)
-            dat.close()
-            self.dlg.resize(in_json["width"], in_json["height"])
-        except:
-            pass
+            with open(json_path, "r", encoding="utf-8") as dat:
+                in_json = json.load(dat)
+
+            width = in_json["width"]
+            height = in_json["height"]
+            if (
+                isinstance(width, bool)
+                or not isinstance(width, int)
+                or isinstance(height, bool)
+                or not isinstance(height, int)
+                or width <= 0
+                or height <= 0
+            ):
+                raise ValueError("window dimensions must be positive integers")
+
+            self.dlg.resize(width, height)
+        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError, OverflowError) as error:
+            QgsMessageLog.logMessage(
+                "Could not load the plugin window size: {}".format(error),
+                "RVT",
+                Qgis.MessageLevel.Warning,
+            )
