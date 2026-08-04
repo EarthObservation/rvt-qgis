@@ -1016,7 +1016,7 @@ QGroupBox
                          </font>
                         </property>
                         <property name="text">
-                         <string>Radius for trend assesment [pixels]:</string>
+                         <string>Radius for trend assessment [pixels]:</string>
                         </property>
                        </widget>
                       </item>
@@ -1799,7 +1799,7 @@ QGroupBox
                   </widget>
                  </item>
                  <item>
-                  <widget class="QGroupBox" name="group_openess_pos">
+                  <widget class="QGroupBox" name="group_openness_pos">
                    <property name="enabled">
                     <bool>true</bool>
                    </property>
@@ -1820,7 +1820,7 @@ QGroupBox
                     <string>positive_openness</string>
                    </property>
                    <property name="title">
-                    <string>Openess - positive (set parameters in sky-view factor)</string>
+                    <string>Openness - positive (set parameters in sky-view factor)</string>
                    </property>
                    <property name="flat">
                     <bool>false</bool>
@@ -1835,7 +1835,7 @@ QGroupBox
                   </widget>
                  </item>
                  <item>
-                  <widget class="QGroupBox" name="group_openess_neg">
+                  <widget class="QGroupBox" name="group_openness_neg">
                    <property name="enabled">
                     <bool>true</bool>
                    </property>
@@ -1856,7 +1856,7 @@ QGroupBox
                     <string>negative_openness</string>
                    </property>
                    <property name="title">
-                    <string>Openess - negative (set parameters in sky-view factor)</string>
+                    <string>Openness - negative (set parameters in sky-view factor)</string>
                    </property>
                    <property name="flat">
                     <bool>false</bool>
